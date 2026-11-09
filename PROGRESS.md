@@ -83,13 +83,19 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Ghidra — referència d'`IsAllowUnlock` resolta a codi**: funció contenidora `FUN_00054980`; al voltant de `0x00055aac` es veu `ldr x2, [x28, #0x18]`, seguida de `adrp x1, 0xa0000` (`0x00055ab0`), `add x1, x1, #0xe085` (`0x00055ab4`, adreça del text `IsAllowUnlock is %d`) i `bl FUN_00059e4c` (`0x00055ab8`). **Hipòtesi:** `FUN_00059e4c` és una rutina de logging i `x2` transporta el valor imprés; encara no confirmada ni la signatura de la funció ni la procedència de `x28`. Cal distingir el log de la comprovació d'autorització real.
 
+- [x] **Ghidra — origen de x28 identificat** a l'entrada de `FUN_00054980`: `0x000549a8: adrp x28,0xcb000` i `0x000549b0: add x28,x28,#0x5a8`; per tant, `x28=0x000cb5a8` (adreça virtual en la base carregada per Ghidra). La instrucció `0x00055aa8: ldr w2,[x28,#0x18]` llig un valor de 32 bits a `0x000cb5c0` (`DAT_000cb5c0`) i el transmet a una crida de registre junt amb `IsAllowUnlock is %d`. Això identifica una **lectura d'una posició global**, no l'origen o la política de l'autorització. No hi ha cap bug demostrat.
+
 ## Següent pas immediat
 
-**Seguir el valor imprés pel missatge `IsAllowUnlock is %d` dins de `FUN_00054980`.** La captura identifica la càrrega `ldr x2, [x28, #0x18]` immediatament abans de la crida a `FUN_00059e4c`.
+**Buscar qui escriu el camp `DAT_000cb5c0`** (el valor imprés per `IsAllowUnlock is %d`).
 
-En Ghidra: seleccionar la instrucció `0x00055aac` i rastrejar **cap arrere** on s'assigna `x28` dins de la funció `FUN_00054980`; després buscar les escriptures o crides que inicialitzen el camp d'offset `0x18`. En paral·lel, inspeccionar la capçalera/pseudocodi de `FUN_00059e4c` per verificar si només fa logging. **No modificar cap instrucció ni executar cap ordre de desbloqueig**.
+En Ghidra:
+1. Al Listing, prémer `G` i anar a `000CB5C0`.
+2. Seleccionar el símbol/adreça i fer `References → Show References to Address`.
+3. Inspeccionar les referències `WRITE` (`W`) i `READ` (`R`). Si no hi ha escriptures explícites, investigar la base de l'estructura `0x000cb5a8` perquè pot accedir-se mitjançant punters.
+4. Compartir captura de la llista de referències per estudiar la inicialització sense modificar el programa.
 
-Captures útils: el **Decompiler** centrat en la sentència que conté `"IsAllowUnlock is %d"` (utilitzar cerca Ctrl+F dins de Ghidra si cal), i el tram anterior de la funció on `x28` adquireix el seu valor. Si no es veu la sentència perquè és una funció massa gran, documentar el context d'instruccions i analitzar les crides/branques adjacents.
+**Límits:** `0xCB5C0` és una adreça d'anàlisi de Ghidra amb ImageBase 0; no és una ubicació física garantida en execució. Les referències i el text no demostren cap bypass. No tocar el firmware o el telèfon.
 
 ## Pendent després d'eixe pas
 
@@ -121,3 +127,4 @@ Captures útils: el **Decompiler** centrat en la sentència que conté `"IsAllow
 | 2026-11-09 | Prova dels marcadors GBL executada | Cap dels quatre marcadors específics de GPU/fence detectat; cadena genèrica Fastboot sí. Resultat inconcloent. Següent pas: referències de les funcions de bloqueig en Ghidra. |
 | 2026-11-09 | Primera referència a IsAllowUnlock en Ghidra | Una XREF confirmada a la cadena `IsAllowUnlock is %d`. |
 | 2026-11-09 | Referència resolta en codi ARM64 | `FUN_00054980`: `ldr x2,[x28,#0x18]` abans de `bl FUN_00059e4c`; possible logging del valor d'autorització. Següent pas: origen de `x28` i comprovació de la rutina de logging. |
+| 2026-11-09 | Localitzat x28 i lectura global d'IsAllowUnlock | `adrp/add` fixen `x28` a `0xCB5A8`; `ldr w2,[x28,#0x18]` llig `DAT_000cb5c0`. Següent pas: trobar referències d'escriptura al camp. |
