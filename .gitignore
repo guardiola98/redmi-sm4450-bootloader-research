@@ -1,0 +1,24 @@
+# Firmware and device dumps should not be committed.
+*.img
+*.bin
+*.elf
+*.mbn
+*.pac
+*.ofp
+*.tgz
+*.zip
+*.log
+*.pcap
+*.pcapng
+*.dump
+*.bak
+*.bak2
+*.key
+*.pem
+*.p12
+*.token
+.env
+secrets/
+dumps/
+firmware/
+private/
