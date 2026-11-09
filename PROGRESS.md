@@ -314,3 +314,26 @@ python3 scripts/inspect-compressed-uefi.py \
 ```
 
 Passar l'eixida completa, incloent errors de descompressió si apareixen; un error d'esta ferramenta **no demostra xifrat ni absència del protocol**. Si els GUID apareixen, localitzar el PE/TE corresponent per a anàlisi estàtica. **Sense bypass ni vulnerabilitat confirmats.**
+
+## Troballa important: protocols visibles dins d'UEFI descomprimit (2026-11-09)
+
+**Resultat real executat pel propietari de `scripts/inspect-compressed-uefi.py`:**
+- `uefi.elf`, FFS `9e21fd93-9c72-4c15-8c4b-e77f1db2d792` a `0x04ae08`, secció **Qualcomm GZIP** GUID `1d301fe9-be79-4353-91c2-d23bc959ae0c`: 1.383.181 bytes comprimits → **3.985.416 bytes descomprimits**. Dins apareixen els GUID `0c00a314-11a1-4d7a-a5c8-70bd5f88e7df` (token candidat; offset relatiu `0x8f8ec`) i `8e5eff91-21b6-47d3-af2b-c15a01e020ec` (Qualcomm VerifiedBoot; `0x848b4`), en format little-endian UEFI. **És evidència de presència de les identificacions, no de quina funció exacta les implementa ni de vulnerabilitat.**
+- Segon FFS Qualcomm GZIP de `uefi.elf` (`0x19c948`) descomprimit: **10.715.144 bytes**, FV intern; sense coincidències de GUID reportades per l'script.
+- `imagefv.elf`: GUID-defined LZMA; l'eina ha indicat `decompressed size exceeds limit`. **No interpretar-ho com una grandària real del FV ni com corrupció**; cal tractar el cas per separat si interessa.
+- `tools.fv`: LZMA descomprimit correctament a **1.904.648 bytes**, FV intern, sense coincidències reportades.
+
+**Canvi de prioritat:** aprofundir **en el primer FV intern de `uefi.elf`**, on tenim coincidències directes dels dos GUID. No fa falta augmentar de moment els límits LZMA per a `imagefv.elf`.
+
+**Nou script:** `scripts/locate-uefi-protocol-modules.py` (només lectura), verifica SHA-256, descomprimix en memòria el primer FFS GZIP, valida el FV intern i informa de quin **FFS** i secció conté cada GUID, inclosos possibles noms UI. No atribuïx el GUID automàticament a una implementació de protocol.
+
+**Següent prova Debian:**
+
+```bash
+cd ~/redmi-sm4450-bootloader-research
+git pull
+python3 scripts/locate-uefi-protocol-modules.py \
+  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz
+```
+
+Revisar el mòdul FFS concret i la seua relació amb registres `InstallProtocolInterface` i les crides d'ABL. **Encara no hi ha prova de bug explotable, ni mètode de desbloqueig.**
