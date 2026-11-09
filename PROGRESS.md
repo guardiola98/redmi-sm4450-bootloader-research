@@ -77,17 +77,19 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 - [x] **Comandes reals de Fastboot identificades en LinuxLoader**: `flashing get_unlock_ability` (offset fitxer `0x0add1d`), `oem unlock` (`0x0add49`), `oem lock` (`0x0add54`), `oem device-info` (`0x0adda6`), `oem edl` (`0x0addc3`), `oem getlog` (`0x0addcb`), entre altres. Estat i política de desbloqueig: `IsAllowUnlock is %d` (`0x0ae085`), `get_unlock_ability: %d` (`0x0aeac7`), `Error Set Device Unlock: %r` (`0x0aeb8d`), `Failed to update the unlock status` (`0x0aebaa`), `Flashing is not allowed in Lock State` (`0x0ae1c4`), `Fastboot boot command is not available in locked device` (`0x0aec16`). La presència de comandes, errors o estat no indica cap bypass.
 - [x] Revisat el codi públic `chkndrp/qualcomm-gbl-exploit-checker`: comprova dos casos vinculats a `set-gpu-preemption` i `set-hw-fence-value` amb cadenes de pegat i una signatura d'opcodes; **no és una prova general** de vulnerabilitat, ni de desbloqueig, i l'absència de cadenes no equival a un estat vulnerable. El seu fitxer `check.py` és GPLv3; no se n'ha copiat codi al projecte. Creat `scripts/check-gbl-markers.py` com a inventari propi de marcadors, amb resultat sempre inconcloent quant a explotabilitat, pendent d'executar.
 
+- [x] **Inventari de marcadors GBL executat** en el PE `LinuxLoader` SHA-256 `60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`: `gpu-command=not found`, `fence-command=not found`, `gpu-rejection-text=not found`, `fence-rejection-text=not found`, `generic-fastboot=present at 0xaceb2`. **Conclusió estricta:** no s'han trobat les cadenes relatives a `set-gpu-preemption` i `set-hw-fence-value` en este PE, però això no indica si hi ha o no una vulnerabilitat GBL; no hi ha prova que eixes comandes existisquen en esta compilació. No s'ha executat cap exploit.
+
 ## Següent pas immediat
 
-**Comprovar si les dues superfícies GBL descrites per una ferramenta externa estan presents en este `LinuxLoader`**, sense enviar ordres Fastboot ni provar exploits.
+**Anàlisi estàtica amb Ghidra sobre el PE ARM64 `LinuxLoader`** per trobar les referències de codi a `IsAllowUnlock is %d`, `get_unlock_ability: %d`, `oem unlock` i els missatges d'error en l'actualització de l'estat.
 
-```bash
-cd ~/redmi-sm4450-bootloader-research
-git pull
-python3 scripts/check-gbl-markers.py
-```
+1. Obrir Ghidra, crear un projecte local i importar `work/uefi-extracted/.../section1.pe` (la ruta es pot localitzar amb `find work/uefi-extracted -name section1.pe`).
+2. Confirmar que Ghidra importa **PE32+ / AArch64**, i iniciar l'anàlisi automàtica; no forçar importació ARM32 de l'ELF exterior.
+3. En **Window → Defined Strings**, buscar `IsAllowUnlock is`, `get_unlock_ability:`, `oem unlock`, `Failed to update the unlock status`.
+4. Des de les cadenes, usar **References → Show References to Address** per veure funcions que les empren, si Ghidra aconseguix identificar-ne les referències.
+5. Registrar només noms de funcions inferits, ubicacions/RVA verificats i relacions observades. Si les referències no es resolen, registrar el resultat negatiu i comprovar literal pools/reubicacions. No alterar ni executar firmware.
 
-El resultat només és un **inventari de cadenes**. `not found` no significa que el binari siga vulnerable: pot no tindre eixes funcionalitats, o contindre-les amb altres representacions. La ferramenta externa fa heurístiques sobre signatures i opcodes que també requerixen verificació independent. Si trobem marcadors, revisar la documentació de la vulnerabilitat i la seua aplicabilitat a SM4450; si no, prioritzar Ghidra per seguir les referències d'`IsAllowUnlock` i `oem unlock`. **No executar cap ordre que canvie el lock state.**
+En esta etapa estudiem **com consulta i valida l'autorització**, no com evitar-la; no hi ha encara evidència d'un bug. Si és possible, el següent pas posterior serà comparar esta mateixa funció amb un ABL anterior verificat del mateix model i regió.
 
 ## Pendent després d'eixe pas
 
@@ -116,4 +118,5 @@ El resultat només és un **inventari de cadenes**. `not found` no significa que
 | 2026-11-09 | Inspecció detallada del PE i scanner de cadenes | RVA `0x1000`, base `0x0`, seccions `.text`, `.data`, `.reloc`; SHA-256 del PE registrat. Scanner ASCII/UTF-16 creat. |
 | 2026-11-09 | Primera cerca de cadenes Fastboot/AVB/bloqueig | 259 coincidències; localitzades referències a estat de desbloqueig i verificació AVB. |
 | 2026-11-09 | Comandes Fastboot localitzades i revisió del checker GBL | Identificades `oem unlock`, `flashing get_unlock_ability`, `IsAllowUnlock` i errors de restricció; afegit inventari conservador de marcadors GBL per la pròxima prova. |
+| 2026-11-09 | Prova dels marcadors GBL executada | Cap dels quatre marcadors específics de GPU/fence detectat; cadena genèrica Fastboot sí. Resultat inconcloent. Següent pas: referències de les funcions de bloqueig en Ghidra. |
 
