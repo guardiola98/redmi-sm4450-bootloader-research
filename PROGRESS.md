@@ -91,16 +91,19 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Anàlisi directa del PE ARM64 adjunt** `LinuxLoader.pe` (SHA-256 `60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`) amb `llvm-objdump`: la funció `FUN_00054980` consulta explícitament la partició **`frp`** (cadena UTF-16LE a `0xAF508`) via `0x59fc8 → 0x56148`, obté un descriptor en `[x29,#-0x90]`, usa un búfer a `x23` i un callback `blr x9`, i després d'èxit extrau el bit menys significatiu del byte indexat per `N-1` a `0x55b2c..0x55b40` per guardar-lo en `DAT_000cb5c0`. També hi ha missatges `Error Reading FRP partition` i `Error Locate MiToken Protocol`. **No s'ha demostrat** que el bit siga suficient per desbloquejar, que siga editable, ni com intervé MiToken. Informe complet a [docs/linuxloader-frp-analysis.md](docs/linuxloader-frp-analysis.md).
 
+- [x] **Nova revisió estàtica directa del PE adjunt (2026-11-09)**: SHA-256 verificat; desassemblatge LLVM de `FUN_00054980` i funcions auxiliars. `0x55a74..0x55a84` passa el nom UTF-16 `frp` a un helper de localització; `0x55ae8` recupera el descriptor `x22`. `0x55af8` crida `0x5950` per obtindre búfer; `0x55b20` crida callback de lectura; **només si retorna zero** `0x55b2c..0x55b40` emmagatzema el bit `buf[N-1] & 1` a `DAT_000cb5c0`. Es confirma que el missatge `IsAllowUnlock` a `0x55aa8` apareix **abans** del camí de lectura i pot tornar a executar-se per un bucle des de `0x55b4c` fins `0x55a90`. A `0x57c50`, una altra funció llig `DAT_000cb5c0` per passar-lo a una rutina de format amb text proper a `get_unlock_ability`; encara **no és evidència que el bit siga l'únic control d'autorització**.
+- [x] **Ruta MiToken separada confirmada estructuralment**: `0x55b50..0x55b60` intenta localitzar una interfície UEFI per GUID (`0xb1800`) amb `0x59f48` (veneer cap a crida indirecta), i `0x55be0..0x55bf0` invoca un callback via `0x59fe0` per consultar la longitud d'un token; després hi ha una segona invocació i missatge `Error Get Token`. Identitat completa del protocol i relació causal amb desbloqueig **encara no demostrades**. Vegeu [docs/linuxloader-frp-analysis.md](docs/linuxloader-frp-analysis.md).
+
 ## Següent pas immediat
 
-**Correlacionar la lectura de la partició FRP amb la verificació d'autorització real** en l'ABL, sense alterar dades. Ja s'ha identificat un bit llegit d'un búfer associat a `frp`, però és un flag parcial, no un desbloqueig.
+**Identificar el consumidor del flag FRP i la naturalesa exacta del protocol MiToken**, només amb anàlisi offline. Ja no calen captures de Ghidra; tenim el PE ARM64 original.
 
-1. Desassemblar les referències a `Error Reading FRP partition`, `Error Locate MiToken Protocol` i `Error Get Token Length` per separar el flux FRP del de MiToken.
-2. Estudiar qui llig `DAT_000cb5c0` i si eixe flag intervé efectivament en la comanda `oem unlock` o `flashing get_unlock_ability`; les cadenes presents no basten.
-3. Reconstruir el callback `blr x9` a `0x55b20` i la mida `N` usada per calcular l'índex, abans de formular hipòtesis sobre validació.
-4. Si podem validar-ho, preparar un informe reproduïble i comparar amb versions anteriors del mateix model.
+1. Revisar en el PE les funcions de `oem unlock` i `flashing get_unlock_ability` i les referències a `DAT_000cb5c0` per diferenciar lectura, visualització i decisió d'autorització.
+2. Identificar les taules i signatures de callback de MiToken en `0x55b50..0x55c94` sense assumir que obtindre un token siga suficient per desbloquejar el mòbil.
+3. Validar el significat i la mida `N` del descriptor FRP, inclosos els camins d'error; qualsevol hipòtesi de desbordament o de canvi de bit requerix evidència de validació del context.
+4. Comparar amb ABL d'un firmware anterior verificat del mateix model quan siga necessari.
 
-Vegeu [docs/linuxloader-frp-analysis.md](docs/linuxloader-frp-analysis.md) per al flux ARM64 comprovat. **No llegir, editar ni esborrar FRP del mòbil, no fer flash i no intentar forçar estats de bloqueig.**
+**No modificar partició FRP, tokens ni estat del bootloader.** Cap vulnerabilitat o desbloqueig funcional verificat.
 
 ## Pendent després d'eixe pas
 
@@ -136,3 +139,4 @@ Vegeu [docs/linuxloader-frp-analysis.md](docs/linuxloader-frp-analysis.md) per a
 | 2026-11-09 | Localitzat x28 i lectura global d'IsAllowUnlock | `adrp/add` fixen `x28` a `0xCB5A8`; `ldr w2,[x28,#0x18]` llig `DAT_000cb5c0`. Següent pas: trobar referències d'escriptura al camp. |
 | 2026-11-09 | Càlcul del camp IsAllowUnlock localitzat | `0x55b2c..0x55b40`: bit 0 d'un byte del búfer `x23` indexat per dades obtingudes via `x22`; següent pas: identificar origen dels dos registres. |
 | 2026-11-09 | Rastres addicionals x22/x23 en Ghidra | `ldur x22,[x29,#-0x90]` a `0x55ae8`; `mov x23,x0` a `0x55b04`. Següent pas: anàlisi directa del PE adjunt per reconstruir el flux de dades. |
+| 2026-11-09 | Revisió offline FRP i MiToken | Verificat control d'èxit de lectura FRP, bucle de registre del bit, crides indirectes de MiToken i consumidor del flag per a format de get_unlock_ability. La decisió final d'autorització continua pendent. |
