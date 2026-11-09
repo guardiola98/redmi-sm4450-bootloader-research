@@ -297,3 +297,15 @@ Bucle i lectura fora del rang mantenen classificació condicional. No hi ha
 conseqüència demostrada sobre autenticació. Detalls i fronteres en
 [dispatch TZ](tz-dispatch-analysis.md); no substituir l'estat EFI pel
 marcador/booleà intern de resposta.
+
+## Actualització: enllaç amb el monitor EL3
+
+La [fase del monitor](tz-monitor-analysis.md) resol la frontera anterior:
+el paquet segur [1,0x83,-1,0…] es transforma en x0=-1 no segur, i
+ScmDxeLA ARMv8 retorna EFI error 3. Sota inicialització/contextos vàlids
+i ús d'esta ruta, és un productor concret d'error per la branca que omet
+alliberament; no demostra un caller +0x18 ni repetició de la fuga.
+El bucle i lectura de política no s'activen en esta ruta rebutjada.
+Continuen condicionals per altres productors, sense límit del comptador
+ni garantia d'inicialització del búfer demostrats. Cap canvi sobre
+autenticació o bloqueig. No generalitzar el resultat a la convenció SCM antiga.

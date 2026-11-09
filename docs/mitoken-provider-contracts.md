@@ -139,3 +139,13 @@ La ruta de rebuig MiToken normalitzada s'ha seguida fins a la SMC de TZ
 0x1c136914, missatge amb error en x2. La traducció del monitor fins al
 w0 d'UEFI continua pendent; no prova indisponibilitat global, ni canvia
 la classificació del bucle o de les lectures de política condicionals.
+
+## Actualització del retorn EL3
+
+La frontera monitor→UEFI anterior queda resolta per la
+[ruta local ARMv8](tz-monitor-analysis.md): paquet segur x2=-1 → context
+no segur x0=-1 → EFI error 3. Requerix el monitor/contextos inicialitzats
+i les condicions d'entrada documentades. La variant antiga usa una
+petició distinta; el seu mapping local -1→error 7 no prova el mateix
+encaminament. Cap garantia nova sobre el contingut de política ni sobre
+selecció real de variant; no es deduïx indisponibilitat global del servei.

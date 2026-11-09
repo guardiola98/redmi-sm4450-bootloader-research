@@ -1,5 +1,10 @@
 # TrustZone: estructura i consulta de serveis
 
+**Estat vigent:** el [monitor EL3 local](tz-monitor-analysis.md) ja resol
+el consumidor 0x81/0x83 i el mapping x2 segur → x0 no segur → EFI error 3
+en la ruta ARMv8 estudiada. Les fronteres marcades pendents en les fases
+anteriors es conserven com a historial; no proven indisponibilitat global.
+
 Base: commit 1b03a74. Exclusivament estàtic/offline. SHA-256 TZ verificat:
 `f7d943b1de872d239468fe30cc4fab92c5acb0405203e9f9e38436cefd7e1a76`.
 

@@ -674,3 +674,44 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Punt de represa: consumidor monitor de 0x81/0x83 i connexió UEFI↔stub;
   després contracte de política si una ruta real el fa accessible. No repetir
   censos ni atribuir absència global a una consulta concreta que rebutja ID.
+
+## Fase monitor EL3: consumidor identificat
+
+- Els vectors 0x14680800, publicats per dos MSR VBAR_EL3, apunten
+  a 0x1c00ec78 per les entrades síncrones inferiors. L'exportació inicial
+  no havia desassemblat estes entrades indirectes; s'han descodificat
+  explícitament a Ghidra sense executar ni modificar el firmware.
+- El dispatcher EL3 0x1c00f9ec distingix SCR_EL3.NS. En món segur,
+  0x1c00feec interpreta comandament 1 i subtipus `word1 & 0x7f`.
+  Subtipus 1 (0x81) registra entrada +0x58 a 0x1c01c078 i pila +0x60;
+  subtipus 3 (0x83) passa per 0x1c00f870. Este copia words2..5 del paquet
+  als quatre primers registres del context no segur.
+- Error TZ -1 en x2 → x0 guardat no segur; restauració a 0x1c00fd0c
+  i ERET a 0x1c00edf0. Resol la frontera del consumidor del paquet,
+  sota inicialització/context vàlids i ús d'este monitor. Encara no és
+  una observació runtime ni prova d'indisponibilitat global.
+- En eixe punt quedaven bytes/taules, encaminament d'entrada i proves;
+  resolts en el tancament següent.
+
+### Tancament de la fase EL3
+
+- Enllaç d'entrada reconstruït: NS=1 i ID 0x42001401 passa casos especials
+  EL3 → C0/entrada publicada via 0x1c0111a4/0x1c010df0. Contextos
+  inicialitzats i condicions del stub continuen precondicions explícites.
+- Retorn [1,0x83,-1,0…] → C3.x0=-1 → ERET → ScmDxeLA EFI error 3.
+  Neteja condicional de x4..x17 no toca els quatre resultats. La variant
+  antiga w0=1 té namespace/petició distinta i no s'ha equiparat.
+- Informe docs/tz-monitor-analysis.md i manifest tz-monitor.json amb hash,
+  offsets, vectors i 80 entrades estructurals. No són 80 serveis auditats.
+  Resoltes les fronteres històriques del consumidor EL3; notes de vigència
+  en dispatcher, cobertura i informes MiToken.
+- Reavaluació: neteja MiToken omesa continua defecte local confirmat amb
+  productor concret d'error condicional; caller +0x18 i acumulació pendents.
+  Lectures/bucle de política no s'activen en la ruta rebutjada; altres
+  productors continuen desconeguts. VerifiedBoot no canvia.
+- Cinc tests sintètics nous de registres/namespace/neteja, sense emulació.
+  Següents: caller indirecte MiToken; convenció SCM antiga; altres
+  productors carregables locals. No repetir escàners ni inferir absència
+  global d'un rebuig local. **41 proves en 10 scripts passen**; extractor
+  de dades EL3 validat contra el hash original; git diff --check net.
+  Fase documentada per al commit, sense push ni binaris afegits.

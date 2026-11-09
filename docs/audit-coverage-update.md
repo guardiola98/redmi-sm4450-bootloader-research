@@ -1,5 +1,9 @@
 # Cobertura ampliada des de main ce7e4f0
 
+**Actualització:** el [lookup TZ](tz-dispatch-analysis.md) i el
+[monitor EL3](tz-monitor-analysis.md) ja tenen reconstrucció funcional
+parcial. Les notes anteriors de dispatcher pendent són històriques.
+
 Treball exclusivament offline. Els scripts no executen firmware. Les imatges
 extretes es desen només en work/, exclòs de Git, sense alterar els originals.
 
@@ -87,3 +91,16 @@ Cap dels 25 RAW conté el GUID MiToken literal little-endian. El manifest
 ara conserva mida, hash, ruta, prefix i resultat de cerca de cada RAW.
 Açò resol l'exclusió anterior d'estes seccions en la cerca literal; no
 resol altres codificacions de GUID ni àlies de protocols. Cap nou consumidor.
+
+## Cobertura funcional EL3 afegida
+
+Identificades 16 entrades de vector, quatre stubs de context, dos handlers
+i el dispatcher síncron 0x1c00f9ec. Taules de 69 comandaments segurs,
+7 subtipus i 4 selectors de context extretes amb hash/límits; no són
+80 serveis auditats. Reconstruïda la ruta específica d'entrada i retorn
+del rebuig SCM ARMv8. L'ASM inicial ometia entrades indirectes que ara
+s'han desassemblat; exportar Ghidra no certifica cobertura completa.
+No s'han repetit extraccions, RSA ni escàners GUID. El cens continua
+en 110 ocurrències PE més ABL separat; no hi ha nou consumidor +0x18.
+Altres handlers, càrrega dinàmica i productors de política continuen
+fora de la cobertura semàntica. No s'ha executat codi del firmware.
