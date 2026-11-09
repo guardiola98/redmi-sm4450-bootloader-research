@@ -22,3 +22,9 @@ secrets/
 dumps/
 firmware/
 private/
+
+# Local reverse-engineering outputs, extracted proprietary EFI components
+work/
+*.fd
+*.efi
+*.rom
