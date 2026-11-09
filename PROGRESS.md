@@ -485,3 +485,10 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   helper passen per ASSERT i bucles d'aturada abans del retorn nul;
   esgotament de memòria no demostra arribar al fals èxit del caller.
   El model existent només injecta nul. Detalls en l'anàlisi VerifiedBoot.
+
+- [x] **MiToken 0x1784: longitud i capacitat reconstruïdes amb ASM.**
+  No llig capacitat del caller ni valida L nul; 0x2508 comprova solapament.
+  Encoder intern exigix 4*ceil(N/3)+1 <= 128; amb B<=15, N<=49,
+  eixida <=66 caràcters + NUL. Error de capacitat no accessible sota
+  estes precondicions. Corregida reserva ABL: 128, no longitud+1.
+  Evidència i límits en `docs/mitoken-length-capacity.md`.

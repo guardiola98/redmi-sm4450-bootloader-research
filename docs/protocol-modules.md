@@ -94,7 +94,7 @@ anterior només exportava funcions reconegudes, però el codi ja estava desassem
   però retorna zero sense copiar destí ni escriure longitud. Cal demostrar
   que es pot arribar a eixa fallada amb els camps de placa fixos d'este build.
 - Candidat d'API: no hi ha comprovació de capacitat del caller ni de x2 nul.
-  ABL consulta primer 128 i reserva longitud+1 segons l'anàlisi prèvia: este
+  ABL consulta primer 128 i reserva eixa mida: este
   caller no demostra overflow. Accés arbitrari al protocol tampoc està demostrat.
 
 ### Verificació MiToken
@@ -153,3 +153,9 @@ lectura i pot inicialitzar defaults segons una consulta segura separada.
 La ruta Fastboot examinada conserva la verificació MiToken prèvia.
 Set proves sintètiques passen; accessibilitat de la fallada i impacte
 explotable continuen sense demostrar-se.
+
+Reconstrucció detallada de longituds, capacitats i helpers del callback
+0x1784 en [MiToken: longitud i capacitat](mitoken-length-capacity.md).
+La cota normal és 67 bytes incloent NUL; la reserva nova ABL és 128,
+sense increment +1. La fallada de capacitat Base64 no es demostra accessible
+amb els camps acotats i la memòria preservada.
