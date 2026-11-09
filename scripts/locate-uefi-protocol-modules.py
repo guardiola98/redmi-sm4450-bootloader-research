@@ -134,19 +134,30 @@ def decoded_first_fv(data):
 def run(tgz):
     content = decoded_first_fv(read_uefi(tgz))
     print(f"Decoded first GZIP container: {len(content)} bytes")
-    # EFI_SECTION_FIRMWARE_VOLUME_IMAGE is 8 bytes at start:
-    # 3-byte size, type 0x17, optional extended header.
-    if len(content) < 8 or content[3] != 0x17:
-        raise ValueError("Expected decoded FV-image section not found")
-    fv_hdr_size = 8 if content[:3] == b"\xff\xff\xff" else 4
-    if fv_hdr_size == 8:
-        size = struct.unpack_from("<I", content, 4)[0]
-    else:
-        size = int.from_bytes(content[:3], "little")
-    if size > len(content) or size < fv_hdr_size + 0x38:
-        raise ValueError("Malformed FV-image section")
-    start, end, length = parse_fv(content, fv_hdr_size, size)
-    print(f"Nested FV: offset=0x{fv_hdr_size:x}, length=0x{length:x}")
+    # A guided decompressor may return more than one sibling UEFI section;
+    # the FV-image (type 0x17) is not guaranteed to start at byte zero.
+    print(f"Decoded prefix (16 bytes): {content[:16].hex()}")
+    parsed = list(sections(content, 0, len(content)))
+    print("Decoded top-level sections:",
+          ", ".join(f"type=0x{typ:02x}@0x{pos:x},size=0x{end-pos:x}"
+                    for pos, end, typ, _ in parsed[:16]) or "none")
+    volumes = []
+    for pos, section_end, typ, header_size in parsed:
+        if typ != 0x17:
+            continue
+        fv_start = pos + header_size
+        try:
+            start, end, length = parse_fv(content, fv_start, section_end)
+        except ValueError as exc:
+            print(f"Skipping invalid FV-image at 0x{pos:x}: {exc}")
+            continue
+        volumes.append((start, end, length, fv_start))
+    if not volumes:
+        raise ValueError("No valid nested FV-image section found in decoded top-level sections")
+    if len(volumes) > 1:
+        raise ValueError(f"Found {len(volumes)} valid nested FVs; refuse ambiguous first-volume selection")
+    start, end, length, fv_start = volumes[0]
+    print(f"Nested FV: offset=0x{fv_start:x}, length=0x{length:x}")
     owners = []
     for at, last, begin, guid, typ in ffs_files(content, start, end):
         owners.append((at, last, begin, guid, typ))
