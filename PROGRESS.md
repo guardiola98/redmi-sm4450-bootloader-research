@@ -57,29 +57,16 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 | `tz.mbn` | `f7d943b1de872d239468fe30cc4fab92c5acb0405203e9f9e38436cefd7e1a76` |
 | `vbmeta.img` | `4b303d89ac0d8961fe57949148f86cfcf4fcee14799acaef5093455c52763db8` |
 
+- [x] Investigades ferramentes de GitHub per inspeccionar Qualcomm ABL: `theopolis/uefi-firmware-parser`, `LongSoft/UEFITool`, `linux-msm/xbltools`, `qualcomm/abl2esp` i `chkndrp/qualcomm-gbl-exploit-checker`. Documentació i cauteles a [docs/uefi-tools.md](docs/uefi-tools.md).
+- [x] Detectada **signatura `_FVH` a l'offset 0x1028** dins d'`abl.elf`, amb probable volum UEFI a `0x1000`. La capçalera ELF32 ARM **és un contenidor**; la implementació real d'ABL/Fastboot probablement és una EFI PE/COFF comprimida dins del firmware volume, pendent d'extracció i confirmació. Això explica la manca de cadenes ASCII directes sense demostrar cap vulnerabilitat.
+
 ## Següent pas immediat
 
-**Confirmar si l'ELF conté codi ARM desassemblable i caracteritzar l'absència de cadenes visibles, sense assumir que el format està xifrat.** Amb l'ELF32 ARM i el segment carregable ja identificats, el següent pas és recollir metadades addicionals del mateix fitxer i preparar una anàlisi estàtica amb Ghidra o un desassemblador adequat.
+**Extreure i analitzar el volum UEFI dins de l'ABL**, en lloc de desassemblar l'ELF32 ARM exterior com si fora el codi funcional. La inspecció hexadecimal mostrava `_FVH` a `0x1028`; la documentació oficial de Qualcomm confirma l'arquitectura habitual `ELF → UEFI FV → secció comprimida → EFI PE32/PE32+`.
 
-En Debian:
+Vegeu [docs/uefi-tools.md](docs/uefi-tools.md) per les eines trobades i el procediment de lectura local. Prioritzar `UEFIExtract` o `uefi-firmware-parser`; no fer flash ni executar els binaris extrets.
 
-```bash
-cd ~/redmi-sm4450-bootloader-research
-git pull
-readelf -S work/abl.elf
-readelf -n work/abl.elf
-strings -a -n 4 work/abl.elf | wc -l
-xxd -l 128 work/abl.elf
-xxd -s 4096 -l 128 work/abl.elf
-```
-
-- `readelf -S` hauria de corroborar la manca de seccions.
-- `readelf -n` permet veure si hi ha notes ELF reconegudes.
-- `strings | wc -l` ajuda a determinar si la falta de coincidències és deguda a l'absència general de text ASCII o només al filtre.
-- `xxd` observa **només** 128 bytes de la capçalera i 128 bytes del començament del segment carregable; és un examen offline.
-- Si hi ha codi ARM desassemblable, considerar Ghidra amb el punt d'entrada `0x9fa00000`. No inferir una vulnerabilitat de la presència de l'atribut RWE en firmware bare-metal.
-
-**Precaució:** el binari prové del paquet Fastboot verificat, no d'una lectura de la partició `abl_b` del dispositiu en ús. No s'ha demostrat que siguen idèntics.
+**Resultats que cal registrar:** validesa del volum FV, GUID/estructura de seccions, nom i arquitectura del PE EFI (si es troba), i possibles errors del parser. Només després estudiar-lo amb Ghidra. En paral·lel, revisar el codi de `qualcomm-gbl-exploit-checker` i confirmar l'aplicabilitat dels seus patrons al SM4450 abans d'interpretar cap resultat.
 
 ## Pendent després d'eixe pas
 
@@ -100,5 +87,6 @@ xxd -s 4096 -l 128 work/abl.elf
 | Data | Canvi | Resultat |
 | --- | --- | --- |
 | 2026-11-09 | Creació del registre de progrés i pròxim pas | Estat inicial consolidat; següent prova definida: extracció i inspecció estàtica d'ABL |
-| 2026-11-09 | Anàlisi inicial de `abl.elf` amb `file`, `readelf` i `strings` | ELF32 ARM, tres program headers, un LOAD RWE de 0x30000 bytes i sense seccions; cap cadena coincident amb el filtre de desbloqueig. Següent pas: metadades ELF i inspecció dels primers bytes. |
+| 2026-11-09 | Anàlisi inicial de `abl.elf` amb `file`, `readelf` i `strings` | ELF32 ARM, tres program headers, un LOAD RWE de 0x30000 bytes i sense seccions; cap cadena coincident amb el filtre de desbloqueig. |
+| 2026-11-09 | Cerca de ferramentes UEFI i nova interpretació del binari | Signatura `_FVH` a `0x1028`, possible FV a `0x1000`. Documentades eines UEFITool, uefi-firmware-parser, xbltools i GBL checker. Següent pas: extracció del FV i de l'EFI interior. |
 
