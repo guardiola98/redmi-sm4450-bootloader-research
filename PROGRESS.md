@@ -456,3 +456,24 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   passen, sense emular el callback nou. Cap operació sobre el mòbil.
 - Pendent: condicions ABL 0x9dbc/0x9db4 i contracte QSEE/keymaster.
   No hi ha bypass ni efecte intern de reset demostrat.
+
+
+## Condicions ABL resoltes — 2026-11-09
+
+- PE LinuxLoader verificat per SHA-256 i bytes: `0x9dbc` retorna sempre 1;
+  `0x9db4` retorna sempre 2 (`mov w0,imm; ret`).
+- En `0x2e5f0`, la condició d'omissió `(1 == 0) || (2 == 3)` és falsa:
+  es localitza VerifiedBoot i, si té èxit, s'invoca +0x30; els errors es propaguen.
+- Documentada evidència RVA/bytes en `docs/verifiedboot-failure-analysis.md`.
+  No s'atribuïx un nom original ni semàntica a l'enumeració sense evidència.
+- Pendent: contracte del transport QSEE i efecte intern keymaster 0x10e.
+  Cap operació al mòbil, vulnerabilitat explotable ni desbloqueig demostrats.
+
+- [x] **Contracte QSEE al caller (2026-11-09):** dos canals, x0 de
+  transport i word de resposta keymaster; Reset_State exigix tots dos zero
+  i convertix qualsevol error d'enviament/resposta en 0x50. La resposta
+  es carrega abans de comprovar transport i no està inicialitzada: el log
+  en fallada no prova un estat retornat per l'aplicació. El servei +0x48
+  previ usa un global diferent del protocol QSEE. Detalls i contrast amb
+  fonts primàries Linux en `docs/verifiedboot-failure-analysis.md`.
+  Pendent: garantia de còpia i codis del proveïdor QSEE concret, i 0x10e intern.

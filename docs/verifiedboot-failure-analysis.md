@@ -187,3 +187,108 @@ el seu contracte. No s'ha provat cap incompliment d'eixe contracte.
 Validació: 9 proves del model existent passen; no modelen este callback.
 Següent pas: resoldre les consultes `0x9dbc`/`0x9db4` que condicionen
 la invocació i després contrastar el contracte del transport QSEE.
+
+
+## Condicions ABL 0x9dbc / 0x9db4 resoltes — 2026-11-09
+
+Comprovat contra els bytes del PE LinuxLoader SHA-256
+`60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`
+i l'exportació ASM local. En esta imatge, RVA i offset de fitxer
+coincidixen en esta regió de `.text`.
+
+| Rutina | Bytes | Instruccions | Resultat |
+| --- | --- | --- | --- |
+| `0x9db4` | `40 00 80 52 c0 03 5f d6` | `mov w0,#2; ret` | Sempre 2 |
+| `0x9dbc` | `20 00 80 52 c0 03 5f d6` | `mov w0,#1; ret` | Sempre 1 |
+
+No lligen estat, memòria ni protocols. Escriure w0 també posa a zero
+els 32 bits superiors de x0. Els noms simbòlics originals i el significat
+de l'enumeració 2/3 no queden establits per estos bytes; no cal atribuir-los
+una semàntica de plataforma per resoldre les branques.
+
+En `0x2e5f0`, el retorn anticipat zero de `0x2e658` exigix:
+
+```c
+((query_9dbc() & 0xff) == 0) || (query_9db4() == 3)
+// (1 == 0) || (2 == 3) == false
+```
+
+- `0x2e638..0x2e640`: el byte 1 no pren `cbz`.
+- `0x2e648..0x2e650`: 2 és diferent de 3; pren `b.ne 0x2e664`.
+- `0x2e664..0x2e684`: intenta localitzar VerifiedBoot amb GUID a
+  `0xb1790`. Si falla, retorna l'error per `0x2e6f0..0x2e6f8`.
+- Si la localització té èxit, `0x2e700..0x2e708` invoca el callback
+  `+0x30`; el seu resultat es conserva a `0x2e70c` i es propaga.
+
+Per tant, en el binari analitzat sense modificar, estos dos controls
+**no proporcionen un camí de retorn zero que ometa el callback**.
+Arribar al callback continua requerint una localització reeixida i el
+retorn normal pressuposa les comprovacions de canari habituals.
+Un fals èxit anterior de persistència tampoc altera estes constants.
+Açò resol el pendent de les condicions, però no el contracte QSEE ni
+l'efecte intern de la comanda keymaster `0x10e`.
+
+Validació: hash i 16 bytes contrastats directament amb el PE; branques
+contrastades amb ASM i pseudocodi. Cap execució de firmware ni accés al mòbil.
+
+## Contracte QSEE observat pel caller — 2026-11-09
+
+El contracte té dos canals independents: retorn del servei en **x0**
+(64 bits) i resposta específica de keymaster en un **word de 32 bits**
+escrit al búfer del caller. Èxit del transport no equival a èxit de
+l'aplicació. Esta conclusió descriu el consumidor VerifiedBoot; no prova
+la implementació interna del proveïdor QSEE.
+
+Per a 0x10e, `0x1d28..0x1d44` reconstruïx els arguments següents:
+
+| Registre | Valor |
+| --- | --- |
+| x0 | Punter al protocol QSEE |
+| w1 | Identificador de keymaster |
+| x2 | Punter a la comanda 0x10e, a sp+0x28 |
+| w3 | Mida de petició: 4 |
+| x4 | Punter al word de resposta, a sp |
+| w5 | Mida de resposta: 4 |
+
+La destinació és el callback +0x18. No hi ha un argument de longitud
+retornada: el caller no comprova quants bytes s'han escrit.
+
+| Retorn del servei x0 | Resposta w3 | Retorn VerifiedBoot |
+| --- | --- | --- |
+| 0 | 0 | 0 |
+| 0 | No zero | 0x50 |
+| No zero | Qualsevol contingut | 0x50 |
+
+`0x1d48` carrega la resposta **abans** de comprovar x0 a `0x1d50`.
+Si el transport falla sense escriure el búfer, el word mostrat al log
+pot ser contingut preexistent de pila; no es pot interpretar com un error
+real retornat per keymaster. Això no canvia el resultat: x0 no zero força
+0x50 independentment del word. Si x0 és zero, `0x1d54` exigix resposta zero.
+El caller no inicialitza eixe word: el zero escrit a `0x1c78` és a
+sp+0x2c, on es recupera l'identificador, no a sp.
+
+Els errors de localització i d'inici de l'aplicació es propaguen tal qual
+via x19; només els errors de l'enviament/resposta es col·lapsen a 0x50.
+Este 0x50 és literal, sense el bit alt d'error EFI: no s'ha d'atribuir
+un nom EFI estàndard ni assumir que un consumidor que use només EFI_ERROR
+el detectaria. El caller ABL analitzat comprova retorn no zero.
+
+Precisió sobre la descripció anterior: el servei +0x48 de `0x1cd8`
+s'obté del global 0xd3c0, mentre QSEE s'obté de 0xd278. No és una crida
+al slot +0x48 de QSEE; s'ha de mantindre separat del contracte SendCmd.
+
+Com a contrast públic, la [capçalera QSEECom de Linux](https://github.com/torvalds/linux/blob/master/include/linux/firmware/qcom/qcom_qseecom.h)
+documenta retorn zero/no zero i un búfer escrit per l'aplicació.
+El [client uefisecapp](https://github.com/torvalds/linux/blob/master/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c)
+comprova primer el retorn de l'enviament i després l'estat dins de la
+resposta. Són fonts primàries d'una altra implementació: corroboren la
+separació conceptual, però no establixen els codis EFI del nostre proveïdor
+ni garantixen que keymaster 0x10e escriga sempre quatre bytes.
+
+Validació local: SHA-256 del PE torna a coincidir amb el manifest;
+GUID a 0xd0f8 = a74862ce-680f-4fe1-a311-df41f4030391; bytes de
+0x1d28..0x1d74 contrastats amb l'exportació ASM. Sense executar firmware.
+Queda pendent verificar el proveïdor QSEE concret: errors que retorna,
+condicions de còpia de resposta i garantia d'escriptura completa en èxit;
+també la semàntica interna de keymaster 0x10e. No hi ha evidència ací
+d'un transport que retorne èxit sense produir resposta.
