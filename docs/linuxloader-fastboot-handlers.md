@@ -25,6 +25,13 @@
 - `0x43D88` is **not a simple bit assignment**. It is a larger routine with two separate subpaths selected by `w0` (`0` vs `1`) and an argument `w1`; it delegates to `0x440B0` or `0x44188`, and has additional operations and failure exits. The complete calling convention, object identity and persistence mechanism have not yet been formally typed.
 - **Important:** the relationship of any MiToken response to this handler has not been established.
 
+### Further inspection of the state-persistence helpers
+
+- The two subroutines `0x440B0` and `0x44188` are strongly parallel: the first compares the requested byte with the current result of `0x43B60`, then writes the new byte at `0xC294D` (base `0xC2940` + `0xD`); the second compares against `0x43B70` and writes at `0xC294E` (+ `0xE`).
+- In both changed-value paths they invoke **`0x2D728`** with `w0=1`, `x1` referencing a configuration buffer near `0xC2940`, and `w2=0x998` (2,456 bytes). They propagate the return value. **These are not just RAM assignments**: the common helper appears to commit configuration data.
+- `0x2D728` uses a GUID pointer `0xB1790` with an indirect service call at `0x2D7B0`, then calls the located interface through an indirect function at `0x2D840` with the previously supplied arguments. It returns a status. We have not yet typed the GUID or its actual persistence backend. **Do not label it FRP or a specific secure storage mechanism without verifying the protocol.**
+- Thus the examined lock-state routine has **two distinct state fields** and a separate persistence interface. This supports the distinction between *FRP-derived reporting* and *device lock-state update*. No conclusion about remotely available authorization, authentication bypass or hardware fuse state.
+
 ### Other lock enforcement
 
 - A separate code path with the string `Flashing is not allowed in Lock State` references `0x5668C..0x56694`.
