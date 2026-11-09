@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inspect Qualcomm XBL ELF metadata and embedded UEFI header signatures offline.
+"""Inspect verified xbl_s.melf ELF metadata and embedded UEFI FV signatures offline.
 
 Read-only streaming extraction from an already downloaded, verified Fastboot TGZ.
 This is a structural scan, NOT an exploitability test or an XBL unpacker.
@@ -12,8 +12,6 @@ import tarfile
 
 TARGETS = {
     "xbl_s.melf": "cff40b3a88565100c0d640381b3ba12940a5b4b91bc0313cb8e83cf7ccce49f1",
-    "xbl_config.elf": "97e8e3a4b0422e064f3df3282d6b1569364b603d4b9497f6827cace14ceaf9cc",
-    "xbl_s_devprg_ns.melf": "99dc96ace498f99911f110e750fc941cce5f4cc580f7de6329824a055a98baf4",
 }
 MAX_SIZE = 16 * 1024 * 1024
 
