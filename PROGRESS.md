@@ -181,3 +181,20 @@ python3 scripts/scan-xbl-protocol-guid.py \
 ```
 
 Si no hi ha coincidències, estudiar offline l'estructura real de l'XBL abans de descartar res. No flashejar ni enviar dades del mòbil.
+
+### Resultat real de l'escàner XBL (2026-11-09)
+
+El propietari ha executat `scripts/scan-xbl-protocol-guid.py` sobre la ROM EEA local. **Confirmat:** `xbl_s.melf`, 1.170.244 bytes, SHA-256 `cff40b3a88565100c0d640381b3ba12940a5b4b91bc0313cb8e83cf7ccce49f1`. No hi ha coincidència **literal** del GUID token candidat `0c00a314-11a1-4d7a-a5c8-70bd5f88e7df` ni del GUID VerifiedBoot `8e5eff91-21b6-47d3-af2b-c15a01e020ec`, en cap dels dos ordres de bytes examinats. Este resultat **no demostra** absència d'eixos protocols: podrien estar en una imatge distinta, en una capa comprimida o representats d'una altra manera.
+
+He afegit `scripts/inspect-xbl-structure.py` (només lectura) per caracteritzar l'ELF verificat i buscar possibles signatures de volums UEFI (`_FVH`) **amb comprovació de límits**, sense confiar en desplaçaments aleatoris. L'eina limita la comprovació a `xbl_s.melf`, l'únic component amb hash verificat en esta fase.
+
+**Següent ordre segura a Debian:**
+
+```bash
+cd ~/redmi-sm4450-bootloader-research
+git pull
+python3 scripts/inspect-xbl-structure.py \\
+  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz
+```
+
+Interpretar segments ELF i les possibles capçaleres FV abans d'intentar descomprimir res. **No connectar el telèfon ni modificar particions.**
