@@ -5,6 +5,12 @@ Anàlisi estàtica offline, 2026-11-09. Font: `work/MiTokenDxe.asm`,
 `5960ae5e4b2ae712f8ef1e854cb37e3fcaf0ecb1427aa40eeebd733829be68b9`.
 Les adreces són RVA. No s'ha executat firmware.
 
+**Estat vigent (2026-11-10):** la neteja local omesa continua confirmada;
+la investigació d'impacte de +0x18 queda en espera després d'una revisió
+acotada sense consumidor nou. Vegeu [classificació consolidada](candidate-triage.md)
+i [cobertura de consumidors](mitoken-consumer-review.md). Les seccions
+següents conserven l'evolució de les hipòtesis i les correccions posteriors.
+
 ## Callback +0x18: 0x1ac0 → 0x1b4c
 
 Contracte reconstruït: x1 apunta a una eixida de **64 bits**; x0 (interfície)
@@ -309,3 +315,20 @@ El bucle i lectura de política no s'activen en esta ruta rebutjada.
 Continuen condicionals per altres productors, sense límit del comptador
 ni garantia d'inicialització del búfer demostrats. Cap canvi sobre
 autenticació o bloqueig. No generalitzar el resultat a la convenció SCM antiga.
+
+## Reavaluació després de f6672cc
+
+Ebl/QcomBds no aporten consumidor +0x18 en les vies seleccionades; les
+dependències DEPEX i el registre tampoc constituïxen invocacions. TzDxeLA
+aporta un consumidor **independent de SCM 0x02001401**, amb política netejada
+pel caller i sense lectura del recompte. No passa per MiToken. ShmBridge
+garantix zero-fill de les seues reserves, però MiToken usa un altre allocator.
+Cap d'estes dades descarta una resposta parcial en MiToken ni prova que
+el productor puga generar-la. Les lectures/bucle queden condicionals;
+la neteja local confirmada no equival a una fuga acumulativa accessible.
+
+[Inicialització SCM](scm-initialization-analysis.md): no hi ha fallback
+automàtic després de fallar l'inicialitzador, i publicar el protocol no
+prova disponibilitat de política. El defecte nou de neteja amb globals
+nuls és de ScmDxeLA i no s'ha atribuït a este callback. Criteris de
+reobertura i prioritats en [candidate-triage.md](candidate-triage.md).

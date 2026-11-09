@@ -801,3 +801,29 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Informe scm-initialization-analysis.md i manifest de configuració; cap
   reconstrucció EL3 repetida. Següent: consolidar classificació i criteris
   de reobertura; validar proves i conservar la fase en Git.
+
+## Reavaluació i punt de represa
+
+- Classificació consolidada en docs/candidate-triage.md; informes MiToken,
+  VerifiedBoot i README apunten a l'estat vigent sense esborrar l'històric.
+- MiToken +0x18: cap caller nou després de revisió acotada; en espera
+  l'impacte de fuga/cicle/lectures/resposta parcial. Neteja local confirmada.
+  ChipInfo normal continua descartat com a productor de word indeterminat.
+- VerifiedBoot: l'allocator SCM que retorna NULL no és el seu; es manté
+  la barrera ASSERT per error ordinari i el fals èxit condicional.
+- Candidats amb més evidència per continuar: neteja SCM amb globals nuls
+  després d'AllocatePool error; retenció TzDxeLA amb caller directe; reserves
+  ShmBridge no recuperades en errors tardans normals de l'inicialitzador.
+  Cap impacte d'autenticació, explotabilitat ni canvi de bloqueig demostrat.
+- Cobertura actual: 110 PE + 1 TE, ABL separat; 71 DEPEX; revisió funcional
+  parcial i traça de configuració. No equival a auditar tots els executables.
+- Següents tres preguntes: conseqüència UEFI de l'accés nul SCM; reentrada
+  dels callers TzDxeLA; origen efectiu/sobreescriptures UEFI Config Lib.
+  MiToken només es reobri amb caller/productor concret. No repetir EL3.
+- Validació final: **54 proves en 13 scripts passen** (13 noves en esta
+  continuació). Inspectors de bytes PE i configuració verifiquen hashes;
+  git diff --check net. No s'ha executat firmware ni accedit al dispositiu.
+- Fases conservades: d432814 (consumidors/DEPEX), ed38433 (TE/TzDxeLA),
+  e37b001 (SCM/ShmBridge i neteja parcial); classificació en el commit següent.
+  Sense push. Aturada després de les quatre fases acotades, amb preguntes
+  concretes per a la represa; no es declaren esgotades totes les fonts locals.

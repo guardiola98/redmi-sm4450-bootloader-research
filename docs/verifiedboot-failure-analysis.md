@@ -383,3 +383,14 @@ No demostra res del productor keymaster 0x202/0x203/0x10e ni de RPMB.
 Es manté el fals èxit local condicionat a rebre nul, amb errors ordinaris
 de l'allocator que passen per aturada. No extrapolar el rebuig d'un ID
 SCM a la integritat de VerifiedBoot o a l'autorització del canvi d'estat.
+
+## Reavaluació 2026-11-10: allocator distint en SCM
+
+La fase [inicialització SCM](scm-initialization-analysis.md) identifica un
+helper de ScmDxeLA que sí retorna NULL davant EFI_ERROR d'AllocatePool,
+seguit d'una neteja amb globals no inicialitzats. **No és el helper de
+VerifiedBoot**: no elimina les aturades ASSERT demostrades més amunt.
+El fals èxit de VerifiedBoot continua condicional i la investigació
+d'impacte queda en espera fins un productor de NULL compatible amb el seu
+contracte. No s'han ampliat els models d'activació ni s'ha inferit cap
+efecte sobre keymaster/RPMB. Estat vigent en [candidate-triage.md](candidate-triage.md).

@@ -4,6 +4,11 @@ Community-oriented, reproducible research on the boot chain of Xiaomi devices bu
 
 **Status: research only. No unlock, exploit, or root method has been demonstrated.**
 
+The current static/offline audit is summarized in [candidate triage](docs/candidate-triage.md)
+and [PROGRESS.md](PROGRESS.md), with evidence, coverage limits and next steps.
+This audit phase uses local artifacts and synthetic tests only; it does not use
+the device collection workflow described in the historical baseline below.
+
 ## Goals
 
 - Document device identity, kernel configuration, security patch levels, and boot state using **read-only ADB**.
