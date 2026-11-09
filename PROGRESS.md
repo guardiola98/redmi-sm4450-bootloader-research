@@ -492,3 +492,24 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   eixida <=66 caràcters + NUL. Error de capacitat no accessible sota
   estes precondicions. Corregida reserva ABL: 128, no longitud+1.
   Evidència i límits en `docs/mitoken-length-capacity.md`.
+
+## MiToken +0x18 i contractes ABL — continuació offline 2026-11-09
+
+- Informe nou: [contractes i errors](docs/mitoken-interface-errors.md).
+  Contrast de RVA amb bytes dels PE originals i hashes verificats.
+- +0x18 → 0x1b4c: eixida de 64 bits sense validació de nul; errors de
+  localització/SCM/resposta ometen alliberament del bloc reservat.
+  Defecte potencial de recursos, sense repetibilitat ni impacte demostrats.
+- Recompte de 32 bits comparat amb índex efectiu de 8 bits: >=256 sense
+  match produïx cicle en el model. 250..255 excedixen el rang declarat de
+  0x4c4, però no necessàriament la reserva física arredonida a pàgina.
+  Valors accessibles del proveïdor encara no confirmats.
+- Word local sp+0xc no inicialitzat explícitament; retorn del servici que
+  l'ompli ignorat. Ús indeterminat potencial si no l'escriu; pendent proveïdor.
+- +0x10 transforma errors interns en 0x50, no en èxit. Correcció històrica:
+  ABL 0x57de0 obté token (+8); 0x57e48 verifica (+0x10).
+  La reserva d'esta ruta és 128+1; NUL a índex 128 hi cap. Candidat
+  descartat sota reserva reeixida, diferent del caller inicial de 128 bytes.
+- Quatre proves sintètiques passen; cap execució de firmware ni accés al
+  dispositiu. Següent: callers de +0x18, contracte del recompte SCM i
+  garantia d'escriptura del word local. Cap explotabilitat demostrada.
