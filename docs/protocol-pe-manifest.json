@@ -1,0 +1,20 @@
+{
+  "VerifiedBootDxe": {
+    "ffs_guid": "a25f5839-4d55-428f-8f0b-5ce1d565f53e",
+    "ffs_offset": "0x777d8",
+    "pe_payload_offset": "0x777fc",
+    "size": 61440,
+    "sha256": "cb1f1861c84d2aecc6f01ffcd84ea39dff406106053ed389acdd7b045da47fc6",
+    "machine": "ARM64",
+    "format": "PE32+"
+  },
+  "MiTokenDxe": {
+    "ffs_guid": "068aae46-bdc6-4073-85d5-31c5eef19a15",
+    "ffs_offset": "0x86820",
+    "pe_payload_offset": "0x86844",
+    "size": 45056,
+    "sha256": "5960ae5e4b2ae712f8ef1e854cb37e3fcaf0ecb1427aa40eeebd733829be68b9",
+    "machine": "ARM64",
+    "format": "PE32+"
+  }
+}

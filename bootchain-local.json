@@ -1,0 +1,168 @@
+{
+  "archive": "sky_eea_global_images_OS2.0.218.0.VMWEUXM_20261021.0000.00_15.0_eea_330e013f7f.tgz",
+  "regular_files": 114,
+  "images": [
+    {
+      "name": "abl.elf",
+      "size": 204600,
+      "sha256": "f1c1f9ffbfa596cc352bf13aaa8e751eaee5168ab0344c641a70f0aa5f1607eb",
+      "header": "ELF"
+    },
+    {
+      "name": "aop_devcfg.mbn",
+      "size": 12136,
+      "sha256": "c8fbdbf3e74d8360b2e9667710270357fc688754a866689e0ba09a3f9b3278d6",
+      "header": "ELF"
+    },
+    {
+      "name": "boot.img",
+      "size": 134217728,
+      "sha256": "5e31f9004b4151c22edbe3ff2324284b7a08691f3d48d98a235cc7ec4b7e9120",
+      "header": "Android boot"
+    },
+    {
+      "name": "devcfg.mbn",
+      "size": 44904,
+      "sha256": "75dadd6848d2f9fe10052db9628815af3e975a846dc585b4e109f8c97c1ce9ba",
+      "header": "ELF"
+    },
+    {
+      "name": "dtbo.img",
+      "size": 25165824,
+      "sha256": "31990798b916e1c8ae049faa5eb68620e03cbaa08a0b26f579b54e7d6018779c",
+      "header": "Other / container"
+    },
+    {
+      "name": "featenabler.mbn",
+      "size": 89056,
+      "sha256": "60d764b0b7358a9a22ff90395e32798489b09d6ac30ef30267ad13a110b0a8be",
+      "header": "ELF"
+    },
+    {
+      "name": "tz.mbn",
+      "size": 3719360,
+      "sha256": "f7d943b1de872d239468fe30cc4fab92c5acb0405203e9f9e38436cefd7e1a76",
+      "header": "ELF"
+    },
+    {
+      "name": "vbmeta.img",
+      "size": 8192,
+      "sha256": "4b303d89ac0d8961fe57949148f86cfcf4fcee14799acaef5093455c52763db8",
+      "header": "AVB metadata"
+    },
+    {
+      "name": "vbmeta_system.img",
+      "size": 4096,
+      "sha256": "4a1ae9f6bca2e2645ccecc38263da03a409ee47bcb956951d609583616d68240",
+      "header": "AVB metadata"
+    },
+    {
+      "name": "vendor_boot.img",
+      "size": 100663296,
+      "sha256": "02edf204b7caf4a5a069a94894aaf1a8f4da48d17384c6c3fa0b874ac3ceb911",
+      "header": "Other / container"
+    },
+    {
+      "name": "xbl_config.elf",
+      "size": 196744,
+      "sha256": "97e8e3a4b0422e064f3df3282d6b1569364b603d4b9497f6827cace14ceaf9cc",
+      "header": "ELF"
+    },
+    {
+      "name": "xbl_s.melf",
+      "size": 1170244,
+      "sha256": "cff40b3a88565100c0d640381b3ba12940a5b4b91bc0313cb8e83cf7ccce49f1",
+      "header": "ELF"
+    },
+    {
+      "name": "xbl_s_devprg_ns.melf",
+      "size": 1747908,
+      "sha256": "99dc96ace498f99911f110e750fc941cce5f4cc580f7de6329824a055a98baf4",
+      "header": "ELF"
+    },
+    {
+      "name": "xbl_sc_test_mode.bin",
+      "size": 65536,
+      "sha256": "f28e157b99098d300b47743888da372f0a7f7e1fe01f148162648bd0d1e4fd69",
+      "header": "Other / container"
+    },
+    {
+      "name": "XblRamdump.elf",
+      "size": 790424,
+      "sha256": "912caf467639bb15935b66f5ebfddef00d8a85965af3788166242c0cb54c766b",
+      "header": "ELF"
+    }
+  ],
+  "partition_mappings": [
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "abl_a",
+      "filename": "abl.elf"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "aop_config_a",
+      "filename": "aop_devcfg.mbn"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "boot_a",
+      "filename": "boot.img"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "devcfg_a",
+      "filename": "devcfg.mbn"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "dtbo_a",
+      "filename": "dtbo.img"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "featenabler_a",
+      "filename": "featenabler.mbn"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "tz_a",
+      "filename": "tz.mbn"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "vbmeta_a",
+      "filename": "vbmeta.img"
+    },
+    {
+      "manifest": "rawprogram0.xml",
+      "partition": "vbmeta_system_a",
+      "filename": "vbmeta_system.img"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "vendor_boot_a",
+      "filename": "vendor_boot.img"
+    },
+    {
+      "manifest": "rawprogram1.xml",
+      "partition": "xbl_a",
+      "filename": "xbl_s.melf"
+    },
+    {
+      "manifest": "rawprogram1.xml",
+      "partition": "xbl_config_a",
+      "filename": "xbl_config.elf"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "xbl_ramdump_a",
+      "filename": "XblRamdump.elf"
+    },
+    {
+      "manifest": "rawprogram4.xml",
+      "partition": "xbl_sc_test_mode",
+      "filename": "xbl_sc_test_mode.bin"
+    }
+  ]
+}

@@ -31,3 +31,6 @@ work/
 
 # Local Python environment
 .venv/
+
+*.pe
+__pycache__/

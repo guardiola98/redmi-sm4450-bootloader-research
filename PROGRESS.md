@@ -354,3 +354,54 @@ python3 scripts/locate-uefi-protocol-modules.py \
 ```
 
 **Encara no hi ha vulnerabilitat demostrada.**
+
+## Extracció reproduïble dels protocols — sessió local 2026-11-09
+
+Creat `scripts/extract-protocol-pe.py`: reutilitza el lector amb SHA-256 fixat,
+identifica les seccions FV-image i selecciona exclusivament els GUID FFS de
+MiTokenDxe i VerifiedBootDxe, exigint coincidència del nom UI i un únic PE32.
+Valida MZ, PE, PE32+ i ARM64; escriu només en `work/protocols/`.
+Tres proves inicials de límits/entrades truncades passen amb
+`python3 scripts/test-extract-protocol-pe.py`. La lectura integral del TGZ està
+en curs. Disponibles Python, uefi_firmware 1.16 i Ghidra 12.2/Java 25;
+llvm-objdump no està en PATH. Cap operació sobre el dispositiu.
+
+**Extracció completada i comprovada:** MiTokenDxe = 45.056 bytes, SHA-256
+`5960ae5e4b2ae712f8ef1e854cb37e3fcaf0ecb1427aa40eeebd733829be68b9`;
+VerifiedBootDxe = 61.440 bytes, SHA-256
+`cb1f1861c84d2aecc6f01ffcd84ea39dff406106053ed389acdd7b045da47fc6`.
+Els dos són PE32+ ARM64, EFI Boot Service Driver, ImageBase zero, entry RVA
+`0x1000`. Manifest publicable en `docs/protocol-pe-manifest.json`.
+Els payloads PE comencen a `0x86844` i `0x777fc` del descomprimit:
+els offsets facilitats `0x86840`/`0x777f8` inclouen la capçalera de secció.
+Iniciada anàlisi Ghidra offline de MiTokenDxe. Cadenes observades sobre RNG,
+ChipInfo, QFPROM, Base64 i SCM són pistes; no demostren algoritme ni bypass.
+
+**Primera reconstrucció MiToken:** Ghidra completat. Taula a RVA 0x9648:
+`1, 0x1784, 0x1a58, 0x1ac0`; callbacks +8/+0x10 relacionats amb ABL.
+Verificació 0x1a58 → 0x1b0c → 0x1e84; firma exigida de 256 bytes,
+missatge 1..245, clau a 0x9668 amb exponent 65537. Inferència forta RSA-2048,
+padding tipus 1 amb missatge literal segons pseudocodi, pendent corroboració
+instrucció a instrucció. Informe i límits en `docs/protocol-modules.md`.
+VerifiedBoot encara pendent d'anàlisi funcional; no declarar fase d'auditoria
+completada ni desbloqueig. Pròxim experiment: definir 0x1784 i verificar
+branches de 0x1e84, després taula VerifiedBoot i persistència.
+
+## Continuació MiToken i VerifiedBoot — 2026-11-09
+
+- Exportacions Ghidra de codi i instruccions completades per als dos PE.
+  Scripts reproduïbles a `scripts/ghidra/`, resultats propietaris en `work/`.
+- MiToken 0x1784 confirmat: consulta 128, RNG 16 bytes, camps placa/ChipInfo,
+  Base64 URL-safe i cache. No cal redefinir funció per veure les instruccions.
+- Padding corroborat: 256 bytes, missatge 1..245, 00 01 FF…00 + missatge cru.
+  Tres tests de model sintètic passen (inclouen 256 mutacions); no equivalen
+  a provar RSA ni a executar el firmware.
+- VerifiedBoot taula 0xd180, +8 → 0x15ac: connectat a persistència d'ABL.
+  Lectura/escriptura QSEE keymaster 0x202/0x203; fallback devinfo condicionat
+  per SCM, màscares 0x8703/0x8723. No és bypass per si mateix.
+- Defecte estàtic: reserva nul·la en 0x17bc/0x185c acaba en retorn zero
+  (0x1950, 0x1640) sense operació. Accessibilitat/explotabilitat no demostrades.
+  Informe ampliat en docs/protocol-modules.md. Cap desbloqueig funcional.
+- Pendent: model CFG amb fallades injectades com a dades, efectes en caller
+  ABL, mapeig complet de callbacks, integritat interna keymaster/RPMB i
+  comparació pública detallada. No s'ha executat cap payload ni tocat mòbil.
