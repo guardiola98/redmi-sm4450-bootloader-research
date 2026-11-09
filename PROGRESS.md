@@ -87,15 +87,15 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Ghidra — localitzada escriptura a `DAT_000cb5c0` a `0x00055b40`**. Les instruccions exactes són `ldr x8,[x22,#0x8]` (`0x55b2c`), `ldr w8,[x8,#0xc]` (`0x55b30`), `sub w8,w8,#1` (`0x55b34`), `ldrb w8,[x23,w8,UXTW]` (`0x55b38`), `and w8,w8,#1` (`0x55b3c`) i `str w8,[x28,#0x18]` (`0x55b40`). L'indicador guardat és el bit 0 d'un byte d'un búfer referenciat per `x23`, amb índex derivat d'una estructura apuntada indirectament per `x22`. La crida virtual `blr x9` anterior i `cbnz x0` condicionen el camí. **Encara no sabem què és el búfer, ni si representa informació d'autorització; no hi ha vulnerabilitat confirmada.**
 
+- [x] **Nova captura Ghidra**: `0x00055ae8: ldur x22,[x29,#-0x90]` recupera el punter `x22` de la pila; `0x00055b04: mov x23,x0` copia a `x23` el valor de `x0` després d'una crida i abans del camí que extrau el bit d'autorització. Encara falta identificar la funció i les dades origen de `x0`, i l'escriptura prèvia del local `-0x90`.
+
 ## Següent pas immediat
 
-**Identificar la procedència de `x23` i `x22` en `FUN_00054980`.** La variable registrada com `IsAllowUnlock` prové de `((uint8_t*)x23)[index] & 1`, amb `index` extret d'una estructura accessible des de `x22`. No sabem encara si eixes dades són de FRP, una lectura de partició o una altra estructura.
+**Analitzar directament el PE ARM64 amb eines estàtiques a partir del fitxer de l'investigador**, en lloc de multiplicar les captures de Ghidra.
 
-1. Tornar amb `G` a `00054980` i buscar, en les primeres instruccions, les assignacions a `x23` i `x22` (pot haver-hi camins alternatius).
-2. Passar una captura amb el context de les assignacions i, si és possible, el Decompiler en el bloc que conté `str w8,[x28,#0x18]` (`0x55b40`).
-3. Determinar la funció invocada amb `blr x9` just abans de la lectura i les comprovacions del seu resultat. **No fer cap patch ni executar el bootloader.**
+L'usuari pot adjuntar a la conversa `work/uefi-extracted/**/section1.pe` (copiat com `~/Baixades/LinuxLoader.pe`); mida observada 843.776 bytes i SHA-256 `60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`. **No pujar el binari propietari al GitHub públic.**
 
-Continuar amb verificació de límits i significat de dades només quan es coneguen els tipus i els camins; evitar concloure que un flag és vulnerable només perquè és un bit.
+En rebre'l: verificar-ne el hash i el format PE32+ ARM64; desassemblar/analitzar offline les funcions que conten les instruccions `0x55ae8`, `0x55b04` i `0x55b40`, resoldre l'origen de `x0` i del local `[x29,#-0x90]`, i registrar només conclusions verificades. No executar ni flashejar el firmware.
 
 ## Pendent després d'eixe pas
 
@@ -129,3 +129,4 @@ Continuar amb verificació de límits i significat de dades només quan es coneg
 | 2026-11-09 | Referència resolta en codi ARM64 | `FUN_00054980`: `ldr x2,[x28,#0x18]` abans de `bl FUN_00059e4c`; possible logging del valor d'autorització. Següent pas: origen de `x28` i comprovació de la rutina de logging. |
 | 2026-11-09 | Localitzat x28 i lectura global d'IsAllowUnlock | `adrp/add` fixen `x28` a `0xCB5A8`; `ldr w2,[x28,#0x18]` llig `DAT_000cb5c0`. Següent pas: trobar referències d'escriptura al camp. |
 | 2026-11-09 | Càlcul del camp IsAllowUnlock localitzat | `0x55b2c..0x55b40`: bit 0 d'un byte del búfer `x23` indexat per dades obtingudes via `x22`; següent pas: identificar origen dels dos registres. |
+| 2026-11-09 | Rastres addicionals x22/x23 en Ghidra | `ldur x22,[x29,#-0x90]` a `0x55ae8`; `mov x23,x0` a `0x55b04`. Següent pas: anàlisi directa del PE adjunt per reconstruir el flux de dades. |
