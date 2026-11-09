@@ -337,3 +337,20 @@ python3 scripts/locate-uefi-protocol-modules.py \
 ```
 
 Revisar el mòdul FFS concret i la seua relació amb registres `InstallProtocolInterface` i les crides d'ABL. **Encara no hi ha prova de bug explotable, ni mètode de desbloqueig.**
+
+## Incidència del localitzador FFS (2026-11-09)
+
+L'usuari ha executat `scripts/locate-uefi-protocol-modules.py`: SHA-256 de l'entrada acceptat i **descompressió GZIP correcta de 3.985.416 bytes**, però el script acaba amb `ValueError: Expected decoded FV-image section not found` a la línia 140. Per tant, **la descompressió no ha fallat** i cap conclusió sobre presència/absència de mòduls és possible a partir d'esta excepció.
+
+La versió anterior assumia que `content[3] == 0x17` i que el volum interior començava a l'offset 4/8. S'ha modificat `scripts/locate-uefi-protocol-modules.py` per imprimir els **primers 16 bytes**, enumerar les seccions de primer nivell amb el parser existent i localitzar una secció de tipus `0x17` amb capçalera FV comprovada. **Correcció encara no provada amb eixe firmware**: si el nou resultat diu que no ha trobat FV, no deduir corrupció del firmware; caldrà examinar el prefix i el format exacte de l'embolcall descomprimit.
+
+Següent prova read-only:
+
+```bash
+cd ~/redmi-sm4450-bootloader-research
+git pull
+python3 scripts/locate-uefi-protocol-modules.py \
+  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz
+```
+
+**Encara no hi ha vulnerabilitat demostrada.**
