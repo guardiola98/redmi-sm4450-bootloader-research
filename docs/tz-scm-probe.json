@@ -123,6 +123,51 @@
       "va": "0x1c059b8c",
       "offset": "0x5cb8c",
       "bytes": "72 79 ff 97"
+    },
+    {
+      "va": "0x1c0779f0",
+      "offset": "0x7a9f0",
+      "bytes": "35 08 00 b4"
+    },
+    {
+      "va": "0x1c077af8",
+      "offset": "0x7aaf8",
+      "bytes": "52 ff ff 97"
+    },
+    {
+      "va": "0x1c077850",
+      "offset": "0x7a850",
+      "bytes": "14 54 40 a9"
+    },
+    {
+      "va": "0x1c077864",
+      "offset": "0x7a864",
+      "bytes": "1f fc 00 a9"
+    },
+    {
+      "va": "0x1c0778a8",
+      "offset": "0x7a8a8",
+      "bytes": "09 00 b0 52"
+    },
+    {
+      "va": "0x1c0778ac",
+      "offset": "0x7a8ac",
+      "bytes": "e8 ff b7 f2"
+    },
+    {
+      "va": "0x1c0778b0",
+      "offset": "0x7a8b0",
+      "bytes": "a8 02 08 8a"
+    },
+    {
+      "va": "0x1c0778b4",
+      "offset": "0x7a8b4",
+      "bytes": "1f 01 09 eb"
+    },
+    {
+      "va": "0x1c07795c",
+      "offset": "0x7a95c",
+      "bytes": "60 00 f8 37"
     }
   ],
   "scm_instructions": [
@@ -161,6 +206,46 @@
     {
       "rva": "0x1500",
       "bytes": "20 01 00 54"
+    },
+    {
+      "rva": "0x180c",
+      "bytes": "e0 03 01 aa"
+    },
+    {
+      "rva": "0x1814",
+      "bytes": "6e 0b 00 94"
+    },
+    {
+      "rva": "0x1820",
+      "bytes": "a0 00 00 35"
+    },
+    {
+      "rva": "0x1838",
+      "bytes": "1f 34 00 31"
+    },
+    {
+      "rva": "0x183c",
+      "bytes": "e9 0f 41 b2"
+    },
+    {
+      "rva": "0x1840",
+      "bytes": "13 01 89 9a"
+    },
+    {
+      "rva": "0x45d4",
+      "bytes": "e2 03 00 aa"
+    },
+    {
+      "rva": "0x45d8",
+      "bytes": "20 00 80 52"
+    },
+    {
+      "rva": "0x45dc",
+      "bytes": "e1 03 00 11"
+    },
+    {
+      "rva": "0x45e0",
+      "bytes": "03 00 00 d4"
     }
   ],
   "scope": "Static table/bytes; no claim of monitor routing or live selection"

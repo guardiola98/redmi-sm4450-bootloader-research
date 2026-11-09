@@ -177,3 +177,45 @@ La fase tanca la frontera del consumidor EL3 local. Pendents útils:
 (2) encaminament específic de la convenció SCM antiga, si és pertinent;
 (3) productors/taules carregables en altres components locals, abans de
 proposar límits del format de política. No s'ha fet xarxa ni canvi al dispositiu.
+
+## Seguiment acotat: petició de la variant antiga
+
+Pregunta posterior: el mateix monitor traduïx la petició antiga a l'ID
+SCM contingut en el paquet? S'ha seguit només la ruta normal amb els
+mateixos contextos, sense repetir l'anàlisi del format del paquet.
+
+ScmDxeLA 0x180c passa el punter del paquet a 0x45cc. A **0x45d4..0x45dc**
+posa **x2=punter, w0=1, w1=32 bits baixos de SP**. No posa l'ID de
+política en x0. Amb NS=1, el monitor no selecciona el dispatcher de
+comandaments segurs 0x1c00feec: ID=1 passa per 0x1c00fc14 igual que
+les altres peticions no especials. En el mode/context inicialitzat ja
+reconstruït, conserva x0..x5 fins al stub.
+
+En la ruta normal de 0x1c07798c, owner=(1>>24)&0x3f=0; la branca
+0x1c0779f0 → 0x1c077af4 crida **0x1c077840**. Este conserva només
+ID/x1 per decidir i neteja els set words d'eixida, inclòs el x2 que
+portava el punter. **No llig el paquet ni el seu ID de servei**.
+El validador 0x1c07795c accepta ID=1 (bit 31 apagat), però la subconsulta
+exigix `(x1 & 0xffffffffbfff0000) == 0x80000000` i un low16 admés.
+Ací x1 deriva de SP, no d'una subconsulta preparada deliberadament.
+
+Per tant:
+
+- **Verificat en esta ruta:** no hi ha conversió transparent del paquet
+  antic en consulta de política. Arriba a la interfície owner zero.
+- Si falla la màscara/subconsulta, el resultat és -1; sota les condicions
+  de retorn ja documentades, arriba a UEFI i 0x1838..0x1840 el transforma
+  en **EFI error 7**. El valor de SP no s'ha observat ni assumit.
+- Si passa els controls, s'apliquen els casos owner zero ja descrits;
+  això tampoc demostra execució del servei del paquet. No s'ha reconstruït
+  cada efecte d'estes subconsultes ni atribuït un èxit real a MiToken.
+- **Descartada per esta composició local:** la hipòtesi que la presència
+  de la taula alternativa demostre un segon transport funcional al mateix
+  servei. Altres monitors, configuracions o selecció en runtime continuen
+  fora de la conclusió. No es declara defecte nou sense eixa accessibilitat.
+
+Els bytes PE/TZ nous es reproduïxen amb `inspect-tz-scm-probe.py` i consten
+en `tz-scm-probe.json`. No cal un segon model de la mateixa màscara:
+s'han reutilitzat les proves owner zero i monitor (10 casos, tots passen).
+Les notes anteriors de convenció antiga pendent queden acotades per este
+seguiment: resolt el recorregut local normal, pendent ús efectiu i altres rutes.

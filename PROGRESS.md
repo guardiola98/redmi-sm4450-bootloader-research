@@ -715,3 +715,20 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   global d'un rebuig local. **41 proves en 10 scripts passen**; extractor
   de dades EL3 validat contra el hash original; git diff --check net.
   Fase documentada per al commit, sense push ni binaris afegits.
+
+## Fase convenció antiga: frontera local acotada
+
+- Pregunta: es traduïx el paquet antic de ScmDxeLA al mateix servei SCM?
+  0x45d4..0x45dc envia x2=paquet, w0=1 i w1=SP32. El monitor, amb NS=1,
+  conserva els arguments per la ruta normal; ID1 arriba a owner zero.
+- 0x1c077840 no llig el paquet: decidix amb ID/x1, i neteja el word x2.
+  Si SP32 no satisfà els controls de subconsulta, -1 → retorn al monitor
+  → EFI error 7. No s'ha assumit SP real ni selecció efectiva del transport.
+- Descartada conversió transparent a 0x02001401 en esta ruta; presència
+  de variant antiga no prova un fallback funcional. No és un defecte nou
+  demostrat: altres rutes/configuracions i activació continuen pendents.
+- Bytes verificats amb hashes PE/TZ en tz-scm-probe.json; ampliats informe
+  monitor i contractes. Reutilitzats models owner zero/monitor: 10 casos.
+- Punt de represa: consumidor indirecte MiToken +0x18; altres components
+  locals/taules carregables; condicions d'inicialització i selecció de
+  transport. El productor de política continua sense identificació provada.

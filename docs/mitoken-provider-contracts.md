@@ -149,3 +149,13 @@ i les condicions d'entrada documentades. La variant antiga usa una
 petició distinta; el seu mapping local -1→error 7 no prova el mateix
 encaminament. Cap garantia nova sobre el contingut de política ni sobre
 selecció real de variant; no es deduïx indisponibilitat global del servei.
+
+### Petició antiga en el monitor local
+
+El [seguiment de la convenció antiga](tz-monitor-analysis.md) mostra que
+x0=1/x1=SP32/x2=paquet, enviats amb NS=1, passen a owner zero en la ruta
+normal del monitor estudiat. No es descodifica l'ID SCM del paquet.
+Si falla la subconsulta derivada de x1, -1 es traduïx a EFI error 7.
+No s'assumix el valor de SP ni que el selector arribe a triar esta variant;
+la taula alternativa no demostra un segon productor de política funcional.
+No canvien els candidats condicionals de bucle/rang/inicialització.
