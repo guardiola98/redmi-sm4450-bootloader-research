@@ -89,13 +89,18 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Nova captura Ghidra**: `0x00055ae8: ldur x22,[x29,#-0x90]` recupera el punter `x22` de la pila; `0x00055b04: mov x23,x0` copia a `x23` el valor de `x0` després d'una crida i abans del camí que extrau el bit d'autorització. Encara falta identificar la funció i les dades origen de `x0`, i l'escriptura prèvia del local `-0x90`.
 
+- [x] **Anàlisi directa del PE ARM64 adjunt** `LinuxLoader.pe` (SHA-256 `60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`) amb `llvm-objdump`: la funció `FUN_00054980` consulta explícitament la partició **`frp`** (cadena UTF-16LE a `0xAF508`) via `0x59fc8 → 0x56148`, obté un descriptor en `[x29,#-0x90]`, usa un búfer a `x23` i un callback `blr x9`, i després d'èxit extrau el bit menys significatiu del byte indexat per `N-1` a `0x55b2c..0x55b40` per guardar-lo en `DAT_000cb5c0`. També hi ha missatges `Error Reading FRP partition` i `Error Locate MiToken Protocol`. **No s'ha demostrat** que el bit siga suficient per desbloquejar, que siga editable, ni com intervé MiToken. Informe complet a [docs/linuxloader-frp-analysis.md](docs/linuxloader-frp-analysis.md).
+
 ## Següent pas immediat
 
-**Analitzar directament el PE ARM64 amb eines estàtiques a partir del fitxer de l'investigador**, en lloc de multiplicar les captures de Ghidra.
+**Correlacionar la lectura de la partició FRP amb la verificació d'autorització real** en l'ABL, sense alterar dades. Ja s'ha identificat un bit llegit d'un búfer associat a `frp`, però és un flag parcial, no un desbloqueig.
 
-L'usuari pot adjuntar a la conversa `work/uefi-extracted/**/section1.pe` (copiat com `~/Baixades/LinuxLoader.pe`); mida observada 843.776 bytes i SHA-256 `60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`. **No pujar el binari propietari al GitHub públic.**
+1. Desassemblar les referències a `Error Reading FRP partition`, `Error Locate MiToken Protocol` i `Error Get Token Length` per separar el flux FRP del de MiToken.
+2. Estudiar qui llig `DAT_000cb5c0` i si eixe flag intervé efectivament en la comanda `oem unlock` o `flashing get_unlock_ability`; les cadenes presents no basten.
+3. Reconstruir el callback `blr x9` a `0x55b20` i la mida `N` usada per calcular l'índex, abans de formular hipòtesis sobre validació.
+4. Si podem validar-ho, preparar un informe reproduïble i comparar amb versions anteriors del mateix model.
 
-En rebre'l: verificar-ne el hash i el format PE32+ ARM64; desassemblar/analitzar offline les funcions que conten les instruccions `0x55ae8`, `0x55b04` i `0x55b40`, resoldre l'origen de `x0` i del local `[x29,#-0x90]`, i registrar només conclusions verificades. No executar ni flashejar el firmware.
+Vegeu [docs/linuxloader-frp-analysis.md](docs/linuxloader-frp-analysis.md) per al flux ARM64 comprovat. **No llegir, editar ni esborrar FRP del mòbil, no fer flash i no intentar forçar estats de bloqueig.**
 
 ## Pendent després d'eixe pas
 
@@ -115,6 +120,7 @@ En rebre'l: verificar-ne el hash i el format PE32+ ARM64; desassemblar/analitzar
 
 | Data | Canvi | Resultat |
 | --- | --- | --- |
+| 2026-11-09 | PE ARM64 analitzat directament | Hash verificat; cadena `frp` trobada i lectura indirecta seguida d'extracció d'un bit a `DAT_000cb5c0`. Informe a `docs/linuxloader-frp-analysis.md`. Següent pas: distingir MiToken i seguir consumidors del flag. |
 | 2026-11-09 | Creació del registre de progrés i pròxim pas | Estat inicial consolidat; següent prova definida: extracció i inspecció estàtica d'ABL |
 | 2026-11-09 | Anàlisi inicial de `abl.elf` amb `file`, `readelf` i `strings` | ELF32 ARM, tres program headers, un LOAD RWE de 0x30000 bytes i sense seccions; cap cadena coincident amb el filtre de desbloqueig. |
 | 2026-11-09 | Cerca de ferramentes UEFI i nova interpretació del binari | Signatura `_FVH` a `0x1028`, possible FV a `0x1000`. Documentades eines UEFITool, uefi-firmware-parser, xbltools i GBL checker. |
