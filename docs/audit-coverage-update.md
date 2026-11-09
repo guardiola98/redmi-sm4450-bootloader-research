@@ -76,3 +76,14 @@ Pròxims passos: dispatcher TZ i servei de política; cobertura RAW/altres
 volums amb tipus conegut; consumers +0x18 i errors reals abans d'atribuir
 impacte. Esta sessió acaba després de conservar la fase per límit de recursos;
 queden tasques offline útils, no es declara l'auditoria completa.
+
+## Continuació: seccions RAW després de 1b03a74
+
+Inventari ampliat sense tornar a cercar nous executables: 17 RAW d'imagefv
+comencen amb bytes `42 4d` (signatura BMP); dels 8 RAW de tools, 7 comencen
+amb `23 0a 23 20` (prefix textual de comentaris) i un és buit. Classificació
+per prefix, no validació completa del format ni execució dels textos.
+Cap dels 25 RAW conté el GUID MiToken literal little-endian. El manifest
+ara conserva mida, hash, ruta, prefix i resultat de cerca de cada RAW.
+Açò resol l'exclusió anterior d'estes seccions en la cerca literal; no
+resol altres codificacions de GUID ni àlies de protocols. Cap nou consumidor.

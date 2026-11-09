@@ -614,3 +614,13 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   Cap firmware executat, connexió al dispositiu, token ni push.
 - Següent: reconstrucció TZ, cobertura restant, consumidors +0x18.
   Fase conservada; auditoria no completa, continuació útil pendent.
+
+## Fase RAW des de 1b03a74
+
+- Pregunta: les 25 seccions RAW excloses del cens executable contenen el
+  GUID MiToken? Resultat: cap coincidència literal little-endian.
+- 17 RAW d'imagefv tenen signatura BMP; tools conté 7 prefixos textuals
+  de comentaris i un RAW buit. No s'han executat ni interpretat com a codi.
+- Manifest ampliat amb mida/hash/ruta/prefix de RAW. No es deduïx absència
+  global de consumidors +0x18. Cap canvi de classificació de defectes.
+- Proves del codec LZMA passen; següent: mapatge i referències TZ en Ghidra.

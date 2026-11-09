@@ -23,6 +23,7 @@ TOKEN = uuid.UUID('0c00a314-11a1-4d7a-a5c8-70bd5f88e7df')
 
 def census(data, base, label):
     rows, gaps = [], []
+    raw = []
     types = {}
     names = []
     budget = [256 * 1024 * 1024]
@@ -37,6 +38,8 @@ def census(data, base, label):
             types[hex(typ)] = types.get(hex(typ), 0) + 1
             if typ == 0x15:
                 names.append(body.decode("utf-16le", errors="replace").rstrip("\0"))
+            if typ == 0x19:
+                raw.append(dict(path=route, size=len(body), sha256=hashlib.sha256(body).hexdigest(), signature=body[:4].hex(), token_present=TOKEN.bytes_le in body))
             if typ in (0x10, 0x12):
                 rows.append(dict(path=route, type='PE' if typ == 0x10 else 'TE', size=len(body), sha256=hashlib.sha256(body).hexdigest(), token_offsets=[hex(i) for i in range(len(body)-15) if body[i:i+16] == TOKEN.bytes_le]))
             elif typ == 0x17:
@@ -68,7 +71,7 @@ def census(data, base, label):
             sections(blob, begin, b, path+[f'ffs:{guid}@{a:x}'], depth)
 
     volume(data, base, len(data), [label], 0)
-    return dict(image=label, sha256=hashlib.sha256(data).hexdigest(), modules=rows, gaps=gaps, section_types=types, ui_names=names, parser_limit='Existing FV/FFS readers can stop at malformed/trailing data; no PI checksum validation')
+    return dict(image=label, sha256=hashlib.sha256(data).hexdigest(), modules=rows, raw_sections=raw, gaps=gaps, section_types=types, ui_names=names, parser_limit='Existing FV/FFS readers can stop at malformed/trailing data; no PI checksum validation')
 
 
 if __name__ == '__main__':

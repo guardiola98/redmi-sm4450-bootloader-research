@@ -3,6 +3,263 @@
     "image": "imagefv.elf",
     "sha256": "51220103d9d5f2c8e11f3bfe8a221db9cba2bd0478902037175067e182c94332",
     "modules": [],
+    "raw_sections": [
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:3e5584ed-05d4-4267-9048-0d47f76f4248@80",
+          "section:19@d0"
+        ],
+        "size": 65484,
+        "sha256": "691c0c6465761bb2e8353a5e575f629551c9bf99a1aa01446e5d540ac9112c5f",
+        "signature": "424dccff",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:4753e815-ddd8-402d-bf69-9b8c4eb7573e@100a0",
+          "section:19@100f8"
+        ],
+        "size": 87840,
+        "sha256": "14f41f75256afaa185b0b9ef0d5049c4e889d75c6e0bab14fe5b7bed7b9c5d2d",
+        "signature": "424d2057",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:03ded53e-becd-428f-9f79-5aba64c58445@25820",
+          "section:19@25878"
+        ],
+        "size": 82152,
+        "sha256": "b86eb573f33d5f525cefb15252369d58d9390fbb44a3a97b0e67ea997e5221dd",
+        "signature": "424de840",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:8b86cd38-c772-4fcf-85aa-345b2b3c1ab4@39968",
+          "section:19@399d0"
+        ],
+        "size": 187654,
+        "sha256": "fdf9598c952673aac397eb92319b6877aaf45740b62885725fa2dff63ad50144",
+        "signature": "424d06dd",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:3fd97907-93f1-4349-af3c-3b68b0a5e626@676e0",
+          "section:19@67738"
+        ],
+        "size": 187654,
+        "sha256": "6e0964f6acaf2a552be30f6b02948972650ab15ecd19e9de0791cfc4ac2765e4",
+        "signature": "424d06dd",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:e2ea5a4f-98bd-4203-ab49-399505ddfb7d@95448",
+          "section:19@95498"
+        ],
+        "size": 87840,
+        "sha256": "07c8af68ffe86f4295d3a2b9ae0ab9c3181ee697b60f410b8f7bcde63dc3dc06",
+        "signature": "424d2057",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:c72fb1a9-5527-4e13-bac4-f671d0330145@aabc0",
+          "section:19@aac18"
+        ],
+        "size": 87840,
+        "sha256": "12900ff68e86f4245f4e3a0b8dc7ebd218f8f7b59544d09c8ada7bee173f63bb",
+        "signature": "424d2057",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:b0f8d1be-5353-4812-b1f6-07e7768204cc@c0340",
+          "section:19@c0398"
+        ],
+        "size": 82198,
+        "sha256": "5a905af003b48b7818050679dbd99adc08e79eecaf831afe97d5062ed11fae03",
+        "signature": "424d1641",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:f9e8f683-e065-4e09-b4f9-0230d7cecd08@d44b8",
+          "section:19@d4510"
+        ],
+        "size": 78958,
+        "sha256": "4a13134dc26a54280128b8e6fa371806a297ed347011184b97422cfc72617759",
+        "signature": "424d6e34",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:a795ad83-ed63-48da-8696-79541beb5735@e7988",
+          "section:19@e79c4"
+        ],
+        "size": 7970456,
+        "sha256": "934714d57bb41777eb34624e79f9579300487191fa00fb4075ce5463147089b3",
+        "signature": "424d989e",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:06ef3456-a5b7-4b65-81b1-ed20742d8168@881860",
+          "section:19@8818a0"
+        ],
+        "size": 7970456,
+        "sha256": "908a41f726381d540337a103b3a35ce2dc073bc0a029475dacba84fb9bd62b0a",
+        "signature": "424d989e",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:d09debeb-7738-44c3-8f58-a97f92da14f3@101b740",
+          "section:19@101b780"
+        ],
+        "size": 7970456,
+        "sha256": "490d67ca4db3dc8fec8a9d555733dc9041bf1a6b8b2ea7ddd7643feea87607cd",
+        "signature": "424d989e",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:d1d9667d-b049-4634-a0d3-b711d56db545@17b5620",
+          "section:19@17b5660"
+        ],
+        "size": 7970456,
+        "sha256": "8705b10cc78f99e84d6ba33d06aad3a97b478194f9d8c108da8323727453bb75",
+        "signature": "424d989e",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:25c4f1eb-ddf6-4ba5-b282-844340a540b3@1f4f500",
+          "section:19@1f4f540"
+        ],
+        "size": 7970456,
+        "sha256": "1ae261f32b7aeb1a17a49a5c26e8bfd36daceb1ba2c2692ee104cb84617d0b1d",
+        "signature": "424d989e",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:d1d8f006-42fb-4087-8b70-1c0f82a4890d@26e93e0",
+          "section:19@26e941c"
+        ],
+        "size": 7970456,
+        "sha256": "f670379b7f772d402af59f7b4cba1b247386ede9b01c621f5f28db51eb5e94e2",
+        "signature": "424d989e",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:7866531a-c054-4687-8030-6d1f72f9ca2b@2e832b8",
+          "section:19@2e832f8"
+        ],
+        "size": 7970456,
+        "sha256": "fd24a60c5ed164507316246b04b09a098d00acf529fd7529a732f03fdbc5eaa5",
+        "signature": "424d989e",
+        "token_present": false
+      },
+      {
+        "path": [
+          "imagefv.elf",
+          "ffs:072be68a-6ec0-b209-9b83-276f017ebeaa@1048",
+          "section:02@1060",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:e96c7d149fc1a08c273537db13f4152c858f4c6b15a8cac0b51db6edc8dc8643",
+          "section:17@0",
+          "ffs:0278f76e-185a-4301-af8d-ba5cda08a118@361d198",
+          "section:19@361d1d4"
+        ],
+        "size": 7970456,
+        "sha256": "ae6fd6b6842a6f92eb15de1428828f66acd3d45e530cad43676efb40bc1a908b",
+        "signature": "424d989e",
+        "token_present": false
+      }
+    ],
     "gaps": [],
     "section_types": {
       "0x2": 1,
@@ -289,6 +546,126 @@
         "size": 49152,
         "sha256": "c1f2ed4b51e89cd493f85644c174ea8c892b03b81d2b7f8abe0489d756c506d8",
         "token_offsets": []
+      }
+    ],
+    "raw_sections": [
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:19@0"
+        ],
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "",
+        "token_present": false
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:a91d838e-a5fa-4138-825d-455e23030790@1cd450",
+          "section:19@1cd488"
+        ],
+        "size": 3078,
+        "sha256": "d01136746f846280457d2493945e58313f6882d742164f809f95187b326ebcfc",
+        "signature": "230a2320",
+        "token_present": false
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:a91d838e-a5fa-4138-825d-455e23030791@1ce098",
+          "section:19@1ce0d0"
+        ],
+        "size": 4689,
+        "sha256": "519e0849e40cce0b498a36e625b622a97f1125a092356a09f19abeebbfe95344",
+        "signature": "230a2320",
+        "token_present": false
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:a91d838e-a5fa-4138-825d-455e23030792@1cf328",
+          "section:19@1cf360"
+        ],
+        "size": 1300,
+        "sha256": "1ac37efa9eadbde84738fe0f0e18d87a13f786436442704c825805fc1b5a1111",
+        "signature": "230a2320",
+        "token_present": false
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:a91d838e-a5fa-4138-825d-455e23030793@1cf878",
+          "section:19@1cf8b4"
+        ],
+        "size": 899,
+        "sha256": "5673093c7b441c24201fee16126541530823348642d827e34af6e3c487e6bf1b",
+        "signature": "230a2320",
+        "token_present": false
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:623b76f1-b9cf-4d24-86cc-a8198dc53921@1cfc40",
+          "section:19@1cfc78"
+        ],
+        "size": 1184,
+        "sha256": "11bddf8c8848ce9244d1501262d7b6bec99f5641b7a1c30c40e3cfa6b5e66887",
+        "signature": "230a2320",
+        "token_present": false
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:7d1a8624-0a00-435f-b4df-de7271a846c6@1d0120",
+          "section:19@1d015c"
+        ],
+        "size": 779,
+        "sha256": "b55032eaac87e972dd7b39ad14e00823b617a58f733d314593d0cdb33786ff9a",
+        "signature": "230a2320",
+        "token_present": false
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:96195f52-9eaa-436d-9a86-0fa02acb39b0@1d0470",
+          "section:19@1d04ac"
+        ],
+        "size": 1528,
+        "sha256": "9f6451972d1f8eeb69f8a9ad79a5b7382a919ee71785568696d3dce2911c9855",
+        "signature": "230a2320",
+        "token_present": false
       }
     ],
     "gaps": [],
