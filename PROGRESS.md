@@ -534,3 +534,33 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Següent: proveïdors GUID 0x9078/0x9098, servei 0x02001401 i límits del
   format de política; ampliar callers en altres mòduls disponibles.
   Cap execució de firmware, token real ni accés al dispositiu.
+
+## Cens ampliat de proveïdors — sessió des de 6b099c0
+
+- `scripts/scan-mitoken-providers.py` verifica el hash conegut d'uefi.elf
+  i recorre les seccions PE directes dels dos FV GZIP: 93 PE examinats.
+  Manifest públic: `docs/mitoken-provider-census.json`; binaris només en work/.
+- GUID 0x9078 present en ChipInfo i altres clients; GUID 0x9098 present
+  en ScmDxeLA i altres clients. Proveïdors candidats pendents de confirmar
+  amb instal·lació i taules. Cap nou PE amb GUID MiToken excepte MiTokenDxe.
+- Límit: cens de seccions PE directes, no tots els formats/volums del paquet;
+  absència de GUID literal no prova absència de crides via àlies.
+- Següent: reconstrucció Ghidra ChipInfo/ScmDxeLA, sense executar firmware.
+
+## Proveïdors confirmats i contracte SCM parcial
+
+- ChipInfo registra GUID b0760469… amb taula 0xa0e0: +0x48 → 0x16b4,
+  delegat DAL +0x88. No inicialitza l'eixida en errors; instal·lació
+  condicionada a inicialització DAL correcta. Consum indeterminat continua
+  condicional; no assumir handle nul accessible després del registre.
+- ScmDxeLA registra GUID 77ed108d… amb dues taules segons consulta segura:
+  +0x38 → 0x1858 o 0x3cb4. Variant ARMv8 0x3cb4 → 0x3880 → 0x46b4.
+  0x22 declara dos arguments; control <=10 no limita el comptador de política.
+- Troballa significativa: el marcador resposta[0]=1 l'escriu ScmDxeLA
+  després d'èxit SMC. No acredita per si sol la inicialització/validació
+  de la política. Servei efectiu ARMv8 0x42001401; contracte intern TZ pendent.
+- Informe MiToken ampliat; hashes, cens i bytes puntuals documentats.
+  Dos tests nous de model passen i cinc anteriors també. Sense firmware executat.
+- Neteja omesa continua defecte local; altres anomalies condicionals, sense
+  nou consumidor +0x18 en el cens de 93 PE. Següent: DAL, variant 0x1858
+  i productor TZ; no s'ha establit accessibilitat ni explotabilitat.

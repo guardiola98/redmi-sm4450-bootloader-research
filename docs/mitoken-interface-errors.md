@@ -181,3 +181,95 @@ Següent pas: disposar localment dels proveïdors dels dos GUID i del servei
 0x02001401, identificar el format de política i els seus límits, i ampliar
 la cerca de consumidors de MiToken a altres mòduls ja extrets. Fins llavors,
 les conclusions sobre neteja són locals i les de dades malformades condicionals.
+
+## Proveïdors locals identificats — continuació des de 6b099c0
+
+### Cens i identitat
+
+`scan-mitoken-providers.py` ha llegit el paquet local, verificat el hash
+fixat d'uefi.elf i examinat **93 seccions PE directes** dels dos FV GZIP.
+Manifest amb hashes, FFS i offsets de GUID en
+[mitoken-provider-census.json](mitoken-provider-census.json). Els offsets
+del manifest són de fitxer, no RVA. No s'han analitzat recursivament altres
+formats comprimits ni tot el paquet. Única coincidència literal MiToken:
+MiTokenDxe mateix. Això amplia el resultat negatiu de consumidors de +0x18,
+però no prova que no existisquen àlies, GUID construïts o clients externs.
+
+Proveïdors confirmats per registre, no només pel nom UI:
+
+- **ChipInfo**, SHA-256 `5ac6376fb8066e5fe106a4bb70c303abe34e9f7de19fb6527ef638b09ea1c3dd`:
+  0x1924 registra GUID 0xa068 i taula 0xa0e0; revisió 0x10003,
+  entrada +0x48 = **0x16b4**.
+- **ScmDxeLA**, SHA-256 `bf446081b8d1156f7de9c1b329dcd774f9df427d890d2ca67f6259f6a985d77d`:
+  registre a 0x1550 del GUID 0xd088. Selecciona taula 0xd0d8
+  (+0x38 = **0x1858**) o 0xd130 (+0x38 = **0x3cb4**), revisió 0x40001.
+  La selecció depén de 0x4534, una consulta al servei segur, no d'una
+  constant del PE. No s'ha establit quina variant pren el dispositiu.
+
+Ghidra headless ha importat i analitzat els dos PE ARM64 al projecte
+local `work/ghidra-project/Providers`; exportacions en work/ChipInfo.* i
+work/ScmDxeLA.*. Contrastos puntuals PE/ASM en
+[mitoken-provider-bytes.txt](mitoken-provider-bytes.txt).
+
+### ChipInfo: garantia encara delegada a DAL
+
+0x16b4 carrega el handle global 0xa2c8, substituïx x0 pel handle i
+conserva x1 (punter d'eixida). Si el handle és nul retorna
+0x8000000000000003 sense escriure. Altrament invoca la taula del handle
++0x88 (0x16d4..0x16d8); resultat DAL zero → EFI zero, qualsevol altre
+→ 0x8000000000000003. No inicialitza l'eixida ni valida x1 localment.
+
+El registre del protocol està condicionat a obtindre el handle via
+0x38dc i a l'èxit de la seua inicialització +0x10. **No es pot presentar
+handle nul com una fallada normal després d'una instal·lació reeixida.**
+El wrapper no aporta una garantia d'escriptura en errors DAL. La garantia
+en èxit i la possibilitat real de fallada requerixen seguir la taula DAL:
+0x38dc delega en un servei global +0xc8. El defecte de MiToken que ignora
+l'estat continua confirmat localment; l'ús de dades indeterminades continua
+condicional, no s'ha demostrat amb una execució o contracte DAL complet.
+
+### SCM ARMv8: semàntica concreta de la resposta
+
+La variant 0x3cb4 eleva/restaura TPL al voltant de 0x3880. Esta rutina
+valida punters als arguments/resultats, i `(argument2 & 0xf) <= 10`.
+Per **0x22, el recompte d'arguments és 2**, no és el recompte de la política.
+Copia `{punter,0x4c4}` als arguments de registre. A 0x395c afegix
+0x40000000 a l'ID: la crida segura efectiva és **0x42001401**.
+0x46b4 carrega els registres i executa `smc #0` a 0x46dc; el firmware
+només s'ha llegit, no executat. Retorn positiu repetix SMC; zero torna
+al camí d'èxit. El contracte intern del món segur queda fora del PE.
+
+**Correcció semàntica significativa:** 0x39b8..0x39d8 escriu el primer
+word de resposta igual a **1 des del mateix transport**, seguit dels tres
+registres de resposta. No és una confirmació independent del productor
+que tot el búfer de política siga vàlid. MiToken només consulta el primer
+word; els altres tres no intervenen en la seua decisió local.
+
+En esta variant no hi ha neteja ni comprovació del contingut del búfer
+apuntat per l'argument, ni cota del comptador a +0xdc. El control de <=10
+afecta els arguments de SMC i **no impedix** comptadors de política >=250.
+Açò no prova que TZ els retorne: requerix reconstruir el servei segur.
+La variant alternativa 0x1858 empaqueta una petició per una altra via;
+la seua semàntica completa i l'equivalència de resposta queden pendents.
+No generalitzem la reconstrucció ARMv8 a eixa variant.
+
+### Reavaluació i següent candidat
+
+| Candidat | Resultat després dels proveïdors |
+| --- | --- |
+| Recursos no alliberats | Defecte local de neteja confirmat; ScmDxeLA pot retornar errors, però no hi ha caller +0x18 identificat ni prova de repetibilitat. |
+| Bucle >=256 | Condicional. El transport ARMv8 no limita el camp; falta contracte TZ i consumidor accessible. |
+| Lectura més enllà de 0x4c4 | Condicional per >=250 sense match previ; no equival a lectura fora de pàgina. |
+| Word de ChipInfo indeterminat | Condicional. Wrapper no el neteja en error; registre reeixit exigix inicialització DAL, i falta demostrar fallada de la lectura. |
+| Èxit de transport equival a política validada | Hipòtesi descartada com a deducció del word 1: el genera ScmDxeLA. Validació efectiva dins TZ encara desconeguda. |
+
+Dos tests nous en `test-scm-transport-model.py` comproven la distinció
+entre marcador de transport i búfer, i l'aritmètica d'arguments/ID. Són
+models explícits, no prova que TZ deixe el búfer intacte. Els cinc tests
+anteriors continuen passant.
+
+Següent treball delimitat: taula DAL darrere ChipInfo i lectura de sèrie;
+variant SCM 0x1858; localització estàtica del servei 0x02001401 en TZ.
+No inferir límits del format de política per analogia amb altres versions.
+Els candidats condicionals queden aparcats fins que estes fonts aporten
+una garantia o una ruta real. Sense tokens, dispositiu ni explotabilitat provada.
