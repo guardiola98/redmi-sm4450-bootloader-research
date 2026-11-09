@@ -1,5 +1,11 @@
 # Fastboot unlock handlers — offline PE analysis
 
+
+> Nota de vigència: informe històric. Les conclusions posteriors i correccions
+> estan en [contractes MiToken](mitoken-provider-contracts.md) i
+> [VerifiedBoot](verifiedboot-failure-analysis.md), inclosa la falta de ruta
+> demostrada de reserva nul·la i la identitat confirmada de MiToken.
+
 **Date:** 2026-11-09  
 **Firmware:** OS2.0.218.0.VMWEUXM  
 **Input:** LinuxLoader.pe SHA-256 `60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`  

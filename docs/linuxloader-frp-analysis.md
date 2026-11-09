@@ -1,5 +1,11 @@
 # Anàlisi estàtica de LinuxLoader — partició FRP i IsAllowUnlock
 
+
+> Nota de vigència: informe històric. Les conclusions posteriors i correccions
+> estan en [contractes MiToken](mitoken-provider-contracts.md) i
+> [VerifiedBoot](verifiedboot-failure-analysis.md), inclosa la falta de ruta
+> demostrada de reserva nul·la i la identitat confirmada de MiToken.
+
 **Data:** 2026-11-09  
 **Origen:** binari `LinuxLoader.pe` adjunt per l'investigador, extret del paquet `OS2.0.218.0.VMWEUXM`; **no distribuïm el PE**.
 

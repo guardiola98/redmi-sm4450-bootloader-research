@@ -1,5 +1,11 @@
 # MiTokenDxe i VerifiedBootDxe — extracció i primera anàlisi
 
+
+> Nota de vigència: informe històric. Les conclusions posteriors i correccions
+> estan en [contractes MiToken](mitoken-provider-contracts.md) i
+> [VerifiedBoot](verifiedboot-failure-analysis.md), inclosa la falta de ruta
+> demostrada de reserva nul·la i la identitat confirmada de MiToken.
+
 Sessió 2026-11-09. Cap firmware executat, cap dispositiu connectat.
 Manifest: [protocol-pe-manifest.json](protocol-pe-manifest.json).
 

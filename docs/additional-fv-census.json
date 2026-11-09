@@ -1,0 +1,330 @@
+[
+  {
+    "image": "imagefv.elf",
+    "sha256": "51220103d9d5f2c8e11f3bfe8a221db9cba2bd0478902037175067e182c94332",
+    "modules": [],
+    "gaps": [],
+    "section_types": {
+      "0x2": 1,
+      "0x17": 1,
+      "0x15": 17,
+      "0x19": 17
+    },
+    "ui_names": [
+      "battery_symbol_Soc10.bmp",
+      "battery_symbol_NoBattery.bmp",
+      "battery_symbol_Nocharger.bmp",
+      "battery_symbol_LowBatteryCharging.bmp",
+      "battery_symbol_LowBattery.bmp",
+      "tsens_thermal_symbol.bmp",
+      "tsens_thermal_err_symbol.bmp",
+      "battery_symbol_DebugBoot.bmp",
+      "battery_symbol_DebugStay.bmp",
+      "logo_m_lock.bmp",
+      "logo_fastboot.bmp",
+      "logo_m_unlock.bmp",
+      "logo_destroy.bmp",
+      "logo_p_unlock.bmp",
+      "logo_p_lock.bmp",
+      "logo_r_unlock.bmp",
+      "logo_r_lock.bmp"
+    ],
+    "parser_limit": "Existing FV/FFS readers can stop at malformed/trailing data; no PI checksum validation"
+  },
+  {
+    "image": "tools.fv",
+    "sha256": "d7f0c4034bb3236e3878dfd56116217dc34afd5b3d41e7a1f1e71fddbf77a002",
+    "modules": [
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:484523a5-6a18-463f-ea1d-de3d740abad5@80",
+          "section:10@a4"
+        ],
+        "type": "PE",
+        "size": 110592,
+        "sha256": "558c71fea082cb7e868bc97928b2cfe844e800697fe690ffccbf1b21b2b83900",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:7efd675b-b69b-4be9-9da2-16a12658a1ae@1b0a8",
+          "section:10@1b0d8"
+        ],
+        "type": "PE",
+        "size": 36864,
+        "sha256": "60dcbde848eac1d84211d972debcb998104d67bbe9f2f7a61998e19e96bbf7ee",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:a9f91c13-4df7-3952-6811-f6b4479b3c0c@240e0",
+          "section:10@24108"
+        ],
+        "type": "PE",
+        "size": 57344,
+        "sha256": "55e99a3cf1bb28ceee664ba41150cc86baa7ba07ccd277a72d7383ce5b728151",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:484523a5-6a18-463f-ea1d-de3d740abadf@32110",
+          "section:10@32134"
+        ],
+        "type": "PE",
+        "size": 45056,
+        "sha256": "484a08db866e482b9ec0f7fd429a1e6fadf5e3a68e85595a97ccb457ad8f6f15",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:f7b0199c-756b-4972-a48c-4508151d8bbb@3d138",
+          "section:10@3d170"
+        ],
+        "type": "PE",
+        "size": 40960,
+        "sha256": "793f27906215299da4726cdadb620f82e4094403acf66d1e78221eb96833d588",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:42578984-bba3-43a0-a412-b8f611022b28@47178",
+          "section:10@47190"
+        ],
+        "type": "PE",
+        "size": 32768,
+        "sha256": "17c2e61b35b25b32e4c60d78178a7c9dea078b10a0c8b698cbf7d30868412e70",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:ae4de1e7-b20b-4984-bf03-2e0ff0ac5864@4f1b0",
+          "section:10@4f1e4"
+        ],
+        "type": "PE",
+        "size": 40960,
+        "sha256": "7eaf59d1fcac8f4afddc92f1b6b54d6b655b15530debdd8430431b0be8c053b5",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:193787e1-e5c6-4c66-bbb2-4fa1df2af09a@591e8",
+          "section:10@5921c"
+        ],
+        "type": "PE",
+        "size": 36864,
+        "sha256": "1aa93169353ca2b9c0b3ff6ae07ef058eb55c80aa283b0b843b25d1f0ce0e725",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:1c207232-4086-9be7-db16-159d66ab466a@62220",
+          "section:10@62238"
+        ],
+        "type": "PE",
+        "size": 40960,
+        "sha256": "2e6800d7d90cb9d59f822868e3a314ac296e9def57bac22bcefcc0f69734fbbe",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:a3ef0b47-4f84-4f73-a5c1-e1242e60ba16@6c258",
+          "section:10@6c298"
+        ],
+        "type": "PE",
+        "size": 40960,
+        "sha256": "3abc5a9914debfddae883cadecef031edc753c10f1217a8be65c4539cb46d841",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:1c8407ed-86a9-45e2-83d4-5a64d83588f2@762a0",
+          "section:10@762b8"
+        ],
+        "type": "PE",
+        "size": 40960,
+        "sha256": "72b0f430ed203b65aed800e54059dd1692a0e953627c95324f46f01c187fd117",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:4cef31da-8682-4274-9cc4-aee7516a5e7b@802f0",
+          "section:10@80324"
+        ],
+        "type": "PE",
+        "size": 57344,
+        "sha256": "42a6bf62e594cce0a12efa09a97a2e9d293acb45a95c2254311a3922bb144a54",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:3cef354a-3b7a-4519-ad70-72a134698311@8e328",
+          "section:10@8e34c"
+        ],
+        "type": "PE",
+        "size": 135168,
+        "sha256": "8eb0f3c72b8b776c4965612bfa99511f261545be9972178a741bf6560fa14103",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:decaa93a-472a-e0e6-d1af-2d93fec89b40@af350",
+          "section:10@af37c"
+        ],
+        "type": "PE",
+        "size": 57344,
+        "sha256": "8024ff17e0464f234bd20ed831d13871233993ef1bbe8c72b7394a86c1d724ba",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:7c04a583-9e3e-4f1c-ad65-e05268d0b4d1@bd380",
+          "section:10@bd3a8"
+        ],
+        "type": "PE",
+        "size": 1003520,
+        "sha256": "3491e546d49d48b77faf9fda743a34f6f1a63e532062c9498ab0d3511c528420",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:a9f19c13-4df7-3952-6811-f6b4479b3c0c@1b23b0",
+          "section:10@1b2400"
+        ],
+        "type": "PE",
+        "size": 61440,
+        "sha256": "8f4d9c9400014cacfbb8cd0e2d497e352da03bcc84fce0b7ba7a185541179de3",
+        "token_offsets": []
+      },
+      {
+        "path": [
+          "tools.fv",
+          "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+          "section:02@60",
+          "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+          "section:17@4",
+          "ffs:21429b90-5f67-4e93-af55-1d314d646e12@1c1408",
+          "section:10@1c1448"
+        ],
+        "type": "PE",
+        "size": 49152,
+        "sha256": "c1f2ed4b51e89cd493f85644c174ea8c892b03b81d2b7f8abe0489d756c506d8",
+        "token_offsets": []
+      }
+    ],
+    "gaps": [],
+    "section_types": {
+      "0x2": 1,
+      "0x19": 8,
+      "0x17": 1,
+      "0x15": 24,
+      "0x10": 17
+    },
+    "ui_names": [
+      "Cmd",
+      "ListVars",
+      "Menu",
+      "Pgm",
+      "RPMBProvision",
+      "RPMBErase",
+      "UEFINVErase",
+      "DelBootVars",
+      "UsbfnMsdApp",
+      "SecurityToggleApp",
+      "DebugPolicyToggleApp",
+      "CapsuleApp",
+      "Ebl",
+      "Mptest",
+      "Shell",
+      "WinDsdtUpdateControllerUI",
+      "MemoryProfileInfo",
+      "USB_Menu.cfg",
+      "Uefi_Menu.cfg",
+      "Pmic_Menu.cfg",
+      "Config_Menu.cfg",
+      "EUD_Menu.cfg",
+      "Clock_Menu.cfg",
+      "DriverList.cfg"
+    ],
+    "parser_limit": "Existing FV/FFS readers can stop at malformed/trailing data; no PI checksum validation"
+  }
+]

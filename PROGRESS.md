@@ -594,3 +594,23 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   Productor TZ i límits del comptador continuen bloquejats per falta de fonts.
 - Següents: productor TZ; cobertura pendent; consumidors +0x18. Cap execució
   de firmware, identificador privat llegit ni canvi sobre el dispositiu.
+
+## Cobertura addicional des de main ce7e4f0
+
+- Extractor hash-pinned de tz.mbn, imagefv.elf i tools.fv; originals intactes,
+  còpies només en work/. Manifest recursiu en docs/additional-fv-census.json.
+- imagefv LZMA resolt amb límit acotat 128 MiB: 64.716.808 bytes, 17 UI/RAW
+  de recursos gràfics, cap PE/TE. L'error anterior era límit d'eina.
+- tools.fv: 17 PE addicionals, cap GUID MiToken literal en ells; 8 RAW
+  sense anàlisi semàntica. Total 110 ocurrències PE censades, no auditories
+  funcionals ni necessàriament mòduls únics. ABL separat.
+- TZ ara disponible localment i verificat: ELF64 ARM64, 35 program headers.
+  Cap literal little-endian 0x02001401/0x42001401; no prova absència del servei.
+  Pendent dispatcher i productor real, no continuar atribuint el bloqueig
+  a absència del binari. Cap garantia nova sobre comptador o búfer.
+- Informe docs/audit-coverage-update.md consolida estat, límits i candidats.
+  Notes de vigència afegides als informes històrics per evitar contradiccions.
+- 25 proves passen (sis scripts), incloses tres noves de límits LZMA.
+  Cap firmware executat, connexió al dispositiu, token ni push.
+- Següent: reconstrucció TZ, cobertura restant, consumidors +0x18.
+  Fase conservada; auditoria no completa, continuació útil pendent.
