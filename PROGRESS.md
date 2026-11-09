@@ -79,17 +79,15 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Inventari de marcadors GBL executat** en el PE `LinuxLoader` SHA-256 `60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`: `gpu-command=not found`, `fence-command=not found`, `gpu-rejection-text=not found`, `fence-rejection-text=not found`, `generic-fastboot=present at 0xaceb2`. **Conclusió estricta:** no s'han trobat les cadenes relatives a `set-gpu-preemption` i `set-hw-fence-value` en este PE, però això no indica si hi ha o no una vulnerabilitat GBL; no hi ha prova que eixes comandes existisquen en esta compilació. No s'ha executat cap exploit.
 
+- [x] **Ghidra (anàlisi estàtica) — primera referència a `IsAllowUnlock is %d`**: el CodeBrowser mostra la cadena definida a l'adreça `0x000ae085`; `Show References to Address` mostra **una referència de codi**, amb el context desassemblat `add x1, =>s_IsAllowUnlock_is_%d` i adreça de la instrucció parcialment oculta a la captura. No s'ha verificat encara la funció contenidora ni la font del valor, i no s'ha descobert cap bypass.
+
 ## Següent pas immediat
 
-**Anàlisi estàtica amb Ghidra sobre el PE ARM64 `LinuxLoader`** per trobar les referències de codi a `IsAllowUnlock is %d`, `get_unlock_ability: %d`, `oem unlock` i els missatges d'error en l'actualització de l'estat.
+**Seguir la referència de codi de `IsAllowUnlock is %d` en Ghidra.** En la finestra de referències, doble clic en l'única fila, tancar el diàleg i llegir el desassemblatge i el pseudocodi de la funció contenidora.
 
-1. Obrir Ghidra, crear un projecte local i importar `work/uefi-extracted/.../section1.pe` (la ruta es pot localitzar amb `find work/uefi-extracted -name section1.pe`).
-2. Confirmar que Ghidra importa **PE32+ / AArch64**, i iniciar l'anàlisi automàtica; no forçar importació ARM32 de l'ELF exterior.
-3. En **Window → Defined Strings**, buscar `IsAllowUnlock is`, `get_unlock_ability:`, `oem unlock`, `Failed to update the unlock status`.
-4. Des de les cadenes, usar **References → Show References to Address** per veure funcions que les empren, si Ghidra aconseguix identificar-ne les referències.
-5. Registrar només noms de funcions inferits, ubicacions/RVA verificats i relacions observades. Si les referències no es resolen, registrar el resultat negatiu i comprovar literal pools/reubicacions. No alterar ni executar firmware.
+Cal registrar: **adreça de la instrucció**, nom/adreça de la funció, crida de format/log que rep la cadena i origen de l'argument enter que s'imprimix. Les referències de la cadena poden portar només a una funció de registre, no a la decisió de política. Si el decompilador no identifica la funció, inspeccionar els límits i les crides en el Listing, sense modificar el binari.
 
-En esta etapa estudiem **com consulta i valida l'autorització**, no com evitar-la; no hi ha encara evidència d'un bug. Si és possible, el següent pas posterior serà comparar esta mateixa funció amb un ABL anterior verificat del mateix model i regió.
+**Prova pendent:** captura de pantalla amb la instrucció seleccionada i el panell Decompiler visible. No cal executar cap comanda Fastboot ni modificar el dispositiu.
 
 ## Pendent després d'eixe pas
 
@@ -119,4 +117,4 @@ En esta etapa estudiem **com consulta i valida l'autorització**, no com evitar-
 | 2026-11-09 | Primera cerca de cadenes Fastboot/AVB/bloqueig | 259 coincidències; localitzades referències a estat de desbloqueig i verificació AVB. |
 | 2026-11-09 | Comandes Fastboot localitzades i revisió del checker GBL | Identificades `oem unlock`, `flashing get_unlock_ability`, `IsAllowUnlock` i errors de restricció; afegit inventari conservador de marcadors GBL per la pròxima prova. |
 | 2026-11-09 | Prova dels marcadors GBL executada | Cap dels quatre marcadors específics de GPU/fence detectat; cadena genèrica Fastboot sí. Resultat inconcloent. Següent pas: referències de les funcions de bloqueig en Ghidra. |
-
+| 2026-11-09 | Primera referència a IsAllowUnlock en Ghidra | Una XREF confirmada a la cadena `IsAllowUnlock is %d`, instrucció `add x1, ...`; següent pas: navegar a la funció i estudiar el valor passat al log. |
