@@ -96,9 +96,11 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Anàlisi directa dels handlers Fastboot al PE adjunt (2026-11-09)**: `0x57c50` llig el flag global `[0xCB5A8+0x18]` i el passa junt amb el format `get_unlock_ability: %d` (`0xAEAC7`) a la rutina `0x4488`, compatible amb un **handler informatiu**. Per separat, `0x57e34..0x57f1c` conté una ruta de canvi d'estat amb crida `0x43d88` i comprovació d'errors; la funció `0x43d88` ramifica cap a `0x440b0` i `0x44188` i no és una simple escriptura del flag FRP. No està comprovat encara com s'autoritzen estes transicions ni quina ruta exacta les invoca. Vegeu [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md). **No s'ha descobert cap vulnerabilitat.**
 
+- [x] **Inspecció ampliada de persistència del canvi d'estat**: les subrutines `0x440B0`/`0x44188` comproven valors actuals via `0x43B60`/`0x43B70`, escriuen bytes diferents a `0xC294D` / `0xC294E` i, si cal un canvi, invoquen `0x2D728` amb el búfer de configuració i longitud `0x998` (2.456 bytes). `0x2D728` localitza un protocol per GUID a `0xB1790` i delega la persistència a una crida indirecta (`0x2D840`); la identitat d'eixe protocol encara no s'ha confirmat. **No es pot afirmar que el flag FRP permeta escriure estes dades ni que hi haja una vulnerabilitat.** Documentat a [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md).
+
 ## Següent pas immediat
 
-**Reconstruir el despatx de les comandes `oem unlock` / `oem lock` i tipar les funcions `0x43D88`, `0x440B0`, `0x44188`** per saber si l'estat persistent depén de l'emmagatzematge, serveis UEFI o una altra autorització. Diferenciar l'ús informatiu de `get_unlock_ability` a `0x57C50` de la ruta que intenta canviar l'estat a `0x57E34..`.
+**Identificar el protocol de persistència de configuració i la comprovació d'autorització prèvia a `oem unlock`**, separant-les del flag FRP de consulta. Les subrutines `0x440B0` / `0x44188` actualitzen dos camps d'una configuració de 2.456 bytes via `0x2D728`, que invoca un protocol UEFI per GUID encara no tipat. Diferenciar l'ús informatiu de `get_unlock_ability` a `0x57C50` de la ruta que intenta canviar l'estat a `0x57E34..`.
 
 Continuar amb **desassemblatge offline sobre el PE verificat**, identificant les referències creuades de funcions i la cadena de crides de MiToken. Vegeu [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md). Després comparar amb una ROM anterior de la mateixa família i procedència verificada. **No executar comandes OEM de desbloqueig, ni escriure o esborrar FRP o particions.**
 
@@ -120,6 +122,7 @@ Continuar amb **desassemblatge offline sobre el PE verificat**, identificant les
 
 | Data | Canvi | Resultat |
 | --- | --- | --- |
+| 2026-11-09 | Persistència de l'estat de bloqueig analitzada | Dos bytes de configuració, escriptura via `0x2D728` i protocol UEFI indirecte no identificat; no s'ha descobert bypass. |
 | 2026-11-09 | Anàlisi separada de handlers Fastboot | `get_unlock_ability` llig un flag FRP per mostrar-lo (`0x57c50`); la transició d'estat utilitza `0x43d88` i funcions auxiliars amb controls d'error. Sense bypass confirmat. |
 | 2026-11-09 | PE ARM64 analitzat directament | Hash verificat; cadena `frp` trobada i lectura indirecta seguida d'extracció d'un bit a `DAT_000cb5c0`. Informe a `docs/linuxloader-frp-analysis.md`. Següent pas: distingir MiToken i seguir consumidors del flag. |
 | 2026-11-09 | Creació del registre de progrés i pròxim pas | Estat inicial consolidat; següent prova definida: extracció i inspecció estàtica d'ABL |
