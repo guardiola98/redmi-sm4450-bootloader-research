@@ -84,3 +84,20 @@ The publicly reported 2026 GBL exploit chain involved Android 16-era devices and
 - Compare the exact functions with an authentic older same-model firmware, if available.
 
 Do **not** write FRP, bypass user authentication, flash ABL/XBL, or run non-vetted exploits on a locked phone.
+
+## Refined token protocol data flow — 2026-11-09
+
+**Important correction to the preceding "two checks" description:** the callback at `0x57DE0` most likely **retrieves the token**, rather than independently verifying it. Only the subsequent callback at `0x57E48` has the argument structure expected of **signature/token verification**. The zero-status branches mean both stages must succeed; they do not imply two cryptographic verifications.
+
+AArch64 evidence from the verified `LinuxLoader.pe`:
+
+1. `0x57CE0: bl 0x5A214`; the helper assigns `w21=w2` and `x22=x1` then branches onward, preserving the incoming payload pointer and length for later verification. This explains the apparently unexplained `x21/x22` registers in the handler.
+2. `0x57D0C..0x57D1C`: request a UEFI protocol identified by a GUID stored at `0xB1800` (`0c00a314-11a1-4d7a-a5c8-70bd5f88e7df`). Its precise symbolic name is **not confirmed**. On error the code uses `Error Locate Token Protocol`.
+3. `0x57D58..0x57D64`: invoke the function pointer at protocol offset `+0x08` with `x1=0` and a pointer to an integer length. This matches a *query required token length* operation.
+4. `0x57DB8..0x57DE0`: allocate `length + 1` bytes in `x20`; invoke **the same `+0x08` callback** with `x1=x20`, `x2` pointing to the length field. This matches *read/get token*. A zero status branches to `0x57E34`; a non-zero status goes through `Error Get Token` handling.
+5. `0x57E34..0x57E48`: terminate token buffer at the declared length and call the function pointer at protocol offset **`+0x10`**, via veneer `0x5A1FC`, with `x1=x20` (retrieved token), `x2=x22` (incoming payload), `w3=w21` (payload length). A zero status proceeds to the state-transition call `0x43D88`; failure reaches `Error Verify Token` and `Token Verify Failed, Reboot the device`.
+6. The `0x43D88` / Qualcomm VerifiedBoot configuration update is invoked **after** successful retrieval and verification in this path. The incoming payload's origin in the host Fastboot command is not fully typed here.
+
+**External precedent, not proof of same implementation:** [lrh2000/Xiaomi-bootloader](https://github.com/lrh2000/Xiaomi-bootloader) reconstructs an older Xiaomi implementation where ABL handles the token protocol and XBL contains its implementation, and the device verifies a server-signed token. Its reference device (Redmi Note 8T, 2020) is different from this SM4450/2026 firmware. Therefore verifying **where this device implements the `+0x10` callback likely requires analysing its matching XBL image**, not just `LinuxLoader.pe`.
+
+**No vulnerability or independent unlock method has been demonstrated**. Never upload live tokens, credentials, device identifiers or operate on locked phone partitions for this study.
