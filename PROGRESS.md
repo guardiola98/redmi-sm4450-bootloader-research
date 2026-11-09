@@ -167,3 +167,17 @@ He revisat de nou `LinuxLoader.pe` amb `llvm-objdump` i he afinat la interpretac
 **Següent pas verificable:** examinar l'`xbl_s.melf` del mateix arxiu Fastboot (SHA-256 ja conegut `cff40b3a88565100c0d640381b3ba12940a5b4b91bc0313cb8e83cf7ccce49f1`) i determinar si conté o registra el GUID del protocol token, i en quin mòdul es troba el callback a `+0x10`. Fer-ho **offline**, sense flashejar res. El PE ABL és insuficient per demostrar el funcionament criptogràfic intern.
 
 **Estat:** encara cap vulnerabilitat demostrada ni via de desbloqueig independent.
+
+### Nova eina (2026-11-09)
+
+- [x] Creat `scripts/scan-xbl-protocol-guid.py`: llig exclusivament `images/xbl_s.melf` des del Fastboot `.tgz`, comprova el SHA-256 conegut i busca els GUID del protocol candidat de token i de Qualcomm VerifiedBoot en format UEFI little-endian o network-order. **És una cerca de bytes literal: no trobar coincidències no demostra l'absència del protocol**, perquè podria estar comprimit, dividit o implementat en un altre component.
+- [ ] Executar la prova local en Debian:
+
+```bash
+cd ~/redmi-sm4450-bootloader-research
+git pull
+python3 scripts/scan-xbl-protocol-guid.py \
+  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz
+```
+
+Si no hi ha coincidències, estudiar offline l'estructura real de l'XBL abans de descartar res. No flashejar ni enviar dades del mòbil.
