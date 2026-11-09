@@ -11,7 +11,7 @@ import re
 import tarfile
 import xml.etree.ElementTree as ET
 
-TARGETS = re.compile(r"^(?:abl|xbl(?:_.*)?|tz|hyp|devcfg|aop_devcfg|featenabler|vbmeta(?:_.*)?|boot|vendor_boot|init_boot|dtbo|XblRamdump)\.(?:elf|melf|mbn|bin|img)$", re.I)
+TARGETS = re.compile(r"^(?:abl|xbl(?:_.*)?|uefi(?:_sec)?|imagefv|tools|tz|hyp|devcfg|aop_devcfg|featenabler|vbmeta(?:_.*)?|boot|vendor_boot|init_boot|dtbo|XblRamdump)\.(?:elf|melf|mbn|bin|img|fv)$", re.I)
 RAWPROGRAM = re.compile(r"rawprogram[0-9]+\.xml$", re.I)
 CHUNK = 4 * 1024 * 1024
 
