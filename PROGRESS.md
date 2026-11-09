@@ -198,3 +198,22 @@ python3 scripts/inspect-xbl-structure.py \\
 ```
 
 Interpretar segments ELF i les possibles capçaleres FV abans d'intentar descomprimir res. **No connectar el telèfon ni modificar particions.**
+
+## Investigació comparada de repositoris i nou rumb (2026-11-09)
+
+L'usuari ha executat `scripts/inspect-xbl-structure.py` sobre el firmware EEA propi: `xbl_s.melf`, 1.170.244 bytes, SHA-256 verificat `cff40b3a88565100c0d640381b3ba12940a5b4b91bc0313cb8e83cf7ccce49f1`; ELF32, e_machine `0x1`, entrada `0x2211c000`, dos segments declarats (`0x74/0x1c000`, `0x1c074/0x280`), **sense** coincidències literals `_FVH`. Els segments no abasten tot el fitxer; no sabem encara l'ús de les dades sobrants. No s'han trobat GUIDs de token/VerifiedBoot de forma literal, però això no prova absència.
+
+Comparats els projectes recents i de referència [OpenABL](https://github.com/OpenHandheldCollective/OpenABL) (suport SM4450 en ABL Qualcomm), [linux-msm/xbltools](https://github.com/linux-msm/xbltools) (diferència entre càrrega inicial i nucli UEFI), [qualcomm-linux/qcom-ptool](https://github.com/qualcomm-linux/qcom-ptool) (particions UEFI separades en altres SoC), [lrh2000/Xiaomi-bootloader](https://github.com/lrh2000/Xiaomi-bootloader) (Mi-Token al XBL d'un Xiaomi antic), [kasnria001/qualcomm_gbl_exploit_poc](https://github.com/kasnria001/qualcomm_gbl_exploit_poc) (GBL no confirmat en sky), i [Jz8Root/xiaomi-hyperos-bootloader-unlock](https://github.com/Jz8Root/xiaomi-hyperos-bootloader-unlock) (**MediaTek**, no aplicable a SM4450). Conclusions i limitacions detallades a [docs/research-directions-2026-11.md](docs/research-directions-2026-11.md).
+
+**Canvi de prioritat:** deixar de buscar literalment GUIDs en `xbl_s.melf` i localitzar primer la imatge UEFI real del paquet Fastboot `sky`. Ja existeix `scripts/analyze-bootchain.py`, que inventaria imatges i mapatges `rawprogram*.xml` **sense extraure ni escriure res**; no s'ha creat un script duplicat.
+
+**Prova següent:**
+
+```bash
+cd ~/redmi-sm4450-bootloader-research
+git pull
+python3 scripts/analyze-bootchain.py \\
+  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz
+```
+
+Amb l'eixida, estudiar el `xbl.elf` / `uefi.elf` / equivalents si hi apareixen i comprovar quin mòdul allotja la interfície del token. No importar firmwares, payloads o claus d'altres dispositius; **cap vulnerabilitat demostrada**.
