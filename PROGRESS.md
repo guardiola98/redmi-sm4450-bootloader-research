@@ -72,19 +72,23 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 - [x] **Inspecció PE completada** amb `scripts/inspect-linuxloader.py`: `LinuxLoader` és PE32+ ARM64 (`0xaa64`), subsistema EFI Application (10), 843.776 bytes, SHA-256 `60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`. Punt d'entrada RVA `0x1000`, ImageBase `0x0`, mida d'imatge `0xce000`; 3 seccions: `.text` RVA `0x1000` mida `0xb1000`, flags `0x60000020` (codi executable/llegible); `.data` RVA `0xb2000` mida `0x1b000`, flags `0xc0000040` (dades llegibles/escrivibles); `.reloc` RVA `0xcd000` mida `0x1000`, flags `0x42000040` (dades/descartable). Alineació secció i fitxer `0x1000`. **No és una prova de vulnerabilitat.**
 - [x] Afegit `scripts/scan-linuxloader-strings.py` per localitzar cadenes ASCII i UTF-16LE de Fastboot, bloqueig i AVB amb offsets de fitxer, **pendent executar**. Les cadenes són pistes, no proves de bypass.
 
+- [x] **Scanner de cadenes executat** sobre el PE ARM64 de 843.776 bytes: 259 coincidències totals; categories `fastboot=119`, `lock=33`, `avb=118`, `security=12` (les categories se solapen). L'eixida mostra missatges reals d'AVB i bloqueig, entre ells `read_is_device_unlocked` a offset de fitxer `0x0a110d`, `the Unlock status is : %d` a `0x0a1983`, `Error getting device state` a `0x0a1ef2` i `androidboot.vbmeta.device_state` a `0x0a1f0f`. També hi ha moltes rutes del codi EDK2 que causen falsos positius de la categoria Fastboot. **No s'ha demostrat vulnerabilitat ni bypass.**
+
 ## Següent pas immediat
 
-**Fer un inventari de cadenes de l'executable EFI ARM64 real** (sense extracció addicional ni modificació de firmware) per orientar l'enginyeria inversa.
+**Ampliar i filtrar les cadenes de `LinuxLoader` per identificar comandes Fastboot/OEM i missatges de bloqueig sense el soroll de les rutes EDK2.** L'scanner inicial ha trobat 259 coincidències, però només ha imprés les primeres 100.
 
 ```bash
 cd ~/redmi-sm4450-bootloader-research
 git pull
-python3 scripts/scan-linuxloader-strings.py --max 100
+python3 scripts/scan-linuxloader-strings.py --max 400 \
+  | grep -viE '/home/work/|/Library/|/MdePkg/|/MdeModulePkg/|/libavb/' \
+  | grep -iE 'unlock|locking|locked|fastboot|flashing|oem |getvar|device.state|critical|permission|auth|token|signature|firehose|gbl|preemption|fence'
 ```
 
-L'script recorre el PE ja extret i mostra offsets **de fitxer** de les coincidències ASCII/UTF-16LE relacionades amb Fastboot, bloqueig i AVB. Compartir l'eixida després de revisar-la; si hi apareix alguna cadena sensible, ometre-la. Després decidirem quines referències val la pena estudiar en Ghidra, sense confondre presència de cadenes amb vulnerabilitat.
+La nova eixida pot contindre missatges interns, però **no ha de contindre tokens reals del compte** perquè s'està llegint el PE del firmware públic, no `logcat`. Així i tot, revisar abans de compartir.
 
-**Nota d'anàlisi:** el PE té ImageBase `0x0`; Ghidra haurà d'importar el fitxer PE32+ ARM64 i considerar la reubicació que realitza el carregador UEFI. `0x1000` és un RVA de punt d'entrada, no una adreça física d'execució demostrada.
+**Després:** comparar les cadenes interessants amb les funcions corresponents a Ghidra (PE32+ AArch64), i comprovar si el checker GBL identifica exactament esta compilació; qualsevol resultat heurístic s'ha de validar abans d'afirmar vulnerabilitat. No tocar el telèfon ni escriure particions.
 
 ## Pendent després d'eixe pas
 
@@ -110,5 +114,6 @@ L'script recorre el PE ja extret i mostra offsets **de fitxer** de les coincidè
 | 2026-11-09 | Extracció local confirmada del volum UEFI | `work/abl-fv.bin`, offset `0x1000`, mida `0x30000`; `.gitignore` ampliat per protegir els extrets. Següent prova: parser UEFI en entorn virtual. |
 | 2026-11-09 | Parser UEFI confirma LinuxLoader | `uefi_firmware` 1.16 ha trobat FV intern de 843.968 bytes i aplicació `LinuxLoader` amb secció PE32. |
 | 2026-11-09 | LinuxLoader extret i arquitectura confirmada | Secció `section1.pe` de 843.776 bytes, PE32+ EFI ARM64 amb 3 seccions; publicat `inspect-linuxloader.py`. |
-| 2026-11-09 | Inspecció detallada del PE i scanner de cadenes | RVA `0x1000`, base `0x0`, seccions `.text`, `.data`, `.reloc`; SHA-256 del PE registrat. Scanner ASCII/UTF-16 creat; pròxima execució al Debian. |
+| 2026-11-09 | Inspecció detallada del PE i scanner de cadenes | RVA `0x1000`, base `0x0`, seccions `.text`, `.data`, `.reloc`; SHA-256 del PE registrat. Scanner ASCII/UTF-16 creat. |
+| 2026-11-09 | Primera cerca de cadenes Fastboot/AVB/bloqueig | 259 coincidències; localitzades referències a estat de desbloqueig i verificació AVB. Següent pas: filtrar rutes EDK2 i revisar les comandes Fastboot/OEM reals. |
 
