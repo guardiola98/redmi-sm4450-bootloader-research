@@ -152,3 +152,18 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 | 2026-11-09 | Càlcul del camp IsAllowUnlock localitzat | `0x55b2c..0x55b40`: bit 0 d'un byte del búfer `x23` indexat per dades obtingudes via `x22`; següent pas: identificar origen dels dos registres. |
 | 2026-11-09 | Rastres addicionals x22/x23 en Ghidra | `ldur x22,[x29,#-0x90]` a `0x55ae8`; `mov x23,x0` a `0x55b04`. Següent pas: anàlisi directa del PE adjunt per reconstruir el flux de dades. |
 | 2026-11-09 | Revisió offline FRP i MiToken | Verificat control d'èxit de lectura FRP, bucle de registre del bit, crides indirectes de MiToken i consumidor del flag per a format de get_unlock_ability. La decisió final d'autorització continua pendent. |
+
+## Actualització important — 2026-11-09: token retrieval vs verification
+
+He revisat de nou `LinuxLoader.pe` amb `llvm-objdump` i he afinat la interpretació del handler; la descripció anterior de «dues comprovacions de verificació de token» era massa forta:
+
+- `0x57D64` crida el callback del protocol a `+0x08` amb búfer nul per demanar la longitud del token.
+- `0x57DE0` crida **el mateix callback a `+0x08`** amb un búfer reservat: **obtenció del token**, condicionada a retorn zero, no una segona verificació criptogràfica.
+- `0x57E48` crida el callback a `+0x10` amb el token obtingut, un payload i la seua longitud: **verificació del token/signatura**, condicionada a retorn zero abans d'arribar a `0x43D88`.
+- `0x5A214` conserva `x22=x1` i `w21=w2` (paràmetres d'entrada), que després es passen al verificador.
+- GUID del protocol token a `0xB1800`: `0c00a314-11a1-4d7a-a5c8-70bd5f88e7df`. **No s'ha trobat una definició pública concloent d'este GUID**. No afirmar encara que la interfície siga necessàriament MiToken, encara que el flux siga compatible.
+- [Investigació històrica Xiaomi-bootloader](https://github.com/lrh2000/Xiaomi-bootloader): precedent que situa la implementació del protocol Mi-Token en **XBL** en un model antic (Redmi Note 8T, 2020); no es pot extrapolar automàticament al Redmi 12 5G.
+
+**Següent pas verificable:** examinar l'`xbl_s.melf` del mateix arxiu Fastboot (SHA-256 ja conegut `cff40b3a88565100c0d640381b3ba12940a5b4b91bc0313cb8e83cf7ccce49f1`) i determinar si conté o registra el GUID del protocol token, i en quin mòdul es troba el callback a `+0x10`. Fer-ho **offline**, sense flashejar res. El PE ABL és insuficient per demostrar el funcionament criptogràfic intern.
+
+**Estat:** encara cap vulnerabilitat demostrada ni via de desbloqueig independent.
