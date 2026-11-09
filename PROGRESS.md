@@ -98,11 +98,18 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Inspecció ampliada de persistència del canvi d'estat**: les subrutines `0x440B0`/`0x44188` comproven valors actuals via `0x43B60`/`0x43B70`, escriuen bytes diferents a `0xC294D` / `0xC294E` i, si cal un canvi, invoquen `0x2D728` amb el búfer de configuració i longitud `0x998` (2.456 bytes). `0x2D728` localitza un protocol per GUID a `0xB1790` i delega la persistència a una crida indirecta (`0x2D840`); la identitat d'eixe protocol encara no s'ha confirmat. **No es pot afirmar que el flag FRP permeta escriure estes dades ni que hi haja una vulnerabilitat.** Documentat a [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md).
 
+- [x] **Identificat el GUID del protocol de persistència mitjançant lectura directa del PE adjunt**: bytes a `0xB1790` = `91 ff 5e 8e b6 21 d3 47 af 2b c1 5a 01 e0 20 ec`; GUID UEFI `8e5eff91-21b6-47d3-af2b-c15a01e020ec`, relacionat en referències públiques amb **Qualcomm VerifiedBoot Protocol**. A `0x2D7A4..0x2D7B0`, `0x2D728` localitza eixe protocol, i `0x2D82C..0x2D840` invoca un callback del protocol a offset `+8` amb operació, búfer i longitud. Això concreta la interfície de persistència utilitzada per `0x440B0` i `0x44188`, però **no demostra cap accés no autoritzat ni desbloqueig**. El segon GUID `0c00a314-11a1-4d7a-a5c8-70bd5f88e7df` a `0xB1800` continua sense identificar. Vegeu [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md).
+
 ## Següent pas immediat
 
-**Identificar el protocol de persistència de configuració i la comprovació d'autorització prèvia a `oem unlock`**, separant-les del flag FRP de consulta. Les subrutines `0x440B0` / `0x44188` actualitzen dos camps d'una configuració de 2.456 bytes via `0x2D728`, que invoca un protocol UEFI per GUID encara no tipat. Diferenciar l'ús informatiu de `get_unlock_ability` a `0x57C50` de la ruta que intenta canviar l'estat a `0x57E34..`.
+**Confirmar les interfícies de Qualcomm VerifiedBoot i MiToken en fonts públiques i reconstruir-ne les comprovacions d'autorització del flux de Fastboot, encara exclusivament amb anàlisi estàtica.** El protocol de persistència ja s'associa al GUID `8e5eff91-21b6-47d3-af2b-c15a01e020ec`, mentre que el segon GUID `0c00a314-11a1-4d7a-a5c8-70bd5f88e7df` continua sense identificar.
 
-Continuar amb **desassemblatge offline sobre el PE verificat**, identificant les referències creuades de funcions i la cadena de crides de MiToken. Vegeu [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md). Després comparar amb una ROM anterior de la mateixa família i procedència verificada. **No executar comandes OEM de desbloqueig, ni escriure o esborrar FRP o particions.**
+1. Buscar definicions públiques de les estructures i taules de funcions del protocol, comprovant les versions i les signatures sense importar-les acríticament d'altres SoC.
+2. Estudiar els callers de `0x43D88` i les comprovacions del handler `oem unlock` abans de la crida al protocol. Comparar amb la lectura informativa FRP de `get_unlock_ability`.
+3. Distingir bloqueig normal, bloqueig crític, verificació de signatures, tokens i requisits del fabricant.
+4. Documentar resultats negatius i advertir si una hipòtesi depén de codi no accessible al bootloader bloquejat.
+
+**Cap vulnerabilitat explotable ni desbloqueig verificat**. No executar ordres de modificació d'estat, no escriure FRP ni flashejar el dispositiu.
 
 ## Pendent després d'eixe pas
 
@@ -122,6 +129,7 @@ Continuar amb **desassemblatge offline sobre el PE verificat**, identificant les
 
 | Data | Canvi | Resultat |
 | --- | --- | --- |
+| 2026-11-09 | Identificació del protocol Qualcomm VerifiedBoot | GUID `8e5eff91-21b6-47d3-af2b-c15a01e020ec` a `0xB1790`; wrapper de protocol `0x2D728`, callback a `0x2D840`. Següent: autorització dels handlers i identificació de MiToken. |
 | 2026-11-09 | Persistència de l'estat de bloqueig analitzada | Dos bytes de configuració, escriptura via `0x2D728` i protocol UEFI indirecte no identificat; no s'ha descobert bypass. |
 | 2026-11-09 | Anàlisi separada de handlers Fastboot | `get_unlock_ability` llig un flag FRP per mostrar-lo (`0x57c50`); la transició d'estat utilitza `0x43d88` i funcions auxiliars amb controls d'error. Sense bypass confirmat. |
 | 2026-11-09 | PE ARM64 analitzat directament | Hash verificat; cadena `frp` trobada i lectura indirecta seguida d'extracció d'un bit a `DAT_000cb5c0`. Informe a `docs/linuxloader-frp-analysis.md`. Següent pas: distingir MiToken i seguir consumidors del flag. |
