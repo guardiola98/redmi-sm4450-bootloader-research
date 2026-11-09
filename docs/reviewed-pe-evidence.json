@@ -145,5 +145,175 @@
         "bytes": "00 01 3f d6"
       }
     ]
+  },
+  {
+    "name": "TzDxeLA",
+    "sha256": "067ae49e6dab576b1d5bbb2be6ede7c498440d70b3f64ad9d47bbbec742a0af0",
+    "ffs": "cf6dfc66-14ab-4e13-84db-9c02912d1404",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [
+      {
+        "rva": "0xf108",
+        "bytes": "8c db 10 9a ba 08 ca 45 a8 94 40 c2 51 4d 46 45",
+        "guid": "9a10db8c-08ba-45ca-a894-40c2514d4645"
+      },
+      {
+        "rva": "0xf128",
+        "bytes": "8d 10 ed 77 24 85 8b 4b 9d 2e 34 98 7a ec b9 c1",
+        "guid": "77ed108d-8524-4b8b-9d2e-34987aecb9c1"
+      }
+    ],
+    "instructions": [
+      {
+        "rva": "0x1ed4",
+        "bytes": "8d ff ff 97"
+      },
+      {
+        "rva": "0x1e40",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x1e44",
+        "bytes": "80 00 00 b4"
+      },
+      {
+        "rva": "0x1e50",
+        "bytes": "81 05 00 94"
+      },
+      {
+        "rva": "0x1e58",
+        "bytes": "94 0c 00 94"
+      },
+      {
+        "rva": "0x37ec",
+        "bytes": "80 98 80 52"
+      },
+      {
+        "rva": "0x37f0",
+        "bytes": "01 00 82 52"
+      },
+      {
+        "rva": "0x37f4",
+        "bytes": "e3 02 00 94"
+      },
+      {
+        "rva": "0x3834",
+        "bytes": "7c 16 00 94"
+      },
+      {
+        "rva": "0x3838",
+        "bytes": "b4 4f 3b a9"
+      },
+      {
+        "rva": "0x3844",
+        "bytes": "73 c0 80 52"
+      },
+      {
+        "rva": "0x384c",
+        "bytes": "13 40 a0 72"
+      },
+      {
+        "rva": "0x3850",
+        "bytes": "42 04 80 52"
+      },
+      {
+        "rva": "0x3854",
+        "bytes": "61 fa 37 11"
+      },
+      {
+        "rva": "0x3860",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x3868",
+        "bytes": "c0 0a f8 b7"
+      },
+      {
+        "rva": "0x387c",
+        "bytes": "42 16 00 94"
+      },
+      {
+        "rva": "0x3880",
+        "bytes": "b5 08 00 b5"
+      },
+      {
+        "rva": "0x3884",
+        "bytes": "e8 93 40 39"
+      },
+      {
+        "rva": "0x388c",
+        "bytes": "1f 01 09 6a"
+      },
+      {
+        "rva": "0x3994",
+        "bytes": "ff 43 15 91"
+      },
+      {
+        "rva": "0x39a8",
+        "bytes": "c0 03 5f d6"
+      },
+      {
+        "rva": "0x39d0",
+        "bytes": "f0 ff ff 17"
+      },
+      {
+        "rva": "0x4218",
+        "bytes": "09 70 00 39"
+      },
+      {
+        "rva": "0x4318",
+        "bytes": "1f c1 1f 38"
+      },
+      {
+        "rva": "0x433c",
+        "bytes": "5f 04 40 f1"
+      },
+      {
+        "rva": "0x4350",
+        "bytes": "01 05 88 9a"
+      },
+      {
+        "rva": "0x9228",
+        "bytes": "22 08 00 b4"
+      },
+      {
+        "rva": "0x9234",
+        "bytes": "01 f1 1f 38"
+      }
+    ],
+    "words": [
+      {
+        "rva": "0xf250",
+        "value": "0x10007"
+      },
+      {
+        "rva": "0xf258",
+        "value": "0x2058"
+      },
+      {
+        "rva": "0xf260",
+        "value": "0x1fac"
+      },
+      {
+        "rva": "0xf268",
+        "value": "0x1e74"
+      },
+      {
+        "rva": "0xf270",
+        "value": "0x279c"
+      },
+      {
+        "rva": "0xf278",
+        "value": "0x2d2c"
+      },
+      {
+        "rva": "0xf280",
+        "value": "0x21ec"
+      },
+      {
+        "rva": "0xf288",
+        "value": "0x27a8"
+      }
+    ]
   }
 ]

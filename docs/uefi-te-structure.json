@@ -1,0 +1,43 @@
+{
+  "machine": "0xaa64",
+  "subsystem": 11,
+  "image_base": "0xa7001000",
+  "stripped_size": 3936,
+  "stripped_delta": 3896,
+  "entry_rva": "0xd0b8",
+  "entry_va": "0xa700e0b8",
+  "entry_file_offset": "0xc180",
+  "entry_prefix": "1f 00 00 f1 c0 05 00 54 e3 0b bf a9 e1 03 bf a9",
+  "sections": [
+    {
+      "name": ".text",
+      "virtual_size": 237568,
+      "rva": 4096,
+      "raw_size": 237568,
+      "original_raw_pointer": 4096,
+      "te_offset": 200
+    },
+    {
+      "name": ".data",
+      "virtual_size": 45056,
+      "rva": 241664,
+      "raw_size": 45056,
+      "original_raw_pointer": 241664,
+      "te_offset": 237768
+    },
+    {
+      "name": ".reloc",
+      "virtual_size": 4096,
+      "rva": 286720,
+      "raw_size": 4096,
+      "original_raw_pointer": 286720,
+      "te_offset": 282824
+    }
+  ],
+  "source_sha256": "0543144c7f583d7e870019d95206be2b864eae1fff878dcf9bcee52c063ecc50",
+  "sha256": "064e33de95ebb586b0f103cfa03510a5459bca6068318294981673af8b4e9ed0",
+  "source_offset": "0x2f38",
+  "size": 286920,
+  "mitoken_literal_present": false,
+  "limitation": "New TE only; no functional consumer exclusion, no execution"
+}

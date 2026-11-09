@@ -17,6 +17,12 @@ CASES = {
     'QcomBds': {'guids': [0x1e248],
                 'instructions': [0x1d94,0x1da4,0x1da8,0x1e14,0x1e18,
                                  0xf630,0xf634,0xf65c,0xf664]},
+    'TzDxeLA': {'guids': [0xf108,0xf128], 'words': list(range(0xf250,0xf290,8)),
+                'instructions': [0x1ed4,0x1e40,0x1e44,0x1e50,0x1e58,
+                                 0x37ec,0x37f0,0x37f4,0x3834,0x3838,
+                                 0x3844,0x384c,0x3850,0x3854,0x3860,0x3868,
+                                 0x387c,0x3880,0x3884,0x388c,0x3994,0x39a8,
+                                 0x39d0,0x4218,0x4318,0x433c,0x4350,0x9228,0x9234]},
 }
 
 
@@ -39,6 +45,9 @@ def main():
                                      guid=str(uuid.UUID(bytes_le=raw))))
         for address in case['instructions']:
             row['instructions'].append(dict(rva=hex(address), bytes=pe.read_rva(data,address,4).hex(' ')))
+        if case.get('words'):
+            row['words'] = [dict(rva=hex(a), value=hex(int.from_bytes(pe.read_rva(data,a,8),'little')))
+                            for a in case['words']]
         report.append(row)
     Path('docs/reviewed-pe-evidence.json').write_text(json.dumps(report,indent=2)+'\n')
     print('Verified',len(report),'PEs; selected original GUIDs and instruction bytes')

@@ -104,3 +104,19 @@ No s'han repetit extraccions, RSA ni escàners GUID. El cens continua
 en 110 ocurrències PE més ABL separat; no hi ha nou consumidor +0x18.
 Altres handlers, càrrega dinàmica i productors de política continuen
 fora de la cobertura semàntica. No s'ha executat codi del firmware.
+
+## Revisió posterior a f6672cc: TE i components
+
+El nou cens de metadades afegix un **TE exterior** als 110 PE coneguts;
+ABL continua separat. [uefi-te-structure.json](uefi-te-structure.json)
+fixa origen/hash i tres seccions ARM64, delta de capçalera eliminada
+0xf38; entrada RVA 0xd0b8, VA preferida 0xa700e0b8, offset TE 0xc180.
+No usar RVA=offset en TE. Cap GUID MiToken literal en este component nou;
+no exclou referències indirectes. L'import automàtic Ghidra ha fallat amb
+«No load spec found»; no s'ha forçat una interpretació funcional incorrecta.
+Queda caracteritzat estructuralment, amb quatre tests de mapatge/límits.
+
+Ebl/QcomBds tenen ara revisió funcional acotada de vies d'interfície;
+TzDxeLA aporta [un consumidor SCM independent](tzdxe-policy-consumer.md),
+amb neteja prèvia de política i una omissió local d'alliberament. No són
+auditories completes ni nous consumidors del callback MiToken +0x18.

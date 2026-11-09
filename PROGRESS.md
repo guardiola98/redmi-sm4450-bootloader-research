@@ -752,3 +752,23 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   Neteja local continua defecte confirmat; repetir models no resol l'activació.
 - 4 proves DEPEX noves passen. Següent: TE exterior i contractes TzDxeLA,
   després precondicions/inicialització de ScmDxeLA. Sense execució ni xarxa.
+
+## Components pendents: TE i TzDxeLA
+
+- TE exterior: ARM64, tres seccions; mapatge reproduïble amb delta 0xf38,
+  entrada VA preferida 0xa700e0b8 / offset 0xc180. Hash/origen verificats.
+  Import Ghidra sense loader TE compatible: límit documentat, no semàntica
+  inventada. Quatre proves de bounds/mapatge passen; cap GUID MiToken literal.
+- Troballa significativa: TzDxeLA 0x3454 consulta el mateix 0x02001401
+  sense passar per MiToken; dos búfers 0x4c4 netejats abans de la crida.
+  Byte +0xc &0x0a, cap lectura del recompte +0xdc. No és garantia del
+  productor ni caller de MiToken +0x18. Model d'inicialització separat.
+- Caller directe: 0x1d08 → 0x1e50 només amb error de càrrega SCM +0x28.
+  Taula de protocol TzDxeLA +0x18=0x1e74 permet seguir una entrada local.
+  Estat de seguretat i consulta de logs condicionen arribar a política.
+- Nova neteja omesa: reserva de política no alliberada en error/retorn;
+  el free del caller correspon a una petició distinta de 0x38 bytes.
+  Defecte local confirmat, repetibilitat/impacte condicionals. Mereix una
+  revisió acotada dels callers; no afirmar explotabilitat ni equivalència TZ.
+- Informe tzdxe-policy-consumer.md, bytes originals i cobertura actualitzats.
+  Següent: inicialització ScmDxeLA i criteris de reobertura dels candidats.
