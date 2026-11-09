@@ -60,13 +60,34 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 - [x] Investigades ferramentes de GitHub per inspeccionar Qualcomm ABL: `theopolis/uefi-firmware-parser`, `LongSoft/UEFITool`, `linux-msm/xbltools`, `qualcomm/abl2esp` i `chkndrp/qualcomm-gbl-exploit-checker`. Documentació i cauteles a [docs/uefi-tools.md](docs/uefi-tools.md).
 - [x] Detectada **signatura `_FVH` a l'offset 0x1028** dins d'`abl.elf`, amb probable volum UEFI a `0x1000`. La capçalera ELF32 ARM **és un contenidor**; la implementació real d'ABL/Fastboot probablement és una EFI PE/COFF comprimida dins del firmware volume, pendent d'extracció i confirmació. Això explica la manca de cadenes ASCII directes sense demostrar cap vulnerabilitat.
 
+- [x] Confirmat al Debian que l'extracció de FV des de `work/abl.elf` funciona: offset `0x1000`, longitud `0x30000` (196.608 bytes), destí local `work/abl-fv.bin`. Encara no s'ha analitzat la jerarquia FFS ni extret `LinuxLoader.efi`.
+- [x] Endurit `.gitignore`: `work/`, `*.efi`, `*.fd`, `*.rom` per evitar publicar per error binaris extrets.
+
 ## Següent pas immediat
 
-**Extreure i analitzar el volum UEFI dins de l'ABL**, en lloc de desassemblar l'ELF32 ARM exterior com si fora el codi funcional. La inspecció hexadecimal mostrava `_FVH` a `0x1028`; la documentació oficial de Qualcomm confirma l'arquitectura habitual `ELF → UEFI FV → secció comprimida → EFI PE32/PE32+`.
+**Analitzar el volum UEFI extret amb ferramentes existents**, en lloc de crear un parser nou abans de provar-ne un de fiable. Primer usar `uefi-firmware-parser` en un entorn virtual de Debian, sense privilegis de root i només amb el fitxer `work/abl-fv.bin`.
 
-Vegeu [docs/uefi-tools.md](docs/uefi-tools.md) per les eines trobades i el procediment de lectura local. Prioritzar `UEFIExtract` o `uefi-firmware-parser`; no fer flash ni executar els binaris extrets.
+```bash
+cd ~/redmi-sm4450-bootloader-research
+git pull
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install uefi_firmware
+python - <<'PY'
+from uefi_firmware import AutoParser
+from pathlib import Path
+data = Path("work/abl-fv.bin").read_bytes()
+parser = AutoParser(data)
+print("Parser:", type(parser).__name__)
+parsed = parser.parse()
+print("Parse success:", bool(parsed))
+if parsed:
+    print("Firmware volume object:", type(parsed).__name__)
+    print("Object summary:", repr(parsed)[:1200])
+PY
+```
 
-**Resultats que cal registrar:** validesa del volum FV, GUID/estructura de seccions, nom i arquitectura del PE EFI (si es troba), i possibles errors del parser. Només després estudiar-lo amb Ghidra. En paral·lel, revisar el codi de `qualcomm-gbl-exploit-checker` i confirmar l'aplicabilitat dels seus patrons al SM4450 abans d'interpretar cap resultat.
+Si l'API de la versió instal·lada diferix, documentar l'error i ajustar el programa a l'API real, **sense assumir que `parse()` retorna dades o extraure contingut no revisat**. Després, si s'identifiquen mòduls PE32/PE32+, fer una extracció limitada a `work/`, identificar arquitectura i preparar anàlisi Ghidra. Avaluar eines de tercers abans d'integrar-les, comprovant llicència, manteniment i confiança; preferir dependència instal·lable o adaptador propi a copiar-ne codi.
 
 ## Pendent després d'eixe pas
 
@@ -88,5 +109,6 @@ Vegeu [docs/uefi-tools.md](docs/uefi-tools.md) per les eines trobades i el proce
 | --- | --- | --- |
 | 2026-11-09 | Creació del registre de progrés i pròxim pas | Estat inicial consolidat; següent prova definida: extracció i inspecció estàtica d'ABL |
 | 2026-11-09 | Anàlisi inicial de `abl.elf` amb `file`, `readelf` i `strings` | ELF32 ARM, tres program headers, un LOAD RWE de 0x30000 bytes i sense seccions; cap cadena coincident amb el filtre de desbloqueig. |
-| 2026-11-09 | Cerca de ferramentes UEFI i nova interpretació del binari | Signatura `_FVH` a `0x1028`, possible FV a `0x1000`. Documentades eines UEFITool, uefi-firmware-parser, xbltools i GBL checker. Següent pas: extracció del FV i de l'EFI interior. |
+| 2026-11-09 | Cerca de ferramentes UEFI i nova interpretació del binari | Signatura `_FVH` a `0x1028`, possible FV a `0x1000`. Documentades eines UEFITool, uefi-firmware-parser, xbltools i GBL checker. |
+| 2026-11-09 | Extracció local confirmada del volum UEFI | `work/abl-fv.bin`, offset `0x1000`, mida `0x30000`; `.gitignore` ampliat per protegir els extrets. Següent prova: parser UEFI en entorn virtual. |
 
