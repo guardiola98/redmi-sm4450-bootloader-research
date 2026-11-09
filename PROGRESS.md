@@ -74,21 +74,20 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Scanner de cadenes executat** sobre el PE ARM64 de 843.776 bytes: 259 coincidències totals; categories `fastboot=119`, `lock=33`, `avb=118`, `security=12` (les categories se solapen). L'eixida mostra missatges reals d'AVB i bloqueig, entre ells `read_is_device_unlocked` a offset de fitxer `0x0a110d`, `the Unlock status is : %d` a `0x0a1983`, `Error getting device state` a `0x0a1ef2` i `androidboot.vbmeta.device_state` a `0x0a1f0f`. També hi ha moltes rutes del codi EDK2 que causen falsos positius de la categoria Fastboot. **No s'ha demostrat vulnerabilitat ni bypass.**
 
+- [x] **Comandes reals de Fastboot identificades en LinuxLoader**: `flashing get_unlock_ability` (offset fitxer `0x0add1d`), `oem unlock` (`0x0add49`), `oem lock` (`0x0add54`), `oem device-info` (`0x0adda6`), `oem edl` (`0x0addc3`), `oem getlog` (`0x0addcb`), entre altres. Estat i política de desbloqueig: `IsAllowUnlock is %d` (`0x0ae085`), `get_unlock_ability: %d` (`0x0aeac7`), `Error Set Device Unlock: %r` (`0x0aeb8d`), `Failed to update the unlock status` (`0x0aebaa`), `Flashing is not allowed in Lock State` (`0x0ae1c4`), `Fastboot boot command is not available in locked device` (`0x0aec16`). La presència de comandes, errors o estat no indica cap bypass.
+- [x] Revisat el codi públic `chkndrp/qualcomm-gbl-exploit-checker`: comprova dos casos vinculats a `set-gpu-preemption` i `set-hw-fence-value` amb cadenes de pegat i una signatura d'opcodes; **no és una prova general** de vulnerabilitat, ni de desbloqueig, i l'absència de cadenes no equival a un estat vulnerable. El seu fitxer `check.py` és GPLv3; no se n'ha copiat codi al projecte. Creat `scripts/check-gbl-markers.py` com a inventari propi de marcadors, amb resultat sempre inconcloent quant a explotabilitat, pendent d'executar.
+
 ## Següent pas immediat
 
-**Ampliar i filtrar les cadenes de `LinuxLoader` per identificar comandes Fastboot/OEM i missatges de bloqueig sense el soroll de les rutes EDK2.** L'scanner inicial ha trobat 259 coincidències, però només ha imprés les primeres 100.
+**Comprovar si les dues superfícies GBL descrites per una ferramenta externa estan presents en este `LinuxLoader`**, sense enviar ordres Fastboot ni provar exploits.
 
 ```bash
 cd ~/redmi-sm4450-bootloader-research
 git pull
-python3 scripts/scan-linuxloader-strings.py --max 400 \
-  | grep -viE '/home/work/|/Library/|/MdePkg/|/MdeModulePkg/|/libavb/' \
-  | grep -iE 'unlock|locking|locked|fastboot|flashing|oem |getvar|device.state|critical|permission|auth|token|signature|firehose|gbl|preemption|fence'
+python3 scripts/check-gbl-markers.py
 ```
 
-La nova eixida pot contindre missatges interns, però **no ha de contindre tokens reals del compte** perquè s'està llegint el PE del firmware públic, no `logcat`. Així i tot, revisar abans de compartir.
-
-**Després:** comparar les cadenes interessants amb les funcions corresponents a Ghidra (PE32+ AArch64), i comprovar si el checker GBL identifica exactament esta compilació; qualsevol resultat heurístic s'ha de validar abans d'afirmar vulnerabilitat. No tocar el telèfon ni escriure particions.
+El resultat només és un **inventari de cadenes**. `not found` no significa que el binari siga vulnerable: pot no tindre eixes funcionalitats, o contindre-les amb altres representacions. La ferramenta externa fa heurístiques sobre signatures i opcodes que també requerixen verificació independent. Si trobem marcadors, revisar la documentació de la vulnerabilitat i la seua aplicabilitat a SM4450; si no, prioritzar Ghidra per seguir les referències d'`IsAllowUnlock` i `oem unlock`. **No executar cap ordre que canvie el lock state.**
 
 ## Pendent després d'eixe pas
 
@@ -115,5 +114,6 @@ La nova eixida pot contindre missatges interns, però **no ha de contindre token
 | 2026-11-09 | Parser UEFI confirma LinuxLoader | `uefi_firmware` 1.16 ha trobat FV intern de 843.968 bytes i aplicació `LinuxLoader` amb secció PE32. |
 | 2026-11-09 | LinuxLoader extret i arquitectura confirmada | Secció `section1.pe` de 843.776 bytes, PE32+ EFI ARM64 amb 3 seccions; publicat `inspect-linuxloader.py`. |
 | 2026-11-09 | Inspecció detallada del PE i scanner de cadenes | RVA `0x1000`, base `0x0`, seccions `.text`, `.data`, `.reloc`; SHA-256 del PE registrat. Scanner ASCII/UTF-16 creat. |
-| 2026-11-09 | Primera cerca de cadenes Fastboot/AVB/bloqueig | 259 coincidències; localitzades referències a estat de desbloqueig i verificació AVB. Següent pas: filtrar rutes EDK2 i revisar les comandes Fastboot/OEM reals. |
+| 2026-11-09 | Primera cerca de cadenes Fastboot/AVB/bloqueig | 259 coincidències; localitzades referències a estat de desbloqueig i verificació AVB. |
+| 2026-11-09 | Comandes Fastboot localitzades i revisió del checker GBL | Identificades `oem unlock`, `flashing get_unlock_ability`, `IsAllowUnlock` i errors de restricció; afegit inventari conservador de marcadors GBL per la pròxima prova. |
 
