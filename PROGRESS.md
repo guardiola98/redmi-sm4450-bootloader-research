@@ -43,7 +43,9 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 - [x] Creat i executat `scripts/analyze-bootchain.py`: hashes de components i relació amb `rawprogram*.xml`.
 - [x] Creat i executat `scripts/check-slot-coverage.py`: manifests de particions A/B; el paquet assigna fitxers a particions `*_a` i deixa el camp `filename` buit en moltes entrades `*_b`. Això **no prova** que les particions B estiguen buides ni quin binari està executant el dispositiu.
 - [x] Confirmada per ADB l'existència de `abl_a`, `abl_b`, `xbl_a`, `xbl_b`, `xbl_config_a`, `xbl_config_b`, amb slot `_b` actiu.
-- [x] Publicat `scripts/extract-abl.py` per extraure de manera local l'ABL del paquet, comprovant SHA-256. **Pendent de rebre el resultat d'execució.**
+- [x] Publicat `scripts/extract-abl.py` per extraure de manera local l'ABL del paquet, comprovant SHA-256; el fitxer `work/abl.elf` existeix al Debian de l'investigador i s'ha inspeccionat amb `file` i `readelf`. No s'ha tornat a comunicar el missatge exacte de l'extractor. 
+- [x] Inspecció ELF inicial de `work/abl.elf`: **ELF32 little-endian ARM, EXEC, enllaçat estàticament, sense taula de seccions**, punt d'entrada `0x9fa00000`, tres program headers (`NULL`, `LOAD`, `NULL`), un segment `LOAD` RWE a offset `0x1000`, adreça `0x9fa00000`, grandària fitxer/memòria `0x30000`. Una capçalera `NULL` addicional apareix a offset `0x31000` amb `0x0f38` bytes de mida declarada; **no està confirmat** què conté eixa regió. L'ELF no presenta taula de seccions ni símbols segons la capçalera; això no prova ofuscació, xifrat o vulnerabilitat.
+- [x] Primera cerca `strings -a -n 6` filtrada per `unlock|lockstate|verifiedboot|fastboot|device state|avb|oem`: **cap coincidència**. És només una cerca de text ASCII; no descarta rutines de desbloqueig o verificació al binari.
 
 ### Hashes útils del paquet Fastboot
 
@@ -57,25 +59,27 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 ## Següent pas immediat
 
-**Extraure i caracteritzar l'`abl.elf` del paquet verificat, únicament al PC.** Encara no hi ha eixida de `readelf` ni `strings`; per tant, no hem confirmat l'arquitectura ELF, seccions, símbols ni cadenes presents.
+**Confirmar si l'ELF conté codi ARM desassemblable i caracteritzar l'absència de cadenes visibles, sense assumir que el format està xifrat.** Amb l'ELF32 ARM i el segment carregable ja identificats, el següent pas és recollir metadades addicionals del mateix fitxer i preparar una anàlisi estàtica amb Ghidra o un desassemblador adequat.
 
 En Debian:
 
 ```bash
 cd ~/redmi-sm4450-bootloader-research
 git pull
-python3 scripts/extract-abl.py \
-  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz
-
-file work/abl.elf
-readelf -h work/abl.elf
-readelf -l work/abl.elf
-strings -a -n 6 work/abl.elf \
-  | grep -iE 'unlock|lockstate|verifiedboot|fastboot|device state|avb|oem' \
-  | head -80
+readelf -S work/abl.elf
+readelf -n work/abl.elf
+strings -a -n 4 work/abl.elf | wc -l
+xxd -l 128 work/abl.elf
+xxd -s 4096 -l 128 work/abl.elf
 ```
 
-**Què esperem obtindre:** estructura, segments i indicis de funcionalitat relacionats amb Fastboot/AVB sense executar binaris propietaris. Després: comparar amb versions anteriors del **mateix** model i regió, verificades individualment, i formular hipòtesis concretes sobre canvis de validació. No assumir que l'ABL del paquet coincidix amb l'ABL efectivament instal·lat al slot B.
+- `readelf -S` hauria de corroborar la manca de seccions.
+- `readelf -n` permet veure si hi ha notes ELF reconegudes.
+- `strings | wc -l` ajuda a determinar si la falta de coincidències és deguda a l'absència general de text ASCII o només al filtre.
+- `xxd` observa **només** 128 bytes de la capçalera i 128 bytes del començament del segment carregable; és un examen offline.
+- Si hi ha codi ARM desassemblable, considerar Ghidra amb el punt d'entrada `0x9fa00000`. No inferir una vulnerabilitat de la presència de l'atribut RWE en firmware bare-metal.
+
+**Precaució:** el binari prové del paquet Fastboot verificat, no d'una lectura de la partició `abl_b` del dispositiu en ús. No s'ha demostrat que siguen idèntics.
 
 ## Pendent després d'eixe pas
 
@@ -96,4 +100,5 @@ strings -a -n 6 work/abl.elf \
 | Data | Canvi | Resultat |
 | --- | --- | --- |
 | 2026-11-09 | Creació del registre de progrés i pròxim pas | Estat inicial consolidat; següent prova definida: extracció i inspecció estàtica d'ABL |
+| 2026-11-09 | Anàlisi inicial de `abl.elf` amb `file`, `readelf` i `strings` | ELF32 ARM, tres program headers, un LOAD RWE de 0x30000 bytes i sense seccions; cap cadena coincident amb el filtre de desbloqueig. Següent pas: metadades ELF i inspecció dels primers bytes. |
 
