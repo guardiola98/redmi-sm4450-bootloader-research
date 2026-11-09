@@ -30,7 +30,7 @@ A `FUN_00054980`, el missatge `IsAllowUnlock is %d` mostra un flag global de 32 
    ```
 
    És a dir: calcula un índex `N-1` a partir d'un camp de la partició, recupera el bit menys significatiu del byte `buf[N-1]`, i guarda el resultat a `DAT_000cb5c0`. **No està demostrat que `N` siga la mida total real de la partició**, ni quina validació de rang es fa; no descriure'l encara com 'últim byte de tota la partició'.
-6. A `0x55aa8`–`0x55ab4`, una altra branca mostra el valor amb `IsAllowUnlock is %d`, en passar `w2=[x28+0x18]` a una rutina de log.
+6. A `0x55aa8`–`0x55ab4`, una altra branca mostra el valor amb `IsAllowUnlock is %d`, en passar `w2=[x28+0x18]` a una rutina de log. **Precaució temporal important:** en la funció, eixe log apareix **abans** de la lectura del búfer de FRP (`0x55b20`) i de l'escriptura del bit (`0x55b40`), i la rutina pot tornar a la regió del log després de l'escriptura (`0x55b4c` salta a `0x55a90`). Per tant, no és correcte presentar-lo com una única seqüència lineal de lectura FRP → missatge.
 
 Cadenes contextuals del **mateix** PE:
 - `0xAE085`: `IsAllowUnlock is %d`
@@ -38,7 +38,15 @@ Cadenes contextuals del **mateix** PE:
 - `0xAE0BB`: `Error Locate MiToken Protocol: %r`
 - `0xAE0DE`: `Error Get Token Length: %r`
 
-La presència de **MiToken** suggereix una altra via relacionada amb autorització dins de la funció o codi veí, però **encara no està demostrat** com MiToken es relaciona amb el flag FRP ni amb una ordre de desbloqueig.
+### Ruta MiToken inspeccionada addicionalment
+
+- Després del camí FRP, el flux pot arribar a `0x55b50`: prepara `x0=0xb1800` (punter a dades que semblen un GUID de protocol) i `x2=[x29-0xe0]`, i crida `0x59f48`.
+- `0x59f48` posa `x1=0` i delega mitjançant un salt indirecte `[x8+0x228]+0x140`. El patró és **compatible amb una crida de localització de protocol UEFI**, però la taula de protocol encara no s'ha tipat ni verificat formalment.
+- Si el retorn de `0x59f48` és zero, `0x55be0..0x55bf0` carrega el protocol recuperat i crida `0x59fe0` amb `x1=0` i un punter local `x2`; `0x59fe0` salta a un callback de `[x0+8]`. La seqüència i les cadenes `Error Get Token Length` / `Token Length` són compatibles amb consultar la **longitud del token**.
+- Després `0x55c70..0x55c94` prepara una altra crida al mateix callback, amb més paràmetres, i pot emetre `Error Get Token`. Això apunta a obtenció de token en una ruta separada de FRP.
+- **Pendent:** provar la identitat exacta del GUID/protocol, el format del token i si intervé en `oem unlock`; no deduir-ho només del text ni de la proximitat de les instruccions.
+
+La presència de **MiToken** suggereix una interfície d'autorització diferent de la lectura FRP, però **encara no està demostrat** que les dues vies siguen suficients ni necessàries per desbloquejar el dispositiu.
 
 ## Interpretació i límits
 
