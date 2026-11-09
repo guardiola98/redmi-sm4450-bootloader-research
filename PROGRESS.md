@@ -405,3 +405,54 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Pendent: model CFG amb fallades injectades com a dades, efectes en caller
   ABL, mapeig complet de callbacks, integritat interna keymaster/RPMB i
   comparació pública detallada. No s'ha executat cap payload ni tocat mòbil.
+
+## Fals èxit VerifiedBoot: efectes en ABL — 2026-11-09
+
+- Completada anàlisi Ghidra independent de LinuxLoader (SHA-256 verificat),
+  exportacions locals C/ASM; cap execució de firmware ni operació al mòbil.
+- Corroborat que els setters modifiquen RAM abans de persistir i no restauren
+  el byte dins del setter. La funció superior pot intentar reversió si falla
+  el reset posterior; altres passos poden fallar. Èxit final no garantit.
+- Lectura inicial 0x44640: èxit fals neteja el flag i conserva búfer o inicia
+  defaults segons capçalera i byte retornat per 0x2e4c0. No assumir desbloqueig.
+- MiToken continua sent requisit previ en la ruta 0x57e48 → 0x57e94.
+- Nou informe docs/verifiedboot-failure-analysis.md amb taula de camins,
+  evidència RVA, límits i següent comprovació. Model offline en
+  scripts/test-verifiedboot-failure-model.py: 7 tests passen.
+- Una escriptura posterior correcta pot persistir tot el búfer, inclosos
+  canvis anteriors: distingir absència d'escriptura actual de persistència futura.
+- Següent: 0x10284, callers de 0x44640 i callback VerifiedBoot +0x30.
+  Accessibilitat de reserva nul·la i bypass no demostrats.
+
+## Consulta segura i caller inicial — continuació 2026-11-09
+
+- Verificat en ASM: `0x10284` transforma sentinella `0xffffffff` en
+  `0x8000000000000001`; byte baix 1, no activa defaults desbloquejats.
+- Una sola crida directa a `0x44640`, RVA `0x173c`; dues ocurrències en C
+  són codi solapat. Retorn no zero abandona la continuació normal.
+- Documentat en `docs/verifiedboot-failure-analysis.md`. El retorn intern
+  de `0x100b4` necessita reconstrucció ASM pels helpers compartits;
+  callback VerifiedBoot +0x30 també pendent. Sense bypass demostrat.
+
+## Retorn SCM reconstruït — 2026-11-09
+
+- `0x100b4`: localització fallida, punter nul, error SCM i resposta[0] != 1
+  convergixen en `0xffffffff`; l'epíleg compartit conserva w0.
+- Èxit: retorna 32 bits de resposta[1]. Els errors locals enumerats
+  es transformen en byte 1 i defaults bloquejats en `0x44640`.
+- Model ampliat a 9 tests, tots passen. Informe amb branques i RVA en
+  `docs/verifiedboot-failure-analysis.md`. No s'ha executat firmware.
+- Pendent: callback VerifiedBoot +0x30 i semàntica interna TZ dels bits;
+  no hi ha desbloqueig ni accessibilitat de reserva nul·la demostrats.
+
+
+## Callback de restabliment VerifiedBoot — 2026-11-09
+
+- Taula PE verificada: +0x30 → 0x1c44. Anàlisi ASM fins a 0x1d88.
+- Delega en keymaster, comanda 0x10e, petició/resposta de 4 bytes.
+  Èxit només amb transport i resposta zero; errors de comanda → 0x50.
+  Errors de localització/inici es propaguen. Sense reserva de pàgina local.
+- Informe ampliat en docs/verifiedboot-failure-analysis.md; 9 tests existents
+  passen, sense emular el callback nou. Cap operació sobre el mòbil.
+- Pendent: condicions ABL 0x9dbc/0x9db4 i contracte QSEE/keymaster.
+  No hi ha bypass ni efecte intern de reset demostrat.

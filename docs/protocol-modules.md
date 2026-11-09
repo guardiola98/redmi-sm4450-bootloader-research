@@ -144,3 +144,12 @@ confirmar al caller un canvi només en RAM; persistència no aconseguida.
 No s'ha demostrat control de la reserva des de Fastboot bloquejat, ni que
 l'autorització MiToken es puga evitar. Validació segura següent: modelar el
 CFG amb allocator nul i comprovar l'estat del caller, sense executar firmware.
+
+## Efectes en ABL verificats
+
+Vegeu [anàlisi del fals èxit](verifiedboot-failure-analysis.md): setters
+modifiquen RAM abans de persistir; la lectura inicial neteja el flag de
+lectura i pot inicialitzar defaults segons una consulta segura separada.
+La ruta Fastboot examinada conserva la verificació MiToken prèvia.
+Set proves sintètiques passen; accessibilitat de la fallada i impacte
+explotable continuen sense demostrar-se.
