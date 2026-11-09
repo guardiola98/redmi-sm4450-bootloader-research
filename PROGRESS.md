@@ -81,13 +81,15 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Ghidra (anàlisi estàtica) — primera referència a `IsAllowUnlock is %d`**: el CodeBrowser mostra la cadena definida a l'adreça `0x000ae085`; `Show References to Address` mostra **una referència de codi**, amb el context desassemblat `add x1, =>s_IsAllowUnlock_is_%d` i adreça de la instrucció parcialment oculta a la captura. No s'ha verificat encara la funció contenidora ni la font del valor, i no s'ha descobert cap bypass.
 
+- [x] **Ghidra — referència d'`IsAllowUnlock` resolta a codi**: funció contenidora `FUN_00054980`; al voltant de `0x00055aac` es veu `ldr x2, [x28, #0x18]`, seguida de `adrp x1, 0xa0000` (`0x00055ab0`), `add x1, x1, #0xe085` (`0x00055ab4`, adreça del text `IsAllowUnlock is %d`) i `bl FUN_00059e4c` (`0x00055ab8`). **Hipòtesi:** `FUN_00059e4c` és una rutina de logging i `x2` transporta el valor imprés; encara no confirmada ni la signatura de la funció ni la procedència de `x28`. Cal distingir el log de la comprovació d'autorització real.
+
 ## Següent pas immediat
 
-**Seguir la referència de codi de `IsAllowUnlock is %d` en Ghidra.** En la finestra de referències, doble clic en l'única fila, tancar el diàleg i llegir el desassemblatge i el pseudocodi de la funció contenidora.
+**Seguir el valor imprés pel missatge `IsAllowUnlock is %d` dins de `FUN_00054980`.** La captura identifica la càrrega `ldr x2, [x28, #0x18]` immediatament abans de la crida a `FUN_00059e4c`.
 
-Cal registrar: **adreça de la instrucció**, nom/adreça de la funció, crida de format/log que rep la cadena i origen de l'argument enter que s'imprimix. Les referències de la cadena poden portar només a una funció de registre, no a la decisió de política. Si el decompilador no identifica la funció, inspeccionar els límits i les crides en el Listing, sense modificar el binari.
+En Ghidra: seleccionar la instrucció `0x00055aac` i rastrejar **cap arrere** on s'assigna `x28` dins de la funció `FUN_00054980`; després buscar les escriptures o crides que inicialitzen el camp d'offset `0x18`. En paral·lel, inspeccionar la capçalera/pseudocodi de `FUN_00059e4c` per verificar si només fa logging. **No modificar cap instrucció ni executar cap ordre de desbloqueig**.
 
-**Prova pendent:** captura de pantalla amb la instrucció seleccionada i el panell Decompiler visible. No cal executar cap comanda Fastboot ni modificar el dispositiu.
+Captures útils: el **Decompiler** centrat en la sentència que conté `"IsAllowUnlock is %d"` (utilitzar cerca Ctrl+F dins de Ghidra si cal), i el tram anterior de la funció on `x28` adquireix el seu valor. Si no es veu la sentència perquè és una funció massa gran, documentar el context d'instruccions i analitzar les crides/branques adjacents.
 
 ## Pendent després d'eixe pas
 
@@ -117,4 +119,5 @@ Cal registrar: **adreça de la instrucció**, nom/adreça de la funció, crida d
 | 2026-11-09 | Primera cerca de cadenes Fastboot/AVB/bloqueig | 259 coincidències; localitzades referències a estat de desbloqueig i verificació AVB. |
 | 2026-11-09 | Comandes Fastboot localitzades i revisió del checker GBL | Identificades `oem unlock`, `flashing get_unlock_ability`, `IsAllowUnlock` i errors de restricció; afegit inventari conservador de marcadors GBL per la pròxima prova. |
 | 2026-11-09 | Prova dels marcadors GBL executada | Cap dels quatre marcadors específics de GPU/fence detectat; cadena genèrica Fastboot sí. Resultat inconcloent. Següent pas: referències de les funcions de bloqueig en Ghidra. |
-| 2026-11-09 | Primera referència a IsAllowUnlock en Ghidra | Una XREF confirmada a la cadena `IsAllowUnlock is %d`, instrucció `add x1, ...`; següent pas: navegar a la funció i estudiar el valor passat al log. |
+| 2026-11-09 | Primera referència a IsAllowUnlock en Ghidra | Una XREF confirmada a la cadena `IsAllowUnlock is %d`. |
+| 2026-11-09 | Referència resolta en codi ARM64 | `FUN_00054980`: `ldr x2,[x28,#0x18]` abans de `bl FUN_00059e4c`; possible logging del valor d'autorització. Següent pas: origen de `x28` i comprovació de la rutina de logging. |
