@@ -292,3 +292,25 @@ python3 scripts/inventory-uefi-ffs.py \
 **Objectiu:** determinar quants FFS hi ha, els GUID de fitxer, els noms UI i si les seccions estan comprimides o definides per GUID. Una vegada identificats, extreure/analitzar només el contingut offline dels mòduls pertinents; no tocar les particions ni fer flash.
 
 **Limitació:** l'inventari FFS és un analitzador simple de primer nivell, no un validador complet del format PI/UEFI; un fitxer FFS inesperat o capçalera estesa pot requerir un parser més complet. Cap vulnerabilitat ni bypass confirmat.
+
+## Inventari FFS real i GUID de compressió — 2026-11-09
+
+Eixida de `scripts/inventory-uefi-ffs.py` executat localment per l'investigador (SHA-256 dels 3 FV confirmats):
+
+- `uefi.elf`: 5 entrades FFS de primer nivell; primer fitxer de farciment, un fitxer amb seccions `raw` + `TE`, `uefiplat.cfg`, i **dues seccions GUID-defined** en fitxers FFS a offsets `0x04ae08` i `0x19c948`. GUID de secció `1d301fe9-be79-4353-91c2-d23bc959ae0c`, identificat en fonts UEFI/Qualcomm com a variant de **GZIP de Qualcomm**.
+- `imagefv.elf`: 1 FFS, offset `0x001048`, amb secció GUID-defined `ee4e5898-3914-4259-9d6e-dc7bd79403cf`, associada a **LZMA d'UEFI**.
+- `tools.fv`: 1 FFS, offset `0x000048`, amb secció GUID-defined `ee4e5898-3914-4259-9d6e-dc7bd79403cf`.
+- Els GUID de secció **identifiquen el format exterior de les dades**, no identifiquen cap protocol token ni VerifiedBoot. Encara no s'ha comprovat descomprimint si contenen mòduls relacionats amb el token.
+
+**Nova eina pujada:** `scripts/inspect-compressed-uefi.py`, parseja les seccions de primer nivell, intenta GZIP i LZMA **amb límits de memòria i grandària**, busca els GUID de protocol en les dades descomprimides i mostra tipus de seccions interns. No escriu fitxers, no connecta amb el telèfon, no executa binaris. L'anàlisi de seccions internes és preliminar; un FV anidat o formats específics requeriran un lector complet.
+
+**Següent acció al Debian:**
+
+```bash
+cd ~/redmi-sm4450-bootloader-research
+git pull
+python3 scripts/inspect-compressed-uefi.py \
+  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz
+```
+
+Passar l'eixida completa, incloent errors de descompressió si apareixen; un error d'esta ferramenta **no demostra xifrat ni absència del protocol**. Si els GUID apareixen, localitzar el PE/TE corresponent per a anàlisi estàtica. **Sense bypass ni vulnerabilitat confirmats.**
