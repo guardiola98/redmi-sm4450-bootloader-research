@@ -624,3 +624,20 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Manifest ampliat amb mida/hash/ruta/prefix de RAW. No es deduïx absència
   global de consumidors +0x18. Cap canvi de classificació de defectes.
 - Proves del codec LZMA passen; següent: mapatge i referències TZ en Ghidra.
+
+## Fase TrustZone: lookup del servei SCM
+
+- Hash TZ verificat i mapatge ELF reproduïble: 35 headers, 33 LOAD;
+  manifest docs/tz-structure.json. Ghidra import/export completats amb
+  advertiments de funcions solapades documentats, sense execució del firmware.
+- Ruta 0x1c07798c normalitza 0x42001401 a 0x02001401 i consulta
+  0x1c099c20. Traça ARM64/bytes: índex 0x100 supera 0x11 a 0x1c099e2c;
+  retorna 1 sense callback. Rebuig verificat en esta consulta concreta.
+- No s'ha provat la connexió de l'entrada UEFI amb esta ruta ni descartat
+  dispatch alternatiu: indisponibilitat global del servei NO demostrada.
+  No es modifiquen encara els candidats MiToken/VerifiedBoot per accessibilitat.
+- Informe docs/tz-dispatch-analysis.md, bytes VA/offset i sis tests sintètics
+  nous d'ELF/branques. Coincidència immediata 0x1401 en altra funció tracta
+  una mida; descartada com identificació automàtica del servei.
+- Represa: owner zero 0x1c077840; callers de 0x1c07798c; traducció d'error
+  des de 0x1c077bc8. Política i garanties internes continuen desconegudes.

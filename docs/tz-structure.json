@@ -1,0 +1,399 @@
+{
+  "sha256": "f7d943b1de872d239468fe30cc4fab92c5acb0405203e9f9e38436cefd7e1a76",
+  "entry": "0x14680000",
+  "segments": [
+    {
+      "index": 0,
+      "type": 0,
+      "flags": 117440512,
+      "offset": 0,
+      "va": 0,
+      "filesz": 2024,
+      "memsz": 0,
+      "align": 0
+    },
+    {
+      "index": 1,
+      "type": 1,
+      "flags": 7,
+      "offset": 4096,
+      "va": 342360064,
+      "filesz": 45228,
+      "memsz": 45228,
+      "align": 4096
+    },
+    {
+      "index": 2,
+      "type": 1,
+      "flags": 6,
+      "offset": 53248,
+      "va": 342409216,
+      "filesz": 12932,
+      "memsz": 12932,
+      "align": 4096
+    },
+    {
+      "index": 3,
+      "type": 1,
+      "flags": 7,
+      "offset": 69632,
+      "va": 342425600,
+      "filesz": 6168,
+      "memsz": 6168,
+      "align": 4096
+    },
+    {
+      "index": 4,
+      "type": 1,
+      "flags": 6,
+      "offset": 77824,
+      "va": 342433792,
+      "filesz": 6616,
+      "memsz": 6616,
+      "align": 4096
+    },
+    {
+      "index": 5,
+      "type": 1,
+      "flags": 5,
+      "offset": 86016,
+      "va": 469819392,
+      "filesz": 31360,
+      "memsz": 31360,
+      "align": 4096
+    },
+    {
+      "index": 6,
+      "type": 1,
+      "flags": 6,
+      "offset": 118784,
+      "va": 469852160,
+      "filesz": 51776,
+      "memsz": 51776,
+      "align": 4096
+    },
+    {
+      "index": 7,
+      "type": 1,
+      "flags": 6,
+      "offset": 172032,
+      "va": 469905408,
+      "filesz": 41104,
+      "memsz": 41104,
+      "align": 4096
+    },
+    {
+      "index": 8,
+      "type": 1,
+      "flags": 5,
+      "offset": 217088,
+      "va": 469966848,
+      "filesz": 1072436,
+      "memsz": 1072436,
+      "align": 4096
+    },
+    {
+      "index": 9,
+      "type": 1,
+      "flags": 6,
+      "offset": 1290240,
+      "va": 471040000,
+      "filesz": 86536,
+      "memsz": 86536,
+      "align": 4096
+    },
+    {
+      "index": 10,
+      "type": 1,
+      "flags": 6,
+      "offset": 1380352,
+      "va": 471130112,
+      "filesz": 712320,
+      "memsz": 712320,
+      "align": 4096
+    },
+    {
+      "index": 11,
+      "type": 1,
+      "flags": 6,
+      "offset": 2093056,
+      "va": 471842816,
+      "filesz": 0,
+      "memsz": 0,
+      "align": 4096
+    },
+    {
+      "index": 12,
+      "type": 1,
+      "flags": 6,
+      "offset": 2093056,
+      "va": 472387584,
+      "filesz": 49128,
+      "memsz": 380928,
+      "align": 4096
+    },
+    {
+      "index": 13,
+      "type": 1,
+      "flags": 6,
+      "offset": 2142208,
+      "va": 472768512,
+      "filesz": 65536,
+      "memsz": 65536,
+      "align": 4096
+    },
+    {
+      "index": 14,
+      "type": 1,
+      "flags": 6,
+      "offset": 2207744,
+      "va": 472834048,
+      "filesz": 65536,
+      "memsz": 65536,
+      "align": 4096
+    },
+    {
+      "index": 15,
+      "type": 1,
+      "flags": 4,
+      "offset": 2273280,
+      "va": 472928256,
+      "filesz": 612,
+      "memsz": 612,
+      "align": 4096
+    },
+    {
+      "index": 16,
+      "type": 1,
+      "flags": 5,
+      "offset": 2277376,
+      "va": 472932352,
+      "filesz": 529444,
+      "memsz": 529444,
+      "align": 4096
+    },
+    {
+      "index": 17,
+      "type": 1,
+      "flags": 6,
+      "offset": 2809856,
+      "va": 473464832,
+      "filesz": 5160,
+      "memsz": 5160,
+      "align": 4096
+    },
+    {
+      "index": 18,
+      "type": 1,
+      "flags": 6,
+      "offset": 2818048,
+      "va": 473473024,
+      "filesz": 33750,
+      "memsz": 33750,
+      "align": 4096
+    },
+    {
+      "index": 19,
+      "type": 1,
+      "flags": 5,
+      "offset": 2854912,
+      "va": 473509888,
+      "filesz": 289110,
+      "memsz": 289110,
+      "align": 4096
+    },
+    {
+      "index": 20,
+      "type": 1,
+      "flags": 6,
+      "offset": 3145728,
+      "va": 473800704,
+      "filesz": 248,
+      "memsz": 248,
+      "align": 4096
+    },
+    {
+      "index": 21,
+      "type": 1,
+      "flags": 6,
+      "offset": 3149824,
+      "va": 473804800,
+      "filesz": 10608,
+      "memsz": 10608,
+      "align": 4096
+    },
+    {
+      "index": 22,
+      "type": 1,
+      "flags": 6,
+      "offset": 3162112,
+      "va": 473817088,
+      "filesz": 38216,
+      "memsz": 38216,
+      "align": 4096
+    },
+    {
+      "index": 23,
+      "type": 1,
+      "flags": 6,
+      "offset": 3203072,
+      "va": 473858048,
+      "filesz": 112404,
+      "memsz": 112404,
+      "align": 4096
+    },
+    {
+      "index": 24,
+      "type": 1,
+      "flags": 5,
+      "offset": 3317760,
+      "va": 473972736,
+      "filesz": 136978,
+      "memsz": 136978,
+      "align": 4096
+    },
+    {
+      "index": 25,
+      "type": 1,
+      "flags": 6,
+      "offset": 3457024,
+      "va": 474112000,
+      "filesz": 254,
+      "memsz": 254,
+      "align": 4096
+    },
+    {
+      "index": 26,
+      "type": 1,
+      "flags": 6,
+      "offset": 3461120,
+      "va": 474116096,
+      "filesz": 2168,
+      "memsz": 2168,
+      "align": 4096
+    },
+    {
+      "index": 27,
+      "type": 1,
+      "flags": 6,
+      "offset": 3465216,
+      "va": 474120192,
+      "filesz": 149592,
+      "memsz": 149592,
+      "align": 4096
+    },
+    {
+      "index": 28,
+      "type": 1,
+      "flags": 6,
+      "offset": 3616768,
+      "va": 474271744,
+      "filesz": 26893,
+      "memsz": 26893,
+      "align": 4096
+    },
+    {
+      "index": 29,
+      "type": 1,
+      "flags": 5,
+      "offset": 3645440,
+      "va": 474300416,
+      "filesz": 32618,
+      "memsz": 32618,
+      "align": 4096
+    },
+    {
+      "index": 30,
+      "type": 1,
+      "flags": 6,
+      "offset": 3678208,
+      "va": 474333184,
+      "filesz": 197,
+      "memsz": 197,
+      "align": 4096
+    },
+    {
+      "index": 31,
+      "type": 1,
+      "flags": 6,
+      "offset": 3682304,
+      "va": 474337280,
+      "filesz": 632,
+      "memsz": 632,
+      "align": 4096
+    },
+    {
+      "index": 32,
+      "type": 1,
+      "flags": 6,
+      "offset": 3686400,
+      "va": 474341376,
+      "filesz": 4424,
+      "memsz": 4424,
+      "align": 4096
+    },
+    {
+      "index": 33,
+      "type": 1,
+      "flags": 6,
+      "offset": 3694592,
+      "va": 474349568,
+      "filesz": 9623,
+      "memsz": 9623,
+      "align": 4096
+    },
+    {
+      "index": 34,
+      "type": 0,
+      "flags": 33554432,
+      "offset": 3706880,
+      "va": 0,
+      "filesz": 12480,
+      "memsz": 12480,
+      "align": 4096
+    }
+  ],
+  "candidate_words": [
+    {
+      "value": "0x1401",
+      "offset": "0x5997",
+      "va": [
+        "0x14684997"
+      ],
+      "aligned": false
+    },
+    {
+      "value": "0x1401",
+      "offset": "0x16e359",
+      "va": [
+        "0x1c16b359"
+      ],
+      "aligned": false
+    },
+    {
+      "value": "0x1401",
+      "offset": "0x16e4d5",
+      "va": [
+        "0x1c16b4d5"
+      ],
+      "aligned": false
+    },
+    {
+      "value": "0x1401",
+      "offset": "0x257056",
+      "va": [
+        "0x1c331056"
+      ],
+      "aligned": false
+    },
+    {
+      "value": "0x1401",
+      "offset": "0x257096",
+      "va": [
+        "0x1c331096"
+      ],
+      "aligned": false
+    }
+  ],
+  "limitation": "Literal words are not verified service registrations; flags do not prove runtime page permissions"
+}
