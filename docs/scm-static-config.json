@@ -1,0 +1,20 @@
+{
+  "source": "work/uefi-provider-source.elf",
+  "sha256": "0543144c7f583d7e870019d95206be2b864eae1fff878dcf9bcee52c063ecc50",
+  "config": {
+    "ffs": "dde58710-41cd-4306-dbfb-3fa90bb1d2dd",
+    "ffs_offset": "0x49000",
+    "section": "0x49038",
+    "section_type": "0x19",
+    "data_offset": "0x4903c",
+    "size": 7626,
+    "sha256": "aece4446b3ea41615b0c7aadc79fd2f4c9173fb7a92d241647bd26ed6b62aa37",
+    "selected_keys": {
+      "SecurityFlag": [
+        "0xC4"
+      ],
+      "SmcInvokeConfig": []
+    }
+  },
+  "scope": "Static resource only; effective library values/overrides not established"
+}

@@ -120,3 +120,10 @@ Ebl/QcomBds tenen ara revisió funcional acotada de vies d'interfície;
 TzDxeLA aporta [un consumidor SCM independent](tzdxe-policy-consumer.md),
 amb neteja prèvia de política i una omissió local d'alliberament. No són
 auditories completes ni nous consumidors del callback MiToken +0x18.
+
+ShmBridgeDxe també té revisió acotada de registre, assignació i alliberament;
+ScmDxeLA, dels inicialitzadors i publicació de les dues taules. La secció
+RAW `uefiplat.cfg` exterior té ara traça de claus pertinents en
+[scm-static-config.json](scm-static-config.json). No és cobertura funcional
+de tots els PE ni certifica els valors de configuració efectius. Vegeu
+[inicialització SCM](scm-initialization-analysis.md).

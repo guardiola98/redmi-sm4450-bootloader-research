@@ -23,6 +23,25 @@ CASES = {
                                  0x3844,0x384c,0x3850,0x3854,0x3860,0x3868,
                                  0x387c,0x3880,0x3884,0x388c,0x3994,0x39a8,
                                  0x39d0,0x4218,0x4318,0x433c,0x4350,0x9228,0x9234]},
+    'ScmDxeLA': {'guids': [0xd038,0xd088,0xd098],
+                 'words': [0xd110,0xd168,0xd188,0xd190,0xd198,
+                           0xd438,0xd440,0xd450,0xd460,0xd468,0xd488],
+                 'instructions': [0x14f8,0x1500,0x1504,0x1508,0x1524,0x1528,
+                                  0x1550,0x1554,0x1564,0x1570,0x158c,0x17e4,
+                                  0x3780,0x3784,0x37b0,0x37d0,0x37dc,0x37f8,
+                                  0x3804,0x3814,0x381c,0x384c,0x3864,
+                                  0x36e4,0x36fc,0x38c8,0x38cc,0x4570,0x4580,
+                                  0x47d8,0x47dc,0x47e0,0x4808,0x4810,0x4818,
+                                  0x4828,0x482c,0x48dc,0x48e0,0x48e4,0x4a60,
+                                  0x4ba0,0x4c78,0x4c7c,0x4cc8,0x4ccc,
+                                  0x5814,0x5820,0x5824,0x582c,0x583c,
+                                  0x6aec,0x6af0,0x6b08,0x6b20,
+                                  0x6da0,0x731c,0x7320,0x7324]},
+    'ShmBridgeDxe': {'guids': [0x7068], 'words': [0x70a8,0x70b0,0x70b8],
+                     'instructions': [0x14e4,0x1514,0x1518,0x151c,0x1520,
+                                      0x1530,0x1534,0x2950,0x2b7c,0x2b94,0x2bb0,
+                                      0x2bb4,0x2bf4,0x2bf8,0x2c08,0x2c18,
+                                      0x2c20,0x2c24,0x460c,0x4610]},
 }
 
 
@@ -34,7 +53,19 @@ def main():
         if source.stat().st_size > 4*1024*1024:
             raise ValueError('PE exceeds audit read limit')
         data = source.read_bytes()
-        expected = next(row for row in census if row['name'] == name)
+        expected = next((row for row in census if row['name'] == name), None)
+        if expected is None:
+            # New functional review of an already inventoried PE: reuse its
+            # provenance; do not run another GUID scan or unpack the firmware.
+            metadata = json.loads(Path('docs/consumer-dependencies.json').read_text())
+            candidates = [(module, executable) for image in metadata
+                          for module in image['ffs_metadata'] if name in module['names']
+                          for executable in module['executables'] if executable['type'] == 'PE']
+            if len(candidates) != 1:
+                raise ValueError('Ambiguous metadata: '+name)
+            module, executable = candidates[0]
+            expected = dict(sha256=executable['sha256'], ffs=module['ffs'],
+                            outer=executable['path'][1].split(':')[1].split('@')[0])
         if hashlib.sha256(data).hexdigest() != expected['sha256']:
             raise ValueError('PE hash mismatch: '+name)
         row = dict(name=name, sha256=expected['sha256'], ffs=expected['ffs'],

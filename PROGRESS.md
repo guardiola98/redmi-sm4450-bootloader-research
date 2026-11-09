@@ -772,3 +772,32 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   revisió acotada dels callers; no afirmar explotabilitat ni equivalència TZ.
 - Informe tzdxe-policy-consumer.md, bytes originals i cobertura actualitzats.
   Següent: inicialització ScmDxeLA i criteris de reobertura dels candidats.
+
+## Inicialització SCM i ShmBridge
+
+- Pregunta: fallar un inicialitzador provoca fallback o impedix publicar SCM?
+  CBNZ 0x1508/0x1528 propaga estat no zero abans d'instal·lar protocol;
+  cap segon transport. Error d'instal·lació també es propaga. Registre
+  auxiliar de logs posterior pot fallar sense revocar el protocol publicat.
+- Sonda amb un argument usa registres abans de reservar memòria global;
+  descartada dependència circular d'eixe buffer. Error LocateProtocol
+  ShmBridge arriba a ASSERT amb espera, no a un retorn ordinari demostrat.
+- ShmBridgeDxe revisat funcionalment: +8 neteja la mida demanada inclús
+  en reutilització, +0x10 només marca disponible. No traslladar el zero-fill
+  a la política MiToken, que usa un allocator diferent. Hash/bytes contrastats.
+- SmcInvokeConfig: camps 11/11/10, mida de taules <=81.920 bytes, independent
+  del recompte de política. Recurs uefiplat.cfg té SecurityFlag=0xC4 i no
+  SmcInvokeConfig; valor efectiu de biblioteca/sobreescriptures no demostrat.
+- Neteja tardana de 0x3744: fallada d'objectes o CreateEventEx deixa dues
+  reserves ShmBridge sense recuperació local. Callback que les allibera
+  encara no registrat; impacte/repetició condicionals, no vulnerabilitat provada.
+- Troballa addicional: AllocatePool falla normalment → 0x6b08 retorna NULL
+  → 0x4774 prepara EFI error 9 però crida 0x4b7c amb globals encara zero.
+  0x57fc accepta índex zero amb nombre de remots per defecte 256 i intenta
+  escriure a adreça zero; també hi ha lectura posterior de base nul·la+8.
+  Defecte de neteja amb inicialització parcial confirmat sota error ordinari;
+  activació real/mapatge/impacte desconeguts. No traslladar-hi l'ASSERT de VB.
+  Referències Ghidra i bytes originals comproven estat inicial i salts.
+- Informe scm-initialization-analysis.md i manifest de configuració; cap
+  reconstrucció EL3 repetida. Següent: consolidar classificació i criteris
+  de reobertura; validar proves i conservar la fase en Git.

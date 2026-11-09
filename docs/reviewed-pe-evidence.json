@@ -315,5 +315,421 @@
         "value": "0x27a8"
       }
     ]
+  },
+  {
+    "name": "ScmDxeLA",
+    "sha256": "bf446081b8d1156f7de9c1b329dcd774f9df427d890d2ca67f6259f6a985d77d",
+    "ffs": "4b4973ee-401b-4f36-a6a9-533dfccdfc33",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [
+      {
+        "rva": "0xd038",
+        "bytes": "0d 20 e2 c1 9d ef 8b 44 b6 46 cd 6e 5d 27 83 e9",
+        "guid": "c1e2200d-ef9d-448b-b646-cd6e5d2783e9"
+      },
+      {
+        "rva": "0xd088",
+        "bytes": "8d 10 ed 77 24 85 8b 4b 9d 2e 34 98 7a ec b9 c1",
+        "guid": "77ed108d-8524-4b8b-9d2e-34987aecb9c1"
+      },
+      {
+        "rva": "0xd098",
+        "bytes": "1f b7 1e 9c 6c dd d5 4e 9f 6a 5c c0 ca 78 9f 16",
+        "guid": "9c1eb71f-dd6c-4ed5-9f6a-5cc0ca789f16"
+      }
+    ],
+    "instructions": [
+      {
+        "rva": "0x14f8",
+        "bytes": "0f 0c 00 94"
+      },
+      {
+        "rva": "0x1500",
+        "bytes": "20 01 00 54"
+      },
+      {
+        "rva": "0x1504",
+        "bytes": "90 08 00 94"
+      },
+      {
+        "rva": "0x1508",
+        "bytes": "40 04 00 b5"
+      },
+      {
+        "rva": "0x1524",
+        "bytes": "a4 00 00 94"
+      },
+      {
+        "rva": "0x1528",
+        "bytes": "40 03 00 b5"
+      },
+      {
+        "rva": "0x1550",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x1554",
+        "bytes": "e0 01 00 b5"
+      },
+      {
+        "rva": "0x1564",
+        "bytes": "15 13 00 94"
+      },
+      {
+        "rva": "0x1570",
+        "bytes": "e8 00 00 36"
+      },
+      {
+        "rva": "0x158c",
+        "bytes": "e0 03 1f aa"
+      },
+      {
+        "rva": "0x17e4",
+        "bytes": "c0 00 1f d6"
+      },
+      {
+        "rva": "0x3780",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x3784",
+        "bytes": "80 01 f8 b6"
+      },
+      {
+        "rva": "0x37b0",
+        "bytes": "50 0d 00 94"
+      },
+      {
+        "rva": "0x37d0",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x37dc",
+        "bytes": "60 04 00 b4"
+      },
+      {
+        "rva": "0x37f8",
+        "bytes": "20 01 3f d6"
+      },
+      {
+        "rva": "0x3804",
+        "bytes": "a0 02 00 b4"
+      },
+      {
+        "rva": "0x3814",
+        "bytes": "d8 03 00 94"
+      },
+      {
+        "rva": "0x381c",
+        "bytes": "60 02 00 b5"
+      },
+      {
+        "rva": "0x384c",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x3864",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x36e4",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x36fc",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x38c8",
+        "bytes": "1f 15 00 71"
+      },
+      {
+        "rva": "0x38cc",
+        "bytes": "83 03 00 54"
+      },
+      {
+        "rva": "0x4570",
+        "bytes": "21 00 80 52"
+      },
+      {
+        "rva": "0x4580",
+        "bytes": "c0 fc ff 97"
+      },
+      {
+        "rva": "0x47d8",
+        "bytes": "09 fd 55 d3"
+      },
+      {
+        "rva": "0x47dc",
+        "bytes": "0a 51 4a d3"
+      },
+      {
+        "rva": "0x47e0",
+        "bytes": "08 25 40 92"
+      },
+      {
+        "rva": "0x4808",
+        "bytes": "08 f1 7d 92"
+      },
+      {
+        "rva": "0x4810",
+        "bytes": "33 f1 7d 92"
+      },
+      {
+        "rva": "0x4818",
+        "bytes": "20 05 08 8b"
+      },
+      {
+        "rva": "0x4828",
+        "bytes": "00 29 02 f9"
+      },
+      {
+        "rva": "0x482c",
+        "bytes": "a0 04 00 b4"
+      },
+      {
+        "rva": "0x48dc",
+        "bytes": "33 01 80 d2"
+      },
+      {
+        "rva": "0x48e0",
+        "bytes": "13 00 f0 f2"
+      },
+      {
+        "rva": "0x48e4",
+        "bytes": "5f 00 00 14"
+      },
+      {
+        "rva": "0x4a60",
+        "bytes": "47 00 00 94"
+      },
+      {
+        "rva": "0x4ba0",
+        "bytes": "e8 05 00 b4"
+      },
+      {
+        "rva": "0x4c78",
+        "bytes": "a0 06 40 f9"
+      },
+      {
+        "rva": "0x4c7c",
+        "bytes": "e0 02 00 94"
+      },
+      {
+        "rva": "0x4cc8",
+        "bytes": "88 36 42 f9"
+      },
+      {
+        "rva": "0x4ccc",
+        "bytes": "02 09 40 b9"
+      },
+      {
+        "rva": "0x5814",
+        "bytes": "0b 00 09 cb"
+      },
+      {
+        "rva": "0x5820",
+        "bytes": "5f 01 0d eb"
+      },
+      {
+        "rva": "0x5824",
+        "bytes": "62 01 00 54"
+      },
+      {
+        "rva": "0x582c",
+        "bytes": "3f 79 2a b8"
+      },
+      {
+        "rva": "0x583c",
+        "bytes": "1f fd 00 29"
+      },
+      {
+        "rva": "0x6aec",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x6af0",
+        "bytes": "c0 00 f8 b7"
+      },
+      {
+        "rva": "0x6b08",
+        "bytes": "e0 03 1f aa"
+      },
+      {
+        "rva": "0x6b20",
+        "bytes": "eb ff ff 17"
+      },
+      {
+        "rva": "0x6da0",
+        "bytes": "5a 01 00 94"
+      },
+      {
+        "rva": "0x731c",
+        "bytes": "ff 07 00 f9"
+      },
+      {
+        "rva": "0x7320",
+        "bytes": "e8 07 40 f9"
+      },
+      {
+        "rva": "0x7324",
+        "bytes": "e8 ff ff b4"
+      }
+    ],
+    "words": [
+      {
+        "rva": "0xd110",
+        "value": "0x1858"
+      },
+      {
+        "rva": "0xd168",
+        "value": "0x3cb4"
+      },
+      {
+        "rva": "0xd188",
+        "value": "0x100"
+      },
+      {
+        "rva": "0xd190",
+        "value": "0x100"
+      },
+      {
+        "rva": "0xd198",
+        "value": "0x100"
+      },
+      {
+        "rva": "0xd438",
+        "value": "0x0"
+      },
+      {
+        "rva": "0xd440",
+        "value": "0x0"
+      },
+      {
+        "rva": "0xd450",
+        "value": "0x0"
+      },
+      {
+        "rva": "0xd460",
+        "value": "0x0"
+      },
+      {
+        "rva": "0xd468",
+        "value": "0x0"
+      },
+      {
+        "rva": "0xd488",
+        "value": "0x0"
+      }
+    ]
+  },
+  {
+    "name": "ShmBridgeDxe",
+    "sha256": "67a6b5e55bb08771068fe01cace2bfb9ffd984eade499d9b877dd96f6d4112c2",
+    "ffs": "9c1eb71f-dd6c-4ed5-9f6a-5cc0ca789f16",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [
+      {
+        "rva": "0x7068",
+        "bytes": "1f b7 1e 9c 6c dd d5 4e 9f 6a 5c c0 ca 78 9f 16",
+        "guid": "9c1eb71f-dd6c-4ed5-9f6a-5cc0ca789f16"
+      }
+    ],
+    "instructions": [
+      {
+        "rva": "0x14e4",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x1514",
+        "bytes": "e8 03 01 aa"
+      },
+      {
+        "rva": "0x1518",
+        "bytes": "01 00 82 52"
+      },
+      {
+        "rva": "0x151c",
+        "bytes": "00 01 40 f9"
+      },
+      {
+        "rva": "0x1520",
+        "bytes": "be 05 00 14"
+      },
+      {
+        "rva": "0x1530",
+        "bytes": "be 05 00 94"
+      },
+      {
+        "rva": "0x1534",
+        "bytes": "e0 03 1f aa"
+      },
+      {
+        "rva": "0x2950",
+        "bytes": "2c 71 00 39"
+      },
+      {
+        "rva": "0x2b7c",
+        "bytes": "1f c1 1f 38"
+      },
+      {
+        "rva": "0x2b94",
+        "bytes": "48 04 00 d1"
+      },
+      {
+        "rva": "0x2bb0",
+        "bytes": "28 fc 4c d3"
+      },
+      {
+        "rva": "0x2bb4",
+        "bytes": "01 05 88 9a"
+      },
+      {
+        "rva": "0x2bf4",
+        "bytes": "e8 ff ff 97"
+      },
+      {
+        "rva": "0x2bf8",
+        "bytes": "a0 00 00 b4"
+      },
+      {
+        "rva": "0x2c08",
+        "bytes": "68 06 00 14"
+      },
+      {
+        "rva": "0x2c18",
+        "bytes": "e2 03 01 aa"
+      },
+      {
+        "rva": "0x2c20",
+        "bytes": "80 00 80 52"
+      },
+      {
+        "rva": "0x2c24",
+        "bytes": "f0 ff ff 17"
+      },
+      {
+        "rva": "0x460c",
+        "bytes": "e2 03 1f 2a"
+      },
+      {
+        "rva": "0x4610",
+        "bytes": "1a 00 00 14"
+      }
+    ],
+    "words": [
+      {
+        "rva": "0x70a8",
+        "value": "0x10001"
+      },
+      {
+        "rva": "0x70b0",
+        "value": "0x1514"
+      },
+      {
+        "rva": "0x70b8",
+        "value": "0x1524"
+      }
+    ]
   }
 ]
