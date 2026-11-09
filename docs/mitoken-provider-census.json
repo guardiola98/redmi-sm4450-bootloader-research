@@ -1,0 +1,247 @@
+{
+  "direct_pe_count": 93,
+  "matches": [
+    {
+      "name": "EnvDxe",
+      "ffs": "90a49afd-422f-08ae-9611-e788d3804845",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "c6cb82e65155067b4290874b692042248f60b2bef2a2f9a8490b54377d26370e",
+      "hits": {
+        "first-service": [
+          "0xf1d8"
+        ]
+      }
+    },
+    {
+      "name": "VerifiedBootDxe",
+      "ffs": "a25f5839-4d55-428f-8f0b-5ce1d565f53e",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "cb1f1861c84d2aecc6f01ffcd84ea39dff406106053ed389acdd7b045da47fc6",
+      "hits": {
+        "scm": [
+          "0xd0e8"
+        ]
+      }
+    },
+    {
+      "name": "MiTokenDxe",
+      "ffs": "068aae46-bdc6-4073-85d5-31c5eef19a15",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "5960ae5e4b2ae712f8ef1e854cb37e3fcaf0ecb1427aa40eeebd733829be68b9",
+      "hits": {
+        "first-service": [
+          "0x9078"
+        ],
+        "scm": [
+          "0x9098"
+        ],
+        "mitoken": [
+          "0x90a8"
+        ]
+      }
+    },
+    {
+      "name": "ScmDxeLA",
+      "ffs": "4b4973ee-401b-4f36-a6a9-533dfccdfc33",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "bf446081b8d1156f7de9c1b329dcd774f9df427d890d2ca67f6259f6a985d77d",
+      "hits": {
+        "scm": [
+          "0xd088"
+        ]
+      }
+    },
+    {
+      "name": "TzDxeLA",
+      "ffs": "cf6dfc66-14ab-4e13-84db-9c02912d1404",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "067ae49e6dab576b1d5bbb2be6ede7c498440d70b3f64ad9d47bbbec742a0af0",
+      "hits": {
+        "first-service": [
+          "0xf1b8"
+        ],
+        "scm": [
+          "0xf128"
+        ]
+      }
+    },
+    {
+      "name": "VariableDxe",
+      "ffs": "2b0ecdce-01ae-446e-9ffd-c4217de0340f",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "f1c66b7a45cbf3844f15bda3ec549170f92a69ea60ba13c96d23280fde647d88",
+      "hits": {
+        "scm": [
+          "0xd1b8"
+        ]
+      }
+    },
+    {
+      "name": "ChipInfo",
+      "ffs": "10e193df-9966-44e7-b17c-59dd831e20fc",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "5ac6376fb8066e5fe106a4bb70c303abe34e9f7de19fb6527ef638b09ea1c3dd",
+      "hits": {
+        "first-service": [
+          "0xa068"
+        ]
+      }
+    },
+    {
+      "name": "SdccDxe",
+      "ffs": "f10f76db-42c1-533f-34a8-69be24653110",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "4bc529e2c368d8307bab502a2ba5074a384a4a79d238c23892965e1a40c37c45",
+      "hits": {
+        "scm": [
+          "0x1a248"
+        ]
+      }
+    },
+    {
+      "name": "PmicDxe",
+      "ffs": "5776232e-082d-4b75-9a0e-fe1d13f7a5d9",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "30c0d4054c61b8194453822e398e5a65af2194b114b51235e53e62058a8859ea",
+      "hits": {
+        "scm": [
+          "0x2a238"
+        ]
+      }
+    },
+    {
+      "name": "UFSDxe",
+      "ffs": "0d35cd8e-97ea-4f9a-96af-0f0d89f76567",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "373c8835e6de585da8c115a1221f9fe1652bfc497f0a9b84da39f6d3b5dcc70a",
+      "hits": {
+        "scm": [
+          "0x1b218"
+        ]
+      }
+    },
+    {
+      "name": "QcomBds",
+      "ffs": "5a50aa81-c3ae-4608-a0e3-41a2e69baf94",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "48fd0c7cb6aab7a241f11cb26cb2da655073a2d17aeacb8e3584f5897e8707ed",
+      "hits": {
+        "first-service": [
+          "0x1e258"
+        ]
+      }
+    },
+    {
+      "name": "Ebl",
+      "ffs": "3cef354a-3b7a-4519-ad70-72a134698311",
+      "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+      "sha256": "53456b26ca40d6af771329b13f1727b9fb8f1205c244e9261edd12e75d146da5",
+      "hits": {
+        "first-service": [
+          "0x1d1e8"
+        ]
+      }
+    },
+    {
+      "name": "GpiDxe",
+      "ffs": "569ea0de-b557-4043-84cf-01103fe516e5",
+      "outer": "d14c51ed-4f4d-2f2d-eae4-77914692d046",
+      "sha256": "85c4ebd8d6cbc791c3199026288324791e5ba9c9c0d4f8a54c3bc550f5c21e7c",
+      "hits": {
+        "first-service": [
+          "0xd088"
+        ],
+        "scm": [
+          "0xd0d8"
+        ]
+      }
+    },
+    {
+      "name": "FeatureEnablerDxe",
+      "ffs": "1c04f529-0612-4319-9315-b2e75c16810a",
+      "outer": "d14c51ed-4f4d-2f2d-eae4-77914692d046",
+      "sha256": "0c2c011f7954f7bbfa4f736c20eea9457e58e56fc5c46a4e7c894d2b4e0dcdd0",
+      "hits": {
+        "first-service": [
+          "0x6078"
+        ]
+      }
+    },
+    {
+      "name": "DisplayDxe",
+      "ffs": "4138022f-06c7-4f79-9c94-7e33b511a4e7",
+      "outer": "d14c51ed-4f4d-2f2d-eae4-77914692d046",
+      "sha256": "c859c497549209e986eb853c808b78fdabc8b08e3c8ac37e98ebc767dca71dc4",
+      "hits": {
+        "first-service": [
+          "0x40158"
+        ],
+        "scm": [
+          "0x40148"
+        ]
+      }
+    },
+    {
+      "name": "QcomChargerDxeLA",
+      "ffs": "4bce7f36-428e-4393-99e3-7e0844404dba",
+      "outer": "d14c51ed-4f4d-2f2d-eae4-77914692d046",
+      "sha256": "f3485fd36ba9b8ce378c9cc080086775083584b02210d5644d8306dcef293c4c",
+      "hits": {
+        "first-service": [
+          "0x1b0b8"
+        ]
+      }
+    },
+    {
+      "name": "UsbConfigDxe",
+      "ffs": "cd823a4d-7dec-4531-ae5d-4134fa4127b8",
+      "outer": "d14c51ed-4f4d-2f2d-eae4-77914692d046",
+      "sha256": "3fca3afe9dcbceec82c08737aacd1b1520a1e1c89987e26af664324f978da1ba",
+      "hits": {
+        "first-service": [
+          "0x130d8"
+        ]
+      }
+    },
+    {
+      "name": "PILDxe",
+      "ffs": "1d317734-4083-47c6-83ea-e3a42f2a6bff",
+      "outer": "d14c51ed-4f4d-2f2d-eae4-77914692d046",
+      "sha256": "dbd64cd569e5c192ef29f3ce4e65676245b77e8dd3b270483c7e1a906c9d3a94",
+      "hits": {
+        "first-service": [
+          "0x18108"
+        ],
+        "scm": [
+          "0x180d8"
+        ]
+      }
+    },
+    {
+      "name": "PILProxyDxe",
+      "ffs": "8cf9c920-d5e6-4dac-bef9-6e6a4eec7add",
+      "outer": "d14c51ed-4f4d-2f2d-eae4-77914692d046",
+      "sha256": "e43d43cbb03c2003471376d8eb9af1ac920a9d72df4a81daa698250ca6809627",
+      "hits": {
+        "first-service": [
+          "0x80b8"
+        ]
+      }
+    },
+    {
+      "name": "SPSSDxe",
+      "ffs": "5d787b6c-6254-43f5-a7a8-cb25329cf97e",
+      "outer": "d14c51ed-4f4d-2f2d-eae4-77914692d046",
+      "sha256": "5c415799aa2ce19406fde0de87c6b471c8731466ff67fd8b42bab6c7924df33b",
+      "hits": {
+        "first-service": [
+          "0xa0b8"
+        ],
+        "scm": [
+          "0xa0d8"
+        ]
+      }
+    }
+  ],
+  "scope": "Direct PE32 sections in both GZIP FV-image containers; not recursive compressed sections"
+}
