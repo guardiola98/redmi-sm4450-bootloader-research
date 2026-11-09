@@ -1,0 +1,167 @@
+{
+  "tz_sha256": "f7d943b1de872d239468fe30cc4fab92c5acb0405203e9f9e38436cefd7e1a76",
+  "scm_sha256": "bf446081b8d1156f7de9c1b329dcd774f9df427d890d2ca67f6259f6a985d77d",
+  "lookup_table": [
+    {
+      "identifier": "0x2000601",
+      "va": "0x1c13fb00",
+      "offset": "0x142b00",
+      "bytes": "00 00",
+      "branch_target": "0x1c09a1dc"
+    },
+    {
+      "identifier": "0x2000602",
+      "va": "0x1c13fb02",
+      "offset": "0x142b02",
+      "bytes": "9d 04",
+      "branch_target": "0x1c09b450"
+    },
+    {
+      "identifier": "0x2000603",
+      "va": "0x1c13fb04",
+      "offset": "0x142b04",
+      "bytes": "2a 03",
+      "branch_target": "0x1c09ae84"
+    },
+    {
+      "identifier": "0x2000604",
+      "va": "0x1c13fb06",
+      "offset": "0x142b06",
+      "bytes": "31 03",
+      "branch_target": "0x1c09aea0"
+    },
+    {
+      "identifier": "0x2000605",
+      "va": "0x1c13fb08",
+      "offset": "0x142b08",
+      "bytes": "9d 04",
+      "branch_target": "0x1c09b450"
+    },
+    {
+      "identifier": "0x2000606",
+      "va": "0x1c13fb0a",
+      "offset": "0x142b0a",
+      "bytes": "9d 04",
+      "branch_target": "0x1c09b450"
+    },
+    {
+      "identifier": "0x2000607",
+      "va": "0x1c13fb0c",
+      "offset": "0x142b0c",
+      "bytes": "39 03",
+      "branch_target": "0x1c09aec0"
+    },
+    {
+      "identifier": "0x2000608",
+      "va": "0x1c13fb0e",
+      "offset": "0x142b0e",
+      "bytes": "41 03",
+      "branch_target": "0x1c09aee0"
+    },
+    {
+      "identifier": "0x2000609",
+      "va": "0x1c13fb10",
+      "offset": "0x142b10",
+      "bytes": "9d 04",
+      "branch_target": "0x1c09b450"
+    },
+    {
+      "identifier": "0x200060a",
+      "va": "0x1c13fb12",
+      "offset": "0x142b12",
+      "bytes": "48 03",
+      "branch_target": "0x1c09aefc"
+    }
+  ],
+  "tz_instructions": [
+    {
+      "va": "0x1c09a1e8",
+      "offset": "0x9d1e8",
+      "bytes": "6b e1 1e 91"
+    },
+    {
+      "va": "0x1c09a1ec",
+      "offset": "0x9d1ec",
+      "bytes": "09 e9 13 11"
+    },
+    {
+      "va": "0x1c09b350",
+      "offset": "0x9e350",
+      "bytes": "2a 00 80 52"
+    },
+    {
+      "va": "0x1c077804",
+      "offset": "0x7a804",
+      "bytes": "1f 00 00 71"
+    },
+    {
+      "va": "0x1c07780c",
+      "offset": "0x7a80c",
+      "bytes": "e8 17 9f 1a"
+    },
+    {
+      "va": "0x1c077810",
+      "offset": "0x7a810",
+      "bytes": "68 7e 00 a9"
+    },
+    {
+      "va": "0x1c07782c",
+      "offset": "0x7a82c",
+      "bytes": "e0 03 1f 2a"
+    },
+    {
+      "va": "0x1c038280",
+      "offset": "0x3b280",
+      "bytes": "e8 07 00 d0"
+    },
+    {
+      "va": "0x1c038288",
+      "offset": "0x3b288",
+      "bytes": "8a 22 05 a9"
+    },
+    {
+      "va": "0x1c059b8c",
+      "offset": "0x5cb8c",
+      "bytes": "72 79 ff 97"
+    }
+  ],
+  "scm_instructions": [
+    {
+      "rva": "0x4558",
+      "bytes": "48 c0 80 52"
+    },
+    {
+      "rva": "0x455c",
+      "bytes": "20 c0 80 52"
+    },
+    {
+      "rva": "0x4560",
+      "bytes": "08 40 a0 72"
+    },
+    {
+      "rva": "0x4564",
+      "bytes": "00 40 a0 72"
+    },
+    {
+      "rva": "0x4580",
+      "bytes": "c0 fc ff 97"
+    },
+    {
+      "rva": "0x4588",
+      "bytes": "08 fc 7f d3"
+    },
+    {
+      "rva": "0x458c",
+      "bytes": "00 01 00 52"
+    },
+    {
+      "rva": "0x14fc",
+      "bytes": "1f 1c 00 72"
+    },
+    {
+      "rva": "0x1500",
+      "bytes": "20 01 00 54"
+    }
+  ],
+  "scope": "Static table/bytes; no claim of monitor routing or live selection"
+}

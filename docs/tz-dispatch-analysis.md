@@ -130,7 +130,7 @@ branca (0x1c13691c); si no, 0x1c0390e4 ha d'obtindre un context lliure.
 Si no en troba, bucle d'aturada a 0x1c136918. No s'ha modelat com a error
 normal retornat. Estes són precondicions reals, no una entrada incondicional.
 
-La rutina d'inicialització 0x1c038114 escriu l'adreça del stub a +0x58
+La rutina d'inicialització 0x1c038154 escriu l'adreça del stub a +0x58
 d'un paquet (0x1c038280..0x1c038288) i el límit de pila per CPU a +0x60.
 Açò és evidència de publicació de l'entrada, però falta reconstruir el
 consumidor del paquet en el monitor: no prova per si sola l'encaminament
@@ -178,3 +178,54 @@ models de branques, no emulació ARM ni prova d'encaminament del monitor.
 La neteja omesa MiToken continua confirmada al CFG; interpretació de política
 continua condicional i no s'activa en el camí de rebuig estudiat. No canvia
 la classificació de VerifiedBoot ni hi ha conclusió sobre bloqueig.
+
+## Consulta de disponibilitat i selecció ScmDxeLA
+
+Pregunta de fase: el selector ScmDxeLA comprova transport o disponibilitat
+del servei consultat? La taula original i les instruccions responen:
+
+- Al lookup TZ, rang 0x02000601..0x0200060a: índex `(ID-0x02000601)`,
+  taula de halfwords a 0x1c13fb00, destí `0x1c09a1dc + 4*entrada`.
+  Per 0x02000601, entrada 0 → callback **0x1c0777b8**, amb camps descriptor
+  +4=0x02000601, +8=1, +0xc=0x201, +0x10=callback.
+- Per **0x02000602**, entrada 0x49d → **0x1c09b450**, retorna 1 sense
+  descriptor. La taula concreta no el registra, igual que el cas MiToken
+  estudiat, encara que hi ha altres IDs del mateix rang registrats.
+- El callback de consulta 0x1c0777b8 retorna zero al seu caller fins i tot
+  quan la consulta interna falla; si té punter d'eixida, escriu bool 0/1
+  segons èxit del lookup i dos words zero. Cal separar este retorn
+  d'operació de la resposta «servici disponible».
+- **ScmDxeLA 0x4534** consulta 0x02000601 amb argument 0x02000602.
+  A 0x4588..0x458c retorna `1 ^ (estat_EFI >> 63)`. **No llig** el word
+  de disponibilitat. A 0x14fc..0x1500 resultat 1 tria inicialització
+  0x3744/taula ARMv8; resultat 0 tria 0x17b4/taula alternativa.
+
+Per tant, **descartada** la deducció «taula ARMv8 seleccionada → el lookup
+TZ registra 0x02000602». La selecció prova com a màxim una consulta sense
+bit d'error EFI. Pot ser una sonda deliberada de la convenció ARMv8:
+no es classifica com a defecte sense conéixer el contracte de disseny.
+No s'ha demostrat quina branca pren el dispositiu ni la ruta completa de
+la sonda a través del monitor. La coincidència de la taula i el wrapper
+és evidència estàtica, no una observació runtime.
+
+Reproducció: `python3 scripts/inspect-tz-scm-probe.py`, hashes fixats,
+10 entrades reals i bytes de TZ/ScmDxeLA a `tz-scm-probe.json`.
+No executa el selector ni el lookup. L'informe de la fase anterior havia
+anomenat 0x1c038114 com a inicialitzador: **corregit a 0x1c038154**;
+0x1c038114 només llig un flag. La crida al constructor real és a 0x1c059b8c.
+
+### Límit actual de la cadena monitor
+
+0x1c038154 construïx paquet amb word0=1/word1=0x81 i entrada +0x58;
+el caller d'inicialització 0x1c038550 és invocat des de 0x146900f8
+via literal 0x14690178. El bootstrap recarrega x0..x13 i fa SMC a
+0x14690118. Això enllaça la publicació del stub amb una eixida SMC inicial.
+No s'ha reconstruït qui consumix els comandaments 0x81/0x83 a EL3,
+ni el mapping dels arguments de la SMC d'UEFI a x0..x13 del stub.
+La reconstrucció des d'una crida arbitrària UEFI fins al retorn no està
+completa: cal este consumidor o una especificació local verificable.
+No s'ha assumit que l'EL3 de bootstrap siga el monitor definitiu de runtime.
+
+No s'han obert noves línies de recursos/PE: els pendents amb valor informatiu
+ara són estes fronteres funcionals, no repetir censos de GUID. Les fonts
+públiques pertinents no estan disponibles localment; no s'ha fet xarxa.

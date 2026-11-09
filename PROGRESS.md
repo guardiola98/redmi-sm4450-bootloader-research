@@ -656,3 +656,21 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   connexió monitor→UEFI encara condicional. Cap impacte sobre autenticació.
 - Informe tz-dispatch-analysis.md ampliat, bytes originals i cinc tests nous.
   Següent: registre/consum de l'entrada en monitor i consultes de disponibilitat.
+
+## Fase consulta SCM i reavaluació
+
+- Taula original 0x1c13fb00: 0x02000601 → consulta 0x1c0777b8;
+  0x02000602 → retorn 1 sense descriptor. Script hash-pinned i manifest
+  docs/tz-scm-probe.json, sense executar ni emular firmware.
+- Selector ScmDxeLA 0x4534 comprova només bit 63 de l'estat EFI, no el
+  bool de disponibilitat. Descartada inferència ARMv8→servei 0x602 registrat.
+  Pot ser sonda de transport deliberada; no es declara bug del selector.
+- Corregida adreça d'inicialitzador en informe: 0x1c038154, no 0x1c038114
+  (getter de flag). Constructor publica stub i bootstrap envia paquet via
+  SMC 0x14690118. Consumidor EL3 dels missatges encara no identificat.
+- Informes MiToken/VerifiedBoot reavaluats: cap conseqüència nova demostrada
+  sobre autenticació, política, persistència o bloqueig. Candidats condicionals
+  conservats; no confondre resultats de lookup, retorn de control i EFI.
+- Punt de represa: consumidor monitor de 0x81/0x83 i connexió UEFI↔stub;
+  després contracte de política si una ruta real el fa accessible. No repetir
+  censos ni atribuir absència global a una consulta concreta que rebutja ID.

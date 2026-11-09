@@ -125,3 +125,17 @@ versionades; (2) cobertura de volums/formats que queden fora dels 93 PE;
 (3) consumidors reals de +0x18 abans d'intentar atribuir impacte als errors.
 La falta de fonts públiques locals bloqueja només el contracte intern TZ,
 no la documentació ni la reconstrucció dels proveïdors UEFI.
+
+## Precisió posterior: què selecciona la variant SCM
+
+La [reconstrucció TZ](tz-dispatch-analysis.md) identifica el callback de
+consulta de disponibilitat 0x02000601, i la taula concreta no registra
+0x02000602. ScmDxeLA 0x4534 consulta eixe segon ID, però el selector
+només examina el bit d'error EFI del transport; no llig el bool de
+resposta. No deduir disponibilitat d'un servei de l'elecció ARMv8 ni
+classificar el selector com a defecte per esta diferència de canals.
+
+La ruta de rebuig MiToken normalitzada s'ha seguida fins a la SMC de TZ
+0x1c136914, missatge amb error en x2. La traducció del monitor fins al
+w0 d'UEFI continua pendent; no prova indisponibilitat global, ni canvia
+la classificació del bucle o de les lectures de política condicionals.

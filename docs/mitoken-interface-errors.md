@@ -285,3 +285,15 @@ de localització ignorada continua una condició possible no demostrada.
 La lectura fixa de deu arguments SCM també queda dins del descriptor
 MiToken. Bucle, rang de política i accessibilitat de la fuga continuen
 condicionals; neteja local omesa continua confirmada. Contracte TZ pendent.
+
+## Reavaluació després de reconstruir el retorn TZ
+
+El lookup TZ estudiat rebutja 0x02001401 i no arriba al callback de
+política; el seu error -1 queda emmagatzemat en un missatge SMC de retorn.
+Això descarta interpretar política en **eixe camí concret**, però falta
+la connexió de monitor a UEFI. Els errors de neteja MiToken continuen
+confirmats localment; repetibilitat i consumidor +0x18 continuen desconeguts.
+Bucle i lectura fora del rang mantenen classificació condicional. No hi ha
+conseqüència demostrada sobre autenticació. Detalls i fronteres en
+[dispatch TZ](tz-dispatch-analysis.md); no substituir l'estat EFI pel
+marcador/booleà intern de resposta.

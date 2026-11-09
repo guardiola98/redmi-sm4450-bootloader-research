@@ -374,3 +374,12 @@ com se supera l'aturada de l'assignador; no queda establida per la branca
 nul·la del caller. SHA-256 del PE verificat contra el manifest; arguments,
 branques i bucles contrastats amb ASM i bytes del PE. Sense dispositiu
 ni execució del firmware.
+
+## Límit de la reavaluació amb el dispatcher TZ
+
+La reconstrucció nova en [dispatch TZ](tz-dispatch-analysis.md) correspon
+al lookup del servei MiToken 0x02001401 i al transport de consultes.
+No demostra res del productor keymaster 0x202/0x203/0x10e ni de RPMB.
+Es manté el fals èxit local condicionat a rebre nul, amb errors ordinaris
+de l'allocator que passen per aturada. No extrapolar el rebuig d'un ID
+SCM a la integritat de VerifiedBoot o a l'autorització del canvi d'estat.
