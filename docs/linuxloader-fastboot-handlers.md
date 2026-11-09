@@ -51,6 +51,24 @@
 - Another path references `Fastboot boot command is not available in locked device` near `0x58018..0x58024`.
 - These correspond to separate restrictions; they do not show a bypass.
 
+## Additional validation — token gating before state write (2026-11-09)
+
+Rechecked directly using LLVM 17 `llvm-objdump` on the owner-provided PE, hash verified.
+
+- `0x57CCC` starts a Fastboot handler. Within it, `0x57D1C: bl 0x59F90` performs an indirect UEFI service call after setting a protocol GUID pointer; the nearby error messages are `Error Locate Token Protocol`, `Error Get Token Length`, and `Error Get Token`.
+- `0x57DD8..0x57DE4`: `ldr x9,[x8,#8]; mov x0,x8; blr x9; cbz x0,0x57E34`. The branch on return status leads to the next validation step only on zero; failure produces the messages `Error Verify Token: %r` and `Token Verify Failed, Reboot the device`. This is **strong evidence of a token verification callback**, though we have not fully identified the vtable implementation or token format.
+- `0x57E34..0x57E4C`: after preparing `x1=x20`, `x2=x22`, `w3=w21`, the call `bl 0x5A1FC` executes a second indirect callback. The veneer `0x5A1FC` loads `x0=[x24-0x10]`, `x8=[x0+0x10]`, then `br x8`. The handler proceeds to `0x57E90` **only when its return value is zero**; on error it logs `Error Verify Token`/the reboot message and exits the success path.
+- Only **after both zero-status checks** does the `0x57E90` branch call `0x43D88` (which in turn delegates to VerifiedBoot persistence). Thus a bare reference to the VerifiedBoot GUID is **not** an authorization bypass.
+- `0x57F24` appears to be a distinct alternate handler path that calls `0x43D88` with zero-valued arguments (likely lock); dispatch still requires confirmation before definitively naming it.
+- The blob contains text `Error Locate Token Protocol` at file offset `0xAEB07`, `Error Get Token Length` at `0xAEB24`, `Error Get Token` at `0xAEB3C`, `Error Verify Token: %r` at `0xAEB4D`, and `Token Verify Failed, Reboot the device` at `0xAEB65`.
+- The GUID at `0xB1800` is **not identified by a reliable public definition**; the proximity to token-related code makes it a candidate for a Xiaomi token protocol, not proof.
+
+**Scope:** these observations show *control-flow conditions* leading to a state-change call, not the full cryptographic verification or an exploitable flaw. There is no demonstrated way for a locked SM4450 handset to execute an arbitrary EFI app.
+
+### Public GBL research applicability
+
+The publicly reported 2026 GBL exploit chain involved Android 16-era devices and privileged code execution in an EFI boot path, plus additional device-specific vulnerabilities. This PE is from Android 15, and our marker scan did not identify the two GBL fastboot command anchors. That does **not** prove the firmware is patched or invulnerable; it only leaves the chain's relevance to this model unverified. Sources: [Android Authority's March 2026 report](https://www.androidauthority.com/qualcomm-snapdragon-8-elite-gbl-exploit-bootloader-unlock-3648651/) and [Qualcomm's patch statement](https://www.androidauthority.com/qualcomm-gbl-exploit-fix-statement-3649176/).
+
 ## Current conclusions
 
 1. The FRP-derived global bit is observed by a reporting routine (get_unlock_ability).
