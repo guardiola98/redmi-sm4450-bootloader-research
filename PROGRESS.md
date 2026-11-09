@@ -100,16 +100,18 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Identificat el GUID del protocol de persistència mitjançant lectura directa del PE adjunt**: bytes a `0xB1790` = `91 ff 5e 8e b6 21 d3 47 af 2b c1 5a 01 e0 20 ec`; GUID UEFI `8e5eff91-21b6-47d3-af2b-c15a01e020ec`, relacionat en referències públiques amb **Qualcomm VerifiedBoot Protocol**. A `0x2D7A4..0x2D7B0`, `0x2D728` localitza eixe protocol, i `0x2D82C..0x2D840` invoca un callback del protocol a offset `+8` amb operació, búfer i longitud. Això concreta la interfície de persistència utilitzada per `0x440B0` i `0x44188`, però **no demostra cap accés no autoritzat ni desbloqueig**. El segon GUID `0c00a314-11a1-4d7a-a5c8-70bd5f88e7df` a `0xB1800` continua sense identificar. Vegeu [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md).
 
+- [x] **Revisió directa del handler de desbloqueig amb LLVM (2026-11-09)**: el camí que arriba a `0x57E90` (escriptura de l'estat per `0x43D88`) està protegit per **dues comprovacions indirectes de retorn zero**: callback a `0x57DE0` (fallada amb missatges `Error Verify Token` i `Token Verify Failed, Reboot the device`) i callback via `0x5A1FC` a `0x57E48` (ramifica a `0x57E90` només amb `x0=0`). La seqüència conté els missatges `Error Locate Token Protocol`, `Error Get Token Length`, `Error Get Token`. Això dona evidència d'un *flux de validació de token abans de modificar l'estat*, però no determina l'algorisme criptogràfic ni identifica la implementació de les interfícies. `0x57F24` és una ruta alternativa de canvi d'estat amb arguments zero, potencialment bloqueig, encara no tipada al despatx. **No hi ha bug confirmat**. Vegeu [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md).
+
 ## Següent pas immediat
 
-**Confirmar les interfícies de Qualcomm VerifiedBoot i MiToken en fonts públiques i reconstruir-ne les comprovacions d'autorització del flux de Fastboot, encara exclusivament amb anàlisi estàtica.** El protocol de persistència ja s'associa al GUID `8e5eff91-21b6-47d3-af2b-c15a01e020ec`, mentre que el segon GUID `0c00a314-11a1-4d7a-a5c8-70bd5f88e7df` continua sense identificar.
+**Tipar les dues crides indirectes de verificació de token i identificar la implementació del protocol en fonts de Qualcomm/Xiaomi**, sense tocar el dispositiu. El desassemblatge ja demostra que no n'hi ha prou a canviar un bit de FRP per afirmar que es podrà invocar VerifiedBoot: el handler del PE inclou comprovacions de token abans de la transició.
 
-1. Buscar definicions públiques de les estructures i taules de funcions del protocol, comprovant les versions i les signatures sense importar-les acríticament d'altres SoC.
-2. Estudiar els callers de `0x43D88` i les comprovacions del handler `oem unlock` abans de la crida al protocol. Comparar amb la lectura informativa FRP de `get_unlock_ability`.
-3. Distingir bloqueig normal, bloqueig crític, verificació de signatures, tokens i requisits del fabricant.
-4. Documentar resultats negatius i advertir si una hipòtesi depén de codi no accessible al bootloader bloquejat.
+1. Traçar el GUID i la taula de callbacks usats per `0x57D1C`, `0x57DE0` i `0x57E48`, amb confirmació de signatures i errors; no anomenar MiToken el GUID desconegut sense font.
+2. Relacionar les condicions d'eixida del handler amb els dos camps de VerifiedBoot i determinar què es valida en el mateix ABL versus serveis de firmware.
+3. Revisar la compatibilitat de recerques GBL amb la versió/SoC concret: absència de marcadors no implica invulnerabilitat.
+4. Preparar un inventari de diferències amb una versió anterior de firmware `sky` EEA de procedència verificable; comparar primer comportament estàtic.
 
-**Cap vulnerabilitat explotable ni desbloqueig verificat**. No executar ordres de modificació d'estat, no escriure FRP ni flashejar el dispositiu.
+**Cap prova de modificació sobre FRP, particions, tokens o estat de bloqueig.** No s'ha identificat un desbloqueig no autoritzat.
 
 ## Pendent després d'eixe pas
 
@@ -129,6 +131,7 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 | Data | Canvi | Resultat |
 | --- | --- | --- |
+| 2026-11-09 | Validacions de token verificades al handler | Dos callbacks condicionen el camí que invoca `0x43D88`; nou informe en `docs/linuxloader-fastboot-handlers.md`. El format i validesa del token continuen desconeguts. |
 | 2026-11-09 | Identificació del protocol Qualcomm VerifiedBoot | GUID `8e5eff91-21b6-47d3-af2b-c15a01e020ec` a `0xB1790`; wrapper de protocol `0x2D728`, callback a `0x2D840`. Següent: autorització dels handlers i identificació de MiToken. |
 | 2026-11-09 | Persistència de l'estat de bloqueig analitzada | Dos bytes de configuració, escriptura via `0x2D728` i protocol UEFI indirecte no identificat; no s'ha descobert bypass. |
 | 2026-11-09 | Anàlisi separada de handlers Fastboot | `get_unlock_ability` llig un flag FRP per mostrar-lo (`0x57c50`); la transició d'estat utilitza `0x43d88` i funcions auxiliars amb controls d'error. Sense bypass confirmat. |
