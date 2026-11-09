@@ -36,6 +36,14 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(scan(256, 0)[0], 'match')
         self.assertEqual(scan(256, 255)[0], 'match')
 
+    def test_declared_size_does_not_bound_embedded_count(self):
+        # A correctly sized opaque response can still encode any uint32 count.
+        for count in (249, 250, 255, 256, 0xffffffff):
+            response = bytearray(0x4c4)
+            response[0xdc:0xe0] = count.to_bytes(4, 'little')
+            self.assertEqual(len(response), 0x4c4)
+            self.assertEqual(int.from_bytes(response[0xdc:0xe0], 'little'), count)
+
     def test_requested_buffer_boundary(self):
         self.assertEqual((0x4c4 - 0xe0) // 4, 249)
         self.assertEqual(0xe0 + 249 * 4, 0x4c4)

@@ -513,3 +513,24 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Quatre proves sintètiques passen; cap execució de firmware ni accés al
   dispositiu. Següent: callers de +0x18, contracte del recompte SCM i
   garantia d'escriptura del word local. Cap explotabilitat demostrada.
+
+## Contractes MiToken +0x18 — revisió des de 2cd75e2
+
+- Verificada taula i GUID amb script reproduïble de lectura de PE:
+  `scripts/inspect-mitoken-contract-evidence.py`.
+- Tres localitzacions MiToken identificades en ABL: 0x55b60, 0x57d1c,
+  0x58550; usen +8/+0x10. Cap caller +0x18 identificat en els tres
+  mòduls analitzats; no és prova de codi mort ni absència en altres mòduls.
+- Separada resposta SCM local (32 bytes inicialitzats, primer word exigit
+  a 1) del búfer extern de política. Resposta local no escrita no implica
+  èxit; candidat descartat. No hi ha validació local del recompte ni de
+  completitud del búfer. La mida passada 0x4c4 no acota el valor del camp.
+- Neteja omesa confirmada al CFG després de reserva reeixida i tres errors;
+  activació/acumulació no demostrades. Cicle, lectura fora del rang declarat
+  i word indeterminat continuen condicionals a garanties encara desconegudes.
+- Informe ampliat: `docs/mitoken-interface-errors.md`. Cinc proves
+  sintètiques passen. Fonts dels proveïdors no presents al corpus inspeccionat;
+  comparació pública pendent, sense xarxa per mantindre offline.
+- Següent: proveïdors GUID 0x9078/0x9098, servei 0x02001401 i límits del
+  format de política; ampliar callers en altres mòduls disponibles.
+  Cap execució de firmware, token real ni accés al dispositiu.

@@ -91,3 +91,93 @@ contracte del proveïdor del recompte i escriptura garantida de sp+0xc.
 
 Contrast addicional amb PE LinuxLoader SHA-256
 `60d4bd50574f2fc469489d52a2672b3146ec0c862907907c494efcb86d89f9f7`: ABL `0x57dc0`: `00 05 00 11`. ABL `0x57e44`: `9f 6a 28 38`. ABL `0x5a200`: `08 08 40 f9`.
+
+## Revisió de contractes des de 2cd75e2
+
+### Referències i abast de la cerca
+
+Taula original confirmada: 0x9648 = `[1,0x1784,0x1a58,0x1ac0]`;
+0x1ac4 és una branca directa a 0x1b4c. A 0x1ae4 es passa la taula a
+la instal·lació del protocol (crida indirecta 0x1afc). No s'ha trobat cap
+altra crida directa a 0x1b4c en l'exportació MiToken.
+
+| Localització MiToken en ABL | Ús del punter recuperat |
+| --- | --- |
+| 0x55b60, local x29-0xe0 | +8 via 0x59fe0, consulta i obtenció |
+| 0x57d1c, local x24-0x10 | +8 a 0x57de0; +0x10 via 0x5a1fc |
+| 0x58550, local x24-0x10 | +8 a 0x585bc/0x5861c; +0x10 a 0x5865c |
+
+Les tres referències ADRP/ADD identificades al GUID 0xb1800 no porten a
++0x18. La crida +0x18 de 0x55e.. correspon a una altra interfície de
+pantalla (missatges `WtShowScreen`), no basta coincidir en l'offset.
+VerifiedBootDxe no conté els bytes del GUID MiToken; MiTokenDxe els conté
+una vegada i ABL una vegada. **No s'ha identificat caller de +0x18 en
+estos tres mòduls.** No equival a absència global: les crides indirectes,
+àlies o altres mòduls no analitzats impedixen afirmar que siga codi mort.
+
+### Separació de les dues respostes
+
+Identificacions llegides del PE, sense assignar tipus originals no provats:
+
+- GUID 0x9078: `b0760469-970c-487a-a4b5-28db7b45cef1`;
+  +0x48 rep un punter a word de 32 bits en sp+0xc. El text posterior
+  `The sn in dp don't match chip sn` és compatible amb un número de sèrie;
+  no és prova de les garanties del servei.
+- GUID 0x9098: `77ed108d-8524-4b8b-9d2e-34987aecb9c1`;
+  +0x38 rep x1=0x02001401, x2=0x22, x3=sp+0x38 i x4=sp+0x10.
+  x3 apunta als words de 64 bits `{búfer,0x4c4}`. No s'ha demostrat que
+  0x22 siga una longitud: és un argument independent, no una cota del comptador.
+
+Hi ha **dues regions distintes**: resultats locals SCM i búfer extern de
+política. Els 32 bytes sp+0x10..sp+0x2f estan inicialitzats amb zeros per
+0x1b84; la primera entrada de 64 bits ha de ser 1 per continuar. Si el
+servei no escriu esta entrada, el caller retorna error i no interpreta la
+política. Açò descarta el candidat «resposta local SCM completament absent
+acceptada com a èxit» sota memòria preservada.
+
+En canvi, la reserva retornada per 0x2cac no es neteja en este caller.
+L'allocator pot reutilitzar blocs (0x2998..0x2a28) sense zero-fill visible
+abans del retorn. Que la primera entrada SCM siga 1 **no demostra** que
+s'haja escrit tot el búfer. El caller no comprova bytes escrits, capçalera,
+versió ni longitud interna abans de llegir +0xc i +0xdc. La mida 0x4c4
+passada al servei limita el rang declarat, però no acota per si sola el
+valor de 32 bits emmagatzemat a +0xdc. Un búfer de mida correcta pot
+codificar 256; el test sintètic nou ho comprova sense generar una petició.
+Només el contracte/implementació del proveïdor pot descartar-ho.
+
+### Classificació revisada
+
+| Observació | Classificació i condicions |
+| --- | --- |
+| Reserva reeixida seguida d'error de localització, transport o resposta | **Defecte de neteja confirmat al CFG**: omet el helper que marca disponible el bloc. No depén de comptadors fora de contracte. Activació i acumulació en un caller real no demostrades. |
+| Resposta local SCM no escrita | **Candidat descartat** com a fals èxit: inicialment zero, es requerix 1. |
+| Word sp+0xc no escrit pel primer servei | **Comportament condicional**: consum indeterminat només si després hi ha política amb nibble i recompte no nuls. Retorns ignorats i falta d'inicialització confirmats; fallada real del proveïdor no provada. |
+| Recompte >=256 sense match | **Comportament condicional verificat pel model**: cicle. Producció d'eixe recompte és hipòtesi sense evidència. |
+| Recompte 250..255 | **Comportament condicional**: lectura més enllà de la mida declarada, sense demostrar eixida de la pàgina reservada. |
+| Resposta parcial amb entrada SCM=1 | **Hipòtesi**: manca validació local, però es desconeix si viola el contracte del proveïdor. |
+
+No es pot elevar el cicle a defecte reachable sota un contracte que limite
+el recompte a <=249. Tampoc es pot assumir eixa garantia pel simple fet
+que el caller passe 0x4c4. No s'ha demostrat activació de cap anomalia des
+d'ABL ni impacte sobre autenticació.
+
+### Reproducció i límit de fonts
+
+`python3 scripts/inspect-mitoken-contract-evidence.py` verifica hash,
+mapatge RVA, GUID, taula i bytes de les instruccions de preparació/lectura.
+`python3 scripts/test-mitoken-contract-model.py`: cinc proves passen.
+No executen ni emulen firmware. S'ha contrastat l'ASM amb estos bytes,
+no s'ha fet un segon desassemblatge independent.
+
+El corpus local inspeccionat conté els tres PE/exportacions anteriors,
+però no la implementació del proveïdor SCM ni del callback +0x48.
+Les referències públiques guardades en docs són enllaços, no còpies de
+fonts d'estos proveïdors. Per respectar offline no s'han consultat per
+xarxa, ni s'ha usat la documentació QSEE com a contracte d'esta crida SCM.
+**Comparació amb fonts públiques i garanties del productor pendents per
+falta de fonts locals pertinents.**
+
+Següent pas: disposar localment dels proveïdors dels dos GUID i del servei
+0x02001401, identificar el format de política i els seus límits, i ampliar
+la cerca de consumidors de MiToken a altres mòduls ja extrets. Fins llavors,
+les conclusions sobre neteja són locals i les de dades malformades condicionals.
