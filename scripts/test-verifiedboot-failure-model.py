@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Offline abstraction of observed CFG edges, not firmware execution.
 
-Secure-path allocation failure, successful storage and SCM status flow are modeled.
+An injected null allocation result, successful storage and SCM status flow are modeled.
+The real allocator error paths halt in ASSERT; reaching this injected result
+through ordinary allocation failure has not been established.
 SCM/QSEE setup succeeds by assumption. No device, tokens, RSA or allocator
 exhaustion is implemented. See docs/verifiedboot-failure-analysis.md.
 """

@@ -477,3 +477,11 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   previ usa un global diferent del protocol QSEE. Detalls i contrast amb
   fonts primàries Linux en `docs/verifiedboot-failure-analysis.md`.
   Pendent: garantia de còpia i codis del proveïdor QSEE concret, i 0x10e intern.
+
+- [x] **Precondicions de reserva 0x17bc/0x185c reconstruïdes:** búfer i
+  mida no nuls, selecció SCM `(S & 0x8703)==0`, preparació devinfo,
+  QSEE i identificador disponibles, op=1/0. Ambdues reserven una pàgina
+  via 0x5620 → 0x5364. **Correcció material:** els errors ordinaris del
+  helper passen per ASSERT i bucles d'aturada abans del retorn nul;
+  esgotament de memòria no demostra arribar al fals èxit del caller.
+  El model existent només injecta nul. Detalls en l'anàlisi VerifiedBoot.

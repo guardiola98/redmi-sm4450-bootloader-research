@@ -292,3 +292,85 @@ Queda pendent verificar el proveïdor QSEE concret: errors que retorna,
 condicions de còpia de resposta i garantia d'escriptura completa en èxit;
 també la semàntica interna de keymaster 0x10e. No hi ha evidència ací
 d'un transport que retorne èxit sense produir resposta.
+
+## Precondicions de 0x17bc / 0x185c: revisió de l'assignador
+
+**Correcció de l'abast anterior:** el fals èxit és demostrat si l'assignador
+retorna nul; no està demostrat que una fallada ordinària de reserva arribe
+al caller. La implementació real passa per una aturada ASSERT. El model
+injecta el retorn nul i no modela esta precondició.
+
+### Condicions comunes per arribar a les crides
+
+1. Entrada a 0x15ac: x2 (búfer) no nul i w3 (mida de 32 bits) no zero
+   (`0x15e4..0x15ec`). No hi ha límit superior de mida abans de reservar;
+   el primer argument x0 no es valida ni s'utilitza com a protocol ací.
+2. `0x390c(&flag)` retorna zero i escriu flag=1. Exactament, el resultat
+   de 32 bits S de `0x37e4` ha de satisfer S != 0xffffffff i
+   `(S & 0x8703) == 0` (`0x3920..0x3968`). `0x37e4` consulta SCM
+   0x02000604: callback amb retorn zero i primer word de resposta igual
+   a 1; S és el word baix de resposta[1]. La localització prèvia comprova
+   el bit 63 d'error (`0x3828`), no qualsevol retorn no zero. Es pressuposen
+   punters de protocol vàlids i retorn normal dels serveis.
+3. Conversió del literal `devinfo` a UTF-16 via 0x281c reeixida
+   (`0x1698..0x169c`). No és una consulta de partició: amb els dos búfers
+   locals vàlids i longitud 7, el helper copia i termina amb zero.
+4. LocateProtocol QSEE retorna exactament zero (`0x16c8..0x16cc`).
+5. Identificador global 0xd268 ja no zero, o bé el servei +0x48 del
+   global 0xd3c0 retorna zero, o bé, després que este falle, QSEE +8
+   StartApp retorna zero. El caller no comprova que l'identificador
+   recuperat/iniciat siga no zero abans de continuar.
+6. w1 original, conservat en w19, és **1 per a escriptura**
+   (`0x176c..0x177c`) o **0 per a lectura** (`0x1828..0x182c`).
+   Altres operacions i flag=0 no arriben a estes reserves.
+
+L'escriptura crida 0x5620 a **0x17b4** i comprova el retorn a **0x17bc**;
+la lectura crida a **0x1854** i comprova a **0x185c**. Totes dues passen
+literalment x0=1. El thunk 0x5620 transforma això en
+`0x5364(type=4, pages=1, alignment=0x1000)`: una pàgina de 4096 bytes,
+independent de la mida del búfer del caller. La signatura decompilada que
+mostra `IMAGE_DOS_HEADER... + 1` no reflectix l'argument de les instruccions.
+
+### Quan pot tornar nul el helper real?
+
+Amb estos arguments, la branca pages=0 de 0x537c i l'assert per alineació
+invàlida de 0x5438 són inaccessibles. Primer busca en la llista 0xd1d8
+un bloc lliure, de tipus 4, base alineada a 4096 i almenys una pàgina.
+Reutilitza un bloc exacte o un de major, sense invocar AllocatePages.
+Per arribar als errors de reserva nous no ha d'existir cap bloc elegible.
+
+| Condició en la via de reserva nova | Camí |
+| --- | --- |
+| AllocatePages(1,4,1,&addr) amb bit 63 d'error, i reintent AllocatePages(0,4,1,&addr) també amb error | 0x5490 → 0x54ac → 0x5598 |
+| Reserva acceptada, servei del global 0xd3c8 +0x38 amb bit 63 d'error | 0x54cc → 0x557c; intenta alliberar la pàgina |
+| Reserva acceptada i +0x38 acceptat, però +0x40(addr,4096,2) amb bit 63 d'error | 0x54f8 → 0x557c; intenta alliberar la pàgina |
+
+L'adreça màxima inicial és 0xffffffff (`0x5380..0x538c`). Els serveis
+ací comproven **bit 63**, no retorn diferent de zero. Les tres vies
+convergixen en log i `0x55c4: bl 0x5200`, abans del `mov x0,xzr` de 0x55c8.
+`0x5200` crida incondicionalment 0x8098: després d'altres helpers,
+`0x80bc` posa zero a sp+8 i `0x80c0..0x80c4` espera que deixe de ser zero,
+sense cap escriptura local que ho faça. Si excepcionalment continuara,
+0x5200 cridaria també 0x8724, amb un altre bucle equivalent a 0x8738..0x8740.
+Per tant, **sense intervenció externa sobre l'estat, estos errors no
+retornen nul al caller en el flux normal analitzat**.
+
+La reserva del descriptor de 0x30 bytes a 0x5534 té una altra via:
+si retorna nul, ASSERT a 0x55f8 i bucle incondicional a 0x55fc; tampoc
+produïx el retorn nul. L'error de 0x5898 només es registra i continua.
+Una base física zero retornada com a reserva reeixida o present en la
+llista també seria interpretada com nul pel caller; és un cas límit
+condicional, no una fallada EFI ni una situació observada.
+
+### Conseqüència i validació
+
+Si efectivament rep x0=0, cada caller posa x19=0, salta a 0x1934/0x1940,
+registra l'error i posa x22=0 a 0x1950. Omet alliberament, còpies i
+comandes 0x202/0x203, i retorna zero si el canari es conserva. Tampoc
+intenta el fallback devinfo: este és posterior a l'enviament QSEE.
+
+La hipòtesi «esgotament de memòria → fals èxit» requerix ara demostrar
+com se supera l'aturada de l'assignador; no queda establida per la branca
+nul·la del caller. SHA-256 del PE verificat contra el manifest; arguments,
+branques i bucles contrastats amb ASM i bytes del PE. Sense dispositiu
+ni execució del firmware.
