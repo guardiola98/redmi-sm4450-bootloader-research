@@ -1,0 +1,149 @@
+[
+  {
+    "name": "MiTokenDxe",
+    "sha256": "5960ae5e4b2ae712f8ef1e854cb37e3fcaf0ecb1427aa40eeebd733829be68b9",
+    "ffs": "068aae46-bdc6-4073-85d5-31c5eef19a15",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [
+      {
+        "rva": "0x90a8",
+        "bytes": "14 a3 00 0c a1 11 7a 4d a5 c8 70 bd 5f 88 e7 df",
+        "guid": "0c00a314-11a1-4d7a-a5c8-70bd5f88e7df"
+      }
+    ],
+    "instructions": [
+      {
+        "rva": "0x1ae4",
+        "bytes": "42 20 19 91"
+      },
+      {
+        "rva": "0x1afc",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x1ac4",
+        "bytes": "22 00 00 14"
+      }
+    ]
+  },
+  {
+    "name": "Ebl",
+    "sha256": "53456b26ca40d6af771329b13f1727b9fb8f1205c244e9261edd12e75d146da5",
+    "ffs": "3cef354a-3b7a-4519-ad70-72a134698311",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [
+      {
+        "rva": "0x1d188",
+        "bytes": "03 e6 c4 03 28 ac d3 11 9a 2d 00 90 27 3f c1 4d",
+        "guid": "03c4e603-ac28-11d3-9a2d-0090273fc14d"
+      },
+      {
+        "rva": "0x1d1e8",
+        "bytes": "69 04 76 b0 0c 97 7a 48 a4 b5 28 db 7b 45 ce f1",
+        "guid": "b0760469-970c-487a-a4b5-28db7b45cef1"
+      },
+      {
+        "rva": "0x1b7d0",
+        "bytes": "de a9 42 90 dc 23 38 4a 96 fb 7a de d0 80 51 6a",
+        "guid": "9042a9de-23dc-4a38-96fb-7aded080516a"
+      }
+    ],
+    "instructions": [
+      {
+        "rva": "0x10c94",
+        "bytes": "00 a0 07 91"
+      },
+      {
+        "rva": "0x10ca8",
+        "bytes": "08 a1 40 f9"
+      },
+      {
+        "rva": "0x10cac",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x10d58",
+        "bytes": "08 0c 40 f9"
+      },
+      {
+        "rva": "0x10d5c",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0xe104",
+        "bytes": "00 20 06 91"
+      },
+      {
+        "rva": "0xe114",
+        "bytes": "08 a1 40 f9"
+      },
+      {
+        "rva": "0xe150",
+        "bytes": "08 0c 40 f9"
+      },
+      {
+        "rva": "0xe154",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x136b4",
+        "bytes": "08 9d 40 f9"
+      },
+      {
+        "rva": "0x136fc",
+        "bytes": "08 85 40 f9"
+      }
+    ]
+  },
+  {
+    "name": "QcomBds",
+    "sha256": "48fd0c7cb6aab7a241f11cb26cb2da655073a2d17aeacb8e3584f5897e8707ed",
+    "ffs": "5a50aa81-c3ae-4608-a0e3-41a2e69baf94",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [
+      {
+        "rva": "0x1e248",
+        "bytes": "1a d6 74 d8 87 4b 08 76 a0 0f 58 ad d7 05 25 30",
+        "guid": "d874d61a-4b87-7608-a00f-58add7052530"
+      }
+    ],
+    "instructions": [
+      {
+        "rva": "0x1d94",
+        "bytes": "00 20 09 91"
+      },
+      {
+        "rva": "0x1da4",
+        "bytes": "08 a1 40 f9"
+      },
+      {
+        "rva": "0x1da8",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x1e14",
+        "bytes": "08 0c 40 f9"
+      },
+      {
+        "rva": "0x1e18",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0xf630",
+        "bytes": "08 9d 40 f9"
+      },
+      {
+        "rva": "0xf634",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0xf65c",
+        "bytes": "08 85 40 f9"
+      },
+      {
+        "rva": "0xf664",
+        "bytes": "00 01 3f d6"
+      }
+    ]
+  }
+]

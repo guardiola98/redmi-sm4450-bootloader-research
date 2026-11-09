@@ -732,3 +732,23 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Punt de represa: consumidor indirecte MiToken +0x18; altres components
   locals/taules carregables; condicions d'inicialització i selecció de
   transport. El productor de política continua sense identificació provada.
+
+## Consumidors +0x18: revisió des de f6672cc
+
+- Pregunta: dependències o obtenció indirecta d'interfícies aporten un caller?
+  71 DEPEX vàlides, cap referència MiToken; la del proveïdor és TRUE/END.
+  Cens reutilitzat sense repetir cerca GUID als PE. Manifest nou amb traça.
+- Nou límit de cobertura corregit: 110 ocurrències PE + 1 TE exterior
+  (286.920 bytes, hash 064e33de…); ABL separat. No és auditoria funcional
+  de tots els mòduls. Cap consumidor verificat addicional.
+- Ebl/QcomBds importats a Ghidra, hashes verificats: accessos +0x18
+  seleccionats resolts a ChipInfo/altres GUID; enumeracions genèriques
+  desemboquen en ConnectController, no invocació MiToken. Referències de
+  la taula del proveïdor confirmen registre, no un segon canal de consum.
+- Informe mitoken-consumer-review.md i reviewed-pe-evidence.json: abast,
+  bytes, falsos candidats i límits. La cobertura funcional és parcial;
+  no es deduïx codi mort ni inaccessibilitat global.
+- Decisió: impacte dels candidats +0x18 en espera fins caller/productor nou.
+  Neteja local continua defecte confirmat; repetir models no resol l'activació.
+- 4 proves DEPEX noves passen. Següent: TE exterior i contractes TzDxeLA,
+  després precondicions/inicialització de ScmDxeLA. Sense execució ni xarxa.

@@ -1,0 +1,5656 @@
+[
+  {
+    "image": "uefi.elf",
+    "sha256": "0543144c7f583d7e870019d95206be2b864eae1fff878dcf9bcee52c063ecc50",
+    "gaps": [],
+    "section_types": {
+      "0x19": 61,
+      "0x12": 1,
+      "0x15": 149,
+      "0x2": 2,
+      "0x17": 2,
+      "0x10": 93,
+      "0x13": 71
+    },
+    "ui_names": [
+      "uefiplat.cfg",
+      "DxeCore",
+      "EnvDxe",
+      "RscRtDxe",
+      "SCHandlerRtDxe",
+      "ArmCpuDxe",
+      "RuntimeDxe",
+      "SecurityStubDxe",
+      "VerifiedBootDxe",
+      "MiTokenDxe",
+      "ShmBridgeDxe",
+      "ScmDxeLA",
+      "TzDxeLA",
+      "WatchdogTimer",
+      "CapsuleRuntimeDxe",
+      "VariableDxe",
+      "EmbeddedMonotonicCounter",
+      "ResetRuntimeDxe",
+      "RealTimeClock",
+      "MetronomeDxe",
+      "HiiDatabase",
+      "FontDxe",
+      "QcomWDogDxe",
+      "ArmGicDxe",
+      "ArmTimerDxe",
+      "ChipInfo",
+      "IPCCDxe",
+      "GlinkDxe",
+      "PlatformInfoDxeDriver",
+      "DALSys",
+      "HALIOMMU",
+      "HWIODxeDriver",
+      "SdccDxe",
+      "I2C",
+      "DALTLMM",
+      "PmicDxe",
+      "DevicePathDxe",
+      "DiskIoDxe",
+      "PartitionDxe",
+      "Fat",
+      "EnglishDxe",
+      "FvSimpleFileSystem",
+      "UFSDxe",
+      "CmdDbDxe",
+      "PwrUtilsDxe",
+      "RpmhDxe",
+      "NpaDxe",
+      "ULogDxe",
+      "VcsDxe",
+      "ClockDxe",
+      "SPMI",
+      "ICBDxe",
+      "SmemDxe",
+      "QcomBds",
+      "QcomChargerApp",
+      "BDS_Menu.cfg",
+      "SecParti.cfg",
+      "Ebl",
+      "SimpleTextInOutSerial",
+      "PrintDxe",
+      "ConPlatformDxe",
+      "ConSplitterDxe",
+      "GraphicsConsoleDxe",
+      "GpiDxe",
+      "SPI",
+      "FeatureEnablerDxe",
+      "DisplayDxe",
+      "ButtonsDxe",
+      "ChargerExDxe",
+      "IPCCDxe",
+      "GlinkDxe",
+      "PmicGlinkDxe",
+      "QcomChargerDxeLA",
+      "UsbPwrCtrlDxe",
+      "TsensDxe",
+      "DDRInfoDxe",
+      "UsbfnDwc3Dxe",
+      "XhciPciEmulation",
+      "XhciDxe",
+      "UsbBusDxe",
+      "UsbKbDxe",
+      "UsbMassStorageDxe",
+      "UsbMsdDxe",
+      "UsbDeviceDxe",
+      "UsbConfigDxe",
+      "UsbInitDxe",
+      "UCDxe",
+      "RngDxe",
+      "PILDxe",
+      "PILProxyDxe",
+      "SecRSADxe",
+      "ASN1X509Dxe",
+      "SPSSDxe",
+      "FvDxe",
+      "ParserDxe",
+      "SerialPortDxe",
+      "logo_m_lock.bmp",
+      "Panel_m19_36_02_0a_fhd_dsc_vid.xml",
+      "Panel_m19_42_03_0b_fhd_dsc_vid.xml",
+      "Panel_m19_42_03_0c_fhd_dsc_vid.xml",
+      "Panel_sim_vid_panel.xml",
+      "Panel_truly_wqxga_dsc_cmd.xml",
+      "Panel_truly_wqxga_dsc_vid.xml",
+      "Panel_truly_wqxga_dual_cmd.xml",
+      "Panel_truly_wqxga_dual_vid.xml",
+      "Panel_sharp_4k_dsc_cmd.xml",
+      "Panel_sharp_4k_dsc_vid.xml",
+      "Panel_sharp_1080p_cmd.xml",
+      "Panel_truly_1080p_cmd.xml",
+      "Panel_truly_1080p_vid.xml",
+      "Panel_boe_amoled_wqhd_dsc_cmd.xml",
+      "Panel_boe_amoled_wqhd_dsc_vid.xml",
+      "Panel_boe_amoled_fhd_dsc_cmd.xml",
+      "Panel_nt36860_wqhd_dsc_cmd.xml",
+      "Panel_nt36860_wqhd_dsc_vid.xml",
+      "Panel_r66451_60hz_fhd_plus_dsc_cmd.xml",
+      "Panel_r66451_120hz_fhd_plus_dsc_cmd.xml",
+      "Panel_r66451_120hz_fhd_plus_dsc_cmd_hdk.xml",
+      "Panel_r66451_120hz_fhd_plus_dsc_vid.xml",
+      "Panel_secondary_truly_1080p_cmd.xml",
+      "Panel_secondary_truly_1080p_vid.xml",
+      "Panel_r66451_60hz_fhd_plus_dsc_cmd_cphy.xml",
+      "Panel_r66451_120hz_fhd_plus_dsc_cmd_cphy.xml",
+      "Panel_secondary_r66451_120hz_fhd_plus_dsc_cmd_cphy.xml",
+      "Panel_r66451_144hz_fhd_plus_dsc_cmd_cphy.xml",
+      "Panel_r66451_144hz_fhd_plus_dsc_vid_cphy.xml",
+      "Panel_r66451_60hz_fhd_plus_dsc_vid.xml",
+      "Panel_secondary_r66451_fhd_plus_dsc_cmd.xml",
+      "Panel_secondary_r66451_120hz_fhd_plus_dsc_cmd.xml",
+      "Panel_truly_wqxga_cmd_splitlink.xml",
+      "Panel_r66451_120hz_fhd_plus_dsc_cmd_demura.xml",
+      "Panel_nt36672e_fhd_plus_dsc_60hz_vid.xml",
+      "Panel_r66451_90hz_fhd_plus_dsc_vid_cphy.xml",
+      "Panel_vtdr6130_amoled_144hz_cmd_mode.xml",
+      "Panel_vtdr6130_amoled_144hz_vid_mode.xml",
+      "Panel_nt36672e_fhd_plus_120hz_vid.xml",
+      "Panel_nt36672e_fhd_plus_144hz_vid.xml",
+      "Panel_nt36672e_fhd_plus_60hz_vid.xml",
+      "Panel_nt36672e_fhd_plus_144hz_vid_cphy.xml",
+      "Panel_nt36672e_fhd_plus_90hz_vid.xml",
+      "Panel_ft8726_fhd_plus_120hz_vid.xml",
+      "Panel_ft8726_fhd_plus_90hz_vid.xml",
+      "Panel_ft8726_fhd_plus_60hz_vid.xml",
+      "Panel_r66451_120hz_fhd_plus_dsc_vid_cphy.xml",
+      "Panel_vtdr6130_amoled_120hz_cmd_mode.xml",
+      "Panel_vtdr6130_amoled_120hz_vid.xml",
+      "PanelSimConfig.csv",
+      "uefipil.cfg",
+      "QcomChargerCfg.cfg"
+    ],
+    "parser_limit": "Existing FV/FFS readers can stop at malformed/trailing data; no PI checksum validation",
+    "ffs_metadata": [
+      {
+        "ffs": "8af09f13-44c5-96ec-1437-dd899cb5ee5d",
+        "file_type": 3,
+        "names": [],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:8af09f13-44c5-96ec-1437-dd899cb5ee5d@1fe8",
+              "section:12@2f34"
+            ],
+            "type": "TE",
+            "size": 286920,
+            "sha256": "064e33de95ebb586b0f103cfa03510a5459bca6068318294981673af8b4e9ed0",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "dde58710-41cd-4306-dbfb-3fa90bb1d2dd",
+        "file_type": 2,
+        "names": [
+          "uefiplat.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+        "file_type": 11,
+        "names": [],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "fc510ee7-ffdc-11d4-bd41-0080c73c8881",
+        "file_type": 2,
+        "names": [],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "d6a2cb7f-6a18-4e2f-b43b-9920a733700a",
+        "file_type": 5,
+        "names": [
+          "DxeCore"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:d6a2cb7f-6a18-4e2f-b43b-9920a733700a@5f0",
+              "section:10@608"
+            ],
+            "type": "PE",
+            "size": 196608,
+            "sha256": "a7fb96099cd5793966a4c01dc20a046d67c1858176e48cf3c9d2c6b69563b98c",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "90a49afd-422f-08ae-9611-e788d3804845",
+        "file_type": 7,
+        "names": [
+          "EnvDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:90a49afd-422f-08ae-9611-e788d3804845@30620",
+              "section:10@30640"
+            ],
+            "type": "PE",
+            "size": 73728,
+            "sha256": "c6cb82e65155067b4290874b692042248f60b2bef2a2f9a8490b54377d26370e",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:90a49afd-422f-08ae-9611-e788d3804845@30620",
+              "section:13@30638"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "d93ce3d8-a7eb-4730-8c8e-cc466a9ecc3c",
+        "file_type": 7,
+        "names": [
+          "RscRtDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:d93ce3d8-a7eb-4730-8c8e-cc466a9ecc3c@42658",
+              "section:10@42678"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "b5ea2d3663eddb1936f9396b45c0fc056faccf6112d5876eb196111522067964",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:d93ce3d8-a7eb-4730-8c8e-cc466a9ecc3c@42658",
+              "section:13@42670"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "6c2004ef-4e0e-4be4-b14c-340eb4aa5891",
+        "file_type": 7,
+        "names": [
+          "SCHandlerRtDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:6c2004ef-4e0e-4be4-b14c-340eb4aa5891@4c698",
+              "section:10@4c6c8"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "2c8a9be121f7cf78eb6232e0fc4c900c42781ee56b1187cde1eb57235788d288",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:6c2004ef-4e0e-4be4-b14c-340eb4aa5891@4c698",
+              "section:13@4c6b0"
+            ],
+            "size": 18,
+            "sha256": "7c91bab012ed3f154eff94f9fae034c2ac3baed364cf8eb7f1b45e52b626d9fe",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "86212936-0e76-41c8-a03a-2af2fc1c39e2"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "b8d9777e-d72a-451f-9bdb-bafb52a68415",
+        "file_type": 7,
+        "names": [
+          "ArmCpuDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:b8d9777e-d72a-451f-9bdb-bafb52a68415@546f0",
+              "section:10@54730"
+            ],
+            "type": "PE",
+            "size": 53248,
+            "sha256": "b8a7217745f23817c167c397b4a439c1e9a1c2c28f8bf7ee84479bf03c83e6b1",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:b8d9777e-d72a-451f-9bdb-bafb52a68415@546f0",
+              "section:13@54708"
+            ],
+            "size": 36,
+            "sha256": "2396b0cca0e8b84a09f16f0866c3299b8a781f7464fc0f0df293addc9f76d938",
+            "opcodes": [
+              2,
+              2,
+              4,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "2890b3ea-053d-1643-ad0c-d64808da3ff1"
+              },
+              {
+                "opcode": 2,
+                "guid": "32898322-2da1-474a-baaa-f3f7cf569470"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "b601f8c4-43b7-4784-95b1-f4226cb40cee",
+        "file_type": 7,
+        "names": [
+          "RuntimeDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:b601f8c4-43b7-4784-95b1-f4226cb40cee@61750",
+              "section:10@61770"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "0823267e13e96fbb27e037f74707ace4e294bc3695f59aa78125f22f40af0e8a",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:b601f8c4-43b7-4784-95b1-f4226cb40cee@61750",
+              "section:13@61768"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "f80697e9-7fd6-4665-8646-88e33ef71dfc",
+        "file_type": 7,
+        "names": [
+          "SecurityStubDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:f80697e9-7fd6-4665-8646-88e33ef71dfc@6a790",
+              "section:10@6a7b0"
+            ],
+            "type": "PE",
+            "size": 53248,
+            "sha256": "f79827d013fda360537ea6fa240deef90569cd0539cade98944cabd677772810",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:f80697e9-7fd6-4665-8646-88e33ef71dfc@6a790",
+              "section:13@6a7a8"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "a25f5839-4d55-428f-8f0b-5ce1d565f53e",
+        "file_type": 7,
+        "names": [
+          "VerifiedBootDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:a25f5839-4d55-428f-8f0b-5ce1d565f53e@777d8",
+              "section:10@777f8"
+            ],
+            "type": "PE",
+            "size": 61440,
+            "sha256": "cb1f1861c84d2aecc6f01ffcd84ea39dff406106053ed389acdd7b045da47fc6",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:a25f5839-4d55-428f-8f0b-5ce1d565f53e@777d8",
+              "section:13@777f0"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "068aae46-bdc6-4073-85d5-31c5eef19a15",
+        "file_type": 7,
+        "names": [
+          "MiTokenDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:068aae46-bdc6-4073-85d5-31c5eef19a15@86820",
+              "section:10@86840"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "5960ae5e4b2ae712f8ef1e854cb37e3fcaf0ecb1427aa40eeebd733829be68b9",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:068aae46-bdc6-4073-85d5-31c5eef19a15@86820",
+              "section:13@86838"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "9c1eb71f-dd6c-4ed5-9f6a-5cc0ca789f16",
+        "file_type": 7,
+        "names": [
+          "ShmBridgeDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:9c1eb71f-dd6c-4ed5-9f6a-5cc0ca789f16@91860",
+              "section:10@91880"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "67a6b5e55bb08771068fe01cace2bfb9ffd984eade499d9b877dd96f6d4112c2",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:9c1eb71f-dd6c-4ed5-9f6a-5cc0ca789f16@91860",
+              "section:13@91878"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "4b4973ee-401b-4f36-a6a9-533dfccdfc33",
+        "file_type": 7,
+        "names": [
+          "ScmDxeLA"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:4b4973ee-401b-4f36-a6a9-533dfccdfc33@9a8a8",
+              "section:10@9a8c0"
+            ],
+            "type": "PE",
+            "size": 61440,
+            "sha256": "bf446081b8d1156f7de9c1b329dcd774f9df427d890d2ca67f6259f6a985d77d",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "cf6dfc66-14ab-4e13-84db-9c02912d1404",
+        "file_type": 7,
+        "names": [
+          "TzDxeLA"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:cf6dfc66-14ab-4e13-84db-9c02912d1404@a98e0",
+              "section:10@a98f8"
+            ],
+            "type": "PE",
+            "size": 69632,
+            "sha256": "067ae49e6dab576b1d5bbb2be6ede7c498440d70b3f64ad9d47bbbec742a0af0",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "f099d67f-71ae-4c36-b2a3-dceb0eb2b7d8",
+        "file_type": 7,
+        "names": [
+          "WatchdogTimer"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:f099d67f-71ae-4c36-b2a3-dceb0eb2b7d8@ba910",
+              "section:10@ba940"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "b473dd5a82686216e88b4315b1d1d65679e1efcc98ef8164ec49a40aa30a247c",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:f099d67f-71ae-4c36-b2a3-dceb0eb2b7d8@ba910",
+              "section:13@ba928"
+            ],
+            "size": 18,
+            "sha256": "832a6bf7c961a4f725cf51f8133ebd41f08300135f53942824aa2879f94d4eda",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "26baccb3-6f42-11d4-bce7-0080c73c8881"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "42857f0a-13f2-4b21-8a23-53d3f714b840",
+        "file_type": 7,
+        "names": [
+          "CapsuleRuntimeDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:42857f0a-13f2-4b21-8a23-53d3f714b840@c2968",
+              "section:10@c2998"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "268f8628cc66adfb427e66d13da6c8328e2bee4f9c8691dec08b1296befbd68d",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:42857f0a-13f2-4b21-8a23-53d3f714b840@c2968",
+              "section:13@c2980"
+            ],
+            "size": 18,
+            "sha256": "95ac118515bbda12a240f7ae06e821ac58cb51797d5092ca6017936ef6f69ba4",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "6441f818-6362-4e44-b570-7dba31dd2453"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "2b0ecdce-01ae-446e-9ffd-c4217de0340f",
+        "file_type": 7,
+        "names": [
+          "VariableDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:2b0ecdce-01ae-446e-9ffd-c4217de0340f@cb9c8",
+              "section:10@cb9e8"
+            ],
+            "type": "PE",
+            "size": 61440,
+            "sha256": "f1c66b7a45cbf3844f15bda3ec549170f92a69ea60ba13c96d23280fde647d88",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:2b0ecdce-01ae-446e-9ffd-c4217de0340f@cb9c8",
+              "section:13@cb9e0"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "37795ba0-e1cf-4ed5-bd8b-16df6bcb1e1a",
+        "file_type": 7,
+        "names": [
+          "EmbeddedMonotonicCounter"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:37795ba0-e1cf-4ed5-bd8b-16df6bcb1e1a@daa08",
+              "section:10@daa28"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "419d38050c1b2e4b42be91d72f5c465530f3b70289c038d2d574b0c302e9d69c",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:37795ba0-e1cf-4ed5-bd8b-16df6bcb1e1a@daa08",
+              "section:13@daa20"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "3ae17db7-3cc5-4b89-9304-9549211057ef",
+        "file_type": 7,
+        "names": [
+          "ResetRuntimeDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:3ae17db7-3cc5-4b89-9304-9549211057ef@e2a68",
+              "section:10@e2a98"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "7c87fbc287e9f42d823cff4a1e07682f4097dd330a0cda7232151f33c353946c",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:3ae17db7-3cc5-4b89-9304-9549211057ef@e2a68",
+              "section:13@e2a80"
+            ],
+            "size": 18,
+            "sha256": "59c488736c51c1d46da25ec3249770d7baf8f6e65a21c6d899d14aa8cf697284",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "fa5f306b-f47d-4ac4-a47d-882f8204ec30"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "b336f62d-4135-4a55-ae4e-4971bbf0885d",
+        "file_type": 7,
+        "names": [
+          "RealTimeClock"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:b336f62d-4135-4a55-ae4e-4971bbf0885d@ebac0",
+              "section:10@ebae0"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "de637df3f24e4491e9d6754d66233798db5b2f9a31d83ff388f831a19d4b0b90",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:b336f62d-4135-4a55-ae4e-4971bbf0885d@ebac0",
+              "section:13@ebad8"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "4c6e0267-c77d-410d-8100-1495911a989d",
+        "file_type": 7,
+        "names": [
+          "MetronomeDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:4c6e0267-c77d-410d-8100-1495911a989d@f4b08",
+              "section:10@f4b28"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "630a1859bd242b204d887b1286964862042c70e60b121c4add3e057a752ffb3e",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:4c6e0267-c77d-410d-8100-1495911a989d@f4b08",
+              "section:13@f4b20"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "348c4d62-bfbd-4882-9ece-c80bb1c4783b",
+        "file_type": 7,
+        "names": [
+          "HiiDatabase"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:348c4d62-bfbd-4882-9ece-c80bb1c4783b@fcb50",
+              "section:10@fcb70"
+            ],
+            "type": "PE",
+            "size": 143360,
+            "sha256": "1f23179cc22871156b3a34503aa8425f57441bdcac871ce00c75f436b157a35d",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:348c4d62-bfbd-4882-9ece-c80bb1c4783b@fcb50",
+              "section:13@fcb68"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "ed15ffd5-bc96-4107-9118-95366600188e",
+        "file_type": 7,
+        "names": [
+          "FontDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:ed15ffd5-bc96-4107-9118-95366600188e@11fb90",
+              "section:10@11fbe4"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "d4230f9e96c184a4d5bb498e4bcac9c8195cb58204d0bd2963b5b1fe4e97ecd8",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:ed15ffd5-bc96-4107-9118-95366600188e@11fb90",
+              "section:13@11fba8"
+            ],
+            "size": 54,
+            "sha256": "a3ba363e3f33fec61cf0f67f51d49dcb465bf088d753a25ef4111db1747ed264",
+            "opcodes": [
+              2,
+              2,
+              2,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "0fd96974-23aa-4cdc-b9cb-98d17750322a"
+              },
+              {
+                "opcode": 2,
+                "guid": "ef9fc172-a1b2-4693-b327-6d32fc416042"
+              },
+              {
+                "opcode": 2,
+                "guid": "587e72d7-cc50-4f79-8209-ca291fc1a10f"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "040e1e61-0afb-411b-9ec9-00f3fc59cc13",
+        "file_type": 7,
+        "names": [
+          "QcomWDogDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:040e1e61-0afb-411b-9ec9-00f3fc59cc13@129c00",
+              "section:10@129c20"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "6cf04e98790602b316253cfa52e777149713d2d871c8171dfdabf25963d5b46e",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:040e1e61-0afb-411b-9ec9-00f3fc59cc13@129c00",
+              "section:13@129c18"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "de371f7c-dec4-4d21-adf1-593abcc15882",
+        "file_type": 7,
+        "names": [
+          "ArmGicDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:de371f7c-dec4-4d21-adf1-593abcc15882@131c40",
+              "section:10@131c60"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "94cbe85959e73d3f311fb21267386e0e5e84ce5ff96de37744d2e5962e8a6954",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:de371f7c-dec4-4d21-adf1-593abcc15882@131c40",
+              "section:13@131c58"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "49ea041e-6752-42ca-b0b1-7344fe2546b7",
+        "file_type": 7,
+        "names": [
+          "ArmTimerDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:49ea041e-6752-42ca-b0b1-7344fe2546b7@13ac80",
+              "section:10@13acb0"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "9deef6874468c781d19e15bb36ec3ebd5e968cc49113ccff1def81f90ada526c",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:49ea041e-6752-42ca-b0b1-7344fe2546b7@13ac80",
+              "section:13@13ac98"
+            ],
+            "size": 18,
+            "sha256": "385684677f71647e47ff8f816d300c9bf548a995dfd9e6c99031d65bdc465385",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "2890b3ea-053d-1643-ad0c-d64808da3ff1"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "10e193df-9966-44e7-b17c-59dd831e20fc",
+        "file_type": 7,
+        "names": [
+          "ChipInfo"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:10e193df-9966-44e7-b17c-59dd831e20fc@142cd0",
+              "section:10@142d10"
+            ],
+            "type": "PE",
+            "size": 49152,
+            "sha256": "5ac6376fb8066e5fe106a4bb70c303abe34e9f7de19fb6527ef638b09ea1c3dd",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:10e193df-9966-44e7-b17c-59dd831e20fc@142cd0",
+              "section:13@142ce8"
+            ],
+            "size": 36,
+            "sha256": "5a2204901e9095761d883230974b7d3265bb85eb6eecfd02550ce4d17ec61802",
+            "opcodes": [
+              2,
+              2,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              },
+              {
+                "opcode": 2,
+                "guid": "9e61de7c-9927-4f28-9f3d-320705d81801"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "42031f68-1f0b-429b-93f1-0eb0cf89ddbf",
+        "file_type": 7,
+        "names": [
+          "IPCCDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:42031f68-1f0b-429b-93f1-0eb0cf89ddbf@14ed30",
+              "section:10@14ed60"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "addfa85af5a8666e944dabe6f741405b4fff5751bdb5e63e6e3262284ca29e9a",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:42031f68-1f0b-429b-93f1-0eb0cf89ddbf@14ed30",
+              "section:13@14ed48"
+            ],
+            "size": 18,
+            "sha256": "51e48aff95a5c61299f0c6b7550d1e2348078025c313f63c206f4d6f5cf36477",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "7942a7eb-b7d5-4e2e-b908-831e4de55b58",
+        "file_type": 7,
+        "names": [
+          "GlinkDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:7942a7eb-b7d5-4e2e-b908-831e4de55b58@159d78",
+              "section:10@159da8"
+            ],
+            "type": "PE",
+            "size": 61440,
+            "sha256": "36999650cd766900146c62098b878fd4499e297f2cfe69cff8beb60feaa364fd",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:7942a7eb-b7d5-4e2e-b908-831e4de55b58@159d78",
+              "section:13@159d90"
+            ],
+            "size": 18,
+            "sha256": "bc412c7f953353ed9727ad256b3f5639b5424b8985f9cb2cd8201dff841b75a5",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "52858ad7-8b16-4137-9c64-dfe04d942e80"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "b105211b-bbbd-4add-a3b0-d1cf4a52154c",
+        "file_type": 7,
+        "names": [
+          "PlatformInfoDxeDriver"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:b105211b-bbbd-4add-a3b0-d1cf4a52154c@168dc8",
+              "section:10@168df8"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "6003f1fe539dbfb1f956b80ccda54aee21a978171b3dedb0ac9c412bb8ed8025",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:b105211b-bbbd-4add-a3b0-d1cf4a52154c@168dc8",
+              "section:13@168de0"
+            ],
+            "size": 18,
+            "sha256": "51e48aff95a5c61299f0c6b7550d1e2348078025c313f63c206f4d6f5cf36477",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "8e9bd160-b184-11df-94e2-0800200c9a66",
+        "file_type": 7,
+        "names": [
+          "DALSys"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:8e9bd160-b184-11df-94e2-0800200c9a66@170e30",
+              "section:10@170e60"
+            ],
+            "type": "PE",
+            "size": 385024,
+            "sha256": "4ab20c487dc256a5630ba7939b67ec34722acb6458776f0cd726c6c1a57192db",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:8e9bd160-b184-11df-94e2-0800200c9a66@170e30",
+              "section:13@170e48"
+            ],
+            "size": 18,
+            "sha256": "445084b65f55991565be20b692e489f28006a91c3d0a050eae2a8eebdf12f563",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "f4e5c7d0-d239-47cb-aacd-7f66ef763238"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "9a00771f-36d4-4dd5-8916-c48ed9b16b86",
+        "file_type": 7,
+        "names": [
+          "HALIOMMU"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:9a00771f-36d4-4dd5-8916-c48ed9b16b86@1cee78",
+              "section:10@1cef6c"
+            ],
+            "type": "PE",
+            "size": 147456,
+            "sha256": "4d8a3c69a3b0c703951e79795e513bc0e3d91c1cbd39337d3e55351de3667485",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:9a00771f-36d4-4dd5-8916-c48ed9b16b86@1cee78",
+              "section:13@1cee90"
+            ],
+            "size": 216,
+            "sha256": "8d212b55931b8b7178a06d7d5ff305306299accdbd845743b3c58bdf2e62a45f",
+            "opcodes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "665e3ff6-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb1-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb2-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "1da97072-bddc-4b30-99f1-72a0b56fff2a"
+              },
+              {
+                "opcode": 2,
+                "guid": "27cfac87-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "27cfac88-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "b7dfb4e1-052f-449f-87be-9818fc91b733"
+              },
+              {
+                "opcode": 2,
+                "guid": "a46423e3-4617-49f1-b9ff-d1bfa9115839"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb3-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "6441f818-6362-4e44-b570-7dba31dd2453"
+              },
+              {
+                "opcode": 2,
+                "guid": "1e5668e2-8481-11d4-bcf1-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "665e3ff5-46cc-11d4-9a38-0090273fc14d"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "af9763a2-033b-4109-8e17-56a98d380c92",
+        "file_type": 7,
+        "names": [
+          "HWIODxeDriver"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:af9763a2-033b-4109-8e17-56a98d380c92@1f2f88",
+              "section:10@1f2fb8"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "118587606713c1e02746ff67d712d6755ef93e3047b4467a95c5044ad5998db4",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:af9763a2-033b-4109-8e17-56a98d380c92@1f2f88",
+              "section:13@1f2fa0"
+            ],
+            "size": 18,
+            "sha256": "51e48aff95a5c61299f0c6b7550d1e2348078025c313f63c206f4d6f5cf36477",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "f10f76db-42c1-533f-34a8-69be24653110",
+        "file_type": 7,
+        "names": [
+          "SdccDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:f10f76db-42c1-533f-34a8-69be24653110@1fbfe0",
+              "section:10@1fc020"
+            ],
+            "type": "PE",
+            "size": 122880,
+            "sha256": "4bc529e2c368d8307bab502a2ba5074a384a4a79d238c23892965e1a40c37c45",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:f10f76db-42c1-533f-34a8-69be24653110@1fbfe0",
+              "section:13@1fbff8"
+            ],
+            "size": 36,
+            "sha256": "96d3dcd80ec35498b71c6d2f1d0e08aab0caa5c6d8b8903d3f1d469636544f1f",
+            "opcodes": [
+              2,
+              2,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "241afae6-885f-4f6c-a7ea-c28eab79c3e5"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb3-6f42-11d4-bce7-0080c73c8881"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "04de8591-d2b3-4077-bbbe-b12070094eb6",
+        "file_type": 7,
+        "names": [
+          "I2C"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:04de8591-d2b3-4077-bbbe-b12070094eb6@21a038",
+              "section:10@21a09c"
+            ],
+            "type": "PE",
+            "size": 49152,
+            "sha256": "fddcfc1b605538ec59200209194685760977bcf79e9f1b338791724094e08219",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:04de8591-d2b3-4077-bbbe-b12070094eb6@21a038",
+              "section:13@21a050"
+            ],
+            "size": 72,
+            "sha256": "95cfa13b1308bf157c24a44e7492c34335e9af953a0056da17fb047bdeb2dd50",
+            "opcodes": [
+              2,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              },
+              {
+                "opcode": 2,
+                "guid": "241afae6-885f-4f6c-a7ea-c28eab79c3e5"
+              },
+              {
+                "opcode": 2,
+                "guid": "ad9aec18-7bf0-4809-9e96-3012309f3df7"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb3-6f42-11d4-bce7-0080c73c8881"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "8681cc5a-0df6-441e-b4b8-e915c538f067",
+        "file_type": 7,
+        "names": [
+          "DALTLMM"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:8681cc5a-0df6-441e-b4b8-e915c538f067@2260b0",
+              "section:10@2260e0"
+            ],
+            "type": "PE",
+            "size": 49152,
+            "sha256": "71b9248b5ab37ef19891373ff9b3222413a8d61dc95cc023d98d887c798ed336",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:8681cc5a-0df6-441e-b4b8-e915c538f067@2260b0",
+              "section:13@2260c8"
+            ],
+            "size": 18,
+            "sha256": "51e48aff95a5c61299f0c6b7550d1e2348078025c313f63c206f4d6f5cf36477",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "5776232e-082d-4b75-9a0e-fe1d13f7a5d9",
+        "file_type": 7,
+        "names": [
+          "PmicDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:5776232e-082d-4b75-9a0e-fe1d13f7a5d9@2320f8",
+              "section:10@232138"
+            ],
+            "type": "PE",
+            "size": 196608,
+            "sha256": "30c0d4054c61b8194453822e398e5a65af2194b114b51235e53e62058a8859ea",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:5776232e-082d-4b75-9a0e-fe1d13f7a5d9@2320f8",
+              "section:13@232110"
+            ],
+            "size": 36,
+            "sha256": "038334472dbe9b774f4e06715b2c42aef25afd4c1b83403b9a97bcc1262ce23e",
+            "opcodes": [
+              2,
+              2,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              },
+              {
+                "opcode": 2,
+                "guid": "fa5f306b-f47d-4ac4-a47d-882f8204ec30"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "9b680fce-ad6b-4f3a-b60b-f59899003443",
+        "file_type": 7,
+        "names": [
+          "DevicePathDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:9b680fce-ad6b-4f3a-b60b-f59899003443@262150",
+              "section:10@262170"
+            ],
+            "type": "PE",
+            "size": 77824,
+            "sha256": "2839e47b8f7adde39e559214ced6b453077af4f88958243b1993b3ce9fc8c2e2",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:9b680fce-ad6b-4f3a-b60b-f59899003443@262150",
+              "section:13@262168"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "6b38f7b4-ad98-40e9-9093-aca2b5a253c4",
+        "file_type": 7,
+        "names": [
+          "DiskIoDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:6b38f7b4-ad98-40e9-9093-aca2b5a253c4@275198",
+              "section:10@2751b0"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "ca9b805f1c4e341ea89530f0ffca83fa83725afd6b73e619c9c807d2737ecc49",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "1fa1f39e-feff-4aae-bd7b-38a070a3b609",
+        "file_type": 7,
+        "names": [
+          "PartitionDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:1fa1f39e-feff-4aae-bd7b-38a070a3b609@2801d0",
+              "section:10@2801e8"
+            ],
+            "type": "PE",
+            "size": 53248,
+            "sha256": "0c734095af9a473e2a3298a8acd8e833c0ce1dc41c7f61e78d818eaea159cf89",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "961578fe-b6b7-44c3-af35-6bc705cd2b1f",
+        "file_type": 7,
+        "names": [
+          "Fat"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:961578fe-b6b7-44c3-af35-6bc705cd2b1f@28d210",
+              "section:10@28d228"
+            ],
+            "type": "PE",
+            "size": 65536,
+            "sha256": "767e38ab1e37b5614d30b286031c1ceca47efc8934a1e583cd3e1f97b302222c",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "cd3bafb6-50fb-4fe8-8e4e-ab74d2c1a600",
+        "file_type": 7,
+        "names": [
+          "EnglishDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:cd3bafb6-50fb-4fe8-8e4e-ab74d2c1a600@29d238",
+              "section:10@29d250"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "6d5be2d1dfda09691b5bb375b129577512b18feecf7b4cb3e3f9aedc75514700",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "907125c0-a5f1-11e3-a3fe-a3198b49350c",
+        "file_type": 7,
+        "names": [
+          "FvSimpleFileSystem"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:907125c0-a5f1-11e3-a3fe-a3198b49350c@2a5270",
+              "section:10@2a5288"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "9ac1dcc80fbfe21baa9084c5db6e8d664babb89c32a46e3de1d14a703a3683dd",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "0d35cd8e-97ea-4f9a-96af-0f0d89f76567",
+        "file_type": 7,
+        "names": [
+          "UFSDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:0d35cd8e-97ea-4f9a-96af-0f0d89f76567@2b02b8",
+              "section:10@2b02d8"
+            ],
+            "type": "PE",
+            "size": 131072,
+            "sha256": "373c8835e6de585da8c115a1221f9fe1652bfc497f0a9b84da39f6d3b5dcc70a",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:0d35cd8e-97ea-4f9a-96af-0f0d89f76567@2b02b8",
+              "section:13@2b02d0"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "aba01ff8-2ccb-4e12-8b2e-cd3f4a742993",
+        "file_type": 7,
+        "names": [
+          "CmdDbDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:aba01ff8-2ccb-4e12-8b2e-cd3f4a742993@2d02f0",
+              "section:10@2d0310"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "26ebf905e3a6114a12a529ae8adbc76bb64fc3d480626b7bc8a8471688a97f04",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:aba01ff8-2ccb-4e12-8b2e-cd3f4a742993@2d02f0",
+              "section:13@2d0308"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "0401b830-bff9-44a2-a5f6-95734a33c017",
+        "file_type": 7,
+        "names": [
+          "PwrUtilsDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:0401b830-bff9-44a2-a5f6-95734a33c017@2d8330",
+              "section:10@2d8350"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "40321fefd3d792cd60a05e7be5038ea913ddf22666e57b96fc7240c1e2786135",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:0401b830-bff9-44a2-a5f6-95734a33c017@2d8330",
+              "section:13@2d8348"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "cb29f4d1-7f37-4692-a416-93e82e219766",
+        "file_type": 7,
+        "names": [
+          "RpmhDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:cb29f4d1-7f37-4692-a416-93e82e219766@2e0370",
+              "section:10@2e03a0"
+            ],
+            "type": "PE",
+            "size": 65536,
+            "sha256": "59ffd1cf72c67dbde942923acb2dd47596825a3a07caff9f359688b05840d3f6",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:cb29f4d1-7f37-4692-a416-93e82e219766@2e0370",
+              "section:13@2e0388"
+            ],
+            "size": 18,
+            "sha256": "51e48aff95a5c61299f0c6b7550d1e2348078025c313f63c206f4d6f5cf36477",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "cb29f4d1-7f37-4692-a416-93e82e219711",
+        "file_type": 7,
+        "names": [
+          "NpaDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:cb29f4d1-7f37-4692-a416-93e82e219711@2f03b8",
+              "section:10@2f03d8"
+            ],
+            "type": "PE",
+            "size": 81920,
+            "sha256": "bffbc609016927adb38743f2e0ab1ad55c7976794b72280734f82fc2d7dd33bd",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:cb29f4d1-7f37-4692-a416-93e82e219711@2f03b8",
+              "section:13@2f03d0"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "e43128a8-8692-42b6-8afa-676158578d18",
+        "file_type": 7,
+        "names": [
+          "ULogDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:e43128a8-8692-42b6-8afa-676158578d18@3043f0",
+              "section:10@304410"
+            ],
+            "type": "PE",
+            "size": 77824,
+            "sha256": "33b511130528649ada7dbd9cba0e66bf4c85cd1eb9f7ae2ce80a7bce963cbf3d",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:e43128a8-8692-42b6-8afa-676158578d18@3043f0",
+              "section:13@304408"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "8bd3b475-401a-4b0b-9315-edee61a1eae5",
+        "file_type": 7,
+        "names": [
+          "VcsDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:8bd3b475-401a-4b0b-9315-edee61a1eae5@317428",
+              "section:10@317468"
+            ],
+            "type": "PE",
+            "size": 49152,
+            "sha256": "8e651b0c8104f789a198470768f3c817eb20379e47de12c107895a4efc4bc5f8",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:8bd3b475-401a-4b0b-9315-edee61a1eae5@317428",
+              "section:13@317440"
+            ],
+            "size": 36,
+            "sha256": "24476b524f5b0157f0adac9dc10697740b7e8f832feb09e32ed24d077378e4b2",
+            "opcodes": [
+              2,
+              2,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              },
+              {
+                "opcode": 2,
+                "guid": "b0760469-970c-487a-a4b5-28db7b45cef1"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "4db5dea6-5302-4d1a-8a82-677a683b0d29",
+        "file_type": 7,
+        "names": [
+          "ClockDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:4db5dea6-5302-4d1a-8a82-677a683b0d29@323480",
+              "section:10@3234c0"
+            ],
+            "type": "PE",
+            "size": 172032,
+            "sha256": "0594eb352a8dd29795106df524218f92d1934121357b547c12fd0c57c8927948",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:4db5dea6-5302-4d1a-8a82-677a683b0d29@323480",
+              "section:13@323498"
+            ],
+            "size": 36,
+            "sha256": "24476b524f5b0157f0adac9dc10697740b7e8f832feb09e32ed24d077378e4b2",
+            "opcodes": [
+              2,
+              2,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              },
+              {
+                "opcode": 2,
+                "guid": "b0760469-970c-487a-a4b5-28db7b45cef1"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "2a7b4bef-80cd-49e1-b473-374ba4d673fc",
+        "file_type": 7,
+        "names": [
+          "SPMI"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:2a7b4bef-80cd-49e1-b473-374ba4d673fc@34d4e0",
+              "section:10@34d500"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "ce46f2889281af333bb7f70274efd981aed9aa8be1386badaf85866202bd12de",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:2a7b4bef-80cd-49e1-b473-374ba4d673fc@34d4e0",
+              "section:13@34d4f8"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "5824f9de-17d2-4b1f-a5fe-5eb77fa53093",
+        "file_type": 7,
+        "names": [
+          "ICBDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:5824f9de-17d2-4b1f-a5fe-5eb77fa53093@358518",
+              "section:10@358558"
+            ],
+            "type": "PE",
+            "size": 57344,
+            "sha256": "4fe25946460bc1b4e522ae92eb572df795f96197a1d2ca93f8cf9b99633078e7",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:5824f9de-17d2-4b1f-a5fe-5eb77fa53093@358518",
+              "section:13@358530"
+            ],
+            "size": 36,
+            "sha256": "24476b524f5b0157f0adac9dc10697740b7e8f832feb09e32ed24d077378e4b2",
+            "opcodes": [
+              2,
+              2,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              },
+              {
+                "opcode": 2,
+                "guid": "b0760469-970c-487a-a4b5-28db7b45cef1"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "f541d663-4a48-40aa-aabf-ff158ccae34c",
+        "file_type": 7,
+        "names": [
+          "SmemDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:f541d663-4a48-40aa-aabf-ff158ccae34c@366570",
+              "section:10@366590"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "0dd245b2ebd03c8667f2620c62ac370c62e5607b23c55ea1bc49a1eaeee66b13",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:f541d663-4a48-40aa-aabf-ff158ccae34c@366570",
+              "section:13@366588"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "5a50aa81-c3ae-4608-a0e3-41a2e69baf94",
+        "file_type": 7,
+        "names": [
+          "QcomBds"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:5a50aa81-c3ae-4608-a0e3-41a2e69baf94@3705a8",
+              "section:10@3705c8"
+            ],
+            "type": "PE",
+            "size": 135168,
+            "sha256": "48fd0c7cb6aab7a241f11cb26cb2da655073a2d17aeacb8e3584f5897e8707ed",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:5a50aa81-c3ae-4608-a0e3-41a2e69baf94@3705a8",
+              "section:13@3705c0"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "eee9c2b1-16ca-4f34-87ea-2e6d1e160cc4",
+        "file_type": 9,
+        "names": [
+          "QcomChargerApp"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:eee9c2b1-16ca-4f34-87ea-2e6d1e160cc4@3915e0",
+              "section:10@39161c"
+            ],
+            "type": "PE",
+            "size": 98304,
+            "sha256": "7b53a718274fd98e85e10ce569efd5065f0f1c677d2b3565b62698289edc01ed",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "a91d838e-a5fa-4138-825d-455e2303079e",
+        "file_type": 2,
+        "names": [
+          "BDS_Menu.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "a1e235de-e825-4591-9623-c43175811826",
+        "file_type": 2,
+        "names": [
+          "SecParti.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "3cef354a-3b7a-4519-ad70-72a134698311",
+        "file_type": 9,
+        "names": [
+          "Ebl"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:9e21fd93-9c72-4c15-8c4b-e77f1db2d792@4ae08",
+              "section:02@4ae20",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:c49db2a2bbe648084c0546998f1ae966913c42f3792d37965c57f53df635f5b8",
+              "section:17@4",
+              "ffs:3cef354a-3b7a-4519-ad70-72a134698311@3ab640",
+              "section:10@3ab664"
+            ],
+            "type": "PE",
+            "size": 135168,
+            "sha256": "53456b26ca40d6af771329b13f1727b9fb8f1205c244e9261edd12e75d146da5",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "d14c51ed-4f4d-2f2d-eae4-77914692d046",
+        "file_type": 11,
+        "names": [],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "fc510ee7-ffdc-11d4-bd41-0080c73c8881",
+        "file_type": 2,
+        "names": [],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "857a8741-0eec-43bd-9482-27d14ed47d72",
+        "file_type": 7,
+        "names": [
+          "SimpleTextInOutSerial"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:857a8741-0eec-43bd-9482-27d14ed47d72@5f0",
+              "section:10@610"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "83961fded5f13e488e6875b4ce882c67bd858ef265a1e9f0811560ba8c25b725",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:857a8741-0eec-43bd-9482-27d14ed47d72@5f0",
+              "section:13@608"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "79e4a61c-ed73-4312-94fe-e3e7563362a9",
+        "file_type": 7,
+        "names": [
+          "PrintDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:79e4a61c-ed73-4312-94fe-e3e7563362a9@8648",
+              "section:10@8668"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "201d3ec84c6036368156605ea99e411776d7064d52264b26c1a0919b828803f7",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:79e4a61c-ed73-4312-94fe-e3e7563362a9@8648",
+              "section:13@8660"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "51ccf399-4fdf-4e55-a45b-e123f84d456a",
+        "file_type": 7,
+        "names": [
+          "ConPlatformDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:51ccf399-4fdf-4e55-a45b-e123f84d456a@10688",
+              "section:10@106a0"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "7ad27a5b69227f4d6b5fe2f09f6a0026f3480a4b3973b34ad82006f9fc80bed8",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "408edcec-cf6d-477c-a5a8-b4844e3de281",
+        "file_type": 7,
+        "names": [
+          "ConSplitterDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:408edcec-cf6d-477c-a5a8-b4844e3de281@1a6c8",
+              "section:10@1a6e0"
+            ],
+            "type": "PE",
+            "size": 57344,
+            "sha256": "37a6b2718f05a8785ed889ffecbc739d5410cde6086bb62b0eeddc38a2346a51",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "cccb0c28-4b24-11d5-9a5a-0090273fc14d",
+        "file_type": 7,
+        "names": [
+          "GraphicsConsoleDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:cccb0c28-4b24-11d5-9a5a-0090273fc14d@28708",
+              "section:10@28720"
+            ],
+            "type": "PE",
+            "size": 49152,
+            "sha256": "12bd4a932139fed8fb430ca3754557a08c1d95455ce86a58899f35ca9644de01",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "569ea0de-b557-4043-84cf-01103fe516e5",
+        "file_type": 7,
+        "names": [
+          "GpiDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:569ea0de-b557-4043-84cf-01103fe516e5@34750",
+              "section:10@34844"
+            ],
+            "type": "PE",
+            "size": 90112,
+            "sha256": "85c4ebd8d6cbc791c3199026288324791e5ba9c9c0d4f8a54c3bc550f5c21e7c",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:569ea0de-b557-4043-84cf-01103fe516e5@34750",
+              "section:13@34768"
+            ],
+            "size": 216,
+            "sha256": "8d212b55931b8b7178a06d7d5ff305306299accdbd845743b3c58bdf2e62a45f",
+            "opcodes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "665e3ff6-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb1-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb2-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "1da97072-bddc-4b30-99f1-72a0b56fff2a"
+              },
+              {
+                "opcode": 2,
+                "guid": "27cfac87-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "27cfac88-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "b7dfb4e1-052f-449f-87be-9818fc91b733"
+              },
+              {
+                "opcode": 2,
+                "guid": "a46423e3-4617-49f1-b9ff-d1bfa9115839"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb3-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "6441f818-6362-4e44-b570-7dba31dd2453"
+              },
+              {
+                "opcode": 2,
+                "guid": "1e5668e2-8481-11d4-bcf1-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "665e3ff5-46cc-11d4-9a38-0090273fc14d"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "7a32bd23-f735-4f57-aa1a-447d2fe3be0d",
+        "file_type": 7,
+        "names": [
+          "SPI"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:7a32bd23-f735-4f57-aa1a-447d2fe3be0d@4a860",
+              "section:10@4a8c4"
+            ],
+            "type": "PE",
+            "size": 53248,
+            "sha256": "47b4c9d808704692834b05ca11c4d35f23a1452eb6d70e8191d3d5f928fa168a",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:7a32bd23-f735-4f57-aa1a-447d2fe3be0d@4a860",
+              "section:13@4a878"
+            ],
+            "size": 72,
+            "sha256": "95cfa13b1308bf157c24a44e7492c34335e9af953a0056da17fb047bdeb2dd50",
+            "opcodes": [
+              2,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              },
+              {
+                "opcode": 2,
+                "guid": "241afae6-885f-4f6c-a7ea-c28eab79c3e5"
+              },
+              {
+                "opcode": 2,
+                "guid": "ad9aec18-7bf0-4809-9e96-3012309f3df7"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb3-6f42-11d4-bce7-0080c73c8881"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "1c04f529-0612-4319-9315-b2e75c16810a",
+        "file_type": 7,
+        "names": [
+          "FeatureEnablerDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:1c04f529-0612-4319-9315-b2e75c16810a@578d8",
+              "section:10@578f0"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "0c2c011f7954f7bbfa4f736c20eea9457e58e56fc5c46a4e7c894d2b4e0dcdd0",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "4138022f-06c7-4f79-9c94-7e33b511a4e7",
+        "file_type": 7,
+        "names": [
+          "DisplayDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:4138022f-06c7-4f79-9c94-7e33b511a4e7@5f920",
+              "section:10@5f9f0"
+            ],
+            "type": "PE",
+            "size": 335872,
+            "sha256": "c859c497549209e986eb853c808b78fdabc8b08e3c8ac37e98ebc767dca71dc4",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:4138022f-06c7-4f79-9c94-7e33b511a4e7@5f920",
+              "section:13@5f938"
+            ],
+            "size": 180,
+            "sha256": "0d674cbab2ce30be078ce7324fa9df6ca976c0345922b84510105907047b40ea",
+            "opcodes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "157a5c45-21b2-43c5-ba7c-822fee5fe599"
+              },
+              {
+                "opcode": 2,
+                "guid": "b0760469-970c-487a-a4b5-28db7b45cef1"
+              },
+              {
+                "opcode": 2,
+                "guid": "5bef7c41-a560-435b-835b-3c3ebf2bd151"
+              },
+              {
+                "opcode": 2,
+                "guid": "c1bff82d-6c92-48fb-8355-c7fb4218a4ea"
+              },
+              {
+                "opcode": 2,
+                "guid": "a966cc4f-ee6c-424d-a762-8ed3b5a4a501"
+              },
+              {
+                "opcode": 2,
+                "guid": "47861dff-556f-4269-9b28-062ec3ecb30d"
+              },
+              {
+                "opcode": 2,
+                "guid": "ad9aec18-7bf0-4809-9e96-3012309f3df7"
+              },
+              {
+                "opcode": 2,
+                "guid": "b27ae8b1-3e10-4d07-ab5c-eb9a6dc6fa8f"
+              },
+              {
+                "opcode": 2,
+                "guid": "e08051ae-ac38-46db-a696-c56952b05616"
+              },
+              {
+                "opcode": 2,
+                "guid": "241afae6-885f-4f6c-a7ea-c28eab79c3e5"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "5bd181db-0487-4f1a-ae73-820e165611b3",
+        "file_type": 7,
+        "names": [
+          "ButtonsDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:5bd181db-0487-4f1a-ae73-820e165611b3@b1a10",
+              "section:10@b1a88"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "dbb842b4cb0c41e14ecbe488329a174887744fe8607c47d802868be68c61367e",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:5bd181db-0487-4f1a-ae73-820e165611b3@b1a10",
+              "section:13@b1a28"
+            ],
+            "size": 90,
+            "sha256": "37e5d8b67bf5493de465f227d353eb1d3ccd4235cb4be3fd8b23d71bdaedc81b",
+            "opcodes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "387477c1-69c7-11d2-8e39-00a0c969723b"
+              },
+              {
+                "opcode": 2,
+                "guid": "157a5c45-21b2-43c5-ba7c-822fee5fe599"
+              },
+              {
+                "opcode": 2,
+                "guid": "4bc5c6d7-4ca4-8835-d1bc-d29cc2025d4a"
+              },
+              {
+                "opcode": 2,
+                "guid": "9ba45b66-efa4-441c-a3e4-ed2224786be2"
+              },
+              {
+                "opcode": 2,
+                "guid": "ad9aec18-7bf0-4809-9e96-3012309f3df7"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "2e3042f3-2bb9-463f-8866-56d75b7c4ab0",
+        "file_type": 7,
+        "names": [
+          "ChargerExDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:2e3042f3-2bb9-463f-8866-56d75b7c4ab0@bbaa8",
+              "section:10@bbac8"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "b862fb591cee9bf31a88792d63d553c77de6db1cd8dc10ec5fe9643ec5db8119",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:2e3042f3-2bb9-463f-8866-56d75b7c4ab0@bbaa8",
+              "section:13@bbac0"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "42031f68-1f0b-429b-93f1-0eb0cf89ddbf",
+        "file_type": 7,
+        "names": [
+          "IPCCDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:42031f68-1f0b-429b-93f1-0eb0cf89ddbf@c4af0",
+              "section:10@c4b20"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "addfa85af5a8666e944dabe6f741405b4fff5751bdb5e63e6e3262284ca29e9a",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:42031f68-1f0b-429b-93f1-0eb0cf89ddbf@c4af0",
+              "section:13@c4b08"
+            ],
+            "size": 18,
+            "sha256": "51e48aff95a5c61299f0c6b7550d1e2348078025c313f63c206f4d6f5cf36477",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "7942a7eb-b7d5-4e2e-b908-831e4de55b58",
+        "file_type": 7,
+        "names": [
+          "GlinkDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:7942a7eb-b7d5-4e2e-b908-831e4de55b58@cfb38",
+              "section:10@cfb68"
+            ],
+            "type": "PE",
+            "size": 61440,
+            "sha256": "36999650cd766900146c62098b878fd4499e297f2cfe69cff8beb60feaa364fd",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:7942a7eb-b7d5-4e2e-b908-831e4de55b58@cfb38",
+              "section:13@cfb50"
+            ],
+            "size": 18,
+            "sha256": "bc412c7f953353ed9727ad256b3f5639b5424b8985f9cb2cd8201dff841b75a5",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "52858ad7-8b16-4137-9c64-dfe04d942e80"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "6d4a9cf7-cc0c-42b0-aa89-f6a6a8d99273",
+        "file_type": 7,
+        "names": [
+          "PmicGlinkDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:6d4a9cf7-cc0c-42b0-aa89-f6a6a8d99273@deb88",
+              "section:10@deba8"
+            ],
+            "type": "PE",
+            "size": 49152,
+            "sha256": "e5d4eadb912b3036279dfb2cdbf7058ef7fdc4611a3a73c2272543c42caa652d",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:6d4a9cf7-cc0c-42b0-aa89-f6a6a8d99273@deb88",
+              "section:13@deba0"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "4bce7f36-428e-4393-99e3-7e0844404dba",
+        "file_type": 7,
+        "names": [
+          "QcomChargerDxeLA"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:4bce7f36-428e-4393-99e3-7e0844404dba@eabd0",
+              "section:10@eabf0"
+            ],
+            "type": "PE",
+            "size": 122880,
+            "sha256": "f3485fd36ba9b8ce378c9cc080086775083584b02210d5644d8306dcef293c4c",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:4bce7f36-428e-4393-99e3-7e0844404dba@eabd0",
+              "section:13@eabe8"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "11faed4c-b21f-4d88-8e48-c4c28a1e50df",
+        "file_type": 7,
+        "names": [
+          "UsbPwrCtrlDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:11faed4c-b21f-4d88-8e48-c4c28a1e50df@108c20",
+              "section:10@108c40"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "da29358a21fbc30da90555273c2f7997453319482cb3dce9050aeea21bf452fb",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:11faed4c-b21f-4d88-8e48-c4c28a1e50df@108c20",
+              "section:13@108c38"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "f09ad92e-485c-9cdb-3e05-3385c38f94cc",
+        "file_type": 7,
+        "names": [
+          "TsensDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:f09ad92e-485c-9cdb-3e05-3385c38f94cc@112c68",
+              "section:10@112c98"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "78bd1334104a91206ef03d9ed4435f2187bc88e70e46c6551a67abfd5c94d5a7",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:f09ad92e-485c-9cdb-3e05-3385c38f94cc@112c68",
+              "section:13@112c80"
+            ],
+            "size": 18,
+            "sha256": "51e48aff95a5c61299f0c6b7550d1e2348078025c313f63c206f4d6f5cf36477",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "7db0793a-4402-4be1-906e-d0fabad2707e",
+        "file_type": 7,
+        "names": [
+          "DDRInfoDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:7db0793a-4402-4be1-906e-d0fabad2707e@11acb8",
+              "section:10@11acd8"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "bf557ce1a42731ad7b723ec8594e443e8cff1f4be610750ff7976985607e4ce6",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:7db0793a-4402-4be1-906e-d0fabad2707e@11acb8",
+              "section:13@11acd0"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "94f8a6a7-dc34-4101-88c1-99179cceae83",
+        "file_type": 7,
+        "names": [
+          "UsbfnDwc3Dxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:94f8a6a7-dc34-4101-88c1-99179cceae83@125cf8",
+              "section:10@125e24"
+            ],
+            "type": "PE",
+            "size": 102400,
+            "sha256": "7b63b107c9d2f5b39a0156ee77a49b96f8192cf59d2da741e5e58a9c1e277171",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:94f8a6a7-dc34-4101-88c1-99179cceae83@125cf8",
+              "section:13@125d10"
+            ],
+            "size": 270,
+            "sha256": "bd158853534205e5f34d9372e87432344040de5a5d5c256b3856fb74332e9bf6",
+            "opcodes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "18a031ab-b443-4d1a-a5c0-0c09261e9f71"
+              },
+              {
+                "opcode": 2,
+                "guid": "157a5c45-21b2-43c5-ba7c-822fee5fe599"
+              },
+              {
+                "opcode": 2,
+                "guid": "665e3ff6-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb1-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb2-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "1da97072-bddc-4b30-99f1-72a0b56fff2a"
+              },
+              {
+                "opcode": 2,
+                "guid": "27cfac87-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "27cfac88-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "b7dfb4e1-052f-449f-87be-9818fc91b733"
+              },
+              {
+                "opcode": 2,
+                "guid": "a46423e3-4617-49f1-b9ff-d1bfa9115839"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb3-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "6441f818-6362-4e44-b570-7dba31dd2453"
+              },
+              {
+                "opcode": 2,
+                "guid": "1e5668e2-8481-11d4-bcf1-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "665e3ff5-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "f4e5c7d0-d239-47cb-aacd-7f66ef763238"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "beb12bee-f6e1-11e1-9fb8-6c626de4aeb1",
+        "file_type": 7,
+        "names": [
+          "XhciPciEmulation"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:beb12bee-f6e1-11e1-9fb8-6c626de4aeb1@13ee48",
+              "section:10@13ef50"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "befba5efd262fadfd74f889d8c28b4c6da6f7f9fbcb5f62744620942c0742a08",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:beb12bee-f6e1-11e1-9fb8-6c626de4aeb1@13ee48",
+              "section:13@13ee60"
+            ],
+            "size": 234,
+            "sha256": "6e3f02198c4fa8c831cff254f5913e1cb682ffa122066be8813f9937cd9b64d2",
+            "opcodes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "18a031ab-b443-4d1a-a5c0-0c09261e9f71"
+              },
+              {
+                "opcode": 2,
+                "guid": "665e3ff6-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb1-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb2-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "1da97072-bddc-4b30-99f1-72a0b56fff2a"
+              },
+              {
+                "opcode": 2,
+                "guid": "27cfac87-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "27cfac88-46cc-11d4-9a38-0090273fc14d"
+              },
+              {
+                "opcode": 2,
+                "guid": "b7dfb4e1-052f-449f-87be-9818fc91b733"
+              },
+              {
+                "opcode": 2,
+                "guid": "a46423e3-4617-49f1-b9ff-d1bfa9115839"
+              },
+              {
+                "opcode": 2,
+                "guid": "26baccb3-6f42-11d4-bce7-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "6441f818-6362-4e44-b570-7dba31dd2453"
+              },
+              {
+                "opcode": 2,
+                "guid": "1e5668e2-8481-11d4-bcf1-0080c73c8881"
+              },
+              {
+                "opcode": 2,
+                "guid": "665e3ff5-46cc-11d4-9a38-0090273fc14d"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "b7f50e91-a759-412c-ade4-dcd03e7f7c28",
+        "file_type": 7,
+        "names": [
+          "XhciDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:b7f50e91-a759-412c-ade4-dcd03e7f7c28@149f80",
+              "section:10@149f98"
+            ],
+            "type": "PE",
+            "size": 94208,
+            "sha256": "d2b8084a8b9d1a8383f505561b5226b7778df7a6752dcdf437269c24666cd2bc",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "240612b7-a063-11d4-9a3a-0090273fc14d",
+        "file_type": 7,
+        "names": [
+          "UsbBusDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:240612b7-a063-11d4-9a3a-0090273fc14d@160fb0",
+              "section:10@160fc8"
+            ],
+            "type": "PE",
+            "size": 77824,
+            "sha256": "5f98c1243db4afe10b40da53c4b2d02d80e004ee751045371e7705ff9dd90973",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "2d2e62cf-9ecf-43b7-8219-94e7fc713dfe",
+        "file_type": 7,
+        "names": [
+          "UsbKbDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:2d2e62cf-9ecf-43b7-8219-94e7fc713dfe@173fe8",
+              "section:10@174000"
+            ],
+            "type": "PE",
+            "size": 53248,
+            "sha256": "9baf8253f2a175c6b877f2669c0a5765afb0061eb71657cb2d41f9dea4fe5593",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "9fb4b4a7-42c0-4bcd-8540-9bcc6711f83e",
+        "file_type": 7,
+        "names": [
+          "UsbMassStorageDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:9fb4b4a7-42c0-4bcd-8540-9bcc6711f83e@181020",
+              "section:10@181038"
+            ],
+            "type": "PE",
+            "size": 49152,
+            "sha256": "0ae31765d90f05e25d8b4e536c859ebcd4086aa491c2760192dd87b10e71ae3e",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "5af77f10-90df-4e7e-8325-a17ec09d5443",
+        "file_type": 7,
+        "names": [
+          "UsbMsdDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:5af77f10-90df-4e7e-8325-a17ec09d5443@18d068",
+              "section:10@18d088"
+            ],
+            "type": "PE",
+            "size": 69632,
+            "sha256": "d6095d8298307ff50426ea35b8bf8c3dbf7245df99826957a77382c279996492",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:5af77f10-90df-4e7e-8325-a17ec09d5443@18d068",
+              "section:13@18d080"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "3299a266-15f0-4346-8318-716336736d3e",
+        "file_type": 7,
+        "names": [
+          "UsbDeviceDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:3299a266-15f0-4346-8318-716336736d3e@19e0a8",
+              "section:10@19e0d8"
+            ],
+            "type": "PE",
+            "size": 53248,
+            "sha256": "97b630e0e53f3eff887206fd7db5b19f9528625ad2bc3bb2c923138a20ae6c6e",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:3299a266-15f0-4346-8318-716336736d3e@19e0a8",
+              "section:13@19e0c0"
+            ],
+            "size": 18,
+            "sha256": "445084b65f55991565be20b692e489f28006a91c3d0a050eae2a8eebdf12f563",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "f4e5c7d0-d239-47cb-aacd-7f66ef763238"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "cd823a4d-7dec-4531-ae5d-4134fa4127b8",
+        "file_type": 7,
+        "names": [
+          "UsbConfigDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:cd823a4d-7dec-4531-ae5d-4134fa4127b8@1ab100",
+              "section:10@1ab164"
+            ],
+            "type": "PE",
+            "size": 86016,
+            "sha256": "3fca3afe9dcbceec82c08737aacd1b1520a1e1c89987e26af664324f978da1ba",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:cd823a4d-7dec-4531-ae5d-4134fa4127b8@1ab100",
+              "section:13@1ab118"
+            ],
+            "size": 72,
+            "sha256": "9f1382dd0255d53fb2c06889a985978f3626f9eca00e538dbc51553f65e664af",
+            "opcodes": [
+              2,
+              2,
+              2,
+              2,
+              3,
+              3,
+              3,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "b0760469-970c-487a-a4b5-28db7b45cef1"
+              },
+              {
+                "opcode": 2,
+                "guid": "f4e5c7d0-d239-47cb-aacd-7f66ef763238"
+              },
+              {
+                "opcode": 2,
+                "guid": "157a5c45-21b2-43c5-ba7c-822fee5fe599"
+              },
+              {
+                "opcode": 2,
+                "guid": "eb97088e-cfdf-49c6-be4b-d906a5b20e86"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "0a134f0e-075e-40b3-9c63-3b3906804663",
+        "file_type": 7,
+        "names": [
+          "UsbInitDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:0a134f0e-075e-40b3-9c63-3b3906804663@1c0188",
+              "section:10@1c01b8"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "76ebacaebe3973db912ff259acf5bcec8a9156d89c43db66bbf058e0426025e3",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:0a134f0e-075e-40b3-9c63-3b3906804663@1c0188",
+              "section:13@1c01a0"
+            ],
+            "size": 18,
+            "sha256": "ac68645cdf6f47e6d36bb1293073c8d53a413ddda8e9f4c4503e6cc299ec8e79",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "e722b03f-b250-42ce-8ebd-5bd51812d037"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "5f0937cd-73f9-445e-b320-bb6fd5d3cbde",
+        "file_type": 7,
+        "names": [
+          "UCDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:5f0937cd-73f9-445e-b320-bb6fd5d3cbde@1c81d8",
+              "section:10@1c81f0"
+            ],
+            "type": "PE",
+            "size": 176128,
+            "sha256": "7413a7c87e77791e84a7079a06921565f75a3e0afd2d2511fc33ebcaef0a2eab",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "b0d3689e-11f8-43c6-8ece-023a29cec35b",
+        "file_type": 7,
+        "names": [
+          "RngDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:b0d3689e-11f8-43c6-8ece-023a29cec35b@1f3208",
+              "section:10@1f3220"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "82b1f1d891ffc20f42534191725061145109d2a2cf69d02416f446938981681b",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "1d317734-4083-47c6-83ea-e3a42f2a6bff",
+        "file_type": 7,
+        "names": [
+          "PILDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:1d317734-4083-47c6-83ea-e3a42f2a6bff@1fd238",
+              "section:10@1fd268"
+            ],
+            "type": "PE",
+            "size": 118784,
+            "sha256": "dbd64cd569e5c192ef29f3ce4e65676245b77e8dd3b270483c7e1a906c9d3a94",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:1d317734-4083-47c6-83ea-e3a42f2a6bff@1fd238",
+              "section:13@1fd250"
+            ],
+            "size": 18,
+            "sha256": "51e48aff95a5c61299f0c6b7550d1e2348078025c313f63c206f4d6f5cf36477",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "8cf9c920-d5e6-4dac-bef9-6e6a4eec7add",
+        "file_type": 7,
+        "names": [
+          "PILProxyDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:8cf9c920-d5e6-4dac-bef9-6e6a4eec7add@21a280",
+              "section:10@21a2a0"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "e43d43cbb03c2003471376d8eb9af1ac920a9d72df4a81daa698250ca6809627",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:8cf9c920-d5e6-4dac-bef9-6e6a4eec7add@21a280",
+              "section:13@21a298"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "32c71e68-83a8-46ed-aed1-094e71b12057",
+        "file_type": 7,
+        "names": [
+          "SecRSADxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:32c71e68-83a8-46ed-aed1-094e71b12057@2242c0",
+              "section:10@2242d8"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "39f8eb7434dd550f609c89ed560734d5bfae92937dd35e03afa31237f21d0184",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "c2f9a4f5-f7b4-43e7-ba99-5ea804cc103a",
+        "file_type": 7,
+        "names": [
+          "ASN1X509Dxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:c2f9a4f5-f7b4-43e7-ba99-5ea804cc103a@22f2f8",
+              "section:10@22f310"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "4d8ae2d0b5f1208f5e6607467da79a3855871a855d49b4c11a7ccd470de17a9c",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "5d787b6c-6254-43f5-a7a8-cb25329cf97e",
+        "file_type": 7,
+        "names": [
+          "SPSSDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:5d787b6c-6254-43f5-a7a8-cb25329cf97e@239330",
+              "section:10@239360"
+            ],
+            "type": "PE",
+            "size": 49152,
+            "sha256": "5c415799aa2ce19406fde0de87c6b471c8731466ff67fd8b42bab6c7924df33b",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:5d787b6c-6254-43f5-a7a8-cb25329cf97e@239330",
+              "section:13@239348"
+            ],
+            "size": 18,
+            "sha256": "51e48aff95a5c61299f0c6b7550d1e2348078025c313f63c206f4d6f5cf36477",
+            "opcodes": [
+              2,
+              8
+            ],
+            "references": [
+              {
+                "opcode": 2,
+                "guid": "ae37b942-457f-4c91-a196-d9669fd347a3"
+              }
+            ],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "e2534a24-1d9a-4a54-aaec-be8836d0f45d",
+        "file_type": 7,
+        "names": [
+          "FvDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:e2534a24-1d9a-4a54-aaec-be8836d0f45d@245378",
+              "section:10@245398"
+            ],
+            "type": "PE",
+            "size": 73728,
+            "sha256": "aafc0188611c20cf7f8f70c4496da822227360085f128028b9ed47ad551c72c8",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:e2534a24-1d9a-4a54-aaec-be8836d0f45d@245378",
+              "section:13@245390"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "4a568b8a-4d9d-4984-9c75-cee33698e451",
+        "file_type": 7,
+        "names": [
+          "ParserDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:4a568b8a-4d9d-4984-9c75-cee33698e451@2573b0",
+              "section:10@2573d0"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "ba6e2761ffe0583c314056d04b07fcc03450cb000486aab22a6b945c6587c13f",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:4a568b8a-4d9d-4984-9c75-cee33698e451@2573b0",
+              "section:13@2573c8"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "84cc57f6-38be-4acf-9752-73d1e23f793f",
+        "file_type": 7,
+        "names": [
+          "SerialPortDxe"
+        ],
+        "executables": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:84cc57f6-38be-4acf-9752-73d1e23f793f@2603f0",
+              "section:10@260410"
+            ],
+            "type": "PE",
+            "size": 28672,
+            "sha256": "a286caa5b5de1c2e10cd379ae045609c07ec24e939aaee7737eee7ff571a8c2a",
+            "token_offsets": null
+          }
+        ],
+        "depex": [
+          {
+            "path": [
+              "uefi.elf",
+              "ffs:d14c51ed-4f4d-2f2d-eae4-77914692d046@19c948",
+              "section:02@19c960",
+              "decoded:1d301fe9-be79-4353-91c2-d23bc959ae0c:4c4105b16ef7181adcd752432ab5364dc23610fd0900d2e3db302358e2f302ba",
+              "section:17@4",
+              "ffs:84cc57f6-38be-4acf-9752-73d1e23f793f@2603f0",
+              "section:13@260408"
+            ],
+            "size": 2,
+            "sha256": "557c754d26e2667287367a856ea5fcd584f35ab796d24a6a875d1648a4637d23",
+            "opcodes": [
+              6,
+              8
+            ],
+            "references": [],
+            "ordering_only": false
+          }
+        ]
+      },
+      {
+        "ffs": "a795ad83-ed63-48da-8696-79541beb5735",
+        "file_type": 2,
+        "names": [
+          "logo_m_lock.bmp"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "924a8269-57ee-454d-b764-52ef8926fef1",
+        "file_type": 2,
+        "names": [
+          "Panel_m19_36_02_0a_fhd_dsc_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "25cd6ed6-c8b5-4e9e-b4f6-709994707438",
+        "file_type": 2,
+        "names": [
+          "Panel_m19_42_03_0b_fhd_dsc_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "7b7a5a97-7220-45bf-b58d-a2409a5f4963",
+        "file_type": 2,
+        "names": [
+          "Panel_m19_42_03_0c_fhd_dsc_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "2d571b03-794d-4672-aa1a-fee1b9052b84",
+        "file_type": 2,
+        "names": [
+          "Panel_sim_vid_panel.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "8cae2c55-fc5a-410b-812b-8ca22f572f36",
+        "file_type": 2,
+        "names": [
+          "Panel_truly_wqxga_dsc_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "13ac9dc9-0092-4374-ae1a-06ff35950fd0",
+        "file_type": 2,
+        "names": [
+          "Panel_truly_wqxga_dsc_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "fc6315f9-f8fe-4222-a1e3-226df55d7592",
+        "file_type": 2,
+        "names": [
+          "Panel_truly_wqxga_dual_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "95e7b040-26a2-4511-9abb-1d95d6da7082",
+        "file_type": 2,
+        "names": [
+          "Panel_truly_wqxga_dual_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "8bc595b7-391a-4a9a-8256-5b9983b30392",
+        "file_type": 2,
+        "names": [
+          "Panel_sharp_4k_dsc_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "19b58acd-b1f8-4078-b9a5-a33584b680e2",
+        "file_type": 2,
+        "names": [
+          "Panel_sharp_4k_dsc_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "0ae323d6-2ebe-11e8-8349-9ba636a0d80c",
+        "file_type": 2,
+        "names": [
+          "Panel_sharp_1080p_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "87273b42-311d-11e8-9324-dfb2dadfc3d1",
+        "file_type": 2,
+        "names": [
+          "Panel_truly_1080p_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "bafd3200-311d-11e8-8651-0fb3cacf38fb",
+        "file_type": 2,
+        "names": [
+          "Panel_truly_1080p_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "88ca5abf-d0ac-4093-a68c-0cfae1ef9635",
+        "file_type": 2,
+        "names": [
+          "Panel_boe_amoled_wqhd_dsc_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "6523a5c9-91cb-45c0-a2dc-25997cf23369",
+        "file_type": 2,
+        "names": [
+          "Panel_boe_amoled_wqhd_dsc_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "d7170685-5965-4b44-9305-37cdb199b9be",
+        "file_type": 2,
+        "names": [
+          "Panel_boe_amoled_fhd_dsc_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "8f276ee4-e75e-4c3b-8bcc-c37771e26478",
+        "file_type": 2,
+        "names": [
+          "Panel_nt36860_wqhd_dsc_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "6f2d4884-d8a0-11e9-af7a-d77b1fe990ec",
+        "file_type": 2,
+        "names": [
+          "Panel_nt36860_wqhd_dsc_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "81ce7295-491d-4e3f-aaa7-ab43fef2f615",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_60hz_fhd_plus_dsc_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "8297c793-9861-422c-9f67-d447af1ea812",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_120hz_fhd_plus_dsc_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "61156380-eb8a-4618-940f-ab9bdea1eec2",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_120hz_fhd_plus_dsc_cmd_hdk.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "44b09226-c2b4-45ed-aa6f-6686db103978",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_120hz_fhd_plus_dsc_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "d3f8580c-ccb8-4804-bb03-776e7b542fc2",
+        "file_type": 2,
+        "names": [
+          "Panel_secondary_truly_1080p_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "d192fee9-6a04-4be8-abfe-5534e2b457ec",
+        "file_type": 2,
+        "names": [
+          "Panel_secondary_truly_1080p_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "714a3e09-fcbf-41be-983d-65c015e0349e",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_60hz_fhd_plus_dsc_cmd_cphy.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "9599e50d-172d-403a-859e-3b744465d998",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_120hz_fhd_plus_dsc_cmd_cphy.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "cde28842-a59c-46a0-b43b-1e1e49acee5a",
+        "file_type": 2,
+        "names": [
+          "Panel_secondary_r66451_120hz_fhd_plus_dsc_cmd_cphy.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "9874b60a-6b80-4d76-8eeb-7862c780ec03",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_144hz_fhd_plus_dsc_cmd_cphy.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "bc28e12e-c7e0-47f9-bbf9-0b45ed6f4b18",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_144hz_fhd_plus_dsc_vid_cphy.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "637ad94d-7d9b-4d5f-b420-770b65becda8",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_60hz_fhd_plus_dsc_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "602cffcd-8a5e-438e-b432-bf1a656a2561",
+        "file_type": 2,
+        "names": [
+          "Panel_secondary_r66451_fhd_plus_dsc_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "b2f70e67-7f12-4ca9-8e05-70d2a06a720d",
+        "file_type": 2,
+        "names": [
+          "Panel_secondary_r66451_120hz_fhd_plus_dsc_cmd.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "eb0a97f6-39db-41d4-9b3c-ca3badc144b4",
+        "file_type": 2,
+        "names": [
+          "Panel_truly_wqxga_cmd_splitlink.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc6970",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_120hz_fhd_plus_dsc_cmd_demura.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc65b2",
+        "file_type": 2,
+        "names": [
+          "Panel_nt36672e_fhd_plus_dsc_60hz_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc65c4",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_90hz_fhd_plus_dsc_vid_cphy.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc6465",
+        "file_type": 2,
+        "names": [
+          "Panel_vtdr6130_amoled_144hz_cmd_mode.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc64af",
+        "file_type": 2,
+        "names": [
+          "Panel_vtdr6130_amoled_144hz_vid_mode.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc6463",
+        "file_type": 2,
+        "names": [
+          "Panel_nt36672e_fhd_plus_120hz_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc65c3",
+        "file_type": 2,
+        "names": [
+          "Panel_nt36672e_fhd_plus_144hz_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc66c5",
+        "file_type": 2,
+        "names": [
+          "Panel_nt36672e_fhd_plus_60hz_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc6444",
+        "file_type": 2,
+        "names": [
+          "Panel_nt36672e_fhd_plus_144hz_vid_cphy.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc6541",
+        "file_type": 2,
+        "names": [
+          "Panel_nt36672e_fhd_plus_90hz_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc4532",
+        "file_type": 2,
+        "names": [
+          "Panel_ft8726_fhd_plus_120hz_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc4641",
+        "file_type": 2,
+        "names": [
+          "Panel_ft8726_fhd_plus_90hz_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc4723",
+        "file_type": 2,
+        "names": [
+          "Panel_ft8726_fhd_plus_60hz_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "9159f8d2-7721-4fa9-989a-3eec86f5ab52",
+        "file_type": 2,
+        "names": [
+          "Panel_r66451_120hz_fhd_plus_dsc_vid_cphy.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-82e3c8bc5123",
+        "file_type": 2,
+        "names": [
+          "Panel_vtdr6130_amoled_120hz_cmd_mode.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "f4a245c8-940e-4523-a53b-12b5b2ce5332",
+        "file_type": 2,
+        "names": [
+          "Panel_vtdr6130_amoled_120hz_vid.xml"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "03e9256f-e621-48d8-8576-7e3b4fcf2d41",
+        "file_type": 2,
+        "names": [
+          "PanelSimConfig.csv"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "21e9bdd9-6c3f-4f10-84a5-bbec322741f1",
+        "file_type": 2,
+        "names": [
+          "uefipil.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "45fe4b7c-150c-45da-a021-4beb2048ec6f",
+        "file_type": 2,
+        "names": [
+          "QcomChargerCfg.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      }
+    ]
+  },
+  {
+    "image": "tools.fv",
+    "sha256": "d7f0c4034bb3236e3878dfd56116217dc34afd5b3d41e7a1f1e71fddbf77a002",
+    "gaps": [],
+    "section_types": {
+      "0x2": 1,
+      "0x19": 8,
+      "0x17": 1,
+      "0x15": 24,
+      "0x10": 17
+    },
+    "ui_names": [
+      "Cmd",
+      "ListVars",
+      "Menu",
+      "Pgm",
+      "RPMBProvision",
+      "RPMBErase",
+      "UEFINVErase",
+      "DelBootVars",
+      "UsbfnMsdApp",
+      "SecurityToggleApp",
+      "DebugPolicyToggleApp",
+      "CapsuleApp",
+      "Ebl",
+      "Mptest",
+      "Shell",
+      "WinDsdtUpdateControllerUI",
+      "MemoryProfileInfo",
+      "USB_Menu.cfg",
+      "Uefi_Menu.cfg",
+      "Pmic_Menu.cfg",
+      "Config_Menu.cfg",
+      "EUD_Menu.cfg",
+      "Clock_Menu.cfg",
+      "DriverList.cfg"
+    ],
+    "parser_limit": "Existing FV/FFS readers can stop at malformed/trailing data; no PI checksum validation",
+    "ffs_metadata": [
+      {
+        "ffs": "c57401d8-8a89-4904-8b55-2cc2073126b8",
+        "file_type": 11,
+        "names": [],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "484523a5-6a18-463f-ea1d-de3d740abad5",
+        "file_type": 9,
+        "names": [
+          "Cmd"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:484523a5-6a18-463f-ea1d-de3d740abad5@80",
+              "section:10@a4"
+            ],
+            "type": "PE",
+            "size": 110592,
+            "sha256": "558c71fea082cb7e868bc97928b2cfe844e800697fe690ffccbf1b21b2b83900",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "7efd675b-b69b-4be9-9da2-16a12658a1ae",
+        "file_type": 9,
+        "names": [
+          "ListVars"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:7efd675b-b69b-4be9-9da2-16a12658a1ae@1b0a8",
+              "section:10@1b0d8"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "60dcbde848eac1d84211d972debcb998104d67bbe9f2f7a61998e19e96bbf7ee",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "a9f91c13-4df7-3952-6811-f6b4479b3c0c",
+        "file_type": 9,
+        "names": [
+          "Menu"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:a9f91c13-4df7-3952-6811-f6b4479b3c0c@240e0",
+              "section:10@24108"
+            ],
+            "type": "PE",
+            "size": 57344,
+            "sha256": "55e99a3cf1bb28ceee664ba41150cc86baa7ba07ccd277a72d7383ce5b728151",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "484523a5-6a18-463f-ea1d-de3d740abadf",
+        "file_type": 9,
+        "names": [
+          "Pgm"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:484523a5-6a18-463f-ea1d-de3d740abadf@32110",
+              "section:10@32134"
+            ],
+            "type": "PE",
+            "size": 45056,
+            "sha256": "484a08db866e482b9ec0f7fd429a1e6fadf5e3a68e85595a97ccb457ad8f6f15",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "f7b0199c-756b-4972-a48c-4508151d8bbb",
+        "file_type": 9,
+        "names": [
+          "RPMBProvision"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:f7b0199c-756b-4972-a48c-4508151d8bbb@3d138",
+              "section:10@3d170"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "793f27906215299da4726cdadb620f82e4094403acf66d1e78221eb96833d588",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "42578984-bba3-43a0-a412-b8f611022b28",
+        "file_type": 9,
+        "names": [
+          "RPMBErase"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:42578984-bba3-43a0-a412-b8f611022b28@47178",
+              "section:10@47190"
+            ],
+            "type": "PE",
+            "size": 32768,
+            "sha256": "17c2e61b35b25b32e4c60d78178a7c9dea078b10a0c8b698cbf7d30868412e70",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "ae4de1e7-b20b-4984-bf03-2e0ff0ac5864",
+        "file_type": 9,
+        "names": [
+          "UEFINVErase"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:ae4de1e7-b20b-4984-bf03-2e0ff0ac5864@4f1b0",
+              "section:10@4f1e4"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "7eaf59d1fcac8f4afddc92f1b6b54d6b655b15530debdd8430431b0be8c053b5",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "193787e1-e5c6-4c66-bbb2-4fa1df2af09a",
+        "file_type": 9,
+        "names": [
+          "DelBootVars"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:193787e1-e5c6-4c66-bbb2-4fa1df2af09a@591e8",
+              "section:10@5921c"
+            ],
+            "type": "PE",
+            "size": 36864,
+            "sha256": "1aa93169353ca2b9c0b3ff6ae07ef058eb55c80aa283b0b843b25d1f0ce0e725",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "1c207232-4086-9be7-db16-159d66ab466a",
+        "file_type": 9,
+        "names": [
+          "UsbfnMsdApp"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:1c207232-4086-9be7-db16-159d66ab466a@62220",
+              "section:10@62238"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "2e6800d7d90cb9d59f822868e3a314ac296e9def57bac22bcefcc0f69734fbbe",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "a3ef0b47-4f84-4f73-a5c1-e1242e60ba16",
+        "file_type": 9,
+        "names": [
+          "SecurityToggleApp"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:a3ef0b47-4f84-4f73-a5c1-e1242e60ba16@6c258",
+              "section:10@6c298"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "3abc5a9914debfddae883cadecef031edc753c10f1217a8be65c4539cb46d841",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "1c8407ed-86a9-45e2-83d4-5a64d83588f2",
+        "file_type": 9,
+        "names": [
+          "DebugPolicyToggleApp"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:1c8407ed-86a9-45e2-83d4-5a64d83588f2@762a0",
+              "section:10@762b8"
+            ],
+            "type": "PE",
+            "size": 40960,
+            "sha256": "72b0f430ed203b65aed800e54059dd1692a0e953627c95324f46f01c187fd117",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "4cef31da-8682-4274-9cc4-aee7516a5e7b",
+        "file_type": 9,
+        "names": [
+          "CapsuleApp"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:4cef31da-8682-4274-9cc4-aee7516a5e7b@802f0",
+              "section:10@80324"
+            ],
+            "type": "PE",
+            "size": 57344,
+            "sha256": "42a6bf62e594cce0a12efa09a97a2e9d293acb45a95c2254311a3922bb144a54",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "3cef354a-3b7a-4519-ad70-72a134698311",
+        "file_type": 9,
+        "names": [
+          "Ebl"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:3cef354a-3b7a-4519-ad70-72a134698311@8e328",
+              "section:10@8e34c"
+            ],
+            "type": "PE",
+            "size": 135168,
+            "sha256": "8eb0f3c72b8b776c4965612bfa99511f261545be9972178a741bf6560fa14103",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "decaa93a-472a-e0e6-d1af-2d93fec89b40",
+        "file_type": 9,
+        "names": [
+          "Mptest"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:decaa93a-472a-e0e6-d1af-2d93fec89b40@af350",
+              "section:10@af37c"
+            ],
+            "type": "PE",
+            "size": 57344,
+            "sha256": "8024ff17e0464f234bd20ed831d13871233993ef1bbe8c72b7394a86c1d724ba",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "7c04a583-9e3e-4f1c-ad65-e05268d0b4d1",
+        "file_type": 9,
+        "names": [
+          "Shell"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:7c04a583-9e3e-4f1c-ad65-e05268d0b4d1@bd380",
+              "section:10@bd3a8"
+            ],
+            "type": "PE",
+            "size": 1003520,
+            "sha256": "3491e546d49d48b77faf9fda743a34f6f1a63e532062c9498ab0d3511c528420",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "a9f19c13-4df7-3952-6811-f6b4479b3c0c",
+        "file_type": 9,
+        "names": [
+          "WinDsdtUpdateControllerUI"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:a9f19c13-4df7-3952-6811-f6b4479b3c0c@1b23b0",
+              "section:10@1b2400"
+            ],
+            "type": "PE",
+            "size": 61440,
+            "sha256": "8f4d9c9400014cacfbb8cd0e2d497e352da03bcc84fce0b7ba7a185541179de3",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "21429b90-5f67-4e93-af55-1d314d646e12",
+        "file_type": 9,
+        "names": [
+          "MemoryProfileInfo"
+        ],
+        "executables": [
+          {
+            "path": [
+              "tools.fv",
+              "ffs:c57401d8-8a89-4904-8b55-2cc2073126b8@48",
+              "section:02@60",
+              "decoded:ee4e5898-3914-4259-9d6e-dc7bd79403cf:463b294af6d2a22dd21c817fa6bce2365b8dc85ce96621ccc0df21cdb5f6eeb7",
+              "section:17@4",
+              "ffs:21429b90-5f67-4e93-af55-1d314d646e12@1c1408",
+              "section:10@1c1448"
+            ],
+            "type": "PE",
+            "size": 49152,
+            "sha256": "c1f2ed4b51e89cd493f85644c174ea8c892b03b81d2b7f8abe0489d756c506d8",
+            "token_offsets": null
+          }
+        ],
+        "depex": []
+      },
+      {
+        "ffs": "a91d838e-a5fa-4138-825d-455e23030790",
+        "file_type": 2,
+        "names": [
+          "USB_Menu.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "a91d838e-a5fa-4138-825d-455e23030791",
+        "file_type": 2,
+        "names": [
+          "Uefi_Menu.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "a91d838e-a5fa-4138-825d-455e23030792",
+        "file_type": 2,
+        "names": [
+          "Pmic_Menu.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "a91d838e-a5fa-4138-825d-455e23030793",
+        "file_type": 2,
+        "names": [
+          "Config_Menu.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "623b76f1-b9cf-4d24-86cc-a8198dc53921",
+        "file_type": 2,
+        "names": [
+          "EUD_Menu.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "7d1a8624-0a00-435f-b4df-de7271a846c6",
+        "file_type": 2,
+        "names": [
+          "Clock_Menu.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      },
+      {
+        "ffs": "96195f52-9eaa-436d-9a86-0fa02acb39b0",
+        "file_type": 2,
+        "names": [
+          "DriverList.cfg"
+        ],
+        "executables": [],
+        "depex": []
+      }
+    ]
+  }
+]
