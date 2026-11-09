@@ -63,31 +63,25 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 - [x] Confirmat al Debian que l'extracció de FV des de `work/abl.elf` funciona: offset `0x1000`, longitud `0x30000` (196.608 bytes), destí local `work/abl-fv.bin`. Encara no s'ha analitzat la jerarquia FFS ni extret `LinuxLoader.efi`.
 - [x] Endurit `.gitignore`: `work/`, `*.efi`, `*.fd`, `*.rom` per evitar publicar per error binaris extrets.
 
+- [x] Instal·lat `uefi_firmware` **1.16** en l'entorn virtual local `.venv`. `uefi-firmware-parser --test work/abl-fv.bin` retorna `UEFIFirmwareVolume`.
+- [x] **Confirmada la jerarquia real ABL/UEFI** amb el parser (sense extraure encara el PE): volum exterior FFS2 de `0x30000` (196.608 bytes); fitxer firmware volume image de 168.965 bytes; secció GUID-defined `ee4e5898-3914-4259-9d6e-dc7bd79403cf` amb processament requerit; volum interior FFS2 `0xce0c0` (843.968 bytes); fitxer aplicació `f536d559-459f-48fa-8bbc-43b554ecae8d`, nom **`LinuxLoader`**; secció **PE32 image**, 843.780 bytes (inclou capçalera de secció, no necessàriament mida exacta del PE). El parser ha descomprimit la secció GUID-defined i ha presentat el volum interior. **Encara no s'ha inspeccionat l'arquitectura del PE extret ni s'ha trobat cap vulnerabilitat.**
+
 ## Següent pas immediat
 
-**Analitzar el volum UEFI extret amb ferramentes existents**, en lloc de crear un parser nou abans de provar-ne un de fiable. Primer usar `uefi-firmware-parser` en un entorn virtual de Debian, sense privilegis de root i només amb el fitxer `work/abl-fv.bin`.
+**Extraure `LinuxLoader` localment amb el parser UEFI i identificar la capçalera PE real.** La detecció de l'objecte està confirmada; falta conéixer el camí i el format exacte que genera l'eina en mode d'extracció.
 
 ```bash
 cd ~/redmi-sm4450-bootloader-research
 git pull
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install uefi_firmware
-python - <<'PY'
-from uefi_firmware import AutoParser
-from pathlib import Path
-data = Path("work/abl-fv.bin").read_bytes()
-parser = AutoParser(data)
-print("Parser:", type(parser).__name__)
-parsed = parser.parse()
-print("Parse success:", bool(parsed))
-if parsed:
-    print("Firmware volume object:", type(parsed).__name__)
-    print("Object summary:", repr(parsed)[:1200])
-PY
+source .venv/bin/activate
+uefi-firmware-parser -e -o work/uefi-extracted work/abl-fv.bin
+find work/uefi-extracted -type f -printf '%s bytes  %p\n' | head -60
+find work/uefi-extracted -type f -exec file {} + | grep -Ei 'PE32|PE32\+|EFI|executable'
 ```
 
-Si l'API de la versió instal·lada diferix, documentar l'error i ajustar el programa a l'API real, **sense assumir que `parse()` retorna dades o extraure contingut no revisat**. Després, si s'identifiquen mòduls PE32/PE32+, fer una extracció limitada a `work/`, identificar arquitectura i preparar anàlisi Ghidra. Avaluar eines de tercers abans d'integrar-les, comprovant llicència, manteniment i confiança; preferir dependència instal·lable o adaptador propi a copiar-ne codi.
+**Recollir les línies de `find` i `file`** i, segons els camins reals, obtindre SHA-256 i arquitectura del PE/COFF. No executar cap EFI extret. Si l'eina no pot exportar la secció, registrar l'error i revisar les seues opcions.
+
+Després: anàlisi estàtica de `LinuxLoader` (Ghidra o eines PE), cadenes i referències verificades. Valorar una integració controlada del parser al nostre repo (dependència, amb llicència adequada), no copiar codi sense revisar.
 
 ## Pendent després d'eixe pas
 
@@ -111,4 +105,5 @@ Si l'API de la versió instal·lada diferix, documentar l'error i ajustar el pro
 | 2026-11-09 | Anàlisi inicial de `abl.elf` amb `file`, `readelf` i `strings` | ELF32 ARM, tres program headers, un LOAD RWE de 0x30000 bytes i sense seccions; cap cadena coincident amb el filtre de desbloqueig. |
 | 2026-11-09 | Cerca de ferramentes UEFI i nova interpretació del binari | Signatura `_FVH` a `0x1028`, possible FV a `0x1000`. Documentades eines UEFITool, uefi-firmware-parser, xbltools i GBL checker. |
 | 2026-11-09 | Extracció local confirmada del volum UEFI | `work/abl-fv.bin`, offset `0x1000`, mida `0x30000`; `.gitignore` ampliat per protegir els extrets. Següent prova: parser UEFI en entorn virtual. |
+| 2026-11-09 | Parser UEFI confirma LinuxLoader | `uefi_firmware` 1.16 ha trobat FV intern de 843.968 bytes i aplicació `LinuxLoader` amb secció PE32; següent prova: exportar i identificar PE/COFF. |
 
