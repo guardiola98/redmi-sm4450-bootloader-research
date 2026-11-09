@@ -94,16 +94,13 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 - [x] **Nova revisió estàtica directa del PE adjunt (2026-11-09)**: SHA-256 verificat; desassemblatge LLVM de `FUN_00054980` i funcions auxiliars. `0x55a74..0x55a84` passa el nom UTF-16 `frp` a un helper de localització; `0x55ae8` recupera el descriptor `x22`. `0x55af8` crida `0x5950` per obtindre búfer; `0x55b20` crida callback de lectura; **només si retorna zero** `0x55b2c..0x55b40` emmagatzema el bit `buf[N-1] & 1` a `DAT_000cb5c0`. Es confirma que el missatge `IsAllowUnlock` a `0x55aa8` apareix **abans** del camí de lectura i pot tornar a executar-se per un bucle des de `0x55b4c` fins `0x55a90`. A `0x57c50`, una altra funció llig `DAT_000cb5c0` per passar-lo a una rutina de format amb text proper a `get_unlock_ability`; encara **no és evidència que el bit siga l'únic control d'autorització**.
 - [x] **Ruta MiToken separada confirmada estructuralment**: `0x55b50..0x55b60` intenta localitzar una interfície UEFI per GUID (`0xb1800`) amb `0x59f48` (veneer cap a crida indirecta), i `0x55be0..0x55bf0` invoca un callback via `0x59fe0` per consultar la longitud d'un token; després hi ha una segona invocació i missatge `Error Get Token`. Identitat completa del protocol i relació causal amb desbloqueig **encara no demostrades**. Vegeu [docs/linuxloader-frp-analysis.md](docs/linuxloader-frp-analysis.md).
 
+- [x] **Anàlisi directa dels handlers Fastboot al PE adjunt (2026-11-09)**: `0x57c50` llig el flag global `[0xCB5A8+0x18]` i el passa junt amb el format `get_unlock_ability: %d` (`0xAEAC7`) a la rutina `0x4488`, compatible amb un **handler informatiu**. Per separat, `0x57e34..0x57f1c` conté una ruta de canvi d'estat amb crida `0x43d88` i comprovació d'errors; la funció `0x43d88` ramifica cap a `0x440b0` i `0x44188` i no és una simple escriptura del flag FRP. No està comprovat encara com s'autoritzen estes transicions ni quina ruta exacta les invoca. Vegeu [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md). **No s'ha descobert cap vulnerabilitat.**
+
 ## Següent pas immediat
 
-**Identificar el consumidor del flag FRP i la naturalesa exacta del protocol MiToken**, només amb anàlisi offline. Ja no calen captures de Ghidra; tenim el PE ARM64 original.
+**Reconstruir el despatx de les comandes `oem unlock` / `oem lock` i tipar les funcions `0x43D88`, `0x440B0`, `0x44188`** per saber si l'estat persistent depén de l'emmagatzematge, serveis UEFI o una altra autorització. Diferenciar l'ús informatiu de `get_unlock_ability` a `0x57C50` de la ruta que intenta canviar l'estat a `0x57E34..`.
 
-1. Revisar en el PE les funcions de `oem unlock` i `flashing get_unlock_ability` i les referències a `DAT_000cb5c0` per diferenciar lectura, visualització i decisió d'autorització.
-2. Identificar les taules i signatures de callback de MiToken en `0x55b50..0x55c94` sense assumir que obtindre un token siga suficient per desbloquejar el mòbil.
-3. Validar el significat i la mida `N` del descriptor FRP, inclosos els camins d'error; qualsevol hipòtesi de desbordament o de canvi de bit requerix evidència de validació del context.
-4. Comparar amb ABL d'un firmware anterior verificat del mateix model quan siga necessari.
-
-**No modificar partició FRP, tokens ni estat del bootloader.** Cap vulnerabilitat o desbloqueig funcional verificat.
+Continuar amb **desassemblatge offline sobre el PE verificat**, identificant les referències creuades de funcions i la cadena de crides de MiToken. Vegeu [docs/linuxloader-fastboot-handlers.md](docs/linuxloader-fastboot-handlers.md). Després comparar amb una ROM anterior de la mateixa família i procedència verificada. **No executar comandes OEM de desbloqueig, ni escriure o esborrar FRP o particions.**
 
 ## Pendent després d'eixe pas
 
@@ -123,6 +120,7 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 | Data | Canvi | Resultat |
 | --- | --- | --- |
+| 2026-11-09 | Anàlisi separada de handlers Fastboot | `get_unlock_ability` llig un flag FRP per mostrar-lo (`0x57c50`); la transició d'estat utilitza `0x43d88` i funcions auxiliars amb controls d'error. Sense bypass confirmat. |
 | 2026-11-09 | PE ARM64 analitzat directament | Hash verificat; cadena `frp` trobada i lectura indirecta seguida d'extracció d'un bit a `DAT_000cb5c0`. Informe a `docs/linuxloader-frp-analysis.md`. Següent pas: distingir MiToken i seguir consumidors del flag. |
 | 2026-11-09 | Creació del registre de progrés i pròxim pas | Estat inicial consolidat; següent prova definida: extracció i inspecció estàtica d'ABL |
 | 2026-11-09 | Anàlisi inicial de `abl.elf` amb `file`, `readelf` i `strings` | ELF32 ARM, tres program headers, un LOAD RWE de 0x30000 bytes i sense seccions; cap cadena coincident amb el filtre de desbloqueig. |
