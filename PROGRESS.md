@@ -85,17 +85,17 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 
 - [x] **Ghidra — origen de x28 identificat** a l'entrada de `FUN_00054980`: `0x000549a8: adrp x28,0xcb000` i `0x000549b0: add x28,x28,#0x5a8`; per tant, `x28=0x000cb5a8` (adreça virtual en la base carregada per Ghidra). La instrucció `0x00055aa8: ldr w2,[x28,#0x18]` llig un valor de 32 bits a `0x000cb5c0` (`DAT_000cb5c0`) i el transmet a una crida de registre junt amb `IsAllowUnlock is %d`. Això identifica una **lectura d'una posició global**, no l'origen o la política de l'autorització. No hi ha cap bug demostrat.
 
+- [x] **Ghidra — localitzada escriptura a `DAT_000cb5c0` a `0x00055b40`**. Les instruccions exactes són `ldr x8,[x22,#0x8]` (`0x55b2c`), `ldr w8,[x8,#0xc]` (`0x55b30`), `sub w8,w8,#1` (`0x55b34`), `ldrb w8,[x23,w8,UXTW]` (`0x55b38`), `and w8,w8,#1` (`0x55b3c`) i `str w8,[x28,#0x18]` (`0x55b40`). L'indicador guardat és el bit 0 d'un byte d'un búfer referenciat per `x23`, amb índex derivat d'una estructura apuntada indirectament per `x22`. La crida virtual `blr x9` anterior i `cbnz x0` condicionen el camí. **Encara no sabem què és el búfer, ni si representa informació d'autorització; no hi ha vulnerabilitat confirmada.**
+
 ## Següent pas immediat
 
-**Buscar qui escriu el camp `DAT_000cb5c0`** (el valor imprés per `IsAllowUnlock is %d`).
+**Identificar la procedència de `x23` i `x22` en `FUN_00054980`.** La variable registrada com `IsAllowUnlock` prové de `((uint8_t*)x23)[index] & 1`, amb `index` extret d'una estructura accessible des de `x22`. No sabem encara si eixes dades són de FRP, una lectura de partició o una altra estructura.
 
-En Ghidra:
-1. Al Listing, prémer `G` i anar a `000CB5C0`.
-2. Seleccionar el símbol/adreça i fer `References → Show References to Address`.
-3. Inspeccionar les referències `WRITE` (`W`) i `READ` (`R`). Si no hi ha escriptures explícites, investigar la base de l'estructura `0x000cb5a8` perquè pot accedir-se mitjançant punters.
-4. Compartir captura de la llista de referències per estudiar la inicialització sense modificar el programa.
+1. Tornar amb `G` a `00054980` i buscar, en les primeres instruccions, les assignacions a `x23` i `x22` (pot haver-hi camins alternatius).
+2. Passar una captura amb el context de les assignacions i, si és possible, el Decompiler en el bloc que conté `str w8,[x28,#0x18]` (`0x55b40`).
+3. Determinar la funció invocada amb `blr x9` just abans de la lectura i les comprovacions del seu resultat. **No fer cap patch ni executar el bootloader.**
 
-**Límits:** `0xCB5C0` és una adreça d'anàlisi de Ghidra amb ImageBase 0; no és una ubicació física garantida en execució. Les referències i el text no demostren cap bypass. No tocar el firmware o el telèfon.
+Continuar amb verificació de límits i significat de dades només quan es coneguen els tipus i els camins; evitar concloure que un flag és vulnerable només perquè és un bit.
 
 ## Pendent després d'eixe pas
 
@@ -128,3 +128,4 @@ En Ghidra:
 | 2026-11-09 | Primera referència a IsAllowUnlock en Ghidra | Una XREF confirmada a la cadena `IsAllowUnlock is %d`. |
 | 2026-11-09 | Referència resolta en codi ARM64 | `FUN_00054980`: `ldr x2,[x28,#0x18]` abans de `bl FUN_00059e4c`; possible logging del valor d'autorització. Següent pas: origen de `x28` i comprovació de la rutina de logging. |
 | 2026-11-09 | Localitzat x28 i lectura global d'IsAllowUnlock | `adrp/add` fixen `x28` a `0xCB5A8`; `ldr w2,[x28,#0x18]` llig `DAT_000cb5c0`. Següent pas: trobar referències d'escriptura al camp. |
+| 2026-11-09 | Càlcul del camp IsAllowUnlock localitzat | `0x55b2c..0x55b40`: bit 0 d'un byte del búfer `x23` indexat per dades obtingudes via `x22`; següent pas: identificar origen dels dos registres. |
