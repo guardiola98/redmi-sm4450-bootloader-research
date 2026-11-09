@@ -28,3 +28,6 @@ work/
 *.fd
 *.efi
 *.rom
+
+# Local Python environment
+.venv/
