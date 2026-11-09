@@ -66,22 +66,20 @@ La diferència entre pegats Android i vendor **no demostra una vulnerabilitat**;
 - [x] Instal·lat `uefi_firmware` **1.16** en l'entorn virtual local `.venv`. `uefi-firmware-parser --test work/abl-fv.bin` retorna `UEFIFirmwareVolume`.
 - [x] **Confirmada la jerarquia real ABL/UEFI** amb el parser (sense extraure encara el PE): volum exterior FFS2 de `0x30000` (196.608 bytes); fitxer firmware volume image de 168.965 bytes; secció GUID-defined `ee4e5898-3914-4259-9d6e-dc7bd79403cf` amb processament requerit; volum interior FFS2 `0xce0c0` (843.968 bytes); fitxer aplicació `f536d559-459f-48fa-8bbc-43b554ecae8d`, nom **`LinuxLoader`**; secció **PE32 image**, 843.780 bytes (inclou capçalera de secció, no necessàriament mida exacta del PE). El parser ha descomprimit la secció GUID-defined i ha presentat el volum interior. **Encara no s'ha inspeccionat l'arquitectura del PE extret ni s'ha trobat cap vulnerabilitat.**
 
+- [x] **Extracció confirmada de `LinuxLoader`:** `uefi-firmware-parser -e -o work/uefi-extracted work/abl-fv.bin` ha exportat la secció `section1.pe` de **843.776 bytes**; `file` la identifica com **PE32+ executable EFI, ARM64, 3 seccions**. La ruta està dins del volum interior de la FFS application `f536d559-459f-48fa-8bbc-43b554ecae8d`. El fitxer `section0.guid` s'ha identificat com `OpenPGP Public Key` per `file`, però això no prova que siga cap clau OpenPGP; el parser UEFI l'ha reconegut com a secció GUID-defined. El PE no s'ha executat.
+- [x] Afegit `scripts/inspect-linuxloader.py`: inspecció PE offline sense dependències externes (màquina ARM64, seccions, entry point, base i hash). **Pendent executar-lo al Debian.**
+
 ## Següent pas immediat
 
-**Extraure `LinuxLoader` localment amb el parser UEFI i identificar la capçalera PE real.** La detecció de l'objecte està confirmada; falta conéixer el camí i el format exacte que genera l'eina en mode d'extracció.
+**Inspeccionar la capçalera i les tres seccions de l'executable EFI real `LinuxLoader`**. Ja està extret amb el parser UEFI: `section1.pe` és PE32+ EFI ARM64 de 843.776 bytes (això sí està confirmat). Falta identificar RVA del punt d'entrada, ImageBase, seccions i hash per preparar la importació correcta a Ghidra.
 
 ```bash
 cd ~/redmi-sm4450-bootloader-research
 git pull
-source .venv/bin/activate
-uefi-firmware-parser -e -o work/uefi-extracted work/abl-fv.bin
-find work/uefi-extracted -type f -printf '%s bytes  %p\n' | head -60
-find work/uefi-extracted -type f -exec file {} + | grep -Ei 'PE32|PE32\+|EFI|executable'
+python3 scripts/inspect-linuxloader.py
 ```
 
-**Recollir les línies de `find` i `file`** i, segons els camins reals, obtindre SHA-256 i arquitectura del PE/COFF. No executar cap EFI extret. Si l'eina no pot exportar la secció, registrar l'error i revisar les seues opcions.
-
-Després: anàlisi estàtica de `LinuxLoader` (Ghidra o eines PE), cadenes i referències verificades. Valorar una integració controlada del parser al nostre repo (dependència, amb llicència adequada), no copiar codi sense revisar.
+**Següent anàlisi:** una vegada comprovades les capçaleres PE, inspeccionar cadenes ASCII/UTF-16 relacionades amb Fastboot/AVB i identificar referències en Ghidra; comparar amb ABL verificats de firmwares anteriors. No assumir vulnerabilitats per cadenes o flags. La integració definitiva de `uefi-firmware-parser` pot fer-se com a dependència explícita quan els scripts estiguen consolidats; no cal copiar codi de tercers.
 
 ## Pendent després d'eixe pas
 
@@ -105,5 +103,6 @@ Després: anàlisi estàtica de `LinuxLoader` (Ghidra o eines PE), cadenes i ref
 | 2026-11-09 | Anàlisi inicial de `abl.elf` amb `file`, `readelf` i `strings` | ELF32 ARM, tres program headers, un LOAD RWE de 0x30000 bytes i sense seccions; cap cadena coincident amb el filtre de desbloqueig. |
 | 2026-11-09 | Cerca de ferramentes UEFI i nova interpretació del binari | Signatura `_FVH` a `0x1028`, possible FV a `0x1000`. Documentades eines UEFITool, uefi-firmware-parser, xbltools i GBL checker. |
 | 2026-11-09 | Extracció local confirmada del volum UEFI | `work/abl-fv.bin`, offset `0x1000`, mida `0x30000`; `.gitignore` ampliat per protegir els extrets. Següent prova: parser UEFI en entorn virtual. |
-| 2026-11-09 | Parser UEFI confirma LinuxLoader | `uefi_firmware` 1.16 ha trobat FV intern de 843.968 bytes i aplicació `LinuxLoader` amb secció PE32; següent prova: exportar i identificar PE/COFF. |
+| 2026-11-09 | Parser UEFI confirma LinuxLoader | `uefi_firmware` 1.16 ha trobat FV intern de 843.968 bytes i aplicació `LinuxLoader` amb secció PE32. |
+| 2026-11-09 | LinuxLoader extret i arquitectura confirmada | Secció `section1.pe` de 843.776 bytes, PE32+ EFI ARM64 amb 3 seccions; publicat `inspect-linuxloader.py`. Següent pas: inspecció PE detallada. |
 
