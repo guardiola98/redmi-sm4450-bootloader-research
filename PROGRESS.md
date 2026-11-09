@@ -265,3 +265,30 @@ python3 scripts/scan-uefi-images.py \
 ```
 
 **Interpretació pendent:** veure si els GUID apareixen en `uefi.elf` o `imagefv.elf`; si no, una implementació comprimida/indirecta continua sent possible. No deduir compatibilitat de vulnerabilitats de firmwares aliens ni intentar flash. **Encara no hi ha bypass confirmat.**
+
+## Resultats de l'escàner UEFI i següent fase — 2026-11-09
+
+Resultat executat i aportat per l'investigador sobre el paquet original (no s'ha modificat el mòbil):
+
+| Component | Mida | SHA-256 | Volum FV |
+| --- | ---: | --- | --- |
+| `uefi.elf` | 3.739.448 | `0543144c7f583d7e870019d95206be2b864eae1fff878dcf9bcee52c063ecc50` | `_FVH` a `0x1028`, inici `0x1000`, llargària `0x38f000` |
+| `imagefv.elf` | 1.056.568 | `51220103d9d5f2c8e11f3bfe8a221db9cba2bd0478902037175067e182c94332` | `_FVH` a `0x1028`, inici `0x1000`, llargària `0x100000` |
+| `tools.fv` | 393.216 | `d7f0c4034bb3236e3878dfd56116217dc34afd5b3d41e7a1f1e71fddbf77a002` | `_FVH` a `0x28`, inici `0x0`, llargària `0x60000` |
+| `uefi_sec.mbn` | 172.120 | `091a04fc255056660612f72c550505ccdc7c4be97bcff653f201f26486892d64` | No hi ha `_FVH` literal |
+
+En cap dels quatre fitxers apareix **literalment** el GUID token candidat `0c00a314-11a1-4d7a-a5c8-70bd5f88e7df` ni el GUID VerifiedBoot `8e5eff91-21b6-47d3-af2b-c15a01e020ec`, en els dos ordres de bytes. **No es poden descartar protocols empaquetats/comprimits.** Els FV confirmats per `_FVH` i mida dins de límits proporcionen un punt d'entrada vàlid per a inspecció FFS.
+
+- [x] Creat `scripts/inventory-uefi-ffs.py`, lector offline només de capçaleres FFS i seccions de primer nivell, verificació SHA-256 dels tres components; no descomprimix ni executa res.
+- [ ] Executar:
+
+```bash
+cd ~/redmi-sm4450-bootloader-research
+git pull
+python3 scripts/inventory-uefi-ffs.py \
+  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz
+```
+
+**Objectiu:** determinar quants FFS hi ha, els GUID de fitxer, els noms UI i si les seccions estan comprimides o definides per GUID. Una vegada identificats, extreure/analitzar només el contingut offline dels mòduls pertinents; no tocar les particions ni fer flash.
+
+**Limitació:** l'inventari FFS és un analitzador simple de primer nivell, no un validador complet del format PI/UEFI; un fitxer FFS inesperat o capçalera estesa pot requerir un parser més complet. Cap vulnerabilitat ni bypass confirmat.
