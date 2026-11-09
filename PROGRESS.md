@@ -217,3 +217,33 @@ python3 scripts/analyze-bootchain.py \\
 ```
 
 Amb l'eixida, estudiar el `xbl.elf` / `uefi.elf` / equivalents si hi apareixen i comprovar quin mòdul allotja la interfície del token. No importar firmwares, payloads o claus d'altres dispositius; **cap vulnerabilitat demostrada**.
+
+## Inventari real de la ROM Fastboot sky EEA — 2026-11-09
+
+L'investigador ha executat `scripts/analyze-bootchain.py` i ha obtingut **114 fitxers regulars**. Mapatges confirmats del manifest:
+
+| Partició en rawprogram | Fitxer | SHA-256 |
+| --- | --- | --- |
+| `abl_a` | `abl.elf` | `f1c1f9ffbfa596cc352bf13aaa8e751eaee5168ab0344c641a70f0aa5f1607eb` |
+| `xbl_a` | `xbl_s.melf` | `cff40b3a88565100c0d640381b3ba12940a5b4b91bc0313cb8e83cf7ccce49f1` |
+| `xbl_config_a` | `xbl_config.elf` | `97e8e3a4b0422e064f3df3282d6b1569364b603d4b9497f6827cace14ceaf9cc` |
+| `tz_a` | `tz.mbn` | `f7d943b1de872d239468fe30cc4fab92c5acb0405203e9f9e38436cefd7e1a76` |
+| `xbl_ramdump_a` | `XblRamdump.elf` | `912caf467639bb15935b66f5ebfddef00d8a85965af3788166242c0cb54c766b` |
+| `xbl_sc_test_mode` | `xbl_sc_test_mode.bin` | `f28e157b99098d300b47743888da372f0a7f7e1fe01f148162648bd0d1e4fd69` |
+
+`xbl_s_devprg_ns.melf` també està al paquet (1.747.908 bytes, SHA-256 `99dc96ace498f99911f110e750fc941cce5f4cc580f7de6329824a055a98baf4`), però **no apareix als mapatges de rawprogram retornats per este script**; no s'ha d'assumir que el telèfon l'arranque.
+
+**Conclusió:** `xbl_s.melf` és l'única imatge del paquet identificada explícitament com a destí `xbl_a`. Els escàners previs no van trobar GUID ni `_FVH` literals, però no han examinat mòduls o possibles capes de contenidor. La manca de `uefi.elf` a l'eixida filtrada **no prova l'absència del fitxer**, perquè el regex de l'script no inclou este nom.
+
+**Següent prova segura:**
+
+```bash
+cd ~/redmi-sm4450-bootloader-research
+python3 scripts/inventory-fastboot.py --all --skip-hash \
+  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz \
+  | grep -Ei 'uefi|xbl|fv|firmware|imagefv|core|bootchain'
+```
+
+Després, si no hi ha cap component UEFI separat, caracteritzar les dades de `xbl_s.melf` fora dels segments ELF (incloent capçaleres Qualcomm), amb anàlisi local read-only i referències a `linux-msm/xbltools`. No considerar `xbl_s_devprg_ns.melf` una drecera ni executar/flashejar cap fitxer.
+
+**Estat:** cap vulnerabilitat ni desbloqueig no autoritzat confirmat.
