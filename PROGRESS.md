@@ -247,3 +247,21 @@ python3 scripts/inventory-fastboot.py --all --skip-hash \
 Després, si no hi ha cap component UEFI separat, caracteritzar les dades de `xbl_s.melf` fora dels segments ELF (incloent capçaleres Qualcomm), amb anàlisi local read-only i referències a `linux-msm/xbltools`. No considerar `xbl_s_devprg_ns.melf` una drecera ni executar/flashejar cap fitxer.
 
 **Estat:** cap vulnerabilitat ni desbloqueig no autoritzat confirmat.
+
+## Imatges UEFI localitzades al paquet sky — 2026-11-09
+
+**Resultat aportat per l'investigador de `inventory-fastboot.py --all`:** la ROM inclou `uefi.elf` (3.739.448 bytes), `imagefv.elf` (1.056.568 bytes), `tools.fv` (393.216 bytes) i `uefi_sec.mbn` (172.120 bytes), a més de `xbl_s.melf` i `xbl_config.elf`. Açò corregix la deducció anterior basada en `analyze-bootchain.py`, que filtrava `uefi.elf` i `imagefv.elf` i no els mostrava: **l'absència en l'inventari anterior era un fals negatiu de l'eina, no una absència en el firmware**.
+
+**Canvis aplicats:**
+- [x] `scripts/analyze-bootchain.py` ara inclou `uefi.elf`, `uefi_sec.mbn`, `imagefv.elf` i `tools.fv` al filtre d'imatges de firmware, per a inventaris futurs.
+- [x] Nou `scripts/scan-uefi-images.py`: inspecció **offline, de només lectura**, de les quatre imatges. Mostra mida, SHA-256, coincidències literals dels GUID de token candidat (`0c00a314-11a1-4d7a-a5c8-70bd5f88e7df`) i VerifiedBoot (`8e5eff91-21b6-47d3-af2b-c15a01e020ec`) en les dues codificacions, i possibles capçaleres `_FVH` amb validació de límits. No executa ni extrau firmware; no accedix al mòbil.
+- [ ] Executar la nova prova sobre el paquet original (l'usuari el conserva al seu Debian):
+
+```bash
+cd ~/redmi-sm4450-bootloader-research
+git pull
+python3 scripts/scan-uefi-images.py \
+  ~/Baixades/sky_eea_global_images_OS2.0.218.0.VMWEUXM_*.tgz
+```
+
+**Interpretació pendent:** veure si els GUID apareixen en `uefi.elf` o `imagefv.elf`; si no, una implementació comprimida/indirecta continua sent possible. No deduir compatibilitat de vulnerabilitats de firmwares aliens ni intentar flash. **Encara no hi ha bypass confirmat.**
