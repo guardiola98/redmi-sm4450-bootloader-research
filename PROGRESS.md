@@ -564,3 +564,33 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Neteja omesa continua defecte local; altres anomalies condicionals, sense
   nou consumidor +0x18 en el cens de 93 PE. Següent: DAL, variant 0x1858
   i productor TZ; no s'ha establit accessibilitat ni explotabilitat.
+
+## Continuació des de 5b87a841: contracte SCM alternatiu
+
+- 0x1858 comprova punters, llig deu slots de 64 bits i els empaqueta en
+  deu words de 32 bits; no usa 0x22 per limitar esta còpia. MiToken prepara
+  deu slots en sp+0x38..sp+0x87: lectura fixa dins del descriptor, candidat
+  de desbordament del descriptor descartat en este caller.
+- Resposta alternativa: quatre words zero-extended després de retorn zero
+  de 0x17e8; marcador 1 no sintetitzat com en ARMv8. Cota i completitud de
+  política continuen dependents de TZ. Detalls en l'informe de proveïdors.
+- DAL: ChipInfo sol·licita device ID 0x0200006f via servei +0xc8;
+  protocol de bootstrap ae37b942-457f-4c91-a196-d9669fd347a3 localitzat
+  en DALSys i clients. Anàlisi DALSys iniciada; cap execució del firmware.
+
+## DAL resolt i cobertura delimitada
+
+- DALSys bootstrap +8 → 0x1430 retorna taula 0x1e0d0; +0xc8 → 0x22b8
+  resol ID 0x0200006f. Factory ChipInfo 0x3208 instal·la handle 0xa390
+  amb taula 0x7d78; DAL +0x88 → 0x345c → 0x5248.
+- Troballa: getter escriu sempre el word de destí i retorna zero. Descartat
+  ús de pila no inicialitzada en la ruta normal amb protocol/handle vàlids.
+  Fallada de localització ignorada continua condicional, sense activació.
+- Informe `docs/mitoken-provider-contracts.md`: comparació SCM, errors DAL,
+  evidència RVA/bytes, reclassificació i cobertura. Els 93 PE són cens GUID,
+  no 93 auditories funcionals. LinuxLoader és separat; TZ, altres imatges,
+  seccions anidades i imagefv queden fora d'esta cobertura funcional.
+- Fonts públiques del servei TZ no disponibles localment; no s'ha fet xarxa.
+  Productor TZ i límits del comptador continuen bloquejats per falta de fonts.
+- Següents: productor TZ; cobertura pendent; consumidors +0x18. Cap execució
+  de firmware, identificador privat llegit ni canvi sobre el dispositiu.

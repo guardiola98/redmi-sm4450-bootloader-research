@@ -273,3 +273,15 @@ variant SCM 0x1858; localització estàtica del servei 0x02001401 en TZ.
 No inferir límits del format de política per analogia amb altres versions.
 Els candidats condicionals queden aparcats fins que estes fonts aporten
 una garantia o una ruta real. Sense tokens, dispositiu ni explotabilitat provada.
+
+## Actualització de contractes des de 5b87a841
+
+Vegeu [contractes detallats](mitoken-provider-contracts.md): reconstruïda
+la variant SCM alternativa i resolta la delegació DAL fins al getter
+ChipInfo 0x345c → 0x5248. **Correcció de classificació:** el getter concret
+escriu sempre un word i retorna zero; dades de pila no inicialitzades
+queden descartades en la ruta normal amb protocol/handle vàlids. La fallada
+de localització ignorada continua una condició possible no demostrada.
+La lectura fixa de deu arguments SCM també queda dins del descriptor
+MiToken. Bucle, rang de política i accessibilitat de la fuga continuen
+condicionals; neteja local omesa continua confirmada. Contracte TZ pendent.
