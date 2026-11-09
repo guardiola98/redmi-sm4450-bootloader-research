@@ -641,3 +641,18 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   una mida; descartada com identificació automàtica del servei.
 - Represa: owner zero 0x1c077840; callers de 0x1c07798c; traducció d'error
   des de 0x1c077bc8. Política i garanties internes continuen desconegudes.
+
+## Fase dispatcher/retorn TZ des de 8a35afa
+
+- 0x1c077840 resolt: consultes owner zero amb low16 0/1 i subconsultes
+  acotades; no és fallback MiToken ni usa el lookup de política.
+- Caller directe de 0x1c07798c: 0x1c0387fc, precedit de validació/context;
+  stub 0x1c1368a0 desa x0..x13. Publicació de l'entrada a 0x1c038288,
+  però consumidor EL3 del paquet encara pendent.
+- Rebuig 0x02001401 → error local -1 (no -3), resultats netejats,
+  retorn de control 0x100. Missatge eixint TZ [1,0x83,-1,0…] →
+  SMC 0x1c136914. No confondre x2 d'este missatge amb w0 retornat a UEFI.
+- Contracte ScmDxeLA: si rep -1, ARMv8 retorna EFI error 3 i antiga error 7;
+  connexió monitor→UEFI encara condicional. Cap impacte sobre autenticació.
+- Informe tz-dispatch-analysis.md ampliat, bytes originals i cinc tests nous.
+  Següent: registre/consum de l'entrada en monitor i consultes de disponibilitat.

@@ -83,3 +83,98 @@ Bytes amb VA/offset en `tz-dispatch-bytes.txt`.
 Represa concreta: 0x1c077840 (cas owner zero), callers de 0x1c07798c i
 camí d'error 0x1c077bc8 fins al retorn SMC. Després determinar si hi ha
 una altra consulta per 0x02001401 abans de continuar el productor de política.
+
+## Owner zero i retorn al monitor — continuació des de 8a35afa
+
+Revisió sobre els mateixos hashes TZ i ScmDxeLA, verificats de nou abans
+de llegir les exportacions. Adreces TZ = VA ELF. Bytes puntuals amb offsets
+originals en [tz-return-bytes.txt](tz-return-bytes.txt).
+
+### Cas 0x1c077840
+
+Precondició al caller: `(ID >> 24) & 0x3f == 0`. No és una segona cerca
+indistinta de serveis Qualcomm. Conserva els dos primers words del context
+i neteja els altres set. Després de validar ID amb 0x1c07795c:
+
+| Funció = ID & 0xffff | Comportament verificat |
+| --- | --- |
+| 0 | Escriu 0x10001 al primer word. Compatible amb consulta de versió, sense atribuir nom original. |
+| 1 | Exigix `(argument & 0xffffffffbfff0000) == 0x80000000`; selecciona pel low16 de l'argument. |
+| Altres | Escriu -1 de 64 bits i registra error. |
+
+Per funció 1, subconsultes 0/1 retornen 0; 0x7fff/0x8000 criden
+0x1c0931d4 amb 1/0 respectivament i invertixen el resultat booleà.
+Este helper fa una altra SMC via 0x1c136cc0, ID 0x40; l'efecte intern
+continua desconegut. Resta de subconsultes: -1. No hi ha crida a
+0x1c099c20 ni lectura del paquet de política en 0x1c077840.
+
+**Descartat:** que este cas siga un fallback local al servei MiToken
+0x02001401 després del rebuig; l'owner d'este ID és 2, no 0.
+Tampoc es pot equiparar directament esta funció amb la variant antiga
+ScmDxeLA que emet SMC w0=1: falta saber com l'EL3 tracta eixa convenció.
+
+### Callers i condicions d'entrada
+
+Una crida directa a 0x1c07798c en l'ASM i referències Ghidra: **0x1c0387fc**,
+dins 0x1c0386a4. No és una prova d'absència d'altres callers indirectes.
+0x1c0386a4 requerix un punter no nul a un context de 0x70 bytes i el copia
+a la pila. Separa els valors especials 0x7ffffffe/0x7fffffff i IDs amb
+`(ID & 0x3f00ff00) == 0x04000000`. 0x42001401 no satisfà cap excepció.
+El camí normal exigix un context local disponible via 0x1c038f70, inicialitza
+un flag de retorn a zero i passa el context a 0x1c07798c.
+
+Caller de 0x1c0386a4: stub **0x1c1368a0**, crida a 0x1c1368e4. Desa
+x0..x13 en 0x70 bytes i passa el seu punter. Abans, 0x1c0392fc consulta
+un conjunt de nou entrades amb x6/x7: si retorna context, pren altra
+branca (0x1c13691c); si no, 0x1c0390e4 ha d'obtindre un context lliure.
+Si no en troba, bucle d'aturada a 0x1c136918. No s'ha modelat com a error
+normal retornat. Estes són precondicions reals, no una entrada incondicional.
+
+La rutina d'inicialització 0x1c038114 escriu l'adreça del stub a +0x58
+d'un paquet (0x1c038280..0x1c038288) i el límit de pila per CPU a +0x60.
+Açò és evidència de publicació de l'entrada, però falta reconstruir el
+consumidor del paquet en el monitor: no prova per si sola l'encaminament
+de la SMC d'UEFI cap al stub.
+
+### Error de lookup fins a SMC
+
+Per 0x42001401 en este camí, la consulta retorna 1. 0x1c077a80..0x1c077a98
+fa dos controls: callback nul suggerix -3, però retorn de consulta no zero
+el substituïx per **-1** (CSINV). No atribuir -3 a este rebuig.
+
+0x1c077bc8 no executa l'operació especial owner 0x34, i el context temporal
+de servei continua nul. A 0x1c077c54 recupera -1 amb extensió de signe;
+la segona consulta de l'ID també falla; 0x1c077c70 escriu -1 al context.
+La màscara 0x1a8001 a 0x1c077c7c..0x1c077c90 no conté bit 16 (-1+17),
+i el word +0x38 s'havia netejat: es netegen els set resultats +8..+0x38.
+Retorn de control de 0x1c07798c: **0x100**, distint del -1 del context.
+No s'ha invocat el callback de política ni la preparació 0x1c075ba8.
+
+0x1c03886c..0x1c0388ac empaqueta els quatre primers words del context:
+word0=1, word1=0x83 (0x100 != 0x101, flag local zero), word2=-1,
+words3..13=0. Copia 0x70 bytes a la pila per CPU (0x1c0388c0..0x1c0388d4).
+El stub els recarrega en x0..x13 (0x1c1368f8..0x1c136910) i executa
+**SMC a 0x1c136914**. Per tant l'error viatja ací en **x2**, no en x0.
+La preparació del missatge és verificada sota les precondicions anteriors.
+
+**Frontera pendent:** esta SMC és una comunicació de TZ al monitor. No hem
+seguit encara l'EL3 fins a la represa d'UEFI. Si el monitor retorna -1 en
+w0 a ScmDxeLA ARMv8, 0x3880 el transforma en 0x8000000000000003; és una
+implicació condicional, no un resultat end-to-end demostrat. En la variant
+antiga -1 es transformaria en 0x8000000000000007. El paquet retornat per TZ
+no es pot passar directament al model del retorn d'UEFI.
+
+### Abast de la fase
+
+Tres crides directes al lookup 0x1c099c20 en l'exportació: 0x1c0777fc
+(helper de consulta de disponibilitat), 0x1c077a7c i 0x1c077c64.
+0x1c0777b8 aplica les mateixes màscares i escriu bool de disponibilitat
+segons retorn zero, amb retorn propi zero. No és una altra implementació
+del servei de política. Altres entrades/monitors no queden descartats.
+
+Cinc proves noves en test-tz-return-model.py: consultes owner zero,
+precedència dels errors -1/-3 i distribució del missatge de retorn. Són
+models de branques, no emulació ARM ni prova d'encaminament del monitor.
+La neteja omesa MiToken continua confirmada al CFG; interpretació de política
+continua condicional i no s'activa en el camí de rebuig estudiat. No canvia
+la classificació de VerifiedBoot ni hi ha conclusió sobre bloqueig.
