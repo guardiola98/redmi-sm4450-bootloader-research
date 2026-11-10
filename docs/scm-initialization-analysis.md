@@ -114,6 +114,14 @@ de política de MiToken.
 retornats per la biblioteca ni de l'absència de sobreescriptures. Si 0xC4
 és efectiu, el bit 0x100 no sol·licita el registre auxiliar de logs.
 
+Actualització d'esta continuació: [procedència de configuració](uefi-configuration-provenance.md)
+reconstruïx el proveïdor TE, HOB i getter concret. No hi ha tampoc variant
+de la clau amb majúscules diferents en este recurs; ChipIDConfig no aporta
+sobreescriptures locals. La cadena normal reconstruïda prediu 0xC4 i
+comptes 256/256/256, sempre condicionada a usar esta taula intacta.
+El getter té un temporal indeterminat en error; els guards d'estat SCM
+eviten consumir-lo com a configuració reeixida.
+
 ## Neteja en errors tardans i decisió
 
 **Nou defecte de robustesa confirmat: neteja amb inicialització parcial.**

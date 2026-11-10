@@ -871,3 +871,27 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   efectiva i callers repetits continuen condicionals.
 - Quatre proves sintètiques noves passen; models existents SCM i bytes
   verificats. Següent: origen i sobreescriptures de UEFI Config Lib.
+
+## Auditoria autònoma — fase 3, procedència de configuració
+
+- Fase 2 publicada: `91fa1cd`. TE exterior importat estàticament amb
+  mapatge de seccions verificat, sense executar ni reubicar firmware.
+  Superat el límit històric del loader TE natiu, només per a la ruta config.
+- Cadena: FFS `uefiplat.cfg` → parser/taula → biblioteca revisió 0x10002
+  → HOB compartit → callback +0x18 SCM. Taules, GUID i 43 instruccions
+  seleccionades verificats contra hash/offset originals.
+- Recurs: 43 paràmetres per a capacitat 64, SecurityFlag=0xC4,
+  SmcInvokeConfig absent també sense distingir majúscules. Ni ChipIDConfig
+  ni ChipID_RegAddr locals; la sobreescriptura per chip no crea claus.
+- PlatConfigFileName="uefiplatLA.cfg" apareix en informació de versió,
+  sense substituir el nom del carregador reconstruït. Nom absent en FFS
+  inventariades; no s'afirma absència en tot el paquet o dispositiu.
+- Getter de 32 bits usa temporal no inicialitzat si falla la consulta:
+  pot escriure un out-word indeterminat o emmascarar l'error original amb
+  error 2. Guards de SCM mantenen defaults/omissió de logs, sense fals èxit.
+- Frontera del parser errònia amb count==capacitat: una entrada fora de
+  taula declarada. Recurs 43/64 no l'activa; no hi ha configuració efectiva
+  alternativa ni corrupció física demostrada. Model només d'índexs.
+- Informe uefi-configuration-provenance.md, inspector amb hashes i 6
+  proves noves; més 4 proves TE i 5 SCM afectades correctes. Següent:
+  consolidar classificació/cobertura i revisar evidència de les noves rutes.

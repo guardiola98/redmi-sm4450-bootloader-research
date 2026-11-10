@@ -13,8 +13,56 @@
       "SecurityFlag": [
         "0xC4"
       ],
-      "SmcInvokeConfig": []
+      "SmcInvokeConfig": [],
+      "ConfigParameterCount": [
+        "64"
+      ],
+      "PlatConfigFileName": [
+        "\"uefiplatLA.cfg\""
+      ],
+      "OsTypeString": [
+        "\"LA\""
+      ],
+      "ChipID_RegAddr": []
+    },
+    "section_names": [
+      "Config",
+      "MemoryMap",
+      "RegisterMap",
+      "ConfigParameters"
+    ],
+    "config_parameter_declarations": 1,
+    "config_parameter_value_rows": 43,
+    "duplicate_parameter_names": [],
+    "casefold_selected_counts": {
+      "SecurityFlag": 1,
+      "SmcInvokeConfig": 0,
+      "ConfigParameterCount": 1,
+      "PlatConfigFileName": 1,
+      "OsTypeString": 1,
+      "ChipID_RegAddr": 0
+    },
+    "selected_key_lines": {
+      "SecurityFlag": [
+        113
+      ],
+      "SmcInvokeConfig": [],
+      "ConfigParameterCount": [
+        58
+      ],
+      "PlatConfigFileName": [
+        61
+      ],
+      "OsTypeString": [
+        62
+      ],
+      "ChipID_RegAddr": []
     }
   },
-  "scope": "Static resource only; effective library values/overrides not established"
+  "named_resource_counts": {
+    "uefiplat.cfg": 1,
+    "uefiplatLA.cfg": 0
+  },
+  "name_inventory_scope": "Existing uefi.elf/tools.fv FFS metadata only",
+  "scope": "Static resource; traced library predicts values conditionally, not a runtime snapshot"
 }
