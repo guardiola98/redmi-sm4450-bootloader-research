@@ -78,6 +78,14 @@ blocs; no s'afirma zero-fill de tota la pàgina sobrera. Una petició de
 mida zero retorna NULL. Diversos errors d'assignació/configuració criden
 ASSERT, i no constituïxen simplement un retorn NULL ordinari.
 
+Precisió posterior del contracte: les dues fallades AllocatePages, els
+errors de configuració de memòria i la reserva fallida del node pool
+convergixen en ASSERT/espera (`0x2af0`, `0x2b24/28`, `0x1738/3c`).
+El NULL del C després d'ASSERT no és una tornada ordinària. Açò limita
+els callers ShmBridge; **no** el helper pool SCM de taules `0x6acc`,
+que és distint i sí retorna NULL després d'EFI_ERROR. Detall de la
+[conseqüència per al caller Tz de fitxers](tzdxe-file-resource-contracts.md).
+
 +0x10 (`0x1524 → 0x2b4c`) marca disponible el bloc coincident de la
 llista, sense netejar-ne el contingut, i retorna zero. Este contracte
 és d'este proveïdor concret. **No cobrix la reserva de política MiToken**,

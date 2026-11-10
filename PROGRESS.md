@@ -1031,3 +1031,15 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   correcte, diff check net. Total conegut90 en17 scripts. Següent:
   comprovar que els informes no confonguen NULL local amb retorn ordinari
   dels proveïdors, i tancar validació/consolidació amb represa exacta.
+
+## Restricció de contracte — retorns ShmBridge
+
+- Reentrada publicada: `1a1c1fa`. Comprovats tots els errors de reserva
+  i configuració de0x2890: ASSERT/espera, no retorn NULL ordinari.
+- La pèrdua del temporal de0x2630 és una omissió del CFG, però no hi ha
+  productor NULL demostrat per a creixement no nul; la cadena d'esgotament
+  queda descartada amb el proveïdor local ordinari. Models/docs corregits.
+  El pool SCM0x6acc sí retorna NULL en error: la seua conclusió no canvia.
+- Huit proves de fitxers correctes i inspector12 PE ampliat; diff check
+  net. Total conegut91 en17 scripts. Resta consolidació final de cobertura,
+  verificació completa i publicació del punt de represa exacte.

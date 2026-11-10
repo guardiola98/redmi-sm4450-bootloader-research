@@ -43,8 +43,16 @@ def cleanup_trace(stage):
 
 
 def grown_cache_result(allocation_result, returned_capacity):
-    # Growth frees old pointer, resets capacity, then overwrites pointer.
+    # Consumer-only hypothetical returned result. Ordinary provider failures
+    # halt instead of supplying None; see shared_provider_outcome below.
     return allocation_result, returned_capacity if allocation_result is not None else 0
+
+
+def shared_provider_outcome(size, ordinary_error=False):
+    """Bounded contract: aligned request, valid state, nonzero successful base."""
+    if size == 0:
+        return 'returned-null'
+    return 'assert-wait' if ordinary_error else 'returned-nonnull'
 
 
 class FileContracts(unittest.TestCase):
@@ -92,6 +100,11 @@ class FileContracts(unittest.TestCase):
         declared_size = 128
         actual_read = min(declared_size, declared_size)
         self.assertEqual(declared_size - actual_read, 0)
+
+    def test_ordinary_shared_error_is_not_a_null_return_producer(self):
+        self.assertEqual(shared_provider_outcome(0x90000, True), 'assert-wait')
+        self.assertEqual(shared_provider_outcome(0x90000), 'returned-nonnull')
+        self.assertEqual(shared_provider_outcome(0), 'returned-null')
 
 
 if __name__ == '__main__':

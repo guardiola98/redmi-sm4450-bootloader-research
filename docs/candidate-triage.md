@@ -33,7 +33,7 @@ censos GUID ni proves del monitor per justificar una conclusió nova.
 | TzDxeLA: free de keystore d'un altre assignador | 0x2b18 reserva amb ShmBridge +8 i neteja amb free privat 0x42e8; les llistes són distintes i el punter desconegut s'ignora. Caller 0x14f8. | **Defecte local confirmat també en camí reeixit.** Presència/mida de partició i acumulació no demostrades; no s'ha accedit al contingut. |
 | TzDxeLA: publicació parcial sense rollback | Fallada EFI de l'últim InstallMultiple 0x1c0c torna sense desinstal·lar protocols anteriors; DxeCore StartImage descarrega imatges que retornen error. Cada InstallMultiple només desfà la seua transacció. | **Omissió confirmada; referència pendent condicional.** Requerix ruta StartImage nativa, error tardà i neteja/FreePages reeixits. No hi ha ús posterior demostrat. Error de la publicació QSEE, en canvi, arriba a ASSERT. |
 | TzDxeLA: notificació abans de preparar SCM | Publica primera taula abans d'emplenar f428; DxeCore pot despatxar NotifySignal durant RestoreTPL, abans del retorn d'InstallMultiple. Slot+0x18 usa f428 sense guard. | **Ordre confirmat; accés nul condicional a reentrada.** Falta subscriptor concret, TPL compatible i crida; no equival a concurrència observada ni crash garantit. |
-| TzDxeLA: recursos de lectura de fitxers | 0x2630 perd temporal pool si falla cache; 0x4a00 omet Close arrel i Close fitxer en errors de reserva. Fat crea un handle arrel de 0xb8 per OpenVolume, FV el reutilitza. | **Omissions locals confirmades; activació/retenció depenen de ruta i proveïdor.** No hi ha caller exterior de fitxers verificat ni acumulació observada. |
+| TzDxeLA: recursos de lectura de fitxers | 0x2630 perd temporal pool si la cache retorna NULL; 0x4a00 omet Close arrel i Close fitxer en errors de reserva. Fat crea un handle arrel de 0xb8 per OpenVolume, FV el reutilitza. | **Omissions locals confirmades; activació/retenció depenen de ruta i proveïdor.** Errors ordinaris ShmBridge arriben a ASSERT, no al NULL necessari per perdre el temporal; eixa cadena queda en espera. No hi ha caller exterior de fitxers verificat ni acumulació observada. |
 | TzDxeLA: neteja GetInfo amb NULL | Errors previs a reserva de dades arriben a FreePool(NULL) 0x4bcc; DxeCore error2 activa ASSERT/espera del wrapper Tz. | **Defecte de propagació d'error confirmat.** Falta error efectiu de GetInfo; no generalitzar a Read, on el pool ja és vàlid. |
 | TzDxeLA: longitud de lectura curta ignorada | Retorna FileInfo.FileSize encara que Read actualitze un recompte menor; els proveïdors locals admeten retorn zero curt al final. | **Pèrdua de recompte confirmada; ús de cua indeterminada condicional.** Fitxer estable des de posició zero no aporta activació; cap lectura fora de pool, divulgació o autenticació alterada provades. |
 | UEFI Config Lib: temporal indeterminat en error | Getter de 32 bits 0xa701d578 usa el temporal sense inicialitzar encara que falle el getter ampli; pot escriure out-word indeterminat o substituir error original per error 2. | **Defecte confirmat de gestió d'error.** No convertix error en èxit; SCM comprova estat zero i conserva defaults. No prova dada efectiva indeterminada en SCM. TE 0xa7024990 ignora estat, però la seua clau és present i vàlida localment. |
@@ -52,8 +52,9 @@ ArmCpuDxe té diagnòstic/espera per defecte, però el mapatge de VA zero,
 CurrentEL i handlers actius no estan establits; no es declara un crash concret.
 La cadena de configuració verificada prediu defaults SCM i SecurityFlag=0xC4
 només sota la taula local intacta; no certifica valors efectius en execució.
-Les conseqüències potencials són interrupció de la inicialització o retenció
-de memòria; no s'ha demostrat cap modificació de política de seguretat,
+Les conseqüències potencials inclouen interrupció, retenció de recursos i
+accessos a memòria no vàlida sota les precondicions indicades; no s'ha
+demostrat cap modificació de política de seguretat,
 autenticació, claus, persistència o estat de bloqueig.
 
 ## Hipòtesis descartades o restringides
@@ -90,9 +91,9 @@ EL3, cap cens GUID ni experiments RSA; executar els tests ja existents
 forma part de la regressió. No s'ha consultat xarxa per investigar firmware;
 només s'han publicat commits autoritzats al repositori.
 
-**90 proves en 17 scripts**: recompte dels scripts, amb comprovació final
+**91 proves en 17 scripts**: recompte dels scripts, amb comprovació final
 completa registrada en PROGRESS.md. Inclouen 14 models nous TzDxeLA,
-11 de configuració, 4 d'índexs RAM i 7 de recursos de fitxers. Inspectors
+11 de configuració, 4 d'índexs RAM i 8 de recursos de fitxers. Inspectors
 verifiquen hashes i bytes seleccionats; `git diff --check` net. Els models
 usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 

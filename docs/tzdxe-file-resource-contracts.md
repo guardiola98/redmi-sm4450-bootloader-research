@@ -22,10 +22,26 @@ error 9 a `0x2764` i **no passa per l'únic FreePool del temporal,
 La ruta reeixida copia, publica els out-paràmetres i sí que allibera el
 temporal. El destructor privat Tz no gestiona este pool de Boot Services.
 
-**Omissió local confirmada**, condicionada a lectura/assignació inicial
-reeixides i fallada de reserva compartida. La reserva pot ser de creixement
-per a un fitxer major que la cache; no s'han verificat mides efectives.
-No és una fuga acumulativa demostrada ni s'ha provocat cap fallada.
+**Omissió local confirmada al CFG**, condicionada a lectura/assignació
+inicial reeixides i **retorn NULL** de la reserva compartida. La reserva
+pot ser de creixement per a un fitxer major que la cache; no s'han
+verificat mides efectives. No és una fuga acumulativa demostrada.
+
+**Restricció del proveïdor, verificada després:** ShmBridge `0x2890`,
+amb mida no nul·la, prova AllocateMaxAddress i després AllocateAnyPages
+(`0x29b8/0x29d8`); si ambdós fallen, arriba a ASSERT `0x2af0` abans del
+retorn NULL textual `0x2af4`. Fallades de configuració de memòria també
+convergixen ací després de FreePages; error del node pool de0x30 va a
+ASSERT/bucle `0x2b24/0x2b28`. ASSERT `0x1640 → 0x1720` espera en
+`0x1738/0x173c`. **L'error ordinari del proveïdor no aporta el NULL
+necessari per a perdre el temporal en un retorn normal del caller.**
+
+Petició zero sí retorna NULL abans d'assignar (`0x28a8`), però no satisfà
+la condició de creixement mida>capacitat no negativa. No s'ha establit
+un altre productor admissible, ni una reserva reeixida a adreça zero.
+La branca continua en espera d'eixa precondició. El model de NULL és un
+contracte del consumidor, no una simulació d'esgotament de ShmBridge.
+Cap fallada s'ha provocat.
 
 ## `0x4a00`: propietat dels handles i dels dos búfers
 
@@ -135,5 +151,5 @@ Ghidra: importacions PE normals als projectes locals ignorats
 exportacions `DumpFunctions.java` i `DumpInstructions.java`. Taules,
 GUIDs a adreces fixes i bytes dels callsites en
 [reviewed-pe-evidence.json](reviewed-pe-evidence.json), ara 12 PE.
-Set proves simbòliques comparen contractes de recursos, errors i longituds;
+Huit proves simbòliques comparen contractes de recursos, errors i longituds;
 no simulen un dispositiu ni establixen accessibilitat efectiva.
