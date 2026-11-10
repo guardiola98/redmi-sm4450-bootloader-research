@@ -951,3 +951,20 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Següent pregunta nova: seguir operació SCM 0x12 que condiciona la
   seqüència QSEE, sense tornar al monitor EL3. Si no aporta estat decidible,
   documentar el límit i passar al mapatge de memòria nul·la UEFI.
+
+## Continuació dirigida — mapa nul i porta SCM de càrrega
+
+- Configuració publicada: `eb5d2d0`. Operació Tz 0x12 resolta al switch
+  ARMv8 SCM: índex17, SMC0x3200010a i descriptor0. Estat depén de resposta
+  segura; no permet fixar activació de càrregues. No s'ha repetit EL3.
+- RAW: 39 rangs alineats, cap cobreix zero; 36 elegibles abans de mescla,
+  base mínima0x400000. Constructor usa identitat PA=VA i taules noves
+  netejades, i activa SCTLR.M al final reeixit.
+- El TE mescla descriptors de RAM abans de MMU; font concreta SMEM0x192.
+  Fallback local 0x80000000/0x60000000 no inclou zero, però la selecció i
+  dades efectives no són conegudes. Crash SCM continua condicional.
+- Inspector TE93 llocs, models inventari/config11 i SCM5 correctes;
+  diff check net. Total vigent72 proves en15 scripts.
+- En seguir la frontera han aparegut operacions d'índex/capacitat del
+  conversor RAM 0xa7023300. Pròxima revisió acotada: contrastar-les amb
+  instruccions i models d'índexs; cap generació ni lectura de SMEM real.

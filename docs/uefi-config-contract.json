@@ -505,11 +505,125 @@
       "te_offset": "0x1b7b8",
       "source_offset": "0x1e6f0",
       "bytes": "e0 03 1f aa"
+    },
+    {
+      "va": "0xa700e8c0",
+      "te_offset": "0xc988",
+      "source_offset": "0xf8c0",
+      "bytes": "d4 0e 00 94"
+    },
+    {
+      "va": "0xa700e980",
+      "te_offset": "0xca48",
+      "source_offset": "0xf980",
+      "bytes": "ae 0c 00 94"
+    },
+    {
+      "va": "0xa700ea08",
+      "te_offset": "0xcad0",
+      "source_offset": "0xfa08",
+      "bytes": "02 0e 00 94"
+    },
+    {
+      "va": "0xa70102b4",
+      "te_offset": "0xe37c",
+      "source_offset": "0x112b4",
+      "bytes": "00 1b 00 94"
+    },
+    {
+      "va": "0xa7010354",
+      "te_offset": "0xe41c",
+      "source_offset": "0x11354",
+      "bytes": "40 01 00 54"
+    },
+    {
+      "va": "0xa7010364",
+      "te_offset": "0xe42c",
+      "source_offset": "0x11364",
+      "bytes": "c0 00 00 54"
+    },
+    {
+      "va": "0xa7010374",
+      "te_offset": "0xe43c",
+      "source_offset": "0x11374",
+      "bytes": "61 00 00 54"
+    },
+    {
+      "va": "0xa70104e4",
+      "te_offset": "0xe5ac",
+      "source_offset": "0x114e4",
+      "bytes": "95 30 00 94"
+    },
+    {
+      "va": "0xa701ca00",
+      "te_offset": "0x1aac8",
+      "source_offset": "0x1da00",
+      "bytes": "2d e9 ff 97"
+    },
+    {
+      "va": "0xa701ca08",
+      "te_offset": "0x1aad0",
+      "source_offset": "0x1da08",
+      "bytes": "4a f4 ff 97"
+    },
+    {
+      "va": "0xa701cc18",
+      "te_offset": "0x1ace0",
+      "source_offset": "0x1dc18",
+      "bytes": "4d f4 ff 97"
+    },
+    {
+      "va": "0xa7019b48",
+      "te_offset": "0x17c10",
+      "source_offset": "0x1ab48",
+      "bytes": "00 20 18 d5"
+    },
+    {
+      "va": "0xa7019b50",
+      "te_offset": "0x17c18",
+      "source_offset": "0x1ab50",
+      "bytes": "00 20 1c d5"
+    },
+    {
+      "va": "0xa7019b58",
+      "te_offset": "0x17c20",
+      "source_offset": "0x1ab58",
+      "bytes": "00 20 1e d5"
+    },
+    {
+      "va": "0xa7019d78",
+      "te_offset": "0x17e40",
+      "source_offset": "0x1ad78",
+      "bytes": "00 00 40 b2"
+    },
+    {
+      "va": "0xa70230dc",
+      "te_offset": "0x211a4",
+      "source_offset": "0x240dc",
+      "bytes": "40 32 80 52"
+    },
+    {
+      "va": "0xa70230f0",
+      "te_offset": "0x211b8",
+      "source_offset": "0x240f0",
+      "bytes": "32 29 00 94"
+    },
+    {
+      "va": "0xa70235c8",
+      "te_offset": "0x21690",
+      "source_offset": "0x245c8",
+      "bytes": "4e ff ff 97"
     }
   ],
   "maximum_ascii_string_length": {
     "va": "0xa7035d30",
     "value": 1000000
+  },
+  "fallback_ram_region": {
+    "base": "0x80000000",
+    "size": "0x60000000",
+    "base_va": "0xa7038b10",
+    "size_va": "0xa7038b18"
   },
   "scope": "Manually reviewed config path only; no full TE audit or effective runtime snapshot"
 }

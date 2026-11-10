@@ -281,3 +281,25 @@ QSEE i callsites; set proves sintètiques TzDxeLA, incloses parella incorrecta
 d'assignadors i portes de seqüència finita. Referències reproduïbles amb
 `DumpAddressReferences.java`: Tz `2fb0 2da8 2b18 f558 f55c f148 f2d0`,
 ShmBridge `71f8 7110`. Cap payload, dada privada o execució de firmware.
+
+### Contracte resolt de l'operació SCM 0x12 que selecciona serveis
+
+Per a la taula SCM ARMv8 `d130`, +0x28 és `0x3d4c`. El selector resta
+1: operació 0x12 usa índex 17. El byte fix `a4d5=0xc6` del switch
+selecciona `0x3e00 + 4*0xc6 = 0x4118`; allí conserva **SMC 0x3200010a,
+descriptor zero**, i crida `0x3a20` a `0x4124`. No confondre-ho amb
+`case 0x12` del C, que correspon a l'operació següent.
+
+El resultat és un estat compost: transport no zero es propaga quan el
+camp de resultat és zero; resultat de resposta no zero es transforma en
+EFI error 7; amb transport/resultat zero, tipus de resposta `0xee01` dona
+error 3 per a esta operació, i altres tipus donen zero. No hi ha un booleà
+local constant que determine la branca QSEE. TzDxeLA selecciona les dues
+càrregues quan eixe estat és no zero; això és compatible amb una via de
+recuperació, no prova per si mateix confusió entre error i autorització.
+
+**Límit resolt:** falta el retorn efectiu d'este servei, no l'enllaç entre
+TzDxeLA i ScmDxeLA. No s'ha reconstruït de nou EL3 ni consultat el dispositiu;
+no es generalitza esta ruta a la taula SCM antiga. El model de portes ja
+tracta el retorn com a estat simbòlic no zero i no necessita noves proves
+redundants de la mateixa condició.

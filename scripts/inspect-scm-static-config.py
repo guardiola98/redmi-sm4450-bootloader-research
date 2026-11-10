@@ -5,6 +5,7 @@ Reports only selected keys and provenance, not the proprietary config body.
 This is an artifact inspection, not proof of the effective runtime config.
 """
 import hashlib
+import csv
 import importlib.util
 import json
 from pathlib import Path
@@ -52,6 +53,38 @@ def summarize_text(raw):
                 selected_key_lines={key: [line for name, line in rows if name == key] for key in KEYS})
 
 
+def summarize_memory_ranges(raw):
+    """Aggregate static ranges only; do not reconstruct dynamic SMEM tables."""
+    section = None
+    ranges = []
+    for number, line in enumerate(raw.decode('ascii').splitlines(), 1):
+        line = line.strip()
+        if not line or line.startswith(('#', ';')):
+            continue
+        if line.startswith('[') and line.endswith(']'):
+            section = line[1:-1]
+            continue
+        if section not in ('MemoryMap', 'RegisterMap'):
+            continue
+        fields = next(csv.reader([line], skipinitialspace=True))
+        if len(fields) != 8:
+            raise ValueError('Expected eight memory region fields')
+        base, size = (int(v.strip(), 16) for v in fields[:2])
+        if base < 0 or size <= 0 or base + size > 1 << 64:
+            raise ValueError('Invalid unsigned memory range')
+        eligible = fields[3].strip() not in ('HobOnlyNoCacheSetting', 'NoMap', 'AddDynamicMem')
+        ranges.append((section, base, size, eligible, number))
+    selected = [row for row in ranges if row[3]]
+    return dict(section_counts={key: sum(r[0] == key for r in ranges)
+                                for key in ('MemoryMap', 'RegisterMap')},
+                all_ranges_page_aligned=all((r[1] | r[2]) & 4095 == 0 for r in ranges),
+                contains_address_zero=any(r[1] == 0 for r in ranges),
+                eligible_before_dynamic_merge=len(selected),
+                excluded_before_dynamic_merge=len(ranges)-len(selected),
+                minimum_eligible_base=hex(min(r[1] for r in selected)) if selected else None,
+                scope='Static resource ranges only; dynamic RAM/SMEM merge and later changes excluded')
+
+
 def main():
     source = Path('work/uefi-provider-source.elf')
     if source.stat().st_size > fv.LIMIT:
@@ -72,7 +105,8 @@ def main():
                 raise ValueError('Unexpected raw config hash')
             rows.append(dict(ffs=str(guid), ffs_offset=hex(at), section=hex(ss),
                              section_type=hex(typ), data_offset=hex(ss+hs),
-                             size=len(raw), sha256=CONFIG_SHA, **summarize_text(raw)))
+                             size=len(raw), sha256=CONFIG_SHA, **summarize_text(raw),
+                             memory_ranges=summarize_memory_ranges(raw)))
     if len(rows) != 1:
         raise ValueError('Expected one raw config')
     metadata = json.loads(Path('docs/consumer-dependencies.json').read_text())

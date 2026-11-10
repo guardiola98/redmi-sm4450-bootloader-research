@@ -215,3 +215,9 @@ amb `a701d31c a701d728 a701a9c4`; inspector TE amb 75 instruccions
 seleccionades, inspector PE ampliat a 10 mòduls. Nou model sintètic cobreix
 la partició exhaustiva d'error del default, el caller que ignora estat i
 la pèrdua d'overflow seguida del rebuig estret. **9 tests de configuració**.
+
+La configuració de memòria també es mescla amb SMEM abans de construir
+MMU: el RAW no és una captura completa de traduccions. Vegeu
+[la frontera del mapatge nul](scm-initialization-analysis.md). Resum
+estàtic de 39 rangs sense zero; 93 instruccions TE verificades i
+**11 tests de configuració/inventari** després d'esta ampliació.

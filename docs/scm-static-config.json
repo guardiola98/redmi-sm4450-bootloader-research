@@ -112,6 +112,18 @@
       "EnableMultiCoreFvDecompression": [
         170
       ]
+    },
+    "memory_ranges": {
+      "section_counts": {
+        "MemoryMap": 24,
+        "RegisterMap": 15
+      },
+      "all_ranges_page_aligned": true,
+      "contains_address_zero": false,
+      "eligible_before_dynamic_merge": 36,
+      "excluded_before_dynamic_merge": 3,
+      "minimum_eligible_base": "0x400000",
+      "scope": "Static resource ranges only; dynamic RAM/SMEM merge and later changes excluded"
     }
   },
   "named_resource_counts": {

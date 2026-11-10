@@ -81,8 +81,8 @@ EL3, cap cens GUID ni experiments RSA; executar els tests ja existents
 forma part de la regressió. No s'ha consultat xarxa per investigar firmware;
 només s'han publicat commits autoritzats al repositori.
 
-**70 proves en 15 scripts** passen executant cada `scripts/test-*.py`
-separat. Inclouen 7 models nous TzDxeLA i 9 de configuració. Inspectors
+**72 proves en 15 scripts** passen executant cada `scripts/test-*.py`
+separat. Inclouen 7 models nous TzDxeLA i 11 de configuració. Inspectors
 verifiquen hashes i bytes seleccionats; `git diff --check` net. Els models
 usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 
@@ -94,9 +94,9 @@ usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 2. **Configuració:** candidats locals delimitats en 25 callsites revisats;
    reobrir impacte amb entrada efectiva diferent o consumidor de +0x20.
    No fabricar recursos alternatius ni repetir models de defaults resolts.
-3. **Conseqüència SCM pendent d'entorn:** mapatge de VA zero/handlers i
-   recuperació global només si apareix evidència local concreta. MiToken i
-   VerifiedBoot continuen en espera de les precondicions especificades.
+3. **Conseqüència SCM pendent d'entorn:** la mescla SMEM item 0x192
+   és la frontera concreta abans del mapa MMU; el RAW no inclou zero.
+   Sense estat efectiu, mantindre crash/underflow/recuperació condicionals.
 
 Les quatre fases demanades estan documentades; l'auditoria no es declara
 exhaustiva. La continuació prioritza les noves rutes amb evidència concreta.

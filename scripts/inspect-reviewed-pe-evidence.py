@@ -53,8 +53,9 @@ CASES = {
                                  0x387c,0x3880,0x3884,0x388c,0x3994,0x39a8,
                                  0x39d0,0x4218,0x4318,0x433c,0x4350,0x9228,0x9234]},
     'ScmDxeLA': {'guids': [0xd038,0xd088,0xd098],
-                 'words': [0xd110,0xd168,0xd188,0xd190,0xd198,
+                 'words': [0xd110,0xd158,0xd168,0xd188,0xd190,0xd198,
                            0xd438,0xd440,0xd450,0xd460,0xd468,0xd488],
+                 'raw_sites': [(0xa4d5,1)],
                  'instructions': [0x14f8,0x1500,0x1504,0x1508,0x1524,0x1528,
                                   0x1550,0x1554,0x1564,0x1570,0x158c,0x17e4,
                                   0x3780,0x3784,0x37b0,0x37d0,0x37dc,0x37f8,
@@ -67,6 +68,8 @@ CASES = {
                                   0x4ce8,0x4cec,0x4cfc,0x5840,0x5844,0x5848,
                                   0x6aec,0x6af0,0x6af8,0x6b00,0x6b08,0x6b20,
                                   0x6b98,0x6b9c,0x6bd4,
+                                  0x3dc4,0x3ddc,0x3de0,0x3dec,0x3df4,0x3df8,
+                                  0x4124,0x412c,0x415c,0x4168,0x41e4,0x41fc,
                                   0x6da0,0x731c,0x7320,0x7324]},
     'ShmBridgeDxe': {'guids': [0x7068], 'words': [0x70a8,0x70b0,0x70b8],
                      'instructions': [0x14e4,0x1514,0x1518,0x151c,0x1520,
@@ -111,6 +114,9 @@ def main():
         if case.get('words'):
             row['words'] = [dict(rva=hex(a), value=hex(int.from_bytes(pe.read_rva(data,a,8),'little')))
                             for a in case['words']]
+        if case.get('raw_sites'):
+            row['selected_data'] = [dict(rva=hex(a), bytes=pe.read_rva(data,a,n).hex(' '))
+                                    for a,n in case['raw_sites']]
         report.append(row)
     Path('docs/reviewed-pe-evidence.json').write_text(json.dumps(report,indent=2)+'\n')
     print('Verified',len(report),'PEs; selected original GUIDs and instruction bytes')

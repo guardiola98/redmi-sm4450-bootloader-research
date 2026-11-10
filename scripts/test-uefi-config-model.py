@@ -62,6 +62,23 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(result['duplicate_parameter_names'], ['securityflag'])
         self.assertIn('ChipIDConfig', result['section_names'])
 
+    def test_memory_summary_separates_static_ranges_from_dynamic_exclusions(self):
+        raw = (b'[MemoryMap]\n0x8000,0x1000,Example,AddMem,SYS_MEM,SYS_MEM_CAP,Conv,WRITE_BACK\n'
+               b'0xA000,0x2000,Later,AddDynamicMem,SYS_MEM,SYS_MEM_CAP,Conv,WRITE_BACK\n'
+               b'[RegisterMap]\n0x4000,0x1000,Register,AddDev,MMAP_IO,UNCACHEABLE,MmIO,NS_DEVICE\n')
+        result = config.summarize_memory_ranges(raw)
+        self.assertEqual(result['section_counts'], {'MemoryMap': 2, 'RegisterMap': 1})
+        self.assertEqual(result['eligible_before_dynamic_merge'], 2)
+        self.assertEqual(result['excluded_before_dynamic_merge'], 1)
+        self.assertEqual(result['minimum_eligible_base'], '0x4000')
+        self.assertTrue(result['all_ranges_page_aligned'])
+        self.assertFalse(result['contains_address_zero'])
+
+    def test_memory_summary_refuses_wrapped_ranges(self):
+        with self.assertRaises(ValueError):
+            config.summarize_memory_ranges(
+                b'[MemoryMap]\n0xfffffffffffff000,0x2000,X,AddMem,X,X,X,X\n')
+
     def test_valid_uint32_and_overflow(self):
         self.assertEqual(narrow_getter(0, 0xc4, 0, 0), (0, 0xc4, True))
         self.assertEqual(narrow_getter(0, 1 << 32, 0, 17), (EFI_ERROR | 2, 17, True))

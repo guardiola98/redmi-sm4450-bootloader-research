@@ -244,3 +244,61 @@ l'inspector de bytes. L'extractor usa el manifest existent, valida hash
 del contenidor i de cada PE i no repetix censos GUID. Per a Ghidra:
 importació PE ARM64 i scripts `DumpFunctions.java`/`DumpInstructions.java`
 en `scripts/ghidra/`; conservar les exportacions només en `work/`.
+
+## Mapatge nul: evidència estàtica addicional i frontera SMEM
+
+La configuració RAW hash-pinned conté **24 regions MemoryMap i 15
+RegisterMap**, totes amb base/mida alineades a 4096 i cap rang que incloga
+zero. Abans de les transformacions dinàmiques, el constructor inclouria
+36 regions i exclouria tres `AddDynamicMem`; la base mínima inclosa és
+`0x00400000`. L'inspector publica només estos agregats, no el cos del recurs.
+No s'ha accedit a cap registre o adreça física.
+
+El TE `0xa7012210 → 0xa7010288` transforma la taula de regions en
+entrades de 32 bytes, amb **base física=base virtual**, longitud i atribut.
+Exclou tipus 6/9/10 (`HobOnlyNoCacheSetting`, `NoMap`, `AddDynamicMem`),
+no `NoHob` (tipus 4). Neteja la llista, comprova count<128, afegix una
+entrada terminadora i crida `0xa701c738` a `0xa70104e4`.
+
+`0xa701c738` reserva una taula de traducció nova, la posa a zero
+(`0xa701ca00`) i la instal·la via `0xa7019b30` (`0xa701ca08`). El helper
+selecciona TTBR0_EL1/EL2/EL3 segons CurrentEL; és codi UEFI del TE, no una
+nova revisió del monitor segur. Cada regió passa a `0xa701c4dc`, que usa
+base/longitud i descriptors de pàgina/bloc; `0xa701ccc8` inicialitza a zero
+les taules subordinades noves. El final reeixit `0xa701cc18 → 0xa7019d4c`
+activa SCTLR.M (`ORR #1` a `0xa7019d78`). No és una taula heretada que
+simplement haja conservat totes les traduccions anteriors.
+
+**Açò no fixa encara el mapa efectiu en l'error SCM.** La mateixa entrada
+TE fa `LoadAndParsePlatformCfg` a `0xa700e8c0`, després mescla RAM amb
+`0xa7011c38` a `0xa700e980`, i només llavors configura MMU a `0xa700ea08`.
+La mescla pot afegir regions anteriors/posteriors als rangs RAW i transformar
+AddDynamicMem. Usa la taula RAM preparada per `0xa70234d4`:
+
+- `0xa70230c4` obté SMEM item **0x192** a `0xa70230f0` i comprova
+  signatures/versió. Les entrades de memòria són dades de l'entorn de boot;
+  no hi ha una captura efectiva d'eixe SMEM en esta auditoria.
+- La versió 1 delega a `0xa7023300`; l'altra via convertix descriptors
+  dins de `0xa70234d4`. El tipus/categoria filtra regions, però no s'ha
+  establit una garantia universal de base no nul·la de totes les entrades.
+- Si SMEM no està disponible amb error 6, hi ha un fallback explícit
+  `{base=0x80000000, mida=0x60000000}` als literals `a7038b10/a7038b18`.
+  No inclou zero, però no s'ha provat que eixa branca siga la seleccionada.
+
+Conseqüència delimitada: **amb taules reeixides que només continguen els
+rangs locals no nuls, sense additions que cobrisquen zero ni canvis posteriors,
+la reconstrucció no proporciona una traducció per als accessos nuls SCM**.
+Falten la taula RAM efectiva mesclada, el context de traducció en eixe moment
+i qualsevol modificació posterior per a convertir-ho en un resultat runtime.
+A més, la destinació de l'excepció/handler i qualsevol recuperació/watchdog
+continuen condicionant el desenllaç. No s'afirma que s'executen els stores
+posteriors, que es produïsca l'underflow del comptador o que el dispositiu
+s'ature necessàriament.
+
+Reproducció: `inspect-scm-static-config.py` afegix resum de rangs amb
+validació de límits; dos tests nous comproven exclusions i rebuig de wrap
+aritmètic. `inspect-uefi-config-contract.py` verifica els callsites/registre
+TTBR i constants de fallback; referències `a7043a58 a7043a60 a7010558
+ a7010288 a701c738` en ConfigTeLayout identifiquen les transformacions.
+No es justifica repetir la recerca d'impacte nul fins disposar de nova
+evidència sobre estes dades o transicions d'entorn.

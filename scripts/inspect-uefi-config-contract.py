@@ -64,6 +64,11 @@ def main():
         0xa701ab48,0xa701ab88,0xa701ab8c,0xa701ab90,
         0xa701baa0,0xa701baa4,0xa701d634,0xa701d638,
         0xa701d698,0xa701d6f0,
+        0xa700e8c0,0xa700e980,0xa700ea08,0xa70102b4,
+        0xa7010354,0xa7010364,0xa7010374,0xa70104e4,
+        0xa701ca00,0xa701ca08,0xa701cc18,
+        0xa7019b48,0xa7019b50,0xa7019b58,0xa7019d78,
+        0xa70230dc,0xa70230f0,0xa70235c8,
     ]
     instructions = []
     for address in locations:
@@ -92,6 +97,10 @@ def main():
                   tables=tables, instructions=instructions,
                   maximum_ascii_string_length=dict(va='0xa7035d30', value=int.from_bytes(
                       read_va(data, layout, 0xa7035d30, 4)[1], 'little')),
+                  fallback_ram_region=dict(base=hex(int.from_bytes(
+                      read_va(data, layout, 0xa7038b10, 8)[1], 'little')),
+                      size=hex(int.from_bytes(read_va(data, layout, 0xa7038b18, 8)[1], 'little')),
+                      base_va='0xa7038b10', size_va='0xa7038b18'),
                   scope='Manually reviewed config path only; no full TE audit or effective runtime snapshot')
     Path('docs/uefi-config-contract.json').write_text(json.dumps(report, indent=2)+'\n')
     print('Verified config TE layout, shared HOB identity and', len(instructions), 'instruction sites')

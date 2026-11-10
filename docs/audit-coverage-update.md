@@ -159,3 +159,8 @@ EnvDxe i TE; no és una auditoria global d'interfícies indirectes. S'ha
 resolt el default de DecompressionRequired absent i delimitat pèrdua
 d'estat d'overflow decimal. Tres nous tests config: **70 proves en
 15 scripts** en total; inspectors de 10 PE i 75 instruccions TE.
+
+Mapa UEFI: revisió dirigida del constructor MMU i procedència de RAM
+SMEM, sense executar ni simular registres del sistema. No s'ha revisitat
+EL3. 39 rangs RAW agregats, 93 llocs TE verificats; dos tests d'inventari
+addicionals porten el total a **72 en 15 scripts**.
