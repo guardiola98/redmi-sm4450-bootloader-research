@@ -1001,3 +1001,20 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   Regressió completa: **80 proves en16 scripts**, totes correctes;
   `git diff --check` net. Següent: revisió de coherència dels informes i
   un punt de represa que separe els límits resolts dels runtime pendents.
+
+## Continuació dirigida — cache i recursos de fitxers
+
+- Publicació parcial publicada: `332be4f`. Creixement de cache fallit
+  sí posa punter/capacitat a zero; descartada conservació de cache antiga.
+- Caller 0x2630 perd el temporal pool si la cache falla. Lector 0x4a00
+  omet Close arrel i Close fitxer en dues eixides de reserva. Fat crea
+  arrel de0xb8 per invocació; FV reutilitza arrel. No extrapolar acumulació.
+- Errors GetInfo anteriors a dades passen NULL a FreePool i activen
+  ASSERT/espera local. Read amb error sí neteja pool vàlid. Recompte de
+  lectura curta es perd, però falta condició efectiva que la produïsca.
+- Proveïdors Fat/FvSimpleFileSystem extrets pel manifest existent;
+  cap cens GUID nou. Set proves de contractes i onze TzDxeLA correctes;
+  inspector12 PE correcte i diff check net. Total conegut87 en17 scripts.
+- Falta caller concret QSEE+0x20 de fitxers; VerifiedBoot+8 de partició
+  no és eixa evidència. Informe tzdxe-file-resource-contracts.md conserva
+  punts exactes; continuar amb coherència/validació final dels informes.

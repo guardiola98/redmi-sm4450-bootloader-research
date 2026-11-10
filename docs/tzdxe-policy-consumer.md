@@ -378,3 +378,12 @@ inclòs èxit i els tres punts de fallada. Són estats simbòlics, no fallades
 induïdes en un assignador ni execució del firmware. Referència dirigida
 del HOB: `DumpAddressReferences.java … a703c350` en ConfigTeLayout;
 exportació local ignorada `work/te-image-unload-refs.txt`.
+
+### Continuació del camí de fitxers
+
+La revisió de creixement descarta cache antiga conservada quan la nova
+reserva falla. El [contracte de fitxers](tzdxe-file-resource-contracts.md)
+documenta en canvi pèrdua del temporal de pool, handles sense Close,
+FreePool(NULL) en errors GetInfo i pèrdua del recompte de lectura curta.
+Els proveïdors Fat i FvSimpleFileSystem tenen distinta vida de l'arrel;
+no s'ha demostrat quin selecciona este caller ni acumulació en execució.
