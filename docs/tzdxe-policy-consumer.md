@@ -303,3 +303,78 @@ TzDxeLA i ScmDxeLA. No s'ha reconstruït de nou EL3 ni consultat el dispositiu;
 no es generalitza esta ruta a la taula SCM antiga. El model de portes ja
 tracta el retorn com a estat simbòlic no zero i no necessita noves proves
 redundants de la mateixa condició.
+
+### Inicialització parcial: protocols publicats sense rollback
+
+La seqüència `0x14e4` crida `0x2958` i, només si retorna zero, salta a
+`0x1ba4` (`0x1508/0x1528`). Hi ha tres publicacions independents:
+
+| Etapa | Handle / interfície | Tractament d'error |
+| --- | --- | --- |
+| `0x2a28` | Handle local inicialment NULL a `0x2998`; GUID `f108`, taula `f250`. Cache ShmBridge ja reservada. | Qualsevol estat no zero torna a l'entrada; no allibera cache. |
+| `0x3370`, condicional | ImageHandle; QSEE GUID `f148`, taula `f2d0`. | EFI_ERROR a `0x2ad0` arriba a ASSERT `0x2afc`. No assumir retorn normal d'esta fallada. |
+| **`0x1c0c`** | ImageHandle; GUID `f78552e0-f751-427f-9451-930e60d839b8` a `f118`, taula `f228` (rev. `0x10000`). | **Retorna x0 sense comprovar ni alterar l'estat** fins a `0x1c1c`. |
+
+No s'ha assignat un nom funcional al tercer GUID només per proximitat de
+cadenes. La seua taula conté `0x191c/0x1960/0x19b8/0x19d0`.
+El C de Ghidra etiqueta `0x1ba4` com void; les instruccions demostren
+que preserva el retorn EFI, de manera que no s'ha usat eixa inferència de
+tipus per al CFG.
+
+Un error ordinari en l'última instal·lació arriba a `0x1150`: guarda
+estat a `0x1210`, crida destructor `0x1490` a `0x1220` i retorna l'error
+original a `0x1224`. El destructor només visita la llista privada
+`0x3fa8`; no hi ha UninstallProtocolInterface/UninstallMultiple de les
+publicacions anteriors, ni free de la cache ShmBridge. La primera
+publicació ja és suficient per al defecte, independentment de la porta
+SecurityFlag de QSEE.
+
+**Contracte local de DxeCore:** la taula Boot Services identifica
+InstallMultiple `0xc430`, UninstallMultiple `0xc930` i StartImage `0x6e3c`.
+`0xc430` desfà només els parells instal·lats dins de la mateixa invocació
+(`0xc5c8/0xc5d4/0xc648`); cada invocació Tz d'ací té un sol parell.
+No és una transacció de tota la inicialització del driver.
+
+InstallProtocol `0xc204` reserva el node de 0x58 bytes a `0xc29c`; NULL
+torna EFI error 9 sense ASSERT (`0xc2a0 → 0xc2d8 → 0xc308`). El helper
+`0x1e238 → 0x1e204 → 0x1e114` conserva el contracte ordinari del pool:
+EFI_ERROR es convertix en NULL (`0x1e128/0x1e12c/0x1e138`). **No s'ha
+provocat eixa fallada**: només s'ha verificat que el contracte la permet.
+El node de protocol guarda l'interface pointer a +0x38 (`0xc3cc`), sense
+copiar la taula ni el codi fora de la imatge.
+
+Si el driver és iniciat pel StartImage local, el seu EFI_ERROR selecciona
+`0x70d8 → 0x70f0 → 0x6424(image,1)`. Esta neteja:
+
+- Tanca entrades OpenProtocol que tenen l'ImageHandle com a agent
+  (`0x6508/0x6510/0x652c`); tancar una obertura no desinstal·la un servei.
+- Retira informació de depuració (`0x7670`) i les interfícies d'imatge
+  amb GUIDs fixes a `2a3c8/2a3d8/2a3e8`, no els GUIDs Tz.
+- Demana FreePages del rang d'imatge a `0x660c`; no comprova el retorn
+  abans de continuar alliberant metadades.
+
+El callback indirecte de `0x6484` també està resolt: HOB
+`b323179b-97fb-477e-b0fe-d88591fa11ab`, TE `0xa703c350`, publicació
+`0xa70180e4`, taula `0xa703c360`, slot +0x28 → `0xa702bd40`.
+Este crida `0xa7030948`: ajust d'atributs de memòria (`0xa7032a58`) i
+retirada d'informació textual de depuració (`0xa7032140`), no rollback
+de protocols Tz. La ruta d'emulador només és aplicable si la imatge té
+un proveïdor d'emulació; no s'ha pressupost per al PE AArch64 natiu.
+
+**Conclusió:** omissió local de rollback confirmada. Sota entrada nativa
+via StartImage, èxit de publicacions prèvies, fallada EFI tardana,
+retorn dels callbacks de neteja i FreePages reeixit, queden registres
+amb punters a la imatge ja alliberada. És una **referència pendent
+condicional**, més precisa que afirmar una fuga de pool o un crash
+observat. No s'ha provat fallada real, consulta posterior del protocol,
+reutilització de pàgines, execució a través del punter ni explotabilitat.
+La fallada de la primera instal·lació només prova retenció local de
+cache, sense protocol publicat; la fallada QSEE amb ASSERT no demostra
+la cadena de retorn/descàrrega.
+
+Validació: bytes seleccionats de DxeCore/TzDxeLA i HOB/taula del TE en
+els inspectors existents; quatre models de vida de registre/imatge,
+inclòs èxit i els tres punts de fallada. Són estats simbòlics, no fallades
+induïdes en un assignador ni execució del firmware. Referència dirigida
+del HOB: `DumpAddressReferences.java … a703c350` en ConfigTeLayout;
+exportació local ignorada `work/te-image-unload-refs.txt`.

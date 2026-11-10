@@ -71,6 +71,35 @@ def initial_loads(version_status, version, config_status, flags, operation18):
     return loads
 
 
+def publication_lifetime(first=0, qsee=0, last=0, enable_qsee=True):
+    """Symbolic image/registration ownership, no allocator failure injection.
+
+    Each publication is a separate one-pair InstallMultiple call. Its failed
+    transaction cannot remove protocols from earlier successful transactions.
+    Assume valid native image, returning cleanup callbacks and successful
+    DxeCore page release after a returned EFI_ERROR. ASSERT does not return.
+    """
+    state = dict(registrations=set(), cache_busy=True, image_live=True,
+                 returned=True)
+    status = first
+    if first == 0:
+        state['registrations'].add('first-on-child')
+        if enable_qsee:
+            if qsee & EFI_ERROR:
+                state['returned'] = False
+                return state
+            if qsee == 0:
+                state['registrations'].add('qsee-on-image')
+            status = qsee
+        if status == 0:
+            status = last
+            if last == 0:
+                state['registrations'].add('last-on-image')
+    if status & EFI_ERROR:
+        state['image_live'] = False
+    return state
+
+
 class ResourceTests(unittest.TestCase):
     def test_security_and_encryption_errors_are_distinct_gates(self):
         self.assertEqual(diagnostic_route(0, 1, 0x100, 0, 0), 'security-stop')
@@ -127,6 +156,33 @@ class ResourceTests(unittest.TestCase):
         self.assertEqual(initial_loads(0, 0x401000, EFI_ERROR | 14, 0xc4, 1), [])
         self.assertEqual(initial_loads(0, 0x401000, 0, 0xc4, 0), ['application'])
         self.assertEqual(initial_loads(0, 0x401000, 0, 0, 1), [])
+
+    def test_late_publication_error_outlives_image(self):
+        state = publication_lifetime(last=EFI_ERROR | 9)
+        self.assertEqual(state['registrations'], {'first-on-child', 'qsee-on-image'})
+        self.assertFalse(state['image_live'])
+        # QSEE is optional; the first independent publication is sufficient.
+        state = publication_lifetime(last=EFI_ERROR | 9, enable_qsee=False)
+        self.assertEqual(state['registrations'], {'first-on-child'})
+        self.assertFalse(state['image_live'])
+
+    def test_first_publication_failure_retains_cache_without_protocol(self):
+        state = publication_lifetime(first=EFI_ERROR | 9)
+        self.assertEqual(state['registrations'], set())
+        self.assertTrue(state['cache_busy'])
+        self.assertFalse(state['image_live'])
+
+    def test_qsee_assert_does_not_imply_returned_error_unload(self):
+        state = publication_lifetime(qsee=EFI_ERROR | 9)
+        self.assertFalse(state['returned'])
+        self.assertTrue(state['image_live'])
+        self.assertEqual(state['registrations'], {'first-on-child'})
+
+    def test_successful_publications_keep_their_image_live(self):
+        state = publication_lifetime()
+        self.assertTrue(state['returned'])
+        self.assertTrue(state['image_live'])
+        self.assertEqual(len(state['registrations']), 3)
 
 
 if __name__ == '__main__':

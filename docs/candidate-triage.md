@@ -31,6 +31,7 @@ censos GUID ni proves del monitor per justificar una conclusió nova.
 | ScmDxeLA: recursos en errors tardans | 0x3744 retorna sense recuperar dues reserves ShmBridge; si falla CreateEventEx després d'inicialitzar objectes, també omet el pool de taules (11296 bytes per defecte). Destructor tracta una altra llista. | **Omissió local confirmada; acumulació condicional.** No assumir retorn normal després dels accessos nuls de la fallada inicial de taules. |
 | TzDxeLA/ShmBridge: cache alliberada però vigent | 0x1e74 allibera el node compartit sense invalidar punter/capacitat; 0x1f2c retorna la cache sense readquirir-lo. Free de ShmBridge no comprova busy. | **Inconsistència local confirmada.** Repetició compatible duplica comptabilitat; un client intermedi pot crear àlies. Seqüència finita identificada en la inicialització QSEE; activació runtime, corrupció i pàgines retornades a UEFI no demostrades. |
 | TzDxeLA: free de keystore d'un altre assignador | 0x2b18 reserva amb ShmBridge +8 i neteja amb free privat 0x42e8; les llistes són distintes i el punter desconegut s'ignora. Caller 0x14f8. | **Defecte local confirmat també en camí reeixit.** Presència/mida de partició i acumulació no demostrades; no s'ha accedit al contingut. |
+| TzDxeLA: publicació parcial sense rollback | Fallada EFI de l'últim InstallMultiple 0x1c0c torna sense desinstal·lar protocols anteriors; DxeCore StartImage descarrega imatges que retornen error. Cada InstallMultiple només desfà la seua transacció. | **Omissió confirmada; referència pendent condicional.** Requerix ruta StartImage nativa, error tardà i neteja/FreePages reeixits. No hi ha ús posterior demostrat. Error de la publicació QSEE, en canvi, arriba a ASSERT. |
 | UEFI Config Lib: temporal indeterminat en error | Getter de 32 bits 0xa701d578 usa el temporal sense inicialitzar encara que falle el getter ampli; pot escriure out-word indeterminat o substituir error original per error 2. | **Defecte confirmat de gestió d'error.** No convertix error en èxit; SCM comprova estat zero i conserva defaults. No prova dada efectiva indeterminada en SCM. TE 0xa7024990 ignora estat, però la seua clau és present i vàlida localment. |
 | Getter de configuració de 64 bits: overflow decimal | Conversor retorna error 3 i UINT64_MAX; wrapper perd l'estat i getter ampli retorna zero amb el valor saturat. | **Pèrdua local d'error confirmada; activació condicional.** Claus seleccionades sense overflow; cap consumidor +0x20 amb eixa entrada identificat. Getter de 32 bits ho rebutja. |
 | Parser de configuració: frontera de capacitat | 0xa7012af8 rebutja count>capacitat, però accepta igualtat i escriu un descriptor fora dels 16*capacitat bytes declarats. | **Defecte condicional confirmat.** Recurs local té 43 entrades per a capacitat 64: no l'activa. Cap configuració alternativa efectiva ni corrupció física demostrada. |
@@ -84,8 +85,9 @@ EL3, cap cens GUID ni experiments RSA; executar els tests ja existents
 forma part de la regressió. No s'ha consultat xarxa per investigar firmware;
 només s'han publicat commits autoritzats al repositori.
 
-**76 proves en 16 scripts** passen executant cada `scripts/test-*.py`
-separat. Inclouen 7 models nous TzDxeLA i 11 de configuració i 4 d'índexs RAM. Inspectors
+**80 proves en 16 scripts**: recompte dels scripts, amb comprovació final
+completa registrada en PROGRESS.md. Inclouen 11 models nous TzDxeLA,
+11 de configuració i 4 d'índexs RAM. Inspectors
 verifiquen hashes i bytes seleccionats; `git diff --check` net. Els models
 usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 

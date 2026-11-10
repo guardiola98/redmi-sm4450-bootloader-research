@@ -983,3 +983,21 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Models config11, RAM4 i SCM5 correctes; diff check net. Total conegut
   **76 proves en16 scripts**. Següent: estat parcial de publicació de
   protocols TzDxeLA i si els errors posteriors disposen de rollback local.
+
+## Continuació dirigida — publicació parcial TzDxeLA
+
+- Conversió RAM publicada: `c78744a`. L'última instal·lació de protocol
+  Tz 0x1c0c pot retornar EFI_ERROR sense retirar publicacions prèvies.
+  Destructor només tracta llista privada; primera fallada reté cache;
+  fallada QSEE intermèdia arriba a ASSERT i no implica descàrrega normal.
+- DxeCore permet error ordinari de reserva del node de protocol. El
+  rollback d'InstallMultiple només cobrix una invocació. StartImage amb
+  retorn d'error demana FreePages de la imatge i no retira protocols Tz.
+- Callback PE/COFF de descàrrega resolt al TE mitjançant HOB específic;
+  tracta atributs/depuració. Referències a imatge alliberada condicionades
+  a eixa ruta i èxit de neteja; cap ús posterior o fallada real observats.
+- Quatre proves simbòliques de vida de publicació, 11 TzDxeLA totals;
+  inspectors ampliats amb bytes i taula/HOB, sense binaris en Git.
+  Regressió completa: **80 proves en16 scripts**, totes correctes;
+  `git diff --check` net. Següent: revisió de coherència dels informes i
+  un punt de represa que separe els límits resolts dels runtime pendents.

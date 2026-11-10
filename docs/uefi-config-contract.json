@@ -9,6 +9,12 @@
     "scm_rva": "0xd048",
     "scm_sha256": "bf446081b8d1156f7de9c1b329dcd774f9df427d890d2ca67f6259f6a985d77d"
   },
+  "image_loader_hob": {
+    "guid": "b323179b-97fb-477e-b0fe-d88591fa11ab",
+    "te_va": "0xa703c350",
+    "table_va": "0xa703c360",
+    "unload_slot": "0x28"
+  },
   "tables": [
     [
       {
@@ -52,6 +58,38 @@
         "va": "0xa703c448",
         "te_offset": "0x3a510",
         "value": "0xa701d728"
+      }
+    ],
+    [
+      {
+        "va": "0xa703c360",
+        "te_offset": "0x3a428",
+        "value": "0xa702ac84"
+      },
+      {
+        "va": "0xa703c368",
+        "te_offset": "0x3a430",
+        "value": "0xa702b404"
+      },
+      {
+        "va": "0xa703c370",
+        "te_offset": "0x3a438",
+        "value": "0xa702b054"
+      },
+      {
+        "va": "0xa703c378",
+        "te_offset": "0x3a440",
+        "value": "0xa702bcbc"
+      },
+      {
+        "va": "0xa703c380",
+        "te_offset": "0x3a448",
+        "value": "0xa702ba1c"
+      },
+      {
+        "va": "0xa703c388",
+        "te_offset": "0x3a450",
+        "value": "0xa702bd40"
       }
     ]
   ],
@@ -841,6 +879,42 @@
       "te_offset": "0x217a8",
       "source_offset": "0x246e0",
       "bytes": "02 03 00 54"
+    },
+    {
+      "va": "0xa7018114",
+      "te_offset": "0x161dc",
+      "source_offset": "0x19114",
+      "bytes": "21 40 0d 91"
+    },
+    {
+      "va": "0xa7018128",
+      "te_offset": "0x161f0",
+      "source_offset": "0x19128",
+      "bytes": "8c fb ff 97"
+    },
+    {
+      "va": "0xa702bd48",
+      "te_offset": "0x29e10",
+      "source_offset": "0x2cd48",
+      "bytes": "00 13 00 94"
+    },
+    {
+      "va": "0xa702bd4c",
+      "te_offset": "0x29e14",
+      "source_offset": "0x2cd4c",
+      "bytes": "e0 03 1f aa"
+    },
+    {
+      "va": "0xa7030998",
+      "te_offset": "0x2ea60",
+      "source_offset": "0x31998",
+      "bytes": "30 08 00 94"
+    },
+    {
+      "va": "0xa70309d0",
+      "te_offset": "0x2ea98",
+      "source_offset": "0x319d0",
+      "bytes": "dc 05 00 94"
     }
   ],
   "maximum_ascii_string_length": {

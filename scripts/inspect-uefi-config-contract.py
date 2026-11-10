@@ -78,6 +78,8 @@ def main():
         0xa70235c0,0xa7023640,0xa7023648,0xa7023650,0xa7023658,
         0xa7023660,0xa7023664,0xa7023668,0xa70236ac,0xa70236c8,
         0xa70236d0,0xa70236e0,
+        0xa7018114,0xa7018128,0xa702bd48,0xa702bd4c,
+        0xa7030998,0xa70309d0,
     ]
     instructions = []
     for address in locations:
@@ -85,7 +87,7 @@ def main():
         instructions.append(dict(va=hex(address), te_offset=hex(offset),
                                  source_offset=hex(0x2f38+offset), bytes=raw.hex(' ')))
     tables = []
-    for start, count in ((0xa703c3d0, 3), (0xa703c428, 5)):
+    for start, count in ((0xa703c3d0, 3), (0xa703c428, 5), (0xa703c360, 6)):
         entries = []
         for address in range(start, start+8*count, 8):
             offset, raw = read_va(data, layout, address, 8)
@@ -103,6 +105,9 @@ def main():
                   te_source_offset='0x2f38', address_kind='TE preferred VA; not runtime addresses',
                   shared_library_hob=dict(guid=str(uuid.UUID(bytes_le=guid)),
                       te_va='0xa703c2f0', scm_rva='0xd048', scm_sha256=scm_sha),
+                  image_loader_hob=dict(guid=str(uuid.UUID(bytes_le=read_va(
+                      data, layout, 0xa703c350, 16)[1])), te_va='0xa703c350',
+                      table_va='0xa703c360', unload_slot='0x28'),
                   tables=tables, instructions=instructions,
                   maximum_ascii_string_length=dict(va='0xa7035d30', value=int.from_bytes(
                       read_va(data, layout, 0xa7035d30, 4)[1], 'little')),
