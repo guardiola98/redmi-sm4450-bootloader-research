@@ -2,7 +2,7 @@
 """Synthetic contracts only: symbolic owners/statuses, no firmware or payloads.
 
 Evidence: TzDxeLA 0x1e74/0x1f2c/0x3454; ShmBridgeDxe 0x2890/0x2b4c.
-These tests establish conditional state transitions, not real repeat callers.
+These tests establish conditional state transitions, not runtime observations.
 """
 import unittest
 
@@ -49,6 +49,28 @@ def cached_get(block, size):
     return block
 
 
+def private_release(registry, pointer):
+    """Unknown pointers are silently ignored; registries model distinct lists."""
+    if pointer in registry:
+        registry[pointer] = False
+
+
+def initial_loads(version_status, version, config_status, flags, operation18):
+    """Successful GUID paths in 0x2fb0 only; no file contents or secure calls.
+
+    Service operations do not enter the application-error diagnostic helper.
+    All selected reads/loads are assumed to return successfully in this model.
+    """
+    if version_status & EFI_ERROR:
+        return []
+    loads = []
+    if version >= 0x401000 and config_status == 0 and flags & 4 and operation18:
+        loads.extend(['service', 'service'])
+    if config_status == 0 and flags & 0x80:
+        loads.append('application')
+    return loads
+
+
 class ResourceTests(unittest.TestCase):
     def test_security_and_encryption_errors_are_distinct_gates(self):
         self.assertEqual(diagnostic_route(0, 1, 0x100, 0, 0), 'security-stop')
@@ -80,6 +102,31 @@ class ResourceTests(unittest.TestCase):
         # Caller still releases it. No actual memory access is performed.
         reused.release()
         self.assertIsNone(block.owner)
+
+    def test_foreign_allocator_cannot_release_shared_node(self):
+        shared = {'shared-node': True}
+        private = {'private-node': True}
+        private_release(private, 'shared-node')
+        self.assertTrue(shared['shared-node'])
+        self.assertTrue(private['private-node'])
+        private_release(private, 'private-node')
+        self.assertFalse(private['private-node'])
+
+    def test_one_lazy_initialization_can_repeat_cache_release(self):
+        loads = initial_loads(0, 0x401000, 0, 0xc4, 1)
+        self.assertEqual(loads, ['service', 'service', 'application'])
+        block = SharedBlock()
+        for _ in loads:
+            cached_get(block, 16).release()
+        self.assertEqual(block.available_bytes, 3 * block.capacity)
+        self.assertIsNone(block.owner)
+
+    def test_load_sequence_requires_each_gate(self):
+        self.assertEqual(initial_loads(EFI_ERROR | 7, 0x401000, 0, 0xc4, 1), [])
+        self.assertEqual(initial_loads(0, 0x400fff, 0, 0xc4, 1), ['application'])
+        self.assertEqual(initial_loads(0, 0x401000, EFI_ERROR | 14, 0xc4, 1), [])
+        self.assertEqual(initial_loads(0, 0x401000, 0, 0xc4, 0), ['application'])
+        self.assertEqual(initial_loads(0, 0x401000, 0, 0, 1), [])
 
 
 if __name__ == '__main__':

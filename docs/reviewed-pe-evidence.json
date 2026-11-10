@@ -151,6 +151,57 @@
     ]
   },
   {
+    "name": "VerifiedBootDxe",
+    "sha256": "cb1f1861c84d2aecc6f01ffcd84ea39dff406106053ed389acdd7b045da47fc6",
+    "ffs": "a25f5839-4d55-428f-8f0b-5ce1d565f53e",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [
+      {
+        "rva": "0xd0f8",
+        "bytes": "ce 62 48 a7 0f 68 e1 4f a3 11 df 41 f4 03 03 91",
+        "guid": "a74862ce-680f-4fe1-a311-df41f4030391"
+      }
+    ],
+    "instructions": [
+      {
+        "rva": "0x16b4",
+        "bytes": "00 e0 03 91"
+      },
+      {
+        "rva": "0x16b8",
+        "bytes": "42 80 09 91"
+      },
+      {
+        "rva": "0x16c8",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x16cc",
+        "bytes": "00 01 00 b4"
+      },
+      {
+        "rva": "0x16f4",
+        "bytes": "c8 03 00 35"
+      },
+      {
+        "rva": "0x1724",
+        "bytes": "00 02 00 b4"
+      },
+      {
+        "rva": "0x173c",
+        "bytes": "08 04 40 f9"
+      },
+      {
+        "rva": "0x1740",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x1744",
+        "bytes": "00 01 00 b4"
+      }
+    ]
+  },
+  {
     "name": "Ebl",
     "sha256": "53456b26ca40d6af771329b13f1727b9fb8f1205c244e9261edd12e75d146da5",
     "ffs": "3cef354a-3b7a-4519-ad70-72a134698311",
@@ -287,6 +338,11 @@
         "guid": "77ed108d-8524-4b8b-9d2e-34987aecb9c1"
       },
       {
+        "rva": "0xf148",
+        "bytes": "ce 62 48 a7 0f 68 e1 4f a3 11 df 41 f4 03 03 91",
+        "guid": "a74862ce-680f-4fe1-a311-df41f4030391"
+      },
+      {
         "rva": "0xf158",
         "bytes": "1f b7 1e 9c 6c dd d5 4e 9f 6a 5c c0 ca 78 9f 16",
         "guid": "9c1eb71f-dd6c-4ed5-9f6a-5cc0ca789f16"
@@ -380,6 +436,182 @@
       {
         "rva": "0x2a24",
         "bytes": "35 65 02 f9"
+      },
+      {
+        "rva": "0x14f8",
+        "bytes": "88 05 00 94"
+      },
+      {
+        "rva": "0x1504",
+        "bytes": "15 05 00 94"
+      },
+      {
+        "rva": "0x21b4",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x2488",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x255c",
+        "bytes": "66 ff ff 97"
+      },
+      {
+        "rva": "0x25ec",
+        "bytes": "a2 ff ff 17"
+      },
+      {
+        "rva": "0x2bc4",
+        "bytes": "20 01 3f d6"
+      },
+      {
+        "rva": "0x2c08",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x2c30",
+        "bytes": "20 01 3f d6"
+      },
+      {
+        "rva": "0x2d08",
+        "bytes": "a4 09 00 94"
+      },
+      {
+        "rva": "0x2d10",
+        "bytes": "ab 05 00 94"
+      },
+      {
+        "rva": "0x2e38",
+        "bytes": "5e 00 00 94"
+      },
+      {
+        "rva": "0x2e40",
+        "bytes": "e0 09 00 b5"
+      },
+      {
+        "rva": "0x2e48",
+        "bytes": "c8 72 15 39"
+      },
+      {
+        "rva": "0x2f54",
+        "bytes": "41 fc ff 97"
+      },
+      {
+        "rva": "0x2fd8",
+        "bytes": "61 00 00 54"
+      },
+      {
+        "rva": "0x2ff0",
+        "bytes": "16 fb ff 97"
+      },
+      {
+        "rva": "0x2ff4",
+        "bytes": "e0 02 f8 b7"
+      },
+      {
+        "rva": "0x3000",
+        "bytes": "89 62 15 39"
+      },
+      {
+        "rva": "0x3004",
+        "bytes": "1f 05 50 71"
+      },
+      {
+        "rva": "0x3008",
+        "bytes": "23 01 00 54"
+      },
+      {
+        "rva": "0x301c",
+        "bytes": "60 00 00 b5"
+      },
+      {
+        "rva": "0x3024",
+        "bytes": "28 07 10 37"
+      },
+      {
+        "rva": "0x303c",
+        "bytes": "60 00 00 b5"
+      },
+      {
+        "rva": "0x3044",
+        "bytes": "e8 00 f8 37"
+      },
+      {
+        "rva": "0x3078",
+        "bytes": "e7 fc ff 97"
+      },
+      {
+        "rva": "0x30b0",
+        "bytes": "ea fb ff 97"
+      },
+      {
+        "rva": "0x3108",
+        "bytes": "c6 fa ff 97"
+      },
+      {
+        "rva": "0x310c",
+        "bytes": "00 f9 ff b4"
+      },
+      {
+        "rva": "0x3128",
+        "bytes": "bb fc ff 97"
+      },
+      {
+        "rva": "0x312c",
+        "bytes": "40 02 00 b4"
+      },
+      {
+        "rva": "0x3140",
+        "bytes": "2b fc ff 97"
+      },
+      {
+        "rva": "0x318c",
+        "bytes": "a2 fc ff 97"
+      },
+      {
+        "rva": "0x3190",
+        "bytes": "e0 f4 ff b4"
+      },
+      {
+        "rva": "0x324c",
+        "bytes": "59 ff ff 97"
+      },
+      {
+        "rva": "0x3258",
+        "bytes": "c8 72 15 39"
+      },
+      {
+        "rva": "0x3358",
+        "bytes": "21 20 05 91"
+      },
+      {
+        "rva": "0x335c",
+        "bytes": "42 40 0b 91"
+      },
+      {
+        "rva": "0x3370",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x42f0",
+        "bytes": "29 a1 0d 91"
+      },
+      {
+        "rva": "0x4304",
+        "bytes": "5f 01 00 eb"
+      },
+      {
+        "rva": "0x4308",
+        "bytes": "60 00 00 54"
+      },
+      {
+        "rva": "0x4310",
+        "bytes": "fa ff ff 17"
+      },
+      {
+        "rva": "0x43bc",
+        "bytes": "cb ff ff 17"
       },
       {
         "rva": "0x3488",
@@ -554,6 +786,26 @@
       {
         "rva": "0xf288",
         "value": "0x27a8"
+      },
+      {
+        "rva": "0xf2d0",
+        "value": "0x10002"
+      },
+      {
+        "rva": "0xf2d8",
+        "value": "0x2da8"
+      },
+      {
+        "rva": "0xf2e0",
+        "value": "0x3288"
+      },
+      {
+        "rva": "0xf2e8",
+        "value": "0x32d8"
+      },
+      {
+        "rva": "0xf2f0",
+        "value": "0x31dc"
       },
       {
         "rva": "0xf4c0",

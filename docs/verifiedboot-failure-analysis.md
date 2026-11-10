@@ -401,3 +401,9 @@ l'assignador de pàgines. Tampoc la comptabilitat errònia de ShmBridge ni
 la retenció diagnòstica TzDxeLA demostren superar eixa barrera. La nova
 evidència no justifica una cadena d'esgotament a fals èxit ni un efecte
 d'autenticació. No s'han repetit els experiments ja resolts.
+
+L'enllaç QSEE del caller `0x1740` s'ha resolt amb el GUID fix `d0f8`
+fins a TzDxeLA `f148/f2d0`, +8=`0x2da8`. Vegeu la
+[seqüència de càrregues](tzdxe-policy-consumer.md). És una precondició de
+càrrega anterior a les reserves d'este informe; no demostra activació
+del fals èxit ni elimina les barreres d'autenticació anteriors.

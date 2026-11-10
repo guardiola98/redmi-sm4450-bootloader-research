@@ -177,3 +177,107 @@ f568 f588 1d08 1e74 3fa8` reconstruïx les referències en `work/`.
 `test-tzdxe-resource-model.py` exercita quatre contractes sintètics de
 portes, estat d'error, cache i propietat compartida. No crea contingut
 de càrrega ni executa firmware; els noms d'objectes del model són simbòlics.
+
+## Continuació dirigida: callers reals en codi i propietat entre assignadors
+
+Esta revisió substituïx el límit anterior «cap seqüència de clients
+identificada» per **seqüència estàtica concreta, activació runtime pendent**.
+No s'ha tornat a executar cap escàner GUID: s'han comparat dos GUIDs en
+adreces ja identificades i seguit les taules/callers existents.
+
+### QSEE i seqüència finita de càrregues
+
+TzDxeLA publica una segona taula `f2d0`, revisió `0x10002`, amb GUID
+`a74862ce-680f-4fe1-a311-df41f4030391` (`f148`). `0x3330` la registra;
+`0x2958 → 0x2d2c → 0x3330` arriba allí si la consulta SecurityFlag falla
+o si el bit 0x40 està actiu. El valor RAW 0xC4 satisfaria el bit, sota
+la cadena intacta de configuració; no és un estat efectiu observat.
+
+| Slot QSEE | Implementació local | Contracte pertinent |
+| --- | --- | --- |
+| +8 | `0x2da8` | Inicialització diferida `0x2fb0` si `f55c==0`; lookup d'aplicació; si no hi ha ID, càrrega de partició `0x2058` a `0x2f54`. |
+| +0x10 | `0x3288` | Operació SCM 2 amb ID. No carrega el búfer estudiat. |
+| +0x18 | `0x32d8` | Operació SCM 6. No és +0x18 de la primera taula TzDxeLA ni el callback MiToken. |
+| +0x20 | `0x31dc` | Una altra entrada que crida `0x2fb0` a `0x324c` i després `0x279c → 0x2414`; contrastada en instruccions, encara que l'exportació C no la delimita com a funció. |
+
+**Caller exterior concret:** VerifiedBootDxe `0x16c8` localitza exactament
+eixe GUID a `d0f8`. Si `d268==0` i el servei previ +0x48 retorna no zero,
+`0x1740` invoca QSEE +8 amb nom `keymaster` i un out-pointer local vàlid.
+El caller comprova estat a `0x1744`. Açò establix un enllaç de càrrega,
+no modifica la conclusió sobre el seu assignador ni sobre autenticació.
+No s'afirma que eixa branca s'haja executat en el dispositiu.
+
+`0x2fb0` té esta seqüència local, sense bucle:
+
+1. Si `f558==1`, retorna error 1. En cas contrari consulta la versió de
+   característica 10 amb `0x1c48`. EFI_ERROR retorna sense fixar `f558`;
+   un resultat acceptat fixa `f558=1` a `0x3000`.
+2. Amb versió >=`0x401000`, SecurityFlag consultat amb estat zero i bit
+   0x04 actiu, crida SCM operació 0x12 via `0x1c20`. **Retorn no zero**
+   (no necessàriament un error) selecciona dues càrregues de serveis:
+   `0x3128 → 0x2414`, després `0x318c → 0x2414`. El significat del
+   retorn de l'operació 0x12 no s'ha extrapolat d'un nom.
+3. Amb SecurityFlag consultat amb estat zero i bit 0x80 actiu, fa una
+   càrrega d'aplicació a `0x3078 → 0x2414`. Si falla amb EFI_ERROR,
+   intenta la via per etiqueta `0x30b0 → 0x2058`.
+4. En les vies que tornen normalment amb zero, el caller fixa `f55c=1`
+   (`0x2e48` o `0x3258`): la inicialització diferida no es repetix en
+   cada StartApp. Els flags `f558/f55c` són diferents dels diagnòstics
+   `f568/f588`; no confondre les garanties.
+
+Les dues vies de servei passen per `0x255c → 0x22f4` (operació 0xb),
+no per `0x1d08`; **no generen per si mateixes la reserva de política**.
+Errors de càrrega poden conduir als fallbacks `0x21ec`; si estos fallen
+amb EFI_ERROR hi ha ASSERT. No assumir que la seqüència sempre finalitza.
+
+Amb les tres càrregues principals acceptades, mides compatibles amb la
+cache i retorn normal dels serveis, cada `0x2414` usa `0x1f2c` i acaba
+alliberant via ShmBridge a `0x2488`. La segona i tercera no readquirixen
+el node. **Una sola entrada QSEE pot contindre alliberaments repetits**;
+no cal postular crides externes arbitràries per construir el CFG. La mida
+de les particions, retorn de versió/operació 0x12 i èxit de lectura/càrrega
+continuen sense verificar. Si la mida creix, s'activa una branca diferent
+del helper, que no queda simulada pel model acotat de cache-hit.
+
+Per a política diagnòstica, el fallback d'aplicació aporta dos callsites
+consecutius possibles de `0x1d08` en cas d'error. Cada reserva continua
+condicionada a les portes de `0x3454`. El segon error pot acabar en ASSERT.
+**No hi ha prova de repetició il·limitada ni d'esgotament acumulatiu**;
+s'ha precisat una seqüència finita, no observat el seu resultat.
+
+Referències de ShmBridge `71f8`: les lectures reconstruïdes només formen
+part de les sumes/restes de `0x2b4c/0x2890`; la selecció de nodes usa
+busy/tipus/capacitat/alineació. No s'ha provat que el comptador inflat
+controle una reserva. La inconsistència de propietat sí permet la branca
+de reutilització per un altre client quan el node està lliure, sota les
+precondicions del seu assignador. No hi ha intercalació runtime demostrada.
+
+### Neteja de keystore amb l'assignador equivocat
+
+`0x14e4` crida **`0x2b18` a `0x14f8`** abans d'inicialitzar la cache.
+Esta rutina busca una partició i requerix un únic resultat. Calcula la mida
+amb `(LastBlock+1)*BlockSize`, localitza ShmBridge (`0x2bc4`) i reserva
+via **el seu +8 a `0x2c08`**. No s'ha extret ni examinat el contingut de
+keystore; només instruccions i metadades de propietat.
+
+Després de la reserva no nul·la, tant els errors de lectura/SCM com el
+final normal convergixen en `0x2d00`: neteja bytes amb `0x5398` i crida
+**`0x43bc → 0x42e8` a `0x2d10`**. Este free busca exclusivament la llista
+privada TzDxeLA `f368`; ShmBridge registra el node en la seua llista `7110`.
+No hi ha transferència ni registre en la llista privada. Sota assignacions
+UEFI vàlides i no solapades, el punter és desconegut i el free privat no fa
+res: el node ShmBridge queda ocupat. Netejar bytes no allibera capacitat.
+
+**Defecte local confirmat de parella assignador/alliberador**, també en el
+camí reeixit, diferent del búfer de política i de la cache de 0x82000.
+El caller ignora l'estat retornat de `0x2b18` (`0x14fc..0x1504`), però
+no es deriva d'això una conseqüència sobre protecció de claus. No s'ha
+provat existència/selecció efectiva de la partició, mida, repetició del
+driver ni recuperació externa. En el CFG revisat hi ha una invocació per
+entrada d'inicialització, no un bucle que demostre fuga acumulativa.
+
+Validació: inspector ampliat a **9 PE** amb GUIDs a adreces fixes, taula
+QSEE i callsites; set proves sintètiques TzDxeLA, incloses parella incorrecta
+d'assignadors i portes de seqüència finita. Referències reproduïbles amb
+`DumpAddressReferences.java`: Tz `2fb0 2da8 2b18 f558 f55c f148 f2d0`,
+ShmBridge `71f8 7110`. Cap payload, dada privada o execució de firmware.

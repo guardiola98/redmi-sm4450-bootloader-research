@@ -146,3 +146,10 @@ temporal indeterminat del getter i frontera del parser; estat vigent en
 Regressió: **64 proves en 15 scripts**, totes correctes; 10 noves en esta
 continuació. No s'ha revisitat EL3, repetit escàners GUID ni experiments
 RSA. Cap execució de firmware, dispositiu, payload ni nova font externa.
+
+La continuació dirigida de TzDxeLA identifica ara una seqüència finita
+de càrregues QSEE i el caller VerifiedBoot ja inventariat, sense cens nou.
+També verifica el free de keystore contra una llista d'un altre assignador.
+Només codi i propietat: cap lectura de dades de keystore. Inspector de
+9 PE, 3 tests sintètics addicionals de recursos; **67 proves en 15 scripts**
+com a total vigent. Els 23 tests afectats passen.

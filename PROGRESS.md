@@ -913,3 +913,22 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Següent tasca factible: seguir la seqüència interna de càrregues de
   TzDxeLA i els callers ja coneguts, motivada pel defecte nou de cache.
   No repetir censos GUID, EL3 ni models criptogràfics.
+
+## Continuació dirigida — callers i propietat TzDxeLA
+
+- Consolidació publicada: `2f67b93`. Nova evidència seguida sense escàners:
+  protocol QSEE f148/f2d0 i caller VerifiedBoot 0x1740, GUID coincident.
+- 0x2fb0 pot fer dues càrregues de serveis i una d'aplicació dins d'una
+  sola entrada; totes poden alliberar la mateixa cache. Flags f558/f55c
+  limiten la inicialització diferida; són diferents dels flags diagnòstics.
+  Seqüència estàtica demostrada; mides/retorns/activació runtime no provats.
+- El comptador ShmBridge inflat no té ús de selecció identificat; el
+  problema de propietat es manté independent de la seua comptabilitat.
+- Nou defecte concret: 0x2b18 reserva keystore en ShmBridge i passa el
+  punter al free privat TzDxeLA, que ignora nodes d'una altra llista.
+  També reté el node en camí reeixit; no prova acumulació. No s'ha llegit
+  contingut de partició ni extret secrets, només codi de gestió de recursos.
+- Inspector de 9 PE i 7 tests TzDxeLA correctes; 9 tests VerifiedBoot i
+  6 config continuen correctes (67 proves totals conegudes); diff check net.
+- Següent: revisar usos locals ja identificats del getter de configuració
+  per delimitar consum de valors indeterminats i documentar rutes protegides.
