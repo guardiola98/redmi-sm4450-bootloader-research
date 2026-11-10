@@ -28,6 +28,12 @@ proveïdor0x1b. La font DDR i la porta d'exclusions tenen ara adreces/camps
 concrets en [l'informe XBL](xbl-ram-producer-analysis.md). No s'ha observat
 la taula runtime; es mantenen les restriccions de v1/entrada33.
 
+Revisió [kernel/root temporal](android-temporary-root-feasibility.md):
+Image del paquet idèntic al GKI oficial i config coincident en Android.
+CVE-2026-43499 i64560 conserven codi anterior a la correcció; prioritat
+estàtica amb explotabilitat/root sense provar. La taula separada inclou
+19 CVE i descartaments per codi/config, sense canviar la classificació UEFI.
+
 ## Candidats demanats
 
 | Candidat | Evidència directa / models | Precondicions i incerteses | Classificació i decisió |

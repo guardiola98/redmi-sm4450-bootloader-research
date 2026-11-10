@@ -8,8 +8,9 @@ from pathlib import Path
 import tarfile
 
 NAMES = {'tz.mbn', 'imagefv.elf', 'tools.fv'}
-ALLOWED = NAMES | {'xbl_s.melf', 'xbl_config.elf'}
+ALLOWED = NAMES | {'xbl_s.melf', 'xbl_config.elf', 'boot.img'}
 LIMIT = 64 * 1024 * 1024
+IMAGE_LIMITS = {'boot.img': 128 * 1024 * 1024}
 
 
 def main():
@@ -32,14 +33,15 @@ def main():
             name = Path(member.name).name
             if name not in names:
                 continue
-            if name in seen or not member.isfile() or not 0 < member.size <= LIMIT:
+            limit = IMAGE_LIMITS.get(name, LIMIT)
+            if name in seen or not member.isfile() or not 0 < member.size <= limit:
                 raise ValueError('Duplicate, nonregular or oversized image')
             seen.add(name)
             record = records[name]
             if 'size' in record and member.size != record['size']:
                 raise ValueError('Size mismatch: ' + name)
             with archive.extractfile(member) as stream:
-                data = stream.read(LIMIT + 1)
+                data = stream.read(limit + 1)
             if hashlib.sha256(data).hexdigest() != record['sha256']:
                 raise ValueError('Hash mismatch: ' + name)
             target = output / name

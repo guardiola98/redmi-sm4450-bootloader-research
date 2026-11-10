@@ -1,0 +1,281 @@
+{
+  "commit": "730d06ec05ff5dc34389ff99ea4009411efba5e6",
+  "release": "5.10.246-android12-9-00012-g730d06ec05ff-ab15159037",
+  "build_id": 15159037,
+  "tag": "android12-5.10-2025-12_r3",
+  "boot_sha256": "5e31f9004b4151c22edbe3ff2324284b7a08691f3d48d98a235cc7ec4b7e9120",
+  "image_url": "https://ci.android.com/builds/submitted/15159037/kernel_aarch64/latest/raw/Image",
+  "system_map_url": "https://ci.android.com/builds/submitted/15159037/kernel_aarch64/latest/raw/System.map",
+  "image_sha256": "ab8958caf17a31b0a532aac0ecff2dda021ea4cfd6bbf0070098d04fd58569e7",
+  "image_bytes": 46927500,
+  "system_map_sha256": "165ee9ef732026c9bf902e6647e5e3076982b26286cfc4e88b64bc2b15f3b052",
+  "config_sha256": "f0f2ca7bd70fa65dae1930c7bf904e70d3e107bd2cbeab9e9450c5e6f4d3abc7",
+  "package_equals_official": true,
+  "live_config_equals_package": true,
+  "selected_functions": {
+    "remove_waiter": {
+      "size": 1688,
+      "sha256": "45ffe7c6e87ed2d35e36c4ede4337869bc73628bbcb0e29e684e6b3e1a6d8029"
+    },
+    "posix_cpu_timer_del": {
+      "size": 956,
+      "sha256": "a85c36152b9a36e5e9164c693034f64da753fa347f61acf1195ce9d304800b98"
+    },
+    "run_posix_cpu_timers": {
+      "size": 1224,
+      "sha256": "c498964a05b9afb899fa801cb287dabd937ddad4cd333b940423b2cf54ff60d5"
+    },
+    "copy_page_to_iter_pipe": {
+      "size": 380,
+      "sha256": "93ae14aee5df135d974033d6e6ad3a80cd0b72ecbc0090f47e1bc4d21180e167"
+    }
+  },
+  "config": {
+    "CONFIG_64BIT": "y",
+    "CONFIG_ARM64_4K_PAGES": "y",
+    "CONFIG_ARM64_16K_PAGES": "n",
+    "CONFIG_RANDOMIZE_BASE": "y",
+    "CONFIG_ARM64_PAN": "y",
+    "CONFIG_ARM64_SW_TTBR0_PAN": "y",
+    "CONFIG_ARM64_UAO": "y",
+    "CONFIG_ARM64_PTR_AUTH": "y",
+    "CONFIG_ARM64_BTI": "y",
+    "CONFIG_ARM64_BTI_KERNEL": "y",
+    "CONFIG_ARM64_MTE": "y",
+    "CONFIG_CFI_CLANG": "y",
+    "CONFIG_CFI_PERMISSIVE": "n",
+    "CONFIG_SHADOW_CALL_STACK": "y",
+    "CONFIG_STACKPROTECTOR_STRONG": "y",
+    "CONFIG_VMAP_STACK": "y",
+    "CONFIG_STRICT_KERNEL_RWX": "y",
+    "CONFIG_STRICT_MODULE_RWX": "y",
+    "CONFIG_SLAB_FREELIST_RANDOM": "y",
+    "CONFIG_SLAB_FREELIST_HARDENED": "y",
+    "CONFIG_HARDENED_USERCOPY": "y",
+    "CONFIG_FORTIFY_SOURCE": "unknown",
+    "CONFIG_MODULE_SIG": "n",
+    "CONFIG_SECURITY_SELINUX": "y",
+    "CONFIG_SECURITY_SELINUX_DISABLE": "n",
+    "CONFIG_SECURITY_YAMA": "n",
+    "CONFIG_SECCOMP": "y",
+    "CONFIG_SECCOMP_FILTER": "y",
+    "CONFIG_USER_NS": "n",
+    "CONFIG_NET_NS": "y",
+    "CONFIG_NF_TABLES": "n",
+    "CONFIG_CRYPTO_USER_API_AEAD": "n",
+    "CONFIG_BPF_SYSCALL": "y",
+    "CONFIG_BPF_JIT_ALWAYS_ON": "y",
+    "CONFIG_FUTEX": "y",
+    "CONFIG_FUTEX_PI": "y",
+    "CONFIG_RT_MUTEXES": "y",
+    "CONFIG_POSIX_TIMERS": "y",
+    "CONFIG_POSIX_CPU_TIMERS_TASK_WORK": "unknown",
+    "CONFIG_ANDROID_BINDER_IPC": "y",
+    "CONFIG_IO_URING": "y",
+    "CONFIG_XFRM_USER": "y",
+    "CONFIG_INET_ESP": "y",
+    "CONFIG_DMABUF_SYSFS_STATS": "y"
+  },
+  "limit": "Package identity and live config/release correlation; no live-memory or active-partition attestation",
+  "observations": {
+    "kernel_release": {
+      "status": "observed",
+      "value": "5.10.246-android12-9-00012-g730d06ec05ff-ab15159037"
+    },
+    "selinux": {
+      "status": "observed",
+      "value": "Enforcing"
+    },
+    "properties": {
+      "ro.build.version.security_patch": {
+        "status": "observed",
+        "value": "2026-10-01"
+      },
+      "ro.vendor.build.security_patch": {
+        "status": "observed",
+        "value": "2026-04-05"
+      },
+      "ro.build.version.incremental": {
+        "status": "observed",
+        "value": "OS2.0.218.0.VMWEUXM"
+      },
+      "ro.boot.verifiedbootstate": {
+        "status": "observed",
+        "value": "green"
+      },
+      "ro.boot.flash.locked": {
+        "status": "observed",
+        "value": "1"
+      },
+      "ro.boot.vbmeta.device_state": {
+        "status": "observed",
+        "value": "locked"
+      },
+      "ro.boot.secureboot": {
+        "status": "observed",
+        "value": "1"
+      },
+      "ro.secure": {
+        "status": "observed",
+        "value": "1"
+      },
+      "ro.debuggable": {
+        "status": "observed",
+        "value": "0"
+      },
+      "ro.adb.secure": {
+        "status": "observed",
+        "value": "1"
+      },
+      "ro.build.type": {
+        "status": "observed",
+        "value": "user"
+      }
+    },
+    "sysctls": {
+      "kernel-randomize_va_space": {
+        "status": "denied"
+      },
+      "kernel-kptr_restrict": {
+        "status": "denied"
+      },
+      "kernel-dmesg_restrict": {
+        "status": "denied"
+      },
+      "kernel-unprivileged_bpf_disabled": {
+        "status": "observed",
+        "value": "0"
+      },
+      "kernel-perf_event_paranoid": {
+        "status": "observed",
+        "value": "-1"
+      },
+      "kernel-yama-ptrace_scope": {
+        "status": "missing"
+      },
+      "kernel-unprivileged_userns_clone": {
+        "status": "missing"
+      },
+      "user-max_user_namespaces": {
+        "status": "denied"
+      },
+      "vm-mmap_rnd_bits": {
+        "status": "denied"
+      },
+      "vm-mmap_rnd_compat_bits": {
+        "status": "denied"
+      },
+      "kernel-modules_disabled": {
+        "status": "denied"
+      },
+      "kernel-io_uring_disabled": {
+        "status": "missing"
+      }
+    },
+    "own_process": {
+      "samples": 4,
+      "uid": [
+        2000
+      ],
+      "euid": [
+        2000
+      ],
+      "page_size": [
+        4096
+      ],
+      "seccomp": [
+        0
+      ],
+      "paca": [
+        0
+      ],
+      "pacg": [
+        0
+      ],
+      "bti": [
+        0
+      ],
+      "mte": [
+        0
+      ],
+      "distinct_addresses": {
+        "image": 4,
+        "stack": 4,
+        "mapping": 4
+      }
+    }
+  },
+  "source_evidence": {
+    "files": [
+      {
+        "path": "kernel/locking/rtmutex.c",
+        "sha256": "f04c31a25bb4ddf8e4d79f55807e9656351f0ce049fc76d7b8fb895b3301a90e",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/locking/rtmutex.c"
+      },
+      {
+        "path": "kernel/time/posix-cpu-timers.c",
+        "sha256": "ac3bbf676f09074a84a46674a1d1e8113ad9199354bbac9b6f1ec0e38f34f862",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/time/posix-cpu-timers.c"
+      },
+      {
+        "path": "kernel/exit.c",
+        "sha256": "e81c58332835633bda87d01ca779650889184f48b9fb9251b809456c221df188",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/exit.c"
+      },
+      {
+        "path": "kernel/signal.c",
+        "sha256": "00af7ad1259a33319fbe42e938632d01949705e531d0443db8e92c48fd247377",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/signal.c"
+      },
+      {
+        "path": "lib/iov_iter.c",
+        "sha256": "b120ae7a256a2095a41d63d8a0047976d9acc33725e04be3b37b90913fb556f7",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/lib/iov_iter.c"
+      },
+      {
+        "path": "kernel/bpf/verifier.c",
+        "sha256": "034bafaaef8d0148c488930950b723b70e0ebe853cee07156f921f0fe755db09",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/bpf/verifier.c"
+      },
+      {
+        "path": "drivers/android/binder.c",
+        "sha256": "71d729856231b65a5d31adb19ab22af51a641ed8f1fe1feb228e870f95d035c3",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/drivers/android/binder.c"
+      },
+      {
+        "path": "kernel/fork.c",
+        "sha256": "e6adce8f5d83eb523fcae30895addf01fa1e5f0e89091c4916316545a96175da",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/fork.c"
+      },
+      {
+        "path": "mm/memory.c",
+        "sha256": "17b7f201d75a00a56ccf357ff613e37527a539fd149b3aed53d34e06a86cf3d1",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/mm/memory.c"
+      },
+      {
+        "path": "mm/pgsize_migration.c",
+        "sha256": "ccf96eb4b2ad0e05e6770e236f210b2e5fa832daa5d87caed94b568496753899",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/mm/pgsize_migration.c"
+      },
+      {
+        "path": "include/linux/pgsize_migration.h",
+        "sha256": "c554508f7a4a011737c9b3bc45f03bea0ca14ca86679b23c167d2df13e806a46",
+        "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/include/linux/pgsize_migration.h"
+      }
+    ],
+    "checks": {
+      "43499_remove_waiter_uses_current": true,
+      "64560_old_timer_delete_and_no_retry_helper": true,
+      "64560_exit_without_release_store": true,
+      "64560_sighand_lookup_without_acquire_barrier": true,
+      "38352_exit_state_guard_present": true,
+      "0847_pipe_flags_initialized": true,
+      "2163_verifier_jmp32_marks_both_registers": true,
+      "20938_deferred_copy_and_fda_guards_present": true,
+      "23184_binder_netlink_report_absent": true,
+      "58825_fork_dmabuf_info_absent": true,
+      "58942_page_migration_code_present_not_a_vulnerability_verdict": true
+    },
+    "scope": "Selected source predicates reviewed against public fixes, not a universal CVE scanner"
+  }
+}

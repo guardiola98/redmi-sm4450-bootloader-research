@@ -1213,3 +1213,47 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Inspector ampliat correcte i cinc tests de layout dins de la regressió
   completa de la sessió,142 proves en20 scripts; diff check net. La nova
   fase kernel aporta13 proves de límits/privacitat, documentada a continuació.
+
+## Root temporal i kernel Android — evidència concreta de compilació
+
+- Base7257cbc actualitzada i neta; fonts públiques consultades a2026-11-10.
+  Informe nou: [viabilitat de root temporal](docs/android-temporary-root-feasibility.md),
+  amb19 CVE, precondicions, correccions, riscos i límits. Cap exploit executat.
+- Identitat forta: boot.img del paquet amb hash conegut conté exactament
+  l'Image GKI oficial del build15159037. Commit ACK complet730d06ec05ff5dc34389ff99ea4009411efba5e6,
+  tagandroid12-5.10-2025-12_r3; IKCONFIG igual al /proc/config.gz real.
+  System.map oficial i hashes de funcions seleccionades contrastats.
+  No és atestació de memòria viva, partició activa o mòduls vendor.
+- CVE-2026-43499: remove_waiter continua usant current; font exacta i
+  desassemblatge del paquet ho confirmen. CVE-2026-64560: codi timer antic
+  i absència del retry/ordenació de la correcció. Defectes estàtics
+  prioritzables, sense reproducció de corrupció, explotabilitat o root.
+- Descartats per codi/config: Dirty Pipe, CVE-2023-20938/2163,
+  CVE-2024-1086, CVE-2025-38352, CVE-2026-31431/58825/23184.
+  No descartar58942 només per ser5.10/4K: hi ha backport de migració de
+  pàgina; equivalència del defecte i flag runtime encara pendents.
+- Qualcomm57545/57554: plataforma inclosa, però mòdul/camí i pegats Xiaomi
+  pendents. FixKGSL llegit; FastRPC limitat perHTTP429. Els altres candidats
+  vendor no tenen evidència suficient. SPLvendor antic no és prova de bug.
+- ADB real:32 consultes passives, propietats seleccionades, config,
+  domini/capacitats, Features i sysctls. Enforcing, green/locked; UID2000
+  sense capacitats efectives. BPFsysctl0/perf−1 no proven accessibilitat.
+  Sysctls denegats queden desconeguts, no interpretats com desactivats.
+- Probe propi ARM64/PIE amb NDKr30:4 execucions benignes, sense fallades,
+  una pàgina RW; ASLR variable en imatge/pila/mmap, HWCAP PAC/BTI/MTE zero.
+  Config confirma CFI/SCS/PAN/KASLR compilats, no tots els modes runtime.
+  Executable temporal propi eliminat; adreces només en originals privats.
+- Sis consultes addicionals no completades per desconnexió ADB. Treball
+  continuat offline. Col·lector --scope followup preparat per als nodes
+  GPU/FastRPC, mòduls i flag pgsize_migration; versió final no executada.
+- Inspector offline fixa identitat i11 comprovacions de codi; rebutja
+  fonts/hashes inesperats.13 tests nous de privacitat, límits i parsers.
+  Regressió completa: **142 proves en20 scripts**, totes correctes.
+  Inspectors kernel/XBL, JSON, enllaços i git diff --check correctes.
+  Revisió sense secrets, UUID o adreces runtime en fitxers publicables;
+  captures originals només en work/kernel-audit-2026-11-10/, privat/ignorat.
+- La línia root mereix seguiment estàtic; cap camí operatiu de root o
+  desbloqueig demostrat. No s'ha usat fastboot, reinici, instrumentació
+  invasiva, canvis de seguretat o particions. Prioritats: completar
+  contrast dels dos fixes GKI; identificar mòduls/portes vendor només
+  lectura; seguir writers DDR o un caller Tz/Config concret amb dada nova.
