@@ -313,7 +313,203 @@
       "te_offset": "0x1b888",
       "source_offset": "0x1e7c0",
       "bytes": "00 01 3f d6"
+    },
+    {
+      "va": "0xa700ec38",
+      "te_offset": "0xcd00",
+      "source_offset": "0xfc38",
+      "bytes": "c8 00 00 b5"
+    },
+    {
+      "va": "0xa700eca4",
+      "te_offset": "0xcd6c",
+      "source_offset": "0xfca4",
+      "bytes": "a8 00 00 b5"
+    },
+    {
+      "va": "0xa700ecdc",
+      "te_offset": "0xcda4",
+      "source_offset": "0xfcdc",
+      "bytes": "c8 00 00 b5"
+    },
+    {
+      "va": "0xa700ed18",
+      "te_offset": "0xcde0",
+      "source_offset": "0xfd18",
+      "bytes": "e8 00 00 b5"
+    },
+    {
+      "va": "0xa700f6c0",
+      "te_offset": "0xd788",
+      "source_offset": "0x106c0",
+      "bytes": "17 37 00 94"
+    },
+    {
+      "va": "0xa700f6d8",
+      "te_offset": "0xd7a0",
+      "source_offset": "0x106d8",
+      "bytes": "a1 00 00 54"
+    },
+    {
+      "va": "0xa700f6e4",
+      "te_offset": "0xd7ac",
+      "source_offset": "0x106e4",
+      "bytes": "a8 c3 1d b8"
+    },
+    {
+      "va": "0xa700f6ec",
+      "te_offset": "0xd7b4",
+      "source_offset": "0x106ec",
+      "bytes": "a8 c3 5d b8"
+    },
+    {
+      "va": "0xa700f6f0",
+      "te_offset": "0xd7b8",
+      "source_offset": "0x106f0",
+      "bytes": "c8 00 00 34"
+    },
+    {
+      "va": "0xa700f93c",
+      "te_offset": "0xda04",
+      "source_offset": "0x1093c",
+      "bytes": "78 36 00 94"
+    },
+    {
+      "va": "0xa70146a0",
+      "te_offset": "0x12768",
+      "source_offset": "0x156a0",
+      "bytes": "1f 23 00 94"
+    },
+    {
+      "va": "0xa701d810",
+      "te_offset": "0x1b8d8",
+      "source_offset": "0x1e810",
+      "bytes": "60 03 00 b5"
+    },
+    {
+      "va": "0xa701d830",
+      "te_offset": "0x1b8f8",
+      "source_offset": "0x1e830",
+      "bytes": "c0 02 00 b5"
+    },
+    {
+      "va": "0xa701d938",
+      "te_offset": "0x1ba00",
+      "source_offset": "0x1e938",
+      "bytes": "80 00 00 b5"
+    },
+    {
+      "va": "0xa701d960",
+      "te_offset": "0x1ba28",
+      "source_offset": "0x1e960",
+      "bytes": "00 01 00 b4"
+    },
+    {
+      "va": "0xa701dbc0",
+      "te_offset": "0x1bc88",
+      "source_offset": "0x1ebc0",
+      "bytes": "a0 03 00 b5"
+    },
+    {
+      "va": "0xa70239a4",
+      "te_offset": "0x21a6c",
+      "source_offset": "0x249a4",
+      "bytes": "5e e6 ff 97"
+    },
+    {
+      "va": "0xa7023a04",
+      "te_offset": "0x21acc",
+      "source_offset": "0x24a04",
+      "bytes": "46 e6 ff 97"
+    },
+    {
+      "va": "0xa7024948",
+      "te_offset": "0x22a10",
+      "source_offset": "0x25948",
+      "bytes": "bf c3 1f b8"
+    },
+    {
+      "va": "0xa7024990",
+      "te_offset": "0x22a58",
+      "source_offset": "0x25990",
+      "bytes": "63 e2 ff 97"
+    },
+    {
+      "va": "0xa7024994",
+      "te_offset": "0x22a5c",
+      "source_offset": "0x25994",
+      "bytes": "a8 c3 5f b8"
+    },
+    {
+      "va": "0xa7024998",
+      "te_offset": "0x22a60",
+      "source_offset": "0x25998",
+      "bytes": "a8 fe ff 34"
+    },
+    {
+      "va": "0xa701ab48",
+      "te_offset": "0x18c10",
+      "source_offset": "0x1bb48",
+      "bytes": "08 02 00 54"
+    },
+    {
+      "va": "0xa701ab88",
+      "te_offset": "0x18c50",
+      "source_offset": "0x1bb88",
+      "bytes": "08 00 80 92"
+    },
+    {
+      "va": "0xa701ab8c",
+      "te_offset": "0x18c54",
+      "source_offset": "0x1bb8c",
+      "bytes": "e0 0b 41 b2"
+    },
+    {
+      "va": "0xa701ab90",
+      "te_offset": "0x18c58",
+      "source_offset": "0x1bb90",
+      "bytes": "a8 02 00 f9"
+    },
+    {
+      "va": "0xa701baa0",
+      "te_offset": "0x19b68",
+      "source_offset": "0x1caa0",
+      "bytes": "c9 fb ff 97"
+    },
+    {
+      "va": "0xa701baa4",
+      "te_offset": "0x19b6c",
+      "source_offset": "0x1caa4",
+      "bytes": "e0 07 40 f9"
+    },
+    {
+      "va": "0xa701d634",
+      "te_offset": "0x1b6fc",
+      "source_offset": "0x1e634",
+      "bytes": "1f 48 00 f1"
+    },
+    {
+      "va": "0xa701d638",
+      "te_offset": "0x1b700",
+      "source_offset": "0x1e638",
+      "bytes": "a8 01 00 54"
+    },
+    {
+      "va": "0xa701d698",
+      "te_offset": "0x1b760",
+      "source_offset": "0x1e698",
+      "bytes": "fd f8 ff 97"
+    },
+    {
+      "va": "0xa701d6f0",
+      "te_offset": "0x1b7b8",
+      "source_offset": "0x1e6f0",
+      "bytes": "e0 03 1f aa"
     }
   ],
+  "maximum_ascii_string_length": {
+    "va": "0xa7035d30",
+    "value": 1000000
+  },
   "scope": "Manually reviewed config path only; no full TE audit or effective runtime snapshot"
 }

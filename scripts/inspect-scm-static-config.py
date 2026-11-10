@@ -16,7 +16,10 @@ spec.loader.exec_module(fv)
 CONFIG_FFS = 'dde58710-41cd-4306-dbfb-3fa90bb1d2dd'
 CONFIG_SHA = 'aece4446b3ea41615b0c7aadc79fd2f4c9173fb7a92d241647bd26ed6b62aa37'
 KEYS = ('SecurityFlag', 'SmcInvokeConfig', 'ConfigParameterCount',
-        'PlatConfigFileName', 'OsTypeString', 'ChipID_RegAddr')
+        'PlatConfigFileName', 'OsTypeString', 'ChipID_RegAddr',
+        'SharedIMEMBaseAddr', 'OverRideSharedImemBootCfg', 'DDRInfoNotifyFlag',
+        'EnableMultiThreading', 'DecompressionRequired', 'SecPagePoolCount',
+        'MaxCoreCnt', 'EarlyInitCoreCnt', 'EnableMultiCoreFvDecompression')
 
 
 def summarize_text(raw):

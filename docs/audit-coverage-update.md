@@ -153,3 +153,9 @@ També verifica el free de keystore contra una llista d'un altre assignador.
 Només codi i propietat: cap lectura de dades de keystore. Inspector de
 9 PE, 3 tests sintètics addicionals de recursos; **67 proves en 15 scripts**
 com a total vigent. Els 23 tests afectats passen.
+
+Consumidors de configuració: 25 callsites dirigits en SCM, TzDxeLA,
+EnvDxe i TE; no és una auditoria global d'interfícies indirectes. S'ha
+resolt el default de DecompressionRequired absent i delimitat pèrdua
+d'estat d'overflow decimal. Tres nous tests config: **70 proves en
+15 scripts** en total; inspectors de 10 PE i 75 instruccions TE.

@@ -138,3 +138,80 @@ Límit restant: confirmar la identitat de la taula efectiva requeriria
 evidència addicional de l'entorn, o traçar totes les possibles escriptures
 per àlies. No és necessari per confirmar els defectes locals ni per
 concloure que els dos callers SCM revisats conserven els seus guards.
+
+## Consumidors del getter i propagació d'errors
+
+Revisió dirigida posterior: dos callsites SCM, cinc TzDxeLA, tres EnvDxe
+ja importats i quinze BL directes del TE al wrapper `0xa701d31c`.
+No és un cens nou de GUIDs ni una prova que no existisquen altres callers
+indirectes. EnvDxe `f0c8` conté el mateix HOB compartit; el seu wrapper
+`0x3ce4` acaba en biblioteca +0x18, igual que TzDxeLA `0x33cc`.
+
+| Consumidor | Comprovació abans d'usar out | Resultat acotat |
+| --- | --- | --- |
+| SCM `0x1564`, `0x47a4` | Estat exactament zero. | Rebutja out indeterminat; defaults preservats. |
+| TzDxeLA `SecurityFlag`, tres callsites | Estat zero abans de comprovar bits. | Un error pot seleccionar la branca per defecte del caller, però els bytes indeterminats no es consumixen com a flags vàlids. |
+| TzDxeLA `0x3e8c/0x3eec`, EnvDxe `0x9a18/0x9a78` | Estat zero abans de base IMEM o override. | No hi ha lectura MMIO a partir d'un out escrit en error en estes vies. Override absent conserva el tipus obtingut d'IMEM si la lectura anterior fou vàlida. |
+| EnvDxe `DDRInfoNotifyFlag`, `0x26ec` | `CBNZ` a `0x26f4`, abans de carregar out. | La clau local és zero; error no activa el callback a partir del temporal. |
+| Tretze callsites TE | Guards d'estat o substitució per defaults abans d'usar out. | Inclou SecPagePoolCount, MaxCoreCnt, EarlyInitCoreCnt, EnableMultiCoreFvDecompression, UARTLogBufferSize i altres consultes revisades. No s'ha auditat l'efecte complet de totes les operacions posteriors. |
+| TE `DecompressionRequired`, `0xa700f6c0` | Tractament especial només d'EFI_NOT_FOUND. | L'absència local **conserva default 1** amb qualsevol valor del temporal; raonament següent. |
+| TE `EnableMultiThreading`, `0xa7024990` | Cap comprovació d'estat; llig out a `0xa7024994`. | Consum d'out indeterminat **condicional** si falla la consulta amb bits alts del temporal zero. La clau local existeix i val 1; eixa precondició no es dona en la cadena intacta. |
+
+`DecompressionRequired` no està en el RAW. El caller inicialitza out=1.
+Si falla el getter ampli amb error 14, hi ha dos casos exhaustius:
+
+- Bits alts del temporal zero: wrapper escriu el word indeterminat, però
+  conserva error 14; caller `0xa700f6e4` restablix 1.
+- Bits alts no zero: wrapper retorna error 2 sense escriure out; queda 1.
+
+Per tant es **descarta** que la mera absència d'esta clau, combinada amb
+el defecte del wrapper, desactive la descompressió en este caller. Altres
+errors no tenen esta garantia; no s'han demostrat en la cadena local intacta.
+
+En `0xa7024938`, si el helper d'interfície `0xa702cbe0` retorna byte zero,
+la consulta d'EnableMultiThreading ignora estat i un out no zero selecciona
+el camí que registra error i omet `0xa7024e50`. L'out està inicialitzat a
+zero (`0xa7024948`), però el wrapper pot sobreescriure'l en error. És una
+composició concreta del defecte, **no un bloqueig observat** ni un nou
+impacte sobre autenticació. No cal assumir dades runtime: amb el recurs
+intacte la consulta d'esta clau retorna 1 vàlid. Les altres consultes
+revisades a la mateixa clau sí comproven estat.
+
+Valors addicionals hash-pinned: SharedIMEMBaseAddr=0x146AA000,
+DDRInfoNotifyFlag=0, EnableMultiThreading=1, SecPagePoolCount=0x1000,
+MaxCoreCnt=8, EarlyInitCoreCnt=2, EnableMultiCoreFvDecompression=1.
+OverRideSharedImemBootCfg i DecompressionRequired absents també sense
+distingir majúscules. No s'ha llegit la memòria IMEM ni inferit tipus de
+boot efectiu a partir de la base numèrica.
+
+### Conversió decimal de 64 bits: error que es perd
+
+El getter `0xa701d5b8` valida dígits decimals però no limita el valor
+matemàtic abans de `0xa701d698 → 0xa701ba8c`. Este wrapper crida la
+conversió amb estat `0xa701a9c4`, però torna únicament el valor out a
+`0xa701baa4` i descarta l'estat. El conversor detecta overflow a
+`0xa701ab48 → 0xa701ab88`, escriu UINT64_MAX i retorna error 3.
+El getter extern posa estat zero a `0xa701d6f0` i publica el valor saturat.
+
+**Pèrdua confirmada d'estat de conversió en la interfície de 64 bits**
+per una cadena decimal representant un enter superior a UINT64_MAX,
+sota la longitud admesa. El límit de longitud local és 1.000.000
+(`0xa7035d30`), suficient per a un decimal que desborde 64 bits. No s'ha
+generat cap configuració alternativa ni payload; el model usa enters
+matemàtics. No hi ha un valor així en les claus numèriques seleccionades.
+El getter de **32 bits** comprova la part alta del valor saturat i retorna
+error 2 sense escriure out: no es convertix en èxit per als callers SCM.
+No s'ha identificat ací un consumidor efectiu de +0x20 amb eixa entrada.
+
+La frontera hexadecimal limita la cadena a 18 caràcters totals abans de
+acceptar el prefix, de manera que el cas de més de 16 dígits hexadecimals
+no seguix esta mateixa via. El validador també accepta una cadena buida
+o prefix hexadecimal sense dígits com zero; sense una especificació del
+format, açò es registra com a semàntica permissiva, no com a vulnerabilitat.
+No generalitzar el defecte decimal a tots els formats.
+
+Reproducció addicional: `DumpAddressReferences.java` sobre ConfigTeLayout
+amb `a701d31c a701d728 a701a9c4`; inspector TE amb 75 instruccions
+seleccionades, inspector PE ampliat a 10 mòduls. Nou model sintètic cobreix
+la partició exhaustiva d'error del default, el caller que ignora estat i
+la pèrdua d'overflow seguida del rebuig estret. **9 tests de configuració**.

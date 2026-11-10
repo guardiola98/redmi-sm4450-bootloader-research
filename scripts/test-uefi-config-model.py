@@ -40,6 +40,18 @@ def insertion_offset(count, capacity):
     return 16 * count if count <= capacity and capacity else None
 
 
+def decompression_choice(status, produced, prior):
+    status, out, _ = narrow_getter(status, produced, prior, 1)
+    # Caller only replaces NOT_FOUND, but a masked status leaves out=1.
+    return 1 if status == EFI_ERROR | 14 else out
+
+
+def decimal_conversion(value):
+    """Symbolic integer input, no string or firmware configuration generated."""
+    maximum = (1 << 64) - 1
+    return (EFI_ERROR | 3, maximum) if value > maximum else (0, value)
+
+
 class ConfigTests(unittest.TestCase):
     def test_resource_inventory_tracks_sections_and_duplicate_names(self):
         raw = (b'[ConfigParameters]\nConfigParameterCount=4\nSecurityFlag=0xC4\n'
@@ -68,6 +80,28 @@ class ConfigTests(unittest.TestCase):
             self.assertFalse(valid)
             self.assertEqual(scm.table_sizes(value if status == 0 else None)[0], (256, 256, 256))
             self.assertNotIn(('log', 0), scm.initialize(0, 0, config_status=status, flags=value)[1])
+
+    def test_missing_decompression_key_preserves_default_for_both_error_paths(self):
+        for prior in (0, 1, 0xffffffff, 1 << 32, (1 << 64)-1):
+            self.assertEqual(decompression_choice(EFI_ERROR | 14, None, prior), 1)
+
+    def test_unchecked_consumer_can_use_polluted_output_conditionally(self):
+        status, out, valid = narrow_getter(EFI_ERROR | 14, None, 1, 0)
+        self.assertNotEqual(status, 0)
+        self.assertFalse(valid)
+        self.assertTrue(out != 0)  # 0xa7024994 consumes without testing status.
+        self.assertEqual(narrow_getter(EFI_ERROR | 14, None, 1 << 32, 0)[1], 0)
+        self.assertEqual(narrow_getter(0, 1, 0, 0), (0, 1, True))
+
+    def test_decimal_overflow_status_is_lost_by_wide_getter_but_narrow_rejects(self):
+        conversion_status, saturated = decimal_conversion(1 << 64)
+        self.assertNotEqual(conversion_status, 0)
+        # a701ba8c returns only value; a701d6f0 makes wide status zero.
+        wide_status = 0
+        self.assertEqual(saturated, (1 << 64)-1)
+        self.assertEqual(narrow_getter(wide_status, saturated, 0, 17),
+                         (EFI_ERROR | 2, 17, True))
+        self.assertEqual(decimal_conversion((1 << 64)-1), (0, (1 << 64)-1))
 
     def test_capacity_equality_is_one_entry_outside_declared_table(self):
         self.assertEqual(insertion_offset(63, 64), 1008)

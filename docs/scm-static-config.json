@@ -23,7 +23,30 @@
       "OsTypeString": [
         "\"LA\""
       ],
-      "ChipID_RegAddr": []
+      "ChipID_RegAddr": [],
+      "SharedIMEMBaseAddr": [
+        "0x146AA000"
+      ],
+      "OverRideSharedImemBootCfg": [],
+      "DDRInfoNotifyFlag": [
+        "0x0"
+      ],
+      "EnableMultiThreading": [
+        "1"
+      ],
+      "DecompressionRequired": [],
+      "SecPagePoolCount": [
+        "0x1000"
+      ],
+      "MaxCoreCnt": [
+        "8"
+      ],
+      "EarlyInitCoreCnt": [
+        "2"
+      ],
+      "EnableMultiCoreFvDecompression": [
+        "1"
+      ]
     },
     "section_names": [
       "Config",
@@ -40,7 +63,16 @@
       "ConfigParameterCount": 1,
       "PlatConfigFileName": 1,
       "OsTypeString": 1,
-      "ChipID_RegAddr": 0
+      "ChipID_RegAddr": 0,
+      "SharedIMEMBaseAddr": 1,
+      "OverRideSharedImemBootCfg": 0,
+      "DDRInfoNotifyFlag": 1,
+      "EnableMultiThreading": 1,
+      "DecompressionRequired": 0,
+      "SecPagePoolCount": 1,
+      "MaxCoreCnt": 1,
+      "EarlyInitCoreCnt": 1,
+      "EnableMultiCoreFvDecompression": 1
     },
     "selected_key_lines": {
       "SecurityFlag": [
@@ -56,7 +88,30 @@
       "OsTypeString": [
         62
       ],
-      "ChipID_RegAddr": []
+      "ChipID_RegAddr": [],
+      "SharedIMEMBaseAddr": [
+        71
+      ],
+      "OverRideSharedImemBootCfg": [],
+      "DDRInfoNotifyFlag": [
+        167
+      ],
+      "EnableMultiThreading": [
+        144
+      ],
+      "DecompressionRequired": [],
+      "SecPagePoolCount": [
+        68
+      ],
+      "MaxCoreCnt": [
+        145
+      ],
+      "EarlyInitCoreCnt": [
+        147
+      ],
+      "EnableMultiCoreFvDecompression": [
+        170
+      ]
     }
   },
   "named_resource_counts": {

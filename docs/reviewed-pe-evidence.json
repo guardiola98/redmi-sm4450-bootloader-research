@@ -202,6 +202,69 @@
     ]
   },
   {
+    "name": "EnvDxe",
+    "sha256": "c6cb82e65155067b4290874b692042248f60b2bef2a2f9a8490b54377d26370e",
+    "ffs": "90a49afd-422f-08ae-9611-e788d3804845",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [
+      {
+        "rva": "0xf0c8",
+        "bytes": "bc ea da be 70 5e 66 4d 97 33 21 3d 07 2b 9d 04",
+        "guid": "bedaeabc-5e70-4d66-9733-213d072b9d04"
+      }
+    ],
+    "instructions": [
+      {
+        "rva": "0x26ec",
+        "bytes": "7e 05 00 94"
+      },
+      {
+        "rva": "0x26f4",
+        "bytes": "e0 01 00 b5"
+      },
+      {
+        "rva": "0x26f8",
+        "bytes": "e8 07 40 b9"
+      },
+      {
+        "rva": "0x2730",
+        "bytes": "93 03 f8 b7"
+      },
+      {
+        "rva": "0x3d14",
+        "bytes": "02 0d 40 f9"
+      },
+      {
+        "rva": "0x3d2c",
+        "bytes": "40 00 1f d6"
+      },
+      {
+        "rva": "0x9a18",
+        "bytes": "b3 e8 ff 97"
+      },
+      {
+        "rva": "0x9a24",
+        "bytes": "08 04 00 b5"
+      },
+      {
+        "rva": "0x9a28",
+        "bytes": "a8 c3 5f b8"
+      },
+      {
+        "rva": "0x9a78",
+        "bytes": "9b e8 ff 97"
+      },
+      {
+        "rva": "0x9a7c",
+        "bytes": "c0 01 00 b5"
+      },
+      {
+        "rva": "0x9a90",
+        "bytes": "68 02 00 b9"
+      }
+    ]
+  },
+  {
     "name": "Ebl",
     "sha256": "53456b26ca40d6af771329b13f1727b9fb8f1205c244e9261edd12e75d146da5",
     "ffs": "3cef354a-3b7a-4519-ad70-72a134698311",
@@ -612,6 +675,38 @@
       {
         "rva": "0x43bc",
         "bytes": "cb ff ff 17"
+      },
+      {
+        "rva": "0x2a90",
+        "bytes": "4f 02 00 94"
+      },
+      {
+        "rva": "0x2a94",
+        "bytes": "00 01 00 b5"
+      },
+      {
+        "rva": "0x3e8c",
+        "bytes": "50 fd ff 97"
+      },
+      {
+        "rva": "0x3e98",
+        "bytes": "08 04 00 b5"
+      },
+      {
+        "rva": "0x3ea4",
+        "bytes": "09 01 40 b9"
+      },
+      {
+        "rva": "0x3eec",
+        "bytes": "38 fd ff 97"
+      },
+      {
+        "rva": "0x3ef0",
+        "bytes": "c0 01 00 b5"
+      },
+      {
+        "rva": "0x3f04",
+        "bytes": "68 02 00 b9"
       },
       {
         "rva": "0x3488",

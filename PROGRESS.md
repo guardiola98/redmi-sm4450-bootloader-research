@@ -932,3 +932,22 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   6 config continuen correctes (67 proves totals conegudes); diff check net.
 - Següent: revisar usos locals ja identificats del getter de configuració
   per delimitar consum de valors indeterminats i documentar rutes protegides.
+
+## Continuació dirigida — consumidors de configuració
+
+- Fase de callers publicada: `7b1fa3f`. Revisats 25 callsites dirigits:
+  2 SCM, 5 TzDxeLA, 3 EnvDxe i 15 del TE. No és un cens global.
+- SCM/TzDxeLA/EnvDxe comproven estat abans d'usar out; 13/15 consultes
+  TE també. Una ignora estat, però EnableMultiThreading=1 existeix en el
+  recurs local; el seu consum indeterminat continua condicional.
+- Cas DecompressionRequired absent resolt: amb error 14 original, tant
+  la branca que escriu out com la que emmascara l'error mantenen default1.
+  Descartada eixa cadena concreta de desactivació de descompressió.
+- Nou límit numèric: overflow decimal es detecta però el getter ampli
+  perd error i retorna zero amb UINT64_MAX; l'estret el rebutja. Claus
+  seleccionades no l'activen; falta consumidor efectiu ampli. Sense payload.
+- Inspector TE: 75 instruccions; PE: 10 mòduls. 9 proves config correctes,
+  més models SCM/TzDxeLA afectats; total conegut 70 en 15 scripts.
+- Següent pregunta nova: seguir operació SCM 0x12 que condiciona la
+  seqüència QSEE, sense tornar al monitor EL3. Si no aporta estat decidible,
+  documentar el límit i passar al mapatge de memòria nul·la UEFI.
