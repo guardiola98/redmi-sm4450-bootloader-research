@@ -34,10 +34,13 @@ censos GUID ni proves del monitor per justificar una conclusió nova.
 | UEFI Config Lib: temporal indeterminat en error | Getter de 32 bits 0xa701d578 usa el temporal sense inicialitzar encara que falle el getter ampli; pot escriure out-word indeterminat o substituir error original per error 2. | **Defecte confirmat de gestió d'error.** No convertix error en èxit; SCM comprova estat zero i conserva defaults. No prova dada efectiva indeterminada en SCM. TE 0xa7024990 ignora estat, però la seua clau és present i vàlida localment. |
 | Getter de configuració de 64 bits: overflow decimal | Conversor retorna error 3 i UINT64_MAX; wrapper perd l'estat i getter ampli retorna zero amb el valor saturat. | **Pèrdua local d'error confirmada; activació condicional.** Claus seleccionades sense overflow; cap consumidor +0x20 amb eixa entrada identificat. Getter de 32 bits ho rebutja. |
 | Parser de configuració: frontera de capacitat | 0xa7012af8 rebutja count>capacitat, però accepta igualtat i escriu un descriptor fora dels 16*capacitat bytes declarats. | **Defecte condicional confirmat.** Recurs local té 43 entrades per a capacitat 64: no l'activa. Cap configuració alternativa efectiva ni corrupció física demostrada. |
+| Conversor RAM UEFI v1: atributs amb índex incorrecte | Atributs usen índex d'origen; base/mida usen recompte filtrat. Entrades prèvies descartades separen els camps. | **Defecte local confirmat; activació condicional.** Versió/ordre SMEM desconeguts. La via alternativa usa índex coherent. |
+| Conversors RAM UEFI: guard de capacitat tardà | Primera còpia de l'entrada 33 es fa a base+0x900 abans del salt a ASSERT, en les dues taules i vies. | **Defecte local confirmat; activació condicional.** Recompte SMEM efectiu i controls del productor no establits; no inferir retorn normal ni corrupció física accessible. |
 
 Detall i bytes: [inicialització SCM](scm-initialization-analysis.md),
 [TzDxeLA](tzdxe-policy-consumer.md), [manifest PE](reviewed-pe-evidence.json),
-[procedència de configuració](uefi-configuration-provenance.md).
+[procedència de configuració](uefi-configuration-provenance.md),
+[conversió de RAM](uefi-ram-table-analysis.md).
 DxeCore confirma error ordinari/NULL del pool i error 2 per FreePool(NULL).
 ArmCpuDxe té diagnòstic/espera per defecte, però el mapatge de VA zero,
 CurrentEL i handlers actius no estan establits; no es declara un crash concret.
@@ -81,8 +84,8 @@ EL3, cap cens GUID ni experiments RSA; executar els tests ja existents
 forma part de la regressió. No s'ha consultat xarxa per investigar firmware;
 només s'han publicat commits autoritzats al repositori.
 
-**72 proves en 15 scripts** passen executant cada `scripts/test-*.py`
-separat. Inclouen 7 models nous TzDxeLA i 11 de configuració. Inspectors
+**76 proves en 16 scripts** passen executant cada `scripts/test-*.py`
+separat. Inclouen 7 models nous TzDxeLA i 11 de configuració i 4 d'índexs RAM. Inspectors
 verifiquen hashes i bytes seleccionats; `git diff --check` net. Els models
 usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 

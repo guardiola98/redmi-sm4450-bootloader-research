@@ -69,6 +69,15 @@ def main():
         0xa701ca00,0xa701ca08,0xa701cc18,
         0xa7019b48,0xa7019b50,0xa7019b58,0xa7019d78,
         0xa70230dc,0xa70230f0,0xa70235c8,
+        0xa700e7e8,0xa7023324,0xa7023340,0xa702334c,
+        0xa7023368,0xa7023374,0xa7023398,0xa70233a4,
+        0xa70233b4,0xa70233bc,0xa70233c4,0xa70233cc,
+        0xa70233d4,0xa70233d8,0xa70233dc,0xa702341c,
+        0xa7023430,0xa7023440,0xa7023450,0xa702345c,0xa7023460,
+        0xa70234b0,0xa70234b4,0xa702350c,0xa7023520,0xa7023534,
+        0xa70235c0,0xa7023640,0xa7023648,0xa7023650,0xa7023658,
+        0xa7023660,0xa7023664,0xa7023668,0xa70236ac,0xa70236c8,
+        0xa70236d0,0xa70236e0,
     ]
     instructions = []
     for address in locations:
@@ -101,7 +110,10 @@ def main():
                       read_va(data, layout, 0xa7038b10, 8)[1], 'little')),
                       size=hex(int.from_bytes(read_va(data, layout, 0xa7038b18, 8)[1], 'little')),
                       base_va='0xa7038b10', size_va='0xa7038b18'),
-                  scope='Manually reviewed config path only; no full TE audit or effective runtime snapshot')
+                  ram_attribute_words=[dict(va=hex(a), value=hex(int.from_bytes(
+                      read_va(data, layout, a, 8)[1], 'little')))
+                      for a in (0xa7038ae8,0xa7038af8,0xa7038b00)],
+                  scope='Manually reviewed configuration and RAM-table paths only; no full TE audit or runtime snapshot')
     Path('docs/uefi-config-contract.json').write_text(json.dumps(report, indent=2)+'\n')
     print('Verified config TE layout, shared HOB identity and', len(instructions), 'instruction sites')
 

@@ -968,3 +968,18 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - En seguir la frontera han aparegut operacions d'índex/capacitat del
   conversor RAM 0xa7023300. Pròxima revisió acotada: contrastar-les amb
   instruccions i models d'índexs; cap generació ni lectura de SMEM real.
+
+## Continuació dirigida — conversió de descriptors RAM
+
+- Mapa/porta SCM publicats: `032dcdf`. Confirmats dos defectes en el TE,
+  sense dades runtime: v1 usa índex d'entrada per a tres atributs i índex
+  filtrat per al cos; amb entrades prèvies no seleccionades els separa.
+  La via alternativa no té eixe desacord concret.
+- Les dues vies copien l'entrada33 abans d'aplicar el límit32. Primer
+  destí fora de taula comprovat; ASSERT posterior no desfà l'escriptura.
+  Cap ordre/recompte/versió SMEM efectiu observat, cap explotabilitat inferida.
+- Informe uefi-ram-table-analysis.md, bytes131 llocs TE, quatre proves
+  noves d'índexs. No s'han generat descriptors ni payloads.
+- Models config11, RAM4 i SCM5 correctes; diff check net. Total conegut
+  **76 proves en16 scripts**. Següent: estat parcial de publicació de
+  protocols TzDxeLA i si els errors posteriors disposen de rollback local.

@@ -221,3 +221,8 @@ MMU: el RAW no és una captura completa de traduccions. Vegeu
 [la frontera del mapatge nul](scm-initialization-analysis.md). Resum
 estàtic de 39 rangs sense zero; 93 instruccions TE verificades i
 **11 tests de configuració/inventari** després d'esta ampliació.
+
+La revisió del conversor de RAM ha identificat un desacord d'índexs en
+versió1 i guards de capacitat tardans. Són candidats condicionats a SMEM,
+no defectes activats pel RAW de configuració. Detall i límits en
+[uefi-ram-table-analysis.md](uefi-ram-table-analysis.md).

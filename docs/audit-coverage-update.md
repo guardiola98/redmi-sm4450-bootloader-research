@@ -164,3 +164,8 @@ Mapa UEFI: revisió dirigida del constructor MMU i procedència de RAM
 SMEM, sense executar ni simular registres del sistema. No s'ha revisitat
 EL3. 39 rangs RAW agregats, 93 llocs TE verificats; dos tests d'inventari
 addicionals porten el total a **72 en 15 scripts**.
+
+Conversors RAM del TE: dues vies de format, quatre guardes de capacitat
+i assignació d'atributs revisades; dades SMEM efectives no disponibles.
+Quatre tests d'índexs addicionals: total **76 en 16 scripts**; 131 llocs
+TE hash-pinned. No equival a auditar el productor anterior ni tot el TE.
