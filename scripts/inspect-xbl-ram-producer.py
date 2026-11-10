@@ -172,6 +172,16 @@ def inspect(data):
                               value=hex(int.from_bytes(raw, 'little'))))
     ddr_evidence = dict(instructions=ddr_instructions, selected_words=ddr_words,
                         scope='DDR getter initialization, metadata source and exclusion gate; no runtime DDR values')
+    _, writer = read_va(data, arm, 0x14851120, 0x314)
+    _, entry = read_va(data, arm, 0x148c4e98, 8)
+    if int.from_bytes(entry, 'little') != 0x14851434:
+        raise ValueError('DDR range writer interface entry changed')
+    ddr_evidence['range_writer'] = dict(
+        entry_va='0x14851120', bytes=len(writer), sha256=hashlib.sha256(writer).hexdigest(),
+        interface='0x1b+0x60', table_entry_va='0x148c4e98', stub_va='0x14851434',
+        source_groups=2, initialized_capacity_ranges=2,
+        conditional_max_fragments=3,
+        assumption='Source count and capacities unchanged during the reviewed loop; not a global bound on every writer')
     report = dict(source_sha256=SOURCE_SHA, components=layouts,
                   address_kind='Preferred ELF VA, not observed runtime addresses',
                   stage_name='boot_update_ram_partition_table',

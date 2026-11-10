@@ -1260,7 +1260,19 @@
         "value": "0x148ee6f0"
       }
     ],
-    "scope": "DDR getter initialization, metadata source and exclusion gate; no runtime DDR values"
+    "scope": "DDR getter initialization, metadata source and exclusion gate; no runtime DDR values",
+    "range_writer": {
+      "entry_va": "0x14851120",
+      "bytes": 788,
+      "sha256": "b5e7c7b5cff269ead8809c6e7f0fe878b0b87dd1d68b7a3777249c426b5c9606",
+      "interface": "0x1b+0x60",
+      "table_entry_va": "0x148c4e98",
+      "stub_va": "0x14851434",
+      "source_groups": 2,
+      "initialized_capacity_ranges": 2,
+      "conditional_max_fragments": 3,
+      "assumption": "Source count and capacities unchanged during the reviewed loop; not a global bound on every writer"
+    }
   },
   "scope": "Identified RAM producer/updater and selected ChipInfo provenance; no complete XBL audit or runtime SMEM capture"
 }

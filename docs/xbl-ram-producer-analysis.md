@@ -259,3 +259,44 @@ no exposa HWCAP2_MTE, però això no llig el byte XBL+0x250 ni demostra el
 seu valor. Cap lectura MMIO, SMEM directe, prova de corrupció o nova dada
 sobre desbloqueig. Es manté la restricció anterior de v1/entrada33; la
 novetat és l'origen de les dades i les portes d'inicialització/exclusió.
+
+## Seguiment dirigit: writer del recompte DDR
+
+2026-11-10, base `316669e`. S'ha seguit un writer concret de la font,
+reutilitzant ELF, referències i desassemblatge existents. No és un nou
+cens ni una reobertura de l'entrada33.
+
+La taula0x1b té **+0x60** en `148c4e98`: apunta al stub `14851434`, que
+salta a **14851120**. Esta funció escriu count a +0xc8 de l'estructura
+apuntada per `148c7b60`, la mateixa que llig el getter1484f024. L'inspector
+fixa els788 bytes de la funció per hash i verifica l'entrada de taula.
+Les adreces són posicions preferides de l'ELF, mai lectures de memòria Android.
+
+La inicialització posa **dos** rangs de capacitat en +0x1a0, stride0x10,
+copiats d'una taula local. Recorre **dos** grups DDR: les mides es lligen
+de `148ee9a8+0/+0x20` i es convertixen de MiB amb LSL20; les bases d'origen
+provenen de camps+0x80/+0xc0 de la metadata DDR. En cada iteració consumix
+el mínim entre mida pendent i capacitat del rang, avança base/capacitat,
+i escriu una entrada stride0x28: base exposada+0xf8, mida+0x100,
+base d'origen acumulada+0x108 i grup+0x114. Count s'escriu després del bucle.
+
+**Límit local demostrable sota metadades estables:** cada fragment esgota
+un grup o un rang. Amb dos grups i dos rangs ordenats, el bucle genera
+com a màxim **tres fragments**. Una capacitat zero també avança l'índex
+del rang; no permet repetir-lo indefinidament. Si s'esgoten els rangs,
+el bucle abandona la quantitat restant: no s'ha provat que les capacitats
+cobrisquen totes les configuracions DDR possibles.
+
+El [model de comptes](../scripts/model-kernel-lifetimes.py) només representa
+estos mínims, restes i índexs, sense adreces o descriptors. La prova recorre
+1.296 combinacions de comptes petits, incloent zero i cobertura parcial,
+i observa0..3. Il·lustra el límit combinatori; no valida el hardware ni tots
+els valors de metadata. El possible truncament a8 bits del recompte no
+creix dins d'este límit condicionat.
+
+**Encara obert:** qui prepara totes les mides DDR, altres writers de count,
+selecció/ordre de la crida0x1b+0x60 i publicació0x1c+0x18. Una escriptura
+a +0xc8 en1484e730 pertany a l'objecte de sortida d'una altra funció;
+la coincidència d'offset no prova un altre writer de la mateixa estructura.
+El límit d'esta funció no es generalitza a tot XBL, SMEM o descriptors
+manipulats. No hi ha dades noves de root, AVB o desbloqueig.

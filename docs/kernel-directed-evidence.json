@@ -1,0 +1,293 @@
+{
+  "date": "2026-11-10",
+  "base_commit": "316669e695c2dcc3122aea08966135145408ae67",
+  "scope": "Static contracts and manually reviewed read-only ADB aggregates; no runtime fault/root proof",
+  "static": {
+    "contract_checks": {
+      "exec_changes_leader_and_releases_old": true,
+      "exit_old_plain_new_release": true,
+      "futex_compile_gate_open": true,
+      "futex_proxy_targets_queued_task": true,
+      "futex_waiter_is_stack_object": true,
+      "rt_early_deadlock_precedes_waiter_task": true,
+      "rt_fixed_unarmed_guard": true,
+      "rt_fixed_waiter_lock_clear_chain": true,
+      "rt_old_current_lock_clear_chain": true,
+      "rt_wrapper_nonzero_to_negative": true,
+      "sighand_acquire_added": true,
+      "timer_fixed_helper_retries_lookup": true,
+      "timer_fixed_three_consumers": true,
+      "timer_old_helper_absent": true,
+      "timer_old_null_sighand_warns": true,
+      "timer_owner_signal_checked": true,
+      "timer_release_waits_for_rcu": true
+    },
+    "have_futex_cmpxchg": true,
+    "modules": {
+      "frpc-adsprpc.ko": {
+        "functions": {
+          "context_free": {
+            "bytes": 724,
+            "sha256": "d01e192b0d7adc5e71a445cc92d64f9d81002bcfd868320178d0f7ebd2c6cd73"
+          },
+          "fastrpc_internal_invoke": {
+            "bytes": 8524,
+            "sha256": "4b84e064b6f7e93248fd53b3454ca6bda551e38f928ffbbffb418df4ac1942e4"
+          },
+          "fastrpc_wait_on_async_queue": {
+            "bytes": 1324,
+            "sha256": "5f590a00107718cfdb9eb5fd548442dee37f4dde6a5eda5f2a42c07a84425066"
+          }
+        },
+        "metadata": {
+          "name": "frpc_adsprpc",
+          "scmversion": "g51ab44fbc4b7",
+          "vermagic": "5.10.198-gki-g51ab44fbc4b7 SMP preempt mod_unload modversions aarch64"
+        }
+      },
+      "msm_kgsl.ko": {
+        "functions": {
+          "get_active_cmdobj_lpac": {
+            "bytes": 436,
+            "sha256": "0c864068388a059d510d6923f57bbf2629938167a7fc541e47980b66dd38b5f1"
+          }
+        },
+        "metadata": {
+          "name": "msm_kgsl",
+          "scmversion": "g51ab44fbc4b7",
+          "vermagic": "5.10.198-gki-g51ab44fbc4b7 SMP preempt mod_unload modversions aarch64"
+        }
+      }
+    },
+    "source_functions": {
+      "fastrpc-fix": {},
+      "fixed-cpu-timers": {
+        "posix_cpu_timer_del": {
+          "line": 518,
+          "sha256": "7aebe506a0f673547428b3364e7000b005d71e3408bf1599eabca3170d8cbb8f"
+        },
+        "posix_cpu_timer_rearm": {
+          "line": 1049,
+          "sha256": "b50ac22b6060533ca4b7b260a35881a89ed83c67772b6514462e7375b29a6908"
+        },
+        "posix_cpu_timer_set": {
+          "line": 659,
+          "sha256": "eb5d310c4a517e172f20764c61d74a6015851f75155eb15109faa1151c07dd06"
+        },
+        "timer_lock_sighand": {
+          "line": 467,
+          "sha256": "6b43f99c03a5814c9f044ab2be56563f1b08dcf4817be27cd1ac49c52f3124ba"
+        }
+      },
+      "fixed-exit": {
+        "__exit_signal": {
+          "line": 139,
+          "sha256": "fd9981e6c4a8f7f00050d4445c3623071cf3f6cde75f182d96092efb7c1a2a11"
+        }
+      },
+      "fixed-rt": {
+        "__rt_mutex_start_proxy_lock": {
+          "line": 1752,
+          "sha256": "c6dfd8fdcba03a4851790d40d3c585f1908b8ced702b215252e0180d7b1a70a0"
+        },
+        "remove_waiter": {
+          "line": 1067,
+          "sha256": "e02e6c91d607c9160481949e9e33b7021943907e7e9564e7cc1b937ee21f340e"
+        },
+        "rt_mutex_start_proxy_lock": {
+          "line": 1801,
+          "sha256": "c81429d97dd3ca697bbe903ba2bfbb69d36533d1832973a49c1f8dae4d3991c2"
+        },
+        "task_blocks_on_rt_mutex": {
+          "line": 926,
+          "sha256": "5d56d6606939fd438ce36df07cffad31c6eebad9522ca8bb24b3713305df8933"
+        }
+      },
+      "fixed-signal": {
+        "__lock_task_sighand": {
+          "line": 1370,
+          "sha256": "61334c4eb1f407109e645d51dac3d0622c2cb3c0d8a881148192d233549f1469"
+        }
+      },
+      "kgsl-fix": {},
+      "padding-fix": {},
+      "redmi-cleanup": {},
+      "redmi-cpu-timers": {
+        "do_cpu_nanosleep": {
+          "line": 1447,
+          "sha256": "60095f59d815fc0e16462f6f0fbfc1c55da4ac8e9662d2e87828f4952554ba92"
+        },
+        "pid_for_clock": {
+          "line": 50,
+          "sha256": "82b48bea7c08a95c98af88293542d2463cda5d365d77210de0d09752d080d9e6"
+        },
+        "posix_cpu_timer_create": {
+          "line": 378,
+          "sha256": "12e823a4df505faba2a7acfcc340c43958c857015666306d59ccbdb66ba4d618"
+        },
+        "posix_cpu_timer_del": {
+          "line": 414,
+          "sha256": "5ee57502047b45dde88021bc522e638c962804d49dd9257a0d6bc66f8f0378db"
+        },
+        "posix_cpu_timer_rearm": {
+          "line": 983,
+          "sha256": "25c17e584d07ab90fded17cac629a0d4c7ee1e6bc04b20b52572dc3521a68435"
+        },
+        "posix_cpu_timer_set": {
+          "line": 572,
+          "sha256": "e06b5b618764a0988661e019aa3564eb7d356cfb3d0b67b41977e15728874228"
+        }
+      },
+      "redmi-exec": {
+        "de_thread": {
+          "line": 1044,
+          "sha256": "9ea2324229a5f894c401db6147294c1a2eebbfe9f6faf5d08b6a4e9fc30b8450"
+        }
+      },
+      "redmi-exit": {
+        "__exit_signal": {
+          "line": 141,
+          "sha256": "4f6a131b82b56961960f2e4961c1b4ea07abea83d057dd0b5a521980e8839a98"
+        }
+      },
+      "redmi-filemap": {
+        "filemap_map_pages": {
+          "line": 3017,
+          "sha256": "b0d1b0aa37152d88dd4ef2b082e27c982cfdbaab3729f24fe3059276b07e858e"
+        }
+      },
+      "redmi-futex": {
+        "do_futex": {
+          "line": 3735,
+          "sha256": "4a6438ec8241eee2cf76657511f4a1d976d3c1a03381d7f282d25bda87d50fff"
+        },
+        "futex_requeue": {
+          "line": 1935,
+          "sha256": "486d219cb373d6820a718aef484c9524fe87e9f7b800b7182b73fa94e9fe8d23"
+        },
+        "futex_wait_requeue_pi": {
+          "line": 3191,
+          "sha256": "812a64e01a3a132d63b6ca1b310e9e536a1b02a61948db5e94bd8176c907cfb1"
+        }
+      },
+      "redmi-memory": {
+        "do_fault_around": {
+          "line": 4377,
+          "sha256": "4611c6a74ad32143c135af36add96ec649d8d8393c317f4296b647be81e77776"
+        }
+      },
+      "redmi-page-inline": {},
+      "redmi-page-migration": {
+        "madvise_vma_pad_pages": {
+          "line": 215,
+          "sha256": "2010c5167275d04a4f5482c432ea925c01cb890632f1283927b5a47cdac2549e"
+        }
+      },
+      "redmi-posix-timers": {
+        "__lock_timer": {
+          "line": 615,
+          "sha256": "7d940e914fe5c24f142196e2429c9ed1fdb2b1e672852ca5611d4c1546373941"
+        },
+        "release_posix_timer": {
+          "line": 479,
+          "sha256": "ce26fadf7e39b2205c489003b38300ef4a182a526f4e42a3bb396b638d7a4c57"
+        }
+      },
+      "redmi-rcupdate": {},
+      "redmi-rt": {
+        "__rt_mutex_start_proxy_lock": {
+          "line": 1757,
+          "sha256": "c6dfd8fdcba03a4851790d40d3c585f1908b8ced702b215252e0180d7b1a70a0"
+        },
+        "remove_waiter": {
+          "line": 1066,
+          "sha256": "8b535ac17e440553f27bb49b95aea204676239b5646d94af580b49eddebe2d29"
+        },
+        "rt_mutex_start_proxy_lock": {
+          "line": 1806,
+          "sha256": "6323a569a9b4a4cc216321ee6d896e9f527a4e04ccd2017735dfafb157415270"
+        },
+        "task_blocks_on_rt_mutex": {
+          "line": 927,
+          "sha256": "5d56d6606939fd438ce36df07cffad31c6eebad9522ca8bb24b3713305df8933"
+        }
+      },
+      "redmi-signal": {
+        "__lock_task_sighand": {
+          "line": 1372,
+          "sha256": "f4c4dff7568bb2158977d2c5293c0daf070ec1e581cd7babe00c2351927ef649"
+        }
+      },
+      "redmi-xarray": {
+        "set_bounds": {
+          "line": 166,
+          "sha256": "eeec2cf149daa574776618de43c9b877a0dfc5400729e8def98ecc1f9c2a119f"
+        },
+        "xas_find": {
+          "line": 1235,
+          "sha256": "90457cb496795104a3c4de0918835b7b00a7b0b0f6a99fb9f63dcb901e02ec78"
+        }
+      },
+      "rt-followup": {},
+      "rt-stable-fix": {},
+      "rt-stable-followup": {},
+      "timer-fix": {},
+      "timer-stable-fix": {}
+    }
+  },
+  "adb": {
+    "calls_this_phase": 18,
+    "connection_checks": 1,
+    "shell_queries": 17,
+    "kernel_release_reconfirmed": true,
+    "firmware_incremental_reconfirmed": true,
+    "gpu_model": "Adreno613v1",
+    "gpu_revision": "missing",
+    "loaded_selected_modules": [
+      "msm_kgsl",
+      "frpc_adsprpc"
+    ],
+    "module_files": "denied",
+    "srcversion_and_version_attributes": "missing",
+    "scmversion_attributes": "denied",
+    "root_lpac_hwsched_globs": "missing",
+    "page_size_max_property": 4096,
+    "page_migration_enabled": 1,
+    "fastrpc_nodes": [
+      {
+        "name": "adsprpc-smd",
+        "mode": "0664",
+        "owner": "system",
+        "group": "system",
+        "selinux_type": "vendor_qdsp_device"
+      },
+      {
+        "name": "adsprpc-smd-secure",
+        "mode": "0644",
+        "owner": "system",
+        "group": "system",
+        "selinux_type": "vendor_xdsp_device"
+      }
+    ],
+    "node_open_or_ioctl_performed": false,
+    "loaded_module_hash_attested": false,
+    "collection_notes": "Followup plus 10 directed queries. First module-name filter missed frpc_adsprpc; corrected query found it. No full logs, serials or addresses published."
+  },
+  "backport_application": {
+    "compiled": false,
+    "executed_kernel": false,
+    "fuzz_allowed": false,
+    "normalized_function_matches": {
+      "__exit_signal": true,
+      "__lock_task_sighand": true,
+      "posix_cpu_timer_del": true,
+      "posix_cpu_timer_rearm": true,
+      "posix_cpu_timer_set": true,
+      "remove_waiter": true,
+      "rt_mutex_start_proxy_lock": true,
+      "timer_lock_sighand": true
+    },
+    "official_patches_applied": 3,
+    "rcu_guard_headers_present": true
+  }
+}

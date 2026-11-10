@@ -34,6 +34,15 @@ CVE-2026-43499 i64560 conserven codi anterior a la correcció; prioritat
 estàtica amb explotabilitat/root sense provar. La taula separada inclou
 19 CVE i descartaments per codi/config, sense canviar la classificació UEFI.
 
+Seguiment des de `316669e`: [contractes complets5.10 i callers](kernel-lifetime-followup-2026-11-10.md)
+revisats per43499/64560; gate cmpxchg compilat confirmat, cap carrera/root
+executats. ADB resol GPU, mòduls i migració=1. Els mòduls del paquet
+conserven els patrons anteriors als fixes57545/57554, però LPAC i accés
+async/profiling/DSP no estan establits: **informació insuficient** per
+confirmar compatibilitat operativa.58942 manté eixe estat per diferències
+d'algoritme. En XBL queda identificat el writer DDR0x1b+0x60 amb màxim
+local condicionat de tres fragments; no és un límit global ni desbloqueig.
+
 ## Candidats demanats
 
 | Candidat | Evidència directa / models | Precondicions i incerteses | Classificació i decisió |

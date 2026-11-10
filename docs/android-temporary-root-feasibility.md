@@ -1,14 +1,25 @@
 # Viabilitat de root temporal Android — Redmi 12 5G
 
 Data de tall: **2026-11-10**. Firmware `OS2.0.218.0.VMWEUXM`,
-`river`, SM4450/parrot. Base de treball `7257cbc`, `main` net i
-`git pull --ff-only` actualitzat abans de començar.
+`river`, SM4450/parrot. Auditoria inicial des de `7257cbc`; seguiment dirigit
+des de `316669e`, `main` net i `git pull --ff-only` actualitzat.
 
 **La línia mereix seguiment estàtic:** hi ha evidència concreta de codi
 sense corregir per a **CVE-2026-43499** i **CVE-2026-64560** en el kernel
 del paquet identificat. No s'ha obtingut root, reproduït una corrupció
 ni demostrat una cadena d'elevació funcional. Cap resultat aporta una
 via verificada de desbloqueig del bootloader.
+
+**Seguiment dirigit completat:** els callers i les correccions completes
+de5.10 reforcen els dos candidats GKI. Els mòduls del paquet conserven
+el guard absent de KGSL57545 i el patró antic de comptadors FastRPC57554,
+però la selecció de ruta/permisos runtime continua sense demostrar.
+ADB confirma migració de pàgina activa; això no establix equivalència
+amb58942. Vegeu el [contrast detallat de contractes](kernel-lifetime-followup-2026-11-10.md)
+i els [nous agregats](kernel-directed-evidence.json).
+Els tres backports s'han aplicat sense fuzz a còpies de l'ACK exacte:
+huit funcions resultants coincidixen amb5.10.262, amb dependències de
+guard RCU presents. És validació de font; no compilació o execució kernel.
 
 La revisió cobrix 19 CVE seleccionades per mecanisme, precondicions i
 proximitat al dispositiu, els butlletins actuals i els pegats accessibles.
@@ -51,9 +62,10 @@ pegat absent simplement del sufix `5.10.246`.
 **Límit:** identitat del paquet i coincidència de configuració/versió en
 Android no són una atestació de memòria viva, de cada mòdul vendor ni de
 la partició activa. No s'ha llegit memòria kernel o el codi carregat en
-runtime. El codi comú correspon al GKI oficial; la procedència/revisió
-exacta dels mòduls Qualcomm continua pendent i no s'ha substituït per
-una branca MiCode d'una altra compilació.
+runtime. El codi comú correspon al GKI oficial. En el seguiment s'han
+extret dos mòduls del paquet: scmversion `g51ab44fbc4b7`, vermagic5.10.198.
+No s'ha substituït la seua font exacta per una branca MiCode semblant;
+falta confirmar el hash/revisió dels mòduls efectivament carregats.
 
 ## Què s'ha consultat realment en Android
 
@@ -86,12 +98,15 @@ execucions; només se'n publiquen els recomptes. No és una estimació de
 bits d'entropia ni un test de KASLR. Pàgina4096; PACA/PACG/BTI/MTE=0
 als HWCAP consultats en els quatre processos.
 
-Les sis consultes posteriors de model GPU, revisió, noms/fitxers de
-mòduls, nodes FastRPC i propietat de pàgina **no s'han pogut executar en
-el dispositiu**: ADB ja retornava absència de dispositiu. No són resultats
-negatius d'eixos components. S'ha continuat offline sense repetir
-captures QSEE ni intentar reconnectar per reinici. No s'han repetit els
-laboratoris SIGSEGV/ASan anteriors.
+Les sis consultes posteriors de la primera fase no es van completar per
+desconnexió; no eren resultats negatius dels components. **En el seguiment
+des de316669e sí s'ha executat followup**, més consultes dirigides:
+18 crides ADB en total, inclosa una comprovació de connexió. Adreno613v1,
+msm_kgsl/frpc_adsprpc Live i pgsize_migration/enabled=1 confirmats.
+Fitxers ko i scmversion: denegats; srcversion/version: paths inexistents.
+Nodes adsprpc presents, sense open/ioctl. La
+[taula de diagnòstic](kernel-lifetime-followup-2026-11-10.md#diagnòstic-executat-i-decisió)
+explica cada consulta i límit. No s'han repetit QSEE, SIGSEGV, ASan o el probe.
 
 ## Proteccions: compilació, observació i incògnites
 
@@ -143,9 +158,9 @@ activar el defecte, cosa que no s'ha fet.
 
 | CVE / component | Versions o fix de referència | Precondicions locals | Evidència del Redmi i estat | Risc d'activació |
 | --- | --- | --- | --- | --- |
-| [CVE-2026-43499](https://www.cve.org/CVERecord?id=CVE-2026-43499), rtmutex/futex PI | Introduït2.6.39; branca5.10 corregida en5.10.261; fix `f3fa3424bceb` | Futex PI/proxy rollback, tasca del waiter diferent de current; operacions sobre sincronització pròpia, sense privilegi especial de configuració | FUTEX/PI/RT_MUTEXES=y; `remove_waiter` encara opera sobre current en font i binari. **Potencialment compatible, pendent de verificar**, prioritat1. No carrera/root provats. | UAF kernel, panic/bloqueig i pèrdua de dades no guardades; fiabilitat desconeguda. |
+| [CVE-2026-43499](https://www.cve.org/CVERecord?id=CVE-2026-43499), rtmutex/futex PI | Introduït2.6.39; primer fix5.10.261 `f3fa3424bceb`, seguiment `bfbc047ceb42`; sèrie completa verificada en5.10.262 | Futex PI/proxy rollback, waiter encolat i tasca diferent de current; camí local revisat sense capacitat administrativa específica | FUTEX/PI/RT_MUTEXES/HAVE_FUTEX_CMPXCHG=y; identitat incorrecta en lock/neteja/propagació i caller proxy confirmats estàticament. **Potencialment compatible, pendent de verificar**, prioritat1. No carrera/root provats. | UAF kernel, panic/bloqueig i pèrdua de dades no guardades; fiabilitat desconeguda. |
 | [CVE-2026-64560](https://www.cve.org/CVERecord?id=CVE-2026-64560), POSIX CPU timers | CNA: des de5.7, corregit5.10.262; família de fix `920f893f735e` | Timers de procés i canvi de líder per exec concurrent; procés local sense privilegis especials, temporització específica | POSIX_TIMERS=y; es conserva lookup/lock antic i falten retry/ordenació de la correcció. **Potencialment compatible, pendent de verificar**, prioritat2. | UAF kernel, carrera no determinista, crash i possible pèrdua de dades. |
-| [CVE-2026-58942](https://www.cve.org/CVERecord?id=CVE-2026-58942), fault-around/ELF padding | CNA «Android kernel», sense rang5.10 precís; fix `27d9c79c71ce` i `019d909caeb8` | VMA amb padding, fault-around i funcionalitat de migració de pàgina activa | Hi ha backport pgsize_migration fins i tot en4K; algoritme antic diferent del diff publicat. **Informació insuficient**: no s'ha demostrat equivalència del defecte ni flag runtime. No descartar pel número5.10 o pàgina4K. | Corrupció/UAF o crash kernel segons avís; no provar mappings límit al mòbil. |
+| [CVE-2026-58942](https://www.cve.org/CVERecord?id=CVE-2026-58942), fault-around/ELF padding | CNA «Android kernel», sense rang5.10 precís; fix `27d9c79c71ce` i `019d909caeb8` | VMA amb padding, fault-around i funcionalitat de migració de pàgina activa | Backport i flag runtime=1 confirmats; algoritme5.10 diferent, amb restriccions de rang comprovades. **Informació insuficient**: equivalència del defecte pendent. No descartar pel número5.10 o pàgina4K. | Corrupció/UAF o crash kernel segons avís; no provar mappings límit al mòbil. |
 | [CVE-2026-43284](https://www.cve.org/CVERecord?id=CVE-2026-43284), XFRM/ESP | Des de4.11, branca5.10 corregida5.10.255 | Camí ESP amb fragments compartits; cal estat/política IPsec i accés al flux pertinent | XFRM_USER/INET_ESP=y, però USER_NS=n i CapEff0. Sense prova de configuració accessible o SA aplicable, ni verificació completa del fix. **Informació insuficient**, baixa prioritat per a shell sense privilegis. | Corrupció de memòria/dades i interrupció de xarxa; no configurar SA ni generar estímuls. |
 | [CVE-2025-38352](https://www.cve.org/CVERecord?id=CVE-2025-38352), CPU timers/exit | Des de2.6.36; corregit5.10.239 | Carrera de timers amb eixida en implementació afectada | `run_posix_cpu_timers` conté el guard `tsk->exit_state` de la correcció. **No compatible**. No confondre amb64560. | Carrera kernel si faltara el pegat; cap valor de repetir-la ací. |
 | [CVE-2026-31431](https://www.cve.org/CVERecord?id=CVE-2026-31431), AF_ALG AEAD | Des de4.14; corregit5.10.254, reversió del camí in-place | Interface crypto d'usuari AEAD compilada i accessible | CONFIG_CRYPTO_USER_API_AEAD=n en live/package. **No compatible**: component requerit no compilat; el rang5.10.246 és insuficient. | Pot alterar pàgines/dades en sistemes afectats; cap socket AF_ALG creat. |
@@ -167,7 +182,10 @@ current. El binari del paquet concorda. L'avís i la
 descriuen el desajust de tasca i el punter pendent; l'SPL sol no ha sigut
 la prova. La sèrie Android de novembre inclou també el
 [guard de waiter encolat](https://android.googlesource.com/kernel/common/+/5339d13d8b945cd5841d0e70728ee67474ea74f7):
-cal revisar la correcció completa, no una substitució textual aïllada.
+el seguiment ha contrastat el backport5.10 `bfbc047ceb42` i el fitxer
+complet5.10.262. La correcció requerix identitat del waiter, guard de
+waiter no inicialitzat i neteja només amb retorn negatiu. El caller
+proxy i la vida del waiter en la pila estan ara revisats.
 
 **64560:** contrast amb la
 [correcció ACK](https://android.googlesource.com/kernel/common/+/585f2c9c9560f7e0dadafbba251183cea83d9dc4)
@@ -175,8 +193,11 @@ en tres fitxers: `posix_cpu_timer_del` conserva el camí antic davant
 sighand nul, no hi ha `timer_lock_sighand`, i `__exit_signal` conserva
 l'assignació sense release. El canvi requerix reintentar el lookup i
 l'ordenació corresponent; el guard de38352 és una correcció diferent.
-Les funcions timer_set/rearm i el camí complet d'exec necessiten una
-revisió de reachability més extensa abans d'una afirmació d'explotabilitat.
+El seguiment ha revisat també timer_set/rearm, de_thread, __lock_timer
+i l'alliberació via call_rcu. El backport5.10 `67aa823e3e8c` resol el
+canvi de líder amb retry i ordenació; RCU a soles no elimina un enllaç
+de cua persistent. Es distingixen propietari del timer i objectiu del
+rellotge. Vegeu [precondicions i comparació completa](kernel-lifetime-followup-2026-11-10.md).
 
 No s'ha mesurat una taxa d'èxit ni creat un primitiu de lectura/escriptura
 kernel. CFI, freelist hardening, KASLR, SELinux i el context de syscall
@@ -193,8 +214,11 @@ semblant. El verificador registra els trets seleccionats de la sèrie.
 Per contra, no es descarta58942 amb «és5.10 i4K»: l'[arbre de migració](https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/mm/pgsize_migration.c)
 activa per defecte una static key en4K/64bit i té gates de context/linker.
 El `do_fault_around` concret usa un càlcul anterior, diferent del patch
-publicat. Falta comparar semànticament els límits i observar el flag
-`/sys/kernel/mm/pgsize_migration/enabled`. No s'ha llegit eixe node encara.
+publicat. El flag `/sys/kernel/mm/pgsize_migration/enabled` s'ha llegit
+en el seguiment i val1. El límit antic per offsets de fitxer i el guard
+start>max de xarray restringixen alguns casos de padding; falta una
+prova completa sobre les transformacions legítimes de VMA, no més lectures
+del mateix flag. No és un defecte atribuït a un mòdul Qualcomm.
 
 ## Candidats Qualcomm: plataforma compatible no és driver vulnerable
 
@@ -208,12 +232,12 @@ per a este build; els rangs numèrics de firmware continuen desconeguts.
 
 | CVE / component | Abast i precondicions | Correcció/build concret | Estat i risc |
 | --- | --- | --- | --- |
-| [2026-57545](https://www.cve.org/CVERecord?id=CVE-2026-57545), KGSL/hwsched LPAC | 4Gen2 consta en CNA. Requerix camí LPAC i tipus drawobj afectat; node accessible segons política | [Fix msm5.10](https://git.codelinaro.org/clo/la/kernel/msm-5.10/-/commit/874311dc075047c51c9231e3de1bae0a7677b3b7) llegit: falta comprovació `is_cmdobj` en `get_active_cmdobj_lpac`. No s'ha identificat esta funció ni suport LPAC en el mòdul instal·lat | **Potencialment compatible, pendent de verificar**. Llista de plataforma i node existent són insuficients. Risc de GPU hang/kernel panic/corrupció; cap ioctl. |
-| [2026-57554](https://www.cve.org/CVERecord?id=CVE-2026-57554), FastRPC/DSP | 4Gen2 consta. Invocacions asíncrones amb dades de comptadors compartides; cal accés al domini/node pertinent | Qualcomm enllaça fix msm5.10 `a065d4bacdae`; descàrrega del diff i alternativaDSP limitades per HTTP429. Nodes/mòdul del Redmi encara desconeguts per desconnexió | **Potencialment compatible, pendent de verificar**, confiança inferior als dos bugs GKI. Risc UAF, crash kernel/DSP i pèrdua de dades; no invocacions. |
-| [2026-21385](https://www.cve.org/CVERecord?id=CVE-2026-21385), Graphics/alineació de reserva | 4Gen2 consta; operacions del controlador amb aritmètic afectat, accés local | Butlletí març2026 anterior a SPLvendor; revisió/correcció del binari Xiaomi no verificades | **Informació insuficient**; prioritat baixa fins a disposar del driver. Risc corrupció/crash; no prova d'alineacions límit. |
+| [2026-57545](https://www.cve.org/CVERecord?id=CVE-2026-57545), KGSL/hwsched LPAC | 4Gen2 consta en CNA. Requerix camí LPAC i tipus drawobj afectat; accés segons política | [Fix msm5.10](https://git.codelinaro.org/clo/la/kernel/msm-5.10/-/commit/874311dc075047c51c9231e3de1bae0a7677b3b7): funció identificada en el mòdul del paquet, guard `is_cmdobj` absent. ADB: Adreno613v1 i msm_kgsl Live. Falta selecció LPAC/hwsched i correspondència del mòdul carregat | **Informació insuficient** per a compatibilitat operativa, amb coincidència estàtica del guard absent. Risc GPU hang/panic/corrupció; cap ioctl. |
+| [2026-57554](https://www.cve.org/CVERecord?id=CVE-2026-57554), FastRPC/DSP | 4Gen2 consta. Profiling, async, vida compartida dels comptadors i accés al domini DSP necessaris | [Fix msm5.10 complet](https://git.codelinaro.org/clo/la/kernel/msm-5.10/-/commit/a065d4bacdae2cea6678a7528df8008d16452a63) recuperat. El mòdul del paquet conserva l'actualització antiga de perf; frpc_adsprpc i nodes confirmats en Android. Permisos efectius/portes runtime pendents | **Informació insuficient** per confirmar compatibilitat operativa. Evidència estàtica reforçada; risc UAF/panic/DSP i pèrdua de dades, no root provat. Cap invocació. |
+| [2026-21385](https://www.cve.org/CVERecord?id=CVE-2026-21385), Graphics/alineació de reserva | 4Gen2 consta; operacions del controlador amb aritmètic afectat, accés local | Butlletí març2026 anterior a SPLvendor; revisió/correcció del binari Xiaomi no verificades | **Informació insuficient**; prioritat baixa fins a relacionar la correcció amb el driver. Risc corrupció/crash; no prova d'alineacions límit. |
 | [2025-27038](https://www.cve.org/CVERecord?id=CVE-2025-27038), Adreno/renderització | 4Gen2 consta; camí gràfic descrit en Chrome, versió de driver determinant | Avís juny2025 anterior als SPL declarats; no s'ha demostrat absència del fix | **Informació insuficient**. No equival a una LPE kernel ni root; crash/corrupció GPU possibles en component vulnerable. |
 | [2025-21479](https://www.cve.org/CVERecord?id=CVE-2025-21479) i [21480](https://www.cve.org/CVERecord?id=CVE-2025-21480), GPU micronode | 4Gen2 no figura en les llistes CNA consultades; comandos i firmware específics | Cap correspondència de micronode/revisió amb este Redmi; no extrapolar d'un altre Adreno | **Informació insuficient**, sense evidència positiva per prioritzar. Risc alt d'estímuls GPU; cap prova. |
-| [2026-25291](https://www.cve.org/CVERecord?id=CVE-2026-25291), Graphics/page lists | 4Gen2 no figura en la llista CNA; concurrència i controlador afectat necessaris | Mòdul concret desconegut; ni número5.10 ni SPL establixen compatibilitat | **Informació insuficient**, baixa prioritat. Risc corrupció/panic; no carrera. |
+| [2026-25291](https://www.cve.org/CVERecord?id=CVE-2026-25291), Graphics/page lists | 4Gen2 no figura en la llista CNA; concurrència i controlador afectat necessaris | Correspondència amb la correcció concreta pendent; ni número5.10 ni SPL establixen compatibilitat | **Informació insuficient**, baixa prioritat. Risc corrupció/panic; no carrera. |
 
 ## Fronteres i utilitat per al desbloqueig
 
@@ -238,8 +262,10 @@ Hi ha evidència nova de **fonts DDR i porta d'exclusions XBL** en
 [l'informe del productor](xbl-ram-producer-analysis.md#continuació-proveïdors-ddr-i-exclusions-resolts-estàticament):
 interfícies0x1c/0x1b resoltes, getter condicionat per inicialització,
 estructura DDR font, ordre dels rangs i camp que habilita exclusions.
-La via ordinària estudiada retorna zero o una exclusió. No s'ha llegit
-la taula runtime ni reobert v1/entrada33 sense dades.
+La via ordinària estudiada retorna zero o una exclusió. El seguiment
+identifica també el writer DDR de la interfície0x1b+0x60 i el seu límit
+condicionat de tres fragments. No s'ha llegit la taula runtime ni reobert
+v1/entrada33 sense dades.
 
 No ha aparegut un consumidor nou de Tz f250 o Config+0x20 en esta fase.
 Es mantenen les restriccions de FeatureEnabler/família141 i de QSEE
@@ -252,6 +278,9 @@ precondicions; no aporten una ruta de root temporal o desbloqueig.
 ```sh
 python3 scripts/inspect-android-kernel.py
 python3 scripts/test-android-kernel-audit.py
+python3 scripts/inspect-kernel-directed.py
+python3 scripts/test-kernel-directed.py
+python3 scripts/test-kernel-lifetimes.py
 python3 scripts/inspect-xbl-ram-producer.py
 python3 scripts/test-xbl-component-layout.py
 ```
@@ -275,17 +304,19 @@ publicació queden registrades en `PROGRESS.md`.
 
 | Pròxima pregunta | Prova amb valor | Risc i decisió |
 | --- | --- | --- |
-| Es manté el codi afectat en un kernel corregit equivalent? | Comparar estàticament els canvis complets de43499/64560 i build GKI corregit amb la mateixa ABI; completar callers/guards | Sense risc per al telèfon; prioritat1. No cal activar la carrera. |
-| Quin driver Qualcomm i quines portes runtime té este Redmi? | Quan torne ADB: `ls -lZ` dels nodes i mòduls concrets, lectura de metadades públiques i del flag pgsize_migration; comparar mòduls accessibles amb fonts/fixes | Baix, només lectura; prioritat2. No inspeccionar dades privades o obrir serveis/drivers. Denegacions es documenten. |
-| Es poden validar regressions del fix de forma aïllada? | Preparar kernel ARM64 de laboratori amb correcció i comparar invariants/diagnòstic en VM descartable, fora del telèfon | Cost de preparació; un test de carrera pot bloquejar el guest. No s'ha executat ni es proposa traslladar-lo al mòbil. |
-| Què falta en bootloader? | Completar writers de la font DDR i despatx de publicació; alternativament un caller/subscriptor f250 real o consumidor Config+0x20 concret | Anàlisi estàtica sense risc per al dispositiu; prioritat3 del projecte. |
+| Es poden validar els fixes complets en un build equivalent? | Callers/guards i aplicació dels backports5.10 ja comprovats; completar compilació/ABI i invariants en arbre descartable equivalent | Sense risc per al telèfon; prioritat1. Els models actuals no executen un kernel vulnerable. |
+| Quines portes vendor continuen obertes? | Seguir selecció gpu_core/LPAC i guards profiling/async/DSP; recuperar font exacta g51ab44fbc4b7 o metadades runtime accessibles | Anàlisi estàtica/lectura passiva; prioritat2. No repetir consultes denegades ni obrir drivers. |
+| Què falta per a58942? | Tancar invariants dels offsets/padding durant transformacions VMA i hooks; el flag runtime ja està resolt | Offline; prioritat inferior als dos defectes GKI. Cap mapping límit al mòbil. |
+| Què falta en bootloader? | Seguir el writer DDR0x1b+0x60 fins a publicació i altres writers; alternativament un caller/subscriptor f250 o consumidor Config+0x20 concret | Estàtic, sense risc per al dispositiu; prioritat3. El límit de tres fragments és local, no global. |
 
 No cal fastboot per a estes proves. Una futura prova que intentara root,
 provocara una carrera kernel o modificara l'estat requeriria definir
 prèviament objectiu, precondicions i risc, i autorització específica;
 no forma part del treball executat ni dels scripts publicats.
 
-Les consultes passives pendents estan preparades, separades de la captura
-inicial: `python3 scripts/collect-kernel-readonly.py --scope followup`.
-Inclouen el flag de migració identificat després de la desconnexió;
-no s'ha executat esta versió final del col·lector sobre el dispositiu.
+`python3 scripts/collect-kernel-readonly.py --scope followup` s'ha executat
+en el seguiment. El filtre actual incorpora el nom frpc_adsprpc descobert
+en la consulta addicional i exclou la columna d'adreces abans de capturar-la.
+Les22 proves noves són de contractes abstractes i integritat/privacitat
+d'inputs; no constituïxen una reproducció kernel. Resultats de regressió
+i revisió de publicació en `PROGRESS.md`.

@@ -18,7 +18,7 @@ def queries(scope='baseline'):
             'gpu-model':('Which GPU model is exposed?', ['shell','cat','/sys/class/kgsl/kgsl-3d0/gpu_model']),
             'gpu-revision':('Which GPU revision is exposed?', ['shell','cat','/sys/class/kgsl/kgsl-3d0/gpu_revision']),
             'vendor-module-names':('Which selected vendor modules are loaded?',
-                ['shell',"grep -E '^(msm_kgsl|qcom_fastrpc|fastrpc|adsprpc) ' /proc/modules"]),
+                ['shell',"grep -E '^(msm_kgsl|frpc_adsprpc|qcom_fastrpc|fastrpc|adsprpc) ' /proc/modules | cut -d ' ' -f 1-5"]),
             'vendor-module-files':('Are the selected module files exposed?',
                 ['shell',"ls -l /vendor/lib/modules/*kgsl* /vendor_dlkm/lib/modules/*kgsl* /vendor/lib/modules/*fastrpc* /vendor_dlkm/lib/modules/*fastrpc* /vendor/lib/modules/*adsprpc* /vendor_dlkm/lib/modules/*adsprpc*"]),
             'fastrpc-nodes':('Which FastRPC node metadata is exposed?',

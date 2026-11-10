@@ -1,0 +1,289 @@
+{
+  "scope": "Pinned inputs for manual contract review, not an exploitability verdict",
+  "sources": {
+    "redmi-rt": {
+      "path": "kernel-audit-2026-11-10/sources/ack-kernel_locking_rtmutex.c",
+      "sha256": "f04c31a25bb4ddf8e4d79f55807e9656351f0ce049fc76d7b8fb895b3301a90e",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/locking/rtmutex.c",
+      "functions": [
+        "remove_waiter",
+        "task_blocks_on_rt_mutex",
+        "rt_mutex_start_proxy_lock",
+        "__rt_mutex_start_proxy_lock"
+      ]
+    },
+    "fixed-rt": {
+      "path": "kernel-directed-2026-11-10/sources/stable262-kernel_locking_rtmutex.c",
+      "sha256": "67b75e8368f61c87c43cee0126c08cc8aed88107905bf09f9ecf6ba2222aa21a",
+      "url": "https://raw.githubusercontent.com/gregkh/linux/065a677fad98698de04279ba2cb152a472ab8b1f/kernel/locking/rtmutex.c",
+      "functions": [
+        "remove_waiter",
+        "task_blocks_on_rt_mutex",
+        "rt_mutex_start_proxy_lock",
+        "__rt_mutex_start_proxy_lock"
+      ]
+    },
+    "redmi-cpu-timers": {
+      "path": "kernel-audit-2026-11-10/sources/ack-kernel_time_posix-cpu-timers.c",
+      "sha256": "ac3bbf676f09074a84a46674a1d1e8113ad9199354bbac9b6f1ec0e38f34f862",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/time/posix-cpu-timers.c",
+      "functions": [
+        "pid_for_clock",
+        "posix_cpu_timer_create",
+        "posix_cpu_timer_del",
+        "posix_cpu_timer_set",
+        "posix_cpu_timer_rearm",
+        "do_cpu_nanosleep"
+      ]
+    },
+    "fixed-cpu-timers": {
+      "path": "kernel-directed-2026-11-10/sources/stable262-kernel_time_posix-cpu-timers.c",
+      "sha256": "0ba70ae3e3138f7cad197f76372859ecd366f509caacd4ce6442fbaaf662907c",
+      "url": "https://raw.githubusercontent.com/gregkh/linux/065a677fad98698de04279ba2cb152a472ab8b1f/kernel/time/posix-cpu-timers.c",
+      "functions": [
+        "timer_lock_sighand",
+        "posix_cpu_timer_del",
+        "posix_cpu_timer_set",
+        "posix_cpu_timer_rearm"
+      ]
+    },
+    "redmi-exit": {
+      "path": "kernel-audit-2026-11-10/sources/ack-kernel_exit.c",
+      "sha256": "e81c58332835633bda87d01ca779650889184f48b9fb9251b809456c221df188",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/exit.c",
+      "functions": [
+        "__exit_signal"
+      ]
+    },
+    "fixed-exit": {
+      "path": "kernel-directed-2026-11-10/sources/stable262-kernel_exit.c",
+      "sha256": "88c4694280cb713a2926c758b462b922abf9a9f610047860ccd15eb41936b872",
+      "url": "https://raw.githubusercontent.com/gregkh/linux/065a677fad98698de04279ba2cb152a472ab8b1f/kernel/exit.c",
+      "functions": [
+        "__exit_signal"
+      ]
+    },
+    "redmi-signal": {
+      "path": "kernel-audit-2026-11-10/sources/ack-kernel_signal.c",
+      "sha256": "00af7ad1259a33319fbe42e938632d01949705e531d0443db8e92c48fd247377",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/signal.c",
+      "functions": [
+        "__lock_task_sighand"
+      ]
+    },
+    "fixed-signal": {
+      "path": "kernel-directed-2026-11-10/sources/stable262-kernel_signal.c",
+      "sha256": "bbd7014861341fada30df53bb87d2fd0765c43b7765795f760354af47f03f6e2",
+      "url": "https://raw.githubusercontent.com/gregkh/linux/065a677fad98698de04279ba2cb152a472ab8b1f/kernel/signal.c",
+      "functions": [
+        "__lock_task_sighand"
+      ]
+    },
+    "redmi-futex": {
+      "path": "kernel-directed-2026-11-10/sources/redmi-kernel_futex_core.c",
+      "sha256": "d31e1c7a7a60355418138bcb167070c57a636f7fde6d5134b0470add7980a6d4",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/futex/core.c",
+      "functions": [
+        "futex_requeue",
+        "futex_wait_requeue_pi",
+        "do_futex"
+      ]
+    },
+    "redmi-posix-timers": {
+      "path": "kernel-directed-2026-11-10/sources/redmi-kernel_time_posix-timers.c",
+      "sha256": "f98ef7c6f7c76bae4793a581576210985577c42af504cd75e0f28cb672485e09",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/kernel/time/posix-timers.c",
+      "functions": [
+        "__lock_timer",
+        "release_posix_timer"
+      ]
+    },
+    "redmi-exec": {
+      "path": "kernel-directed-2026-11-10/sources/redmi-fs_exec.c",
+      "sha256": "cd5a18059c8156330d5191a65cf5afe0d33ad2ac60a55ba903e4db7338f19778",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/fs/exec.c",
+      "functions": [
+        "de_thread"
+      ]
+    },
+    "redmi-filemap": {
+      "path": "kernel-directed-2026-11-10/sources/redmi-mm_filemap.c",
+      "sha256": "9d825608185028fac3d5c00015fcc99a0b6cb2e46008e8b5ce7d7cf12895dfd0",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/mm/filemap.c",
+      "functions": [
+        "filemap_map_pages"
+      ]
+    },
+    "redmi-page-inline": {
+      "path": "kernel-directed-2026-11-10/sources/redmi-include_linux_pgsize_migration_inline.h",
+      "sha256": "1c318800fa00d56e51cf7a2c279daf89ecc98ad7053a790722864882445109af",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/include/linux/pgsize_migration_inline.h",
+      "functions": []
+    },
+    "redmi-memory": {
+      "path": "kernel-audit-2026-11-10/sources/ack-mm_memory.c",
+      "sha256": "17b7f201d75a00a56ccf357ff613e37527a539fd149b3aed53d34e06a86cf3d1",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/mm/memory.c",
+      "functions": [
+        "do_fault_around"
+      ]
+    },
+    "redmi-page-migration": {
+      "path": "kernel-audit-2026-11-10/sources/ack-mm_pgsize_migration.c",
+      "sha256": "ccf96eb4b2ad0e05e6770e236f210b2e5fa832daa5d87caed94b568496753899",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/mm/pgsize_migration.c",
+      "functions": [
+        "madvise_vma_pad_pages"
+      ]
+    },
+    "rt-followup": {
+      "path": "kernel-directed-2026-11-10/sources/5339d13d8b945cd5841d0e70728ee67474ea74f7.patch",
+      "sha256": "eced8666c66804f3e2071acfb631ae784fd447d6ad53be2b900a9721ae02612a",
+      "url": "https://android.googlesource.com/kernel/common/+/5339d13d8b945cd5841d0e70728ee67474ea74f7",
+      "functions": []
+    },
+    "timer-fix": {
+      "path": "kernel-directed-2026-11-10/sources/8eff909dd82da10a599468a514cc1ad07e90c3cc.patch",
+      "sha256": "f1b9086d585e3e195fb90afbe845f093630d216978faaa598d6c3a089f689977",
+      "url": "https://android.googlesource.com/kernel/common/+/8eff909dd82da10a599468a514cc1ad07e90c3cc",
+      "functions": []
+    },
+    "padding-fix": {
+      "path": "kernel-directed-2026-11-10/sources/019d909caeb85547b9aed2beea73101ea73b958f.patch",
+      "sha256": "16fab1138acc02b9fd71e168a7ec5e6897a95bf3294cca5eee24da9dea909f0b",
+      "url": "https://android.googlesource.com/kernel/common/+/019d909caeb85547b9aed2beea73101ea73b958f",
+      "functions": []
+    },
+    "fastrpc-fix": {
+      "path": "kernel-directed-2026-11-10/sources/fastrpc-fix.patch",
+      "sha256": "920eb298afac01c3b9542a268ba10261dec41edd764ce946f46f297d33e5bef1",
+      "url": "https://git.codelinaro.org/clo/la/kernel/msm-5.10/-/commit/a065d4bacdae2cea6678a7528df8008d16452a63.patch",
+      "functions": []
+    },
+    "kgsl-fix": {
+      "path": "kernel-audit-2026-11-10/sources/kgsl-57545.patch",
+      "sha256": "d955dcce9b726d22efa23136ceef6d4408a88ccae81114a0649c1d3d8a354dbe",
+      "url": "https://git.codelinaro.org/clo/la/kernel/msm-5.10/-/commit/874311dc075047c51c9231e3de1bae0a7677b3b7.patch",
+      "functions": []
+    },
+    "redmi-xarray": {
+      "path": "kernel-directed-2026-11-10/sources/redmi-lib_xarray.c",
+      "sha256": "d9e5f41c034f1b6ae7367cd95b1548bbed347ca37b0c543452f3460746f9babd",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/lib/xarray.c",
+      "functions": [
+        "xas_find",
+        "set_bounds"
+      ]
+    },
+    "timer-stable-fix": {
+      "path": "kernel-directed-2026-11-10/sources/timer-stable510.patch",
+      "sha256": "ff8ee581290ad02233acc35ef01f6cbe7064ea56c65423cacf6f60edea66a3d0",
+      "url": "https://github.com/gregkh/linux/commit/67aa823e3e8c229c6d374df79c804f6721cb83b6",
+      "functions": []
+    },
+    "rt-stable-followup": {
+      "path": "kernel-directed-2026-11-10/sources/rt-followup-stable510.patch",
+      "sha256": "9e47054ef8b30bb1cf100ad5bbb0541d5266f61a96bfa2aac13b6eee6c39c913",
+      "url": "https://github.com/gregkh/linux/commit/bfbc047ceb42c0e1fac8f3a155d4548a8bbe76b1",
+      "functions": []
+    },
+    "rt-stable-fix": {
+      "path": "kernel-audit-2026-11-10/sources/rtmutex-5.10-fix.patch",
+      "sha256": "e2784dba97051703874c4f3a1473a33634f7abcd093d0080a3641efc139286b4",
+      "url": "https://github.com/gregkh/linux/commit/f3fa3424bceb128d2be4b3745506b22844b87db7",
+      "functions": []
+    },
+    "redmi-cleanup": {
+      "path": "kernel-directed-2026-11-10/sources/redmi-include_linux_cleanup.h",
+      "sha256": "f813e4a3c091978f55b6d20bdcf75b81081294461beb8127019a6236a17055e4",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/include/linux/cleanup.h",
+      "functions": []
+    },
+    "redmi-rcupdate": {
+      "path": "kernel-directed-2026-11-10/sources/redmi-include_linux_rcupdate.h",
+      "sha256": "7cbca5638c10c5d5bfa4e55a2c45847fd49d213b22e2e4497136f6787e33b424",
+      "url": "https://android.googlesource.com/kernel/common/+/730d06ec05ff5dc34389ff99ea4009411efba5e6/include/linux/rcupdate.h",
+      "functions": []
+    }
+  },
+  "config": {
+    "path": "kernel-audit-2026-11-10/package-config.txt",
+    "sha256": "f0f2ca7bd70fa65dae1930c7bf904e70d3e107bd2cbeab9e9450c5e6f4d3abc7"
+  },
+  "modules": {
+    "msm_kgsl.ko": {
+      "path": "kernel-directed-2026-11-10/msm_kgsl.ko",
+      "sha256": "3216a92340bd190a73887554323f06db86415197d72ebb42ae0ebacbb1cbbf24",
+      "functions": [
+        "get_active_cmdobj_lpac"
+      ],
+      "reviewed_summary": {
+        "metadata": {
+          "vermagic": "5.10.198-gki-g51ab44fbc4b7 SMP preempt mod_unload modversions aarch64",
+          "name": "msm_kgsl",
+          "scmversion": "g51ab44fbc4b7"
+        },
+        "functions": {
+          "get_active_cmdobj_lpac": {
+            "bytes": 436,
+            "sha256": "0c864068388a059d510d6923f57bbf2629938167a7fc541e47980b66dd38b5f1"
+          }
+        }
+      }
+    },
+    "frpc-adsprpc.ko": {
+      "path": "kernel-directed-2026-11-10/frpc-adsprpc.ko",
+      "sha256": "421415da067dc61c95fa90c996112f1d7c8e644c9bc50889284dfbc6d6aff317",
+      "functions": [
+        "fastrpc_internal_invoke",
+        "fastrpc_wait_on_async_queue",
+        "context_free"
+      ],
+      "reviewed_summary": {
+        "metadata": {
+          "vermagic": "5.10.198-gki-g51ab44fbc4b7 SMP preempt mod_unload modversions aarch64",
+          "name": "frpc_adsprpc",
+          "scmversion": "g51ab44fbc4b7"
+        },
+        "functions": {
+          "context_free": {
+            "bytes": 724,
+            "sha256": "d01e192b0d7adc5e71a445cc92d64f9d81002bcfd868320178d0f7ebd2c6cd73"
+          },
+          "fastrpc_internal_invoke": {
+            "bytes": 8524,
+            "sha256": "4b84e064b6f7e93248fd53b3454ca6bda551e38f928ffbbffb418df4ac1942e4"
+          },
+          "fastrpc_wait_on_async_queue": {
+            "bytes": 1324,
+            "sha256": "5f590a00107718cfdb9eb5fd548442dee37f4dde6a5eda5f2a42c07a84425066"
+          }
+        }
+      }
+    }
+  },
+  "firmware_chain": {
+    "archive_sha256": "d2d44b39440d4915a10b3198d0075a32253c6058405ba67be1fc5667a067eac9",
+    "file": "super.img",
+    "size": 6545397556,
+    "sha256": "d24ea23708ab342d9acd09c8942d673bef613bfa523399928d5b2508c199550f",
+    "vendor_dlkm": {
+      "name": "vendor_dlkm_a",
+      "size": 33640448,
+      "sha256": "aca1d5510338d3f503b71f8f73e3a8010b03d9a1829baddbbab50c5681e0ec96",
+      "extents": [
+        [
+          65704,
+          0,
+          11102208,
+          0
+        ]
+      ]
+    }
+  },
+  "comparison_revision": {
+    "tag": "v5.10.262",
+    "commit": "065a677fad98698de04279ba2cb152a472ab8b1f",
+    "tag_object": "1aa370ea034f2ffde63499d90a832c6c31594c6f"
+  }
+}

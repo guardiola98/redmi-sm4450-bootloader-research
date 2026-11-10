@@ -1257,3 +1257,58 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   invasiva, canvis de seguretat o particions. Prioritats: completar
   contrast dels dos fixes GKI; identificar mòduls/portes vendor només
   lectura; seguir writers DDR o un caller Tz/Config concret amb dada nova.
+
+## Seguiment dirigit de root temporal — contractes, backports i mòduls
+
+- 2026-11-10, base `316669e`; main net i pull --ff-only ja actualitzat.
+  [Informe dirigit](docs/kernel-lifetime-followup-2026-11-10.md) i
+  [avaluació principal](docs/android-temporary-root-feasibility.md) actualitzats.
+  Esta entrada substituïx els pendents de captura/patches de la fase anterior.
+- 43499: revisats caller futex proxy, waiter de pila, pi_state, pi_lock,
+  retorns i propagació de prioritats. HAVE_FUTEX_CMPXCHG=y resol la porta
+  de compilació. Confirmat el desajust current/waiter; la sèrie completa
+  requerix f3fa3424bceb i bfbc047ceb42, incloent guard no encolat i ret<0.
+  No confondre la regressió d'un fix parcial amb un crash observat ací.
+- 64560: propietari del timer distint de l'objectiu del rellotge, PID versus
+  canvi de líder, de_thread, delete/set/rearm i free via call_rcu revisats.
+  El fix5.10 67aa823e3e8c combina retry i ordenació release/acquire/rmb.
+  RCU no repara un enllaç de cua persistent; no s'ha provocat la carrera.
+- Validació offline nova: **tres pegats oficials aplicats sense fuzz** a
+  còpies dels quatre fitxers ACK exactes; **huit funcions** normalitzades
+  coincidixen amb el5.10.262 complet, commit065a677fad98698de04279ba2cb152a472ab8b1f.
+  Dependències guard(rcu) presents en les capçaleres ACK. Cap kernel compilat
+  o executat, ni validació d'ABI completa. Opció reproduïble --check-backports.
+- ADB: **18 crides**, una de connexió i17 consultes shell de només lectura.
+  Followup executat i complementat: Adreno613v1, msm_kgsl/frpc_adsprpc Live,
+  nodes adsprpc, pagesize.max4096 i migració=1. Versió/kernel reconfirmats.
+  Ko/scmversion denegats, srcversion/version inexistents; globs LPAC/hwsched
+  sense coincidència al nivell consultat. No equival a capacitat desactivada.
+  Filtre del col·lector corregit per frpc_adsprpc i adreces de mòdul eliminades
+  en el dispositiu abans de capturar. Cap open/ioctl, binari enviat o logcat.
+- Vendor: recuperats només msm_kgsl.ko i frpc-adsprpc.ko del paquet local,
+  via super/vendor_dlkm EROFS amb cadena de hashes. scmversiong51ab44fbc4b7,
+  vermagic5.10.198, distint del GKI. KGSL conserva el guard is_cmdobj absent;
+  FastRPC conserva l'actualització perf asíncrona antiga i la vida compartida
+  que corregix a065d4bacdae. Instruccions/decompilació i quatre hashes de
+  funció contrastats. No s'ha atestat el mòdul carregat ni establit selecció
+  LPAC o portes d'accés async/profiling/DSP: **informació insuficient** per
+  confirmar compatibilitat operativa, tot i la nova evidència del paquet.
+- 58942: flag actiu confirmat, algoritme antic diferent del fix6.12;
+  límit end_pgoff i xas_find restringixen casos de padding. Falta tancar
+  invariants de transformació VMA/hooks. No descartar per5.10/4K ni declarar
+  vulnerable només pel flag. Cap cas límit o descriptor fabricat al mòbil.
+- XBL: writer DDR0x1b+0x60 identificat; dos grups/dos rangs, màxim local
+  condicionat de tres fragments. Model de comptes amb1.296 combinacions.
+  Altres writers, inicialització completa i publicació continuen pendents.
+  Sense consumidor nou Tz/Config i sense reobrir FeatureEnabler/QSEE/entrada33.
+- Validació: **164 proves en22 scripts**, incloses22 noves; manifests
+  kernel/XBL reproduïts, JSON/enllaços locals i git diff --check correctes.
+  17 assertions de contractes i26 fonts/patches fixats; models sense fils,
+  syscalls, adreces o execució kernel. Els inputs originals, ELF, desassemblatges
+  i fonts completes queden en work/ ignorat. Revisió de publicació sense
+  números de sèrie, UUID, tokens, claus, logs crus o adreces runtime.
+- Decisió: recerca estàtica justificada sobretot per43499/64560, **cap via
+  operativa de root ni evidència nova de desbloqueig**. Root no equival a
+  autorització del bootloader. No fastboot, reinici, modificacions de seguretat
+  o particions. Prioritats: build/ABI de laboratori amb fixes; selecció LPAC
+  i portes FastRPC; writer DDR fins a publicació o caller Tz/Config verificable.
