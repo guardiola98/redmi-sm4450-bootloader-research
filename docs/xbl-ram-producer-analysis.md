@@ -204,3 +204,58 @@ Per avançar: seguir el despatx de fases i la consulta0x51 si es necessita
 provar selecció de productor; seguir getter DDR/exclusions amb dades locals
 autèntiques; o reprendre una altra precondició oberta Tz. La mateixa
 cadena v1/entrada33 no justifica proves de fallada sobre el telèfon.
+
+## Continuació: proveïdors DDR i exclusions resolts estàticament
+
+Sessió de kernel/root temporal del 2026-11-10, base `7257cbc`.
+S'ha reutilitzat el mateix ELF i Providers, sense repetir censos.
+L'inspector fixa ara també **50 instruccions** i 12 paraules de les
+interfícies DDR. Són adreces preferides del firmware, no valors Android.
+
+| Interfície / entrada | Definició local | Resultat verificable |
+| --- | --- | --- |
+| 0x1c | Registre `148c3408`, taula `148c4f20` | +0 inicialitza; +0x10 prepara llista; +0x18 publica; +0x20 obté. |
+| 0x1c+0 | `14821b10` | Reserva context0x38 per interfície0x11; el global `148ea098` apunta al context i el flag+0x28 comença en zero. |
+| 0x1c+0x18 | `14821dfc` | Amb context i argument vàlids copia tres paraules de64 bits a context+0x10/+0x18/+0x20 i posa flag1. Copia els punters; no prova transferència d'ownership ni una còpia profunda. |
+| 0x1c+0x20 | `14821e6c` | Retorna context+0x10 només amb global no nul i flag no zero; altrament NULL. El productor el desreferencia després de `1485c770`, sense guard local a `1485c774`. La inicialització prèvia és una precondició, no una fallada observada. |
+| 0x1b | Registre `148c3468`, taula `148c4e38` | +0xb0=`1484f024`, +0xb8=`1484f034`, +0xd8=`14851444`. |
+
+**Origen i ordre DDR:** `14821bc8` prepara la llista des d'esta interfície
+0x1b, usant dos arrays locals del firmware a `148ea0a0` i `148ea120`.
+El getter+0xb0 llig count en `148ee6f0+0xc8`; el punter a eixa estructura
+és el literal `148c7b60`. Les consultes+0xb8 recorren índexs creixents amb
+stride0x28: el selector0 obté base en +0xf8 i el selector1 obté mida en
++0x100 amb `LSR #20`. La llista intermèdia usa stride0x10; el constructor
+SMEM torna a convertir la mida amb `LSL #20`. No hi ha ordenació per base
+en estos passos. La correcció de la conversió requerix les unitats i
+alineació previstes; no s'ha observat un rang real que les incomplisca.
+
+Això identifica l'estructura font i el camp count, però encara no els
+valors efectius, tots els seus writers ni un límit superior provat per al
+count d'eixa estructura. El getter de camp comprova índex<count; això no
+és un límit independent de capacitat. No es presenta un count corrupte
+hipotètic com una entrada legítima ni s'han fabricat descriptors. La
+publicació de la llista i el despatx complet de fases continuen pendents
+si es vol demostrar l'ordre d'inicialització de punta a punta.
+
+**Exclusions:** +0xd8=`14851444` exigix els dos out-pointers i el global
+DDR `148ee6e8` vàlids. Llig el **bit2 del byte +0x250**. Si està a zero,
+la via amb etiqueta literal `MTE is DISABLED` retorna estat0 i count0:
+el wrapper no executa el postprocessador RAM. Si està a1, examina
+registres stride0x10 a partir de +0x1b0: tipus8 és el rang seleccionat,
+tipus0 termina. Els extrems es formen a granularitat64KiB i es comprova
+contigüitat. La via ordinària d'èxit exigix índex de grup zero i extrem
+final no nul; retorna **count1**. Altres resultats passen pel gestor
+comú d'error abans de tornar, del qual no es pressuposa retorn zero.
+
+Els guards del bucle no s'han convertit en una afirmació global de
+seguretat aritmètica. El wrapper reserva0x50 bytes per a este resultat;
+no s'ha provat amb metadades malformades. Ara queda concretada una porta
+que abans era desconeguda: la ruta normal aporta zero o una exclusió,
+segons eixe camp i les condicions indicades.
+
+**No equiparar el nom MTE a una observació hardware:** el probe Android
+no exposa HWCAP2_MTE, però això no llig el byte XBL+0x250 ni demostra el
+seu valor. Cap lectura MMIO, SMEM directe, prova de corrupció o nova dada
+sobre desbloqueig. Es manté la restricció anterior de v1/entrada33; la
+novetat és l'origen de les dades i les portes d'inicialització/exclusió.

@@ -23,6 +23,11 @@ amb argument de fitxer o +0x38; encara sense consumidor exterior.
 exposa chip_family141, exclosa per FeatureEnabler. El caller estàtic no
 prova activació al dispositiu; soc_id568 és un camp diferent.
 
+Continuació DDR des de `7257cbc`: resolts getter/publicació0x1c i
+proveïdor0x1b. La font DDR i la porta d'exclusions tenen ara adreces/camps
+concrets en [l'informe XBL](xbl-ram-producer-analysis.md). No s'ha observat
+la taula runtime; es mantenen les restriccions de v1/entrada33.
+
 ## Candidats demanats
 
 | Candidat | Evidència directa / models | Precondicions i incerteses | Classificació i decisió |

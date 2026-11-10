@@ -148,10 +148,35 @@ def inspect(data):
                         selected_chip=dict(va='0x148b32b8', soc_id=soc_id, raw_part=raw_part,
                                            name='SM_CLARENCE'),
                         note='Family uses hardware family fields; raw-part ID lookup does not alone prove family')
+    ddr_sites = [0x14821b54,0x14821b58,0x14821b70,0x14821b78,0x14821b84,0x14821b8c,0x14821b90,
+                 0x14821c14,0x14821c24,0x14821c2c,0x14821c54,0x14821c78,
+                 0x14821c7c,0x14821cc8,0x14821dbc,
+                 0x14821e00,0x14821e10,0x14821e20,0x14821e24,0x14821e28,
+                 0x14821e70,0x14821e74,0x14821e78,0x14821e84,
+                 0x1484f028,0x1484f02c,0x1484f040,0x1484f048,
+                 0x1484f11c,0x1484f124,0x1484f1a8,0x1484f1ac,
+                 0x14851464,0x14851468,0x1485146c,0x1485147c,0x14851480,
+                 0x148514cc,0x148514d4,0x148514e8,0x148514ec,0x148514f0,
+                 0x1485152c,0x14851534,0x1485154c,0x14851550,0x14851558,0x14851580,
+                 0x1485c770,0x1485c774]
+    ddr_instructions = []
+    for address in ddr_sites:
+        offset, raw = read_va(data, arm, address, 4)
+        ddr_instructions.append(dict(va=hex(address), source_offset=hex(offset), bytes=raw.hex(' ')))
+    ddr_words = []
+    for address in [0x148c3408,0x148c3420,0x148c3468,0x148c3480,
+                    0x148c4f20,0x148c4f30,0x148c4f38,0x148c4f40,
+                    0x148c4ee8,0x148c4ef0,0x148c4f10,0x148c7b60]:
+        offset, raw = read_va(data, arm, address, 8)
+        ddr_words.append(dict(va=hex(address), source_offset=hex(offset),
+                              value=hex(int.from_bytes(raw, 'little'))))
+    ddr_evidence = dict(instructions=ddr_instructions, selected_words=ddr_words,
+                        scope='DDR getter initialization, metadata source and exclusion gate; no runtime DDR values')
     report = dict(source_sha256=SOURCE_SHA, components=layouts,
                   address_kind='Preferred ELF VA, not observed runtime addresses',
                   stage_name='boot_update_ram_partition_table',
                   instructions=instructions, selected_words=words, chip_family=chip_evidence,
+                  ddr_providers=ddr_evidence,
                   scope='Identified RAM producer/updater and selected ChipInfo provenance; no complete XBL audit or runtime SMEM capture')
     return report, data[arm['offset']:arm['offset']+arm['size']]
 
@@ -171,7 +196,7 @@ def main():
         if not output.exists():
             output.write_bytes(arm)
     Path('docs/xbl-ram-producer-evidence.json').write_text(json.dumps(report, indent=2)+'\n')
-    print('Verified 3 consecutive ELF components and',len(report['instructions']),'producer/updater instruction sites and',len(report['chip_family']['instructions']),'ChipInfo sites')
+    print('Verified 3 consecutive ELF components and',len(report['instructions']),'producer/updater instruction sites,',len(report['chip_family']['instructions']),'ChipInfo sites and',len(report['ddr_providers']['instructions']),'DDR provider sites')
 
 
 if __name__ == '__main__':

@@ -945,5 +945,322 @@
     },
     "note": "Family uses hardware family fields; raw-part ID lookup does not alone prove family"
   },
+  "ddr_providers": {
+    "instructions": [
+      {
+        "va": "0x14821b54",
+        "source_offset": "0x54ae8",
+        "bytes": "e1 23 00 91"
+      },
+      {
+        "va": "0x14821b58",
+        "source_offset": "0x54aec",
+        "bytes": "00 07 80 52"
+      },
+      {
+        "va": "0x14821b70",
+        "source_offset": "0x54b04",
+        "bytes": "29 b3 82 52"
+      },
+      {
+        "va": "0x14821b78",
+        "source_offset": "0x54b0c",
+        "bytes": "69 e4 bf 72"
+      },
+      {
+        "va": "0x14821b84",
+        "source_offset": "0x54b18",
+        "bytes": "1f 29 00 b9"
+      },
+      {
+        "va": "0x14821b8c",
+        "source_offset": "0x54b20",
+        "bytes": "49 19 00 f9"
+      },
+      {
+        "va": "0x14821b90",
+        "source_offset": "0x54b24",
+        "bytes": "8a 4e 00 f9"
+      },
+      {
+        "va": "0x14821c14",
+        "source_offset": "0x54ba8",
+        "bytes": "68 a6 00 a9"
+      },
+      {
+        "va": "0x14821c24",
+        "source_offset": "0x54bb8",
+        "bytes": "08 59 40 f9"
+      },
+      {
+        "va": "0x14821c2c",
+        "source_offset": "0x54bc0",
+        "bytes": "60 02 00 b9"
+      },
+      {
+        "va": "0x14821c54",
+        "source_offset": "0x54be8",
+        "bytes": "08 5d 40 f9"
+      },
+      {
+        "va": "0x14821c78",
+        "source_offset": "0x54c0c",
+        "bytes": "29 11 34 8b"
+      },
+      {
+        "va": "0x14821c7c",
+        "source_offset": "0x54c10",
+        "bytes": "22 21 00 91"
+      },
+      {
+        "va": "0x14821cc8",
+        "source_offset": "0x54c5c",
+        "bytes": "22 11 16 8b"
+      },
+      {
+        "va": "0x14821dbc",
+        "source_offset": "0x54d50",
+        "bytes": "1f 01 34 6b"
+      },
+      {
+        "va": "0x14821e00",
+        "source_offset": "0x54d94",
+        "bytes": "09 4d 40 f9"
+      },
+      {
+        "va": "0x14821e10",
+        "source_offset": "0x54da4",
+        "bytes": "0b a9 40 a9"
+      },
+      {
+        "va": "0x14821e20",
+        "source_offset": "0x54db4",
+        "bytes": "2b a9 01 a9"
+      },
+      {
+        "va": "0x14821e24",
+        "source_offset": "0x54db8",
+        "bytes": "2c 29 00 b9"
+      },
+      {
+        "va": "0x14821e28",
+        "source_offset": "0x54dbc",
+        "bytes": "28 09 00 f9"
+      },
+      {
+        "va": "0x14821e70",
+        "source_offset": "0x54e04",
+        "bytes": "08 4d 40 f9"
+      },
+      {
+        "va": "0x14821e74",
+        "source_offset": "0x54e08",
+        "bytes": "c8 00 00 b4"
+      },
+      {
+        "va": "0x14821e78",
+        "source_offset": "0x54e0c",
+        "bytes": "09 29 40 b9"
+      },
+      {
+        "va": "0x14821e84",
+        "source_offset": "0x54e18",
+        "bytes": "e0 03 88 9a"
+      },
+      {
+        "va": "0x1484f028",
+        "source_offset": "0x81fbc",
+        "bytes": "08 b1 45 f9"
+      },
+      {
+        "va": "0x1484f02c",
+        "source_offset": "0x81fc0",
+        "bytes": "00 c9 40 b9"
+      },
+      {
+        "va": "0x1484f040",
+        "source_offset": "0x81fd4",
+        "bytes": "09 c9 40 b9"
+      },
+      {
+        "va": "0x1484f048",
+        "source_offset": "0x81fdc",
+        "bytes": "69 02 00 54"
+      },
+      {
+        "va": "0x1484f11c",
+        "source_offset": "0x820b0",
+        "bytes": "0a 05 80 52"
+      },
+      {
+        "va": "0x1484f124",
+        "source_offset": "0x820b8",
+        "bytes": "08 7d 40 f9"
+      },
+      {
+        "va": "0x1484f1a8",
+        "source_offset": "0x8213c",
+        "bytes": "08 81 40 f9"
+      },
+      {
+        "va": "0x1484f1ac",
+        "source_offset": "0x82140",
+        "bytes": "08 fd 54 d3"
+      },
+      {
+        "va": "0x14851464",
+        "source_offset": "0x843f8",
+        "bytes": "2e 01 00 b4"
+      },
+      {
+        "va": "0x14851468",
+        "source_offset": "0x843fc",
+        "bytes": "c9 41 49 39"
+      },
+      {
+        "va": "0x1485146c",
+        "source_offset": "0x84400",
+        "bytes": "29 02 10 37"
+      },
+      {
+        "va": "0x1485147c",
+        "source_offset": "0x84410",
+        "bytes": "f4 03 1f 2a"
+      },
+      {
+        "va": "0x14851480",
+        "source_offset": "0x84414",
+        "bytes": "e0 03 1f 2a"
+      },
+      {
+        "va": "0x148514cc",
+        "source_offset": "0x84460",
+        "bytes": "ff 21 00 71"
+      },
+      {
+        "va": "0x148514d4",
+        "source_offset": "0x84468",
+        "bytes": "cf 02 00 35"
+      },
+      {
+        "va": "0x148514e8",
+        "source_offset": "0x8447c",
+        "bytes": "d0 c5 7e 29"
+      },
+      {
+        "va": "0x148514ec",
+        "source_offset": "0x84480",
+        "bytes": "0e 3e 10 53"
+      },
+      {
+        "va": "0x148514f0",
+        "source_offset": "0x84484",
+        "bytes": "2f 3e 10 33"
+      },
+      {
+        "va": "0x1485152c",
+        "source_offset": "0x844c0",
+        "bytes": "5f 21 00 f1"
+      },
+      {
+        "va": "0x14851534",
+        "source_offset": "0x844c8",
+        "bytes": "9f 12 00 71"
+      },
+      {
+        "va": "0x1485154c",
+        "source_offset": "0x844e0",
+        "bytes": "b4 00 00 35"
+      },
+      {
+        "va": "0x14851550",
+        "source_offset": "0x844e4",
+        "bytes": "89 00 00 b4"
+      },
+      {
+        "va": "0x14851558",
+        "source_offset": "0x844ec",
+        "bytes": "34 00 80 52"
+      },
+      {
+        "va": "0x14851580",
+        "source_offset": "0x84514",
+        "bytes": "74 02 00 b9"
+      },
+      {
+        "va": "0x1485c770",
+        "source_offset": "0x8f704",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "va": "0x1485c774",
+        "source_offset": "0x8f708",
+        "bytes": "08 00 40 b9"
+      }
+    ],
+    "selected_words": [
+      {
+        "va": "0x148c3408",
+        "source_offset": "0xf339c",
+        "value": "0x1c"
+      },
+      {
+        "va": "0x148c3420",
+        "source_offset": "0xf33b4",
+        "value": "0x148c4f20"
+      },
+      {
+        "va": "0x148c3468",
+        "source_offset": "0xf33fc",
+        "value": "0x1b"
+      },
+      {
+        "va": "0x148c3480",
+        "source_offset": "0xf3414",
+        "value": "0x148c4e38"
+      },
+      {
+        "va": "0x148c4f20",
+        "source_offset": "0xf4eb4",
+        "value": "0x14821b10"
+      },
+      {
+        "va": "0x148c4f30",
+        "source_offset": "0xf4ec4",
+        "value": "0x14821bc8"
+      },
+      {
+        "va": "0x148c4f38",
+        "source_offset": "0xf4ecc",
+        "value": "0x14821dfc"
+      },
+      {
+        "va": "0x148c4f40",
+        "source_offset": "0xf4ed4",
+        "value": "0x14821e6c"
+      },
+      {
+        "va": "0x148c4ee8",
+        "source_offset": "0xf4e7c",
+        "value": "0x1484f024"
+      },
+      {
+        "va": "0x148c4ef0",
+        "source_offset": "0xf4e84",
+        "value": "0x1484f034"
+      },
+      {
+        "va": "0x148c4f10",
+        "source_offset": "0xf4ea4",
+        "value": "0x14851444"
+      },
+      {
+        "va": "0x148c7b60",
+        "source_offset": "0xf7af4",
+        "value": "0x148ee6f0"
+      }
+    ],
+    "scope": "DDR getter initialization, metadata source and exclusion gate; no runtime DDR values"
+  },
   "scope": "Identified RAM producer/updater and selected ChipInfo provenance; no complete XBL audit or runtime SMEM capture"
 }

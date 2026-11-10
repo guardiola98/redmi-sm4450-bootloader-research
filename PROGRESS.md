@@ -1191,3 +1191,25 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   DDR/exclusions o consumidor Config+20. QSEE Android continua sense
   pregunta nova per a repetir captures. Contrast web primari intentat
   sense contingut accessible; cap conclusió depén d’una font no verificada.
+
+## Fonts DDR i porta d'exclusions XBL — continuació des de7257cbc
+
+- Resoltes les taules locals de les interfícies0x1c i0x1b, reutilitzant
+  Providers i el mateix ELF. L'inspector afig50 instruccions i12 paraules
+  seleccionades; no s'han repetit censos ni reconstruccions.
+- Getter0x1c+20 exigeix global/context i flag d'inicialització. El setter
+  publica count/punters; la construcció SMEM pressuposa eixa inicialització.
+  No hi ha un error runtime o ownership complet demostrat.
+- Font DDR identificada: estructura148ee6f0, count+c8, rangs stride28,
+  base+f8 i mida+100 convertida aMiB. Llista intermèdia conserva ordre;
+  falten tots els writers, límit de count i valors efectius.
+- Exclusions0x1b+d8: bit2 del byte+250 de metadades DDR governa entrada.
+  Via ordinària sense eixe bit retorna count0; amb les condicions normals
+  de rang/contigüitat torna count1. El nom MTE del firmware no prova el
+  valor del camp a partir dels HWCAP d'Android.
+- Es mantenen les restriccions de v1/entrada33. Cap prova malformada,
+  lectura MMIO, activació UEFI, root o desbloqueig. Informe i manifest:
+  docs/xbl-ram-producer-analysis.md i docs/xbl-ram-producer-evidence.json.
+- Inspector ampliat correcte i cinc tests de layout dins de la regressió
+  completa de la sessió,142 proves en20 scripts; diff check net. La nova
+  fase kernel aporta13 proves de límits/privacitat, documentada a continuació.
