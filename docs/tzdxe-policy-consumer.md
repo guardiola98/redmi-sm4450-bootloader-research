@@ -387,3 +387,44 @@ documenta en canvi pèrdua del temporal de pool, handles sense Close,
 FreePool(NULL) en errors GetInfo i pèrdua del recompte de lectura curta.
 Els proveïdors Fat i FvSimpleFileSystem tenen distinta vida de l'arrel;
 no s'ha demostrat quin selecciona este caller ni acumulació en execució.
+
+### Finestra concreta de reentrada durant publicació
+
+La primera taula `f250` es publica a `0x2a28` **abans** de LocateProtocol
+SCM `0x2a50`, que emplena `f428`. El word original `f428` és zero; les
+referències reconstruïdes identifiquen `0x2a44` com a pas d'out-pointer,
+mentre les altres són lectures. La rutina anterior de keystore usa un
+handle local distint: no inicialitza este global. No s'afirma absència
+universal d'escriptures externes o àlies no identificats.
+
+El slot +0x18 de la taula acabada de publicar és `0x1e74`. Amb entrada
+vàlida, cache suficient i reserva pool de petició reeixida, arriba a
+`0x1d08`: llig `f428` a `0x1e34` i carrega el callback a **[f428+0x28]**
+a `0x1e3c`, sense guard de NULL ni flag de preparació.
+
+DxeCore establix una possible reentrada **síncrona**, sense necessitar
+dos CPUs: InstallMultiple eleva TPL a16 (`0xc484/0xc488`), instal·la el
+protocol i assenyala notificacions registrades via `0xc400 → 0xb2d8 →
+0xb374 → 0x170f0`. Els events NotifySignal s'encuen per prioritat via
+`0x16d58`. Abans de retornar, `0xc660` restaura el TPL original amb
+`0x16594`; si hi ha notificació pendent de TPL superior a l'original,
+`0x16618/0x1661c/0x16638` la despatxa, callback a `0x16ca4`.
+Les llistes de protocols ja estan actualitzades i el lock s'ha solt.
+
+Per exemple, amb TPL d'entrada4 i un subscriptor NotifySignal de TPL8,
+el callback pot executar-se **dins d'InstallMultiple**, abans de la
+consulta SCM posterior del driver. Si localitza la primera interfície
+i crida +0x18 amb les precondicions anteriors, s'intenta llegir VA0x28.
+No s'ha creat cap event, subscriptor, dada d'entrada ni prova de firmware.
+
+**Classificació:** ordre de publicació/preparació confirmat; accés nul
+per reentrada condicional. Falta un subscriptor real d'este GUID, el seu
+TPL, la crida efectuada i l'estat de mapatge. Sense subscriptor no s'ha
+demostrat cap reentrada; amb TPL igual/inferior al restaurat, el callback
+queda ajornat en esta restauració concreta. No confondre esta finestra
+amb els flags `f558/f55c` de QSEE, ni amb un crash inevitable.
+
+Tres models de l'ordre de notificació verifiquen estes diferències;
+14 proves en el script de recursos. Referències locals reproduïbles:
+`DumpAddressReferences.java … f428 f108` en Providers/TzDxeLA.pe,
+exportades a `work/tz-publication-reentry-refs.txt` (ignorat).

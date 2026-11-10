@@ -1018,3 +1018,16 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Falta caller concret QSEE+0x20 de fitxers; VerifiedBoot+8 de partició
   no és eixa evidència. Informe tzdxe-file-resource-contracts.md conserva
   punts exactes; continuar amb coherència/validació final dels informes.
+
+## Continuació dirigida — reentrada de notificació TzDxeLA
+
+- Recursos de fitxers publicats: `69cc878`. La primera interfície Tz es
+  publica abans de LocateProtocol SCM que emplena f428; +0x18 usa eixe
+  global sense guard si arriben els seus arguments/reserves vàlids.
+- DxeCore pot despatxar notificacions pendents en RestoreTPL abans que
+  retorne InstallMultiple. Reentrada síncrona condicionada a subscriptor
+  i TPL; cap subscriptor concret identificat ni concurrència observada.
+- 14 proves recursos Tz correctes (3 noves d'ordre/TPL), inspector12 PE
+  correcte, diff check net. Total conegut90 en17 scripts. Següent:
+  comprovar que els informes no confonguen NULL local amb retorn ordinari
+  dels proveïdors, i tancar validació/consolidació amb represa exacta.

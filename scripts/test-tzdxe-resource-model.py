@@ -100,6 +100,20 @@ def publication_lifetime(first=0, qsee=0, last=0, enable_qsee=True):
     return state
 
 
+def notification_observation(old_tpl, notify_tpl, subscriber):
+    """DxeCore RestoreTPL can dispatch pending higher-TPL notifications.
+
+    Tz publishes with SCM still uninitialized, then locates SCM after the
+    InstallMultiple return. None means no callback in that interval.
+    """
+    if not 0 <= old_tpl <= 16 or notify_tpl not in (8, 16):
+        raise ValueError('Outside the bounded TPL model')
+    scm_ready = False
+    observed = scm_ready if subscriber and notify_tpl > old_tpl else None
+    scm_ready = True
+    return observed, scm_ready
+
+
 class ResourceTests(unittest.TestCase):
     def test_security_and_encryption_errors_are_distinct_gates(self):
         self.assertEqual(diagnostic_route(0, 1, 0x100, 0, 0), 'security-stop')
@@ -183,6 +197,17 @@ class ResourceTests(unittest.TestCase):
         self.assertTrue(state['returned'])
         self.assertTrue(state['image_live'])
         self.assertEqual(len(state['registrations']), 3)
+
+    def test_pending_notification_can_observe_partial_initialization(self):
+        for notify_tpl in (8, 16):
+            self.assertEqual(notification_observation(4, notify_tpl, True), (False, True))
+
+    def test_no_subscriber_is_not_evidence_of_reentry(self):
+        self.assertEqual(notification_observation(4, 8, False), (None, True))
+
+    def test_equal_or_lower_priority_stays_deferred_at_this_restore(self):
+        self.assertEqual(notification_observation(8, 8, True), (None, True))
+        self.assertEqual(notification_observation(16, 8, True), (None, True))
 
 
 if __name__ == '__main__':
