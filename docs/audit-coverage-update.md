@@ -169,3 +169,23 @@ Conversors RAM del TE: dues vies de format, quatre guardes de capacitat
 i assignació d'atributs revisades; dades SMEM efectives no disponibles.
 Quatre tests d'índexs addicionals: total **76 en 16 scripts**; 131 llocs
 TE hash-pinned. No equival a auditar el productor anterior ni tot el TE.
+
+## Tancament de la sessió autònoma del 2026-11-10
+
+Revisades addicionalment la publicació/descàrrega parcial de TzDxeLA,
+la notificació de protocols de DxeCore i la gestió de fitxers. Fat i
+FvSimpleFileSystem s'han extret del manifest existent; es distingix arrel
+nova de Fat i arrel reutilitzada de FV. L'inspector actual cobrix **12 PE**
+amb revisió dirigida; el TE té **137 llocs** d'instrucció seleccionats.
+No s'ha ampliat el cens ni s'han auditat completament estos components.
+
+La revisió final restringix dues inferències: ShmBridge no retorna NULL
+normalment després dels errors ordinaris estudiats, i DxeCore ompli el
+pool amb 0xAF amb les constants locals intactes. Estes garanties no es
+traslladen a un altre assignador ni a caches que es reutilitzen sense reservar.
+
+Regressió final: **92 proves en 17 scripts**, totes correctes; inspectors
+reproduïxen els informes sense diferències. JSON, enllaços locals i higiene
+Git comprovats; cap binari/secret nou. Detall de troballes, commits i
+[punt de represa](audit-session-2026-11-10.md). Els totals anteriors
+d'este document corresponen a etapes històriques.

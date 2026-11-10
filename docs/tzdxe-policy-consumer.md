@@ -104,8 +104,10 @@ ChipInfo; `f588`, llegit a `0x38b8` i fixat a `0x3920`, només afecta el
 diagnòstic de versió/log posterior a reservar i consultar política. Cap
 dels dos impedix una altra reserva de política. La rutina no conté un
 bucle de reintents de política: una entrada pot reservar com a màxim un
-bloc de política. La repetició requerix noves crides externes. La reentrada
-simultània, el TPL efectiu i la sincronització entre clients no s'han provat.
+bloc de política. La repetició requerix noves entrades a la rutina, que
+poden vindre de múltiples callsites dins d'una crida QSEE, com es delimita
+més avant. La reentrada simultània, el TPL efectiu i la sincronització
+entre clients no s'han provat; la finestra de notificació posterior és condicional.
 
 Callers directes de `0x1d08` confirmats als bytes: `0x1ed4` (entrada de
 protocol +0x18), `0x216c`, `0x25c8` i `0x28c4` (altres vies de càrrega).

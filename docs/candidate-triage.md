@@ -91,23 +91,25 @@ EL3, cap cens GUID ni experiments RSA; executar els tests ja existents
 forma part de la regressió. No s'ha consultat xarxa per investigar firmware;
 només s'han publicat commits autoritzats al repositori.
 
-**92 proves en 17 scripts**: recompte dels scripts, amb comprovació final
-completa registrada en PROGRESS.md. Inclouen 14 models nous TzDxeLA,
+**92 proves en 17 scripts**, totes correctes en la regressió final
+registrada en PROGRESS.md. Inclouen 14 models nous TzDxeLA,
 11 de configuració, 4 d'índexs RAM i 9 de recursos de fitxers. Inspectors
 verifiquen hashes i bytes seleccionats; `git diff --check` net. Els models
 usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 
 ## Punt de continuació i tres prioritats
 
-1. **Cache TzDxeLA:** seqüència QSEE i caller VerifiedBoot identificats;
-   acotar mides/metadades de partició i selecció d'altres clients només amb
-   artefactes autoritzats, sense obrir keystore ni assumir retorns segurs.
-2. **Configuració:** candidats locals delimitats en 25 callsites revisats;
-   reobrir impacte amb entrada efectiva diferent o consumidor de +0x20.
-   No fabricar recursos alternatius ni repetir models de defaults resolts.
-3. **Conseqüència SCM pendent d'entorn:** la mescla SMEM item 0x192
-   és la frontera concreta abans del mapa MMU; el RAW no inclou zero.
-   Sense estat efectiu, mantindre crash/underflow/recuperació condicionals.
+1. **Consumidors/notificacions TzDxeLA:** identificar subscriptor de la
+   primera interfície publicada abans de preparar SCM, o caller QSEE+0x20
+   de fitxers, amb TPL/arguments concrets. VerifiedBoot+8 no prova eixes vies.
+2. **Productor SMEM0x192:** delimitar versió/ordre/comptes admissibles
+   des d'artefactes locals autoritzats. És la frontera dels defectes RAM
+   i de la mescla del mapa MMU; sense evidència efectiva, crash SCM condicional.
+3. **Configuració:** continuar amb consumidor real de biblioteca+0x20
+   o escriptura posterior a la taula compartida. No repetir els 25 callsites
+   revisats, defaults resolts, monitor EL3, censos GUID o models RSA.
 
 Les quatre fases demanades estan documentades; l'auditoria no es declara
 exhaustiva. La continuació prioritza les noves rutes amb evidència concreta.
+El [tancament de sessió](audit-session-2026-11-10.md) registra commits,
+comandes de reproducció, projectes locals i adreces exactes de represa.

@@ -118,7 +118,7 @@ def main():
                   ram_attribute_words=[dict(va=hex(a), value=hex(int.from_bytes(
                       read_va(data, layout, a, 8)[1], 'little')))
                       for a in (0xa7038ae8,0xa7038af8,0xa7038b00)],
-                  scope='Manually reviewed configuration and RAM-table paths only; no full TE audit or runtime snapshot')
+                  scope='Selected configuration, RAM-table and image-unload paths; no full TE audit or runtime snapshot')
     Path('docs/uefi-config-contract.json').write_text(json.dumps(report, indent=2)+'\n')
     print('Verified config TE layout, shared HOB identity and', len(instructions), 'instruction sites')
 

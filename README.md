@@ -5,12 +5,15 @@ Community-oriented, reproducible research on the boot chain of Xiaomi devices bu
 **Status: research only. No unlock, exploit, or root method has been demonstrated.**
 
 The current static/offline audit is summarized in [candidate triage](docs/candidate-triage.md)
-and [PROGRESS.md](PROGRESS.md), with evidence, coverage limits and next steps.
+and the [2026-11-10 session report](docs/audit-session-2026-11-10.md), with
+published commits, reproduction steps and an exact resume point in [PROGRESS.md](PROGRESS.md).
 This audit phase uses local artifacts and synthetic tests only; it does not use
 the device collection workflow described in the historical baseline below.
 The current evidence covers [SCM cleanup contracts](docs/scm-initialization-analysis.md),
-[TzDxeLA resource ownership](docs/tzdxe-policy-consumer.md) and
-[UEFI configuration provenance](docs/uefi-configuration-provenance.md).
+[TzDxeLA resource ownership](docs/tzdxe-policy-consumer.md),
+[file resource contracts](docs/tzdxe-file-resource-contracts.md),
+[UEFI configuration provenance](docs/uefi-configuration-provenance.md) and
+[RAM descriptor conversion](docs/uefi-ram-table-analysis.md).
 Confirmed programming defects are distinguished from conditional activation
 and unproven security impact.
 

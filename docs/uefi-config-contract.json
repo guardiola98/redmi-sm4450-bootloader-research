@@ -941,5 +941,5 @@
       "value": "0x100000022"
     }
   ],
-  "scope": "Manually reviewed configuration and RAM-table paths only; no full TE audit or runtime snapshot"
+  "scope": "Selected configuration, RAM-table and image-unload paths; no full TE audit or runtime snapshot"
 }

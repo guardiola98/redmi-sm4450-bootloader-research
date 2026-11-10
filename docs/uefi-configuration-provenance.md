@@ -44,8 +44,8 @@ El getter numèric compara noms sense distingir majúscules ASCII
 Clau absent: EFI error 14; taula/base no preparada: error 6;
 out-pointer nul al getter de 64 bits: error 2; valor nul o format
 rebutjat: error 3. El parser admet decimal i prefixos `0x`/`0X`; el
-valor `0xC4` és representable. No s'atribuïx validació exhaustiva dels
-casos d'overflow decimal o cadenes degenerades a esta revisió.
+valor `0xC4` és representable. La revisió posterior d'este informe delimita
+l'overflow decimal; no s'atribuïx validació exhaustiva de tota cadena possible.
 El wrapper de 32 bits també pressuposa un out-pointer vàlid: no hereta
 el control de NULL del getter de 64 bits perquè li passa el seu local
 de pila. SCM li proporciona locals vàlids; no hi ha caller nul provat.
@@ -121,8 +121,9 @@ generar un fitxer de configuració que active la frontera.
 `python3 scripts/inspect-scm-static-config.py` inventaria línies i seccions;
 no emula el parser. `python3 scripts/inspect-uefi-config-contract.py`
 verifica hash del TE dins d'`uefi.elf`, mapatge, callbacks i identitat HOB.
-`python3 scripts/test-uefi-config-model.py`: sis proves sintètiques de
-validesa de temporals, guards SCM, frontera de taula i mapatge.
+`python3 scripts/test-uefi-config-model.py`: onze proves sintètiques de
+validesa de temporals, guards, frontera de taula, conversions i mapatge,
+incloses les ampliacions de les seccions posteriors.
 
 L'import TE antic no disposava de loader natiu. Ara s'ha usat BinaryLoader
 sobre els bytes originals a base de fitxer `0xa7001f38`, processador

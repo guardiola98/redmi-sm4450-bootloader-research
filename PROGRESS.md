@@ -1054,3 +1054,26 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   la cua copiada és0xAF; retirada inferència de dades antigues indeterminades.
   No generalitzar a caches privades reutilitzades. Nou proves de fitxers
   correctes, inspector12 PE correcte, diff check net. Total92 en17 scripts.
+
+## Tancament verificat — quatre fases i continuació dirigida
+
+- Última fase d'anàlisi publicada: `641b99f`. Les quatre fases inicials
+  i les continuacions tenen commits separats, tots publicats sense force-push.
+  Registre complet i límits en docs/audit-session-2026-11-10.md.
+- Regressió completa final: **92 proves en 17 scripts**, totes correctes
+  (54 anteriors +38 afegides). Inspectors:12 PE,137 llocs TE, recurs RAW;
+  regeneració sense canvis. `git diff --check a566643 HEAD` net.
+- Revisió dels canvis: només Markdown, Python, Java i JSON textuals;
+  cap binari, clau privada, token o dada de dispositiu afegits. JSON vàlid
+  i enllaços locals resolts. Firmware/exportacions romanen en work/ ignorat.
+- No s'ha executat firmware, accedit al mòbil, provocat fallades reals,
+  generat payloads o fet recerca externa. Només xarxa Git autoritzada.
+- Represa1: subscriptor Tz f108/f250 amb TPL, o caller QSEE+0x20
+  31dc→279c→2414→2630; VerifiedBoot+8 no prova ruta de fitxers.
+- Represa2: productor local SMEM0x192 per a TE a70230c4, ordre/versió/
+  recompte dels conversors a7023300/a70234d4 i conseqüència de mapa SCM.
+- Represa3: consumidor biblioteca Config+0x20 a701d728→a701d5b8 o
+  escriptura posterior a taula a703c428. No repetir defaults ni censos.
+- Projectes/callers/exports exactes en l'informe de tancament. ConfigTeLayout
+  és el TE vàlid; ConfigTeAudit és l'intent antic incorrecte. Les preguntes
+  pendents no justifiquen afirmar impacte runtime o autenticació eludida.
