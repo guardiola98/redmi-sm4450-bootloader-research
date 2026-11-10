@@ -166,3 +166,73 @@ identifica un productor de política. Tests sintètics d'estats i cotes en
 Reproducció: `python3 scripts/inspect-reviewed-pe-evidence.py`,
 `python3 scripts/inspect-scm-static-config.py` i el test anterior. Les
 exportacions Ghidra són locals/ignorades, sense PE propietaris en Git.
+
+## Revisió dels contractes d'error — continuació des d'a566643
+
+La revisió del **DxeCore local**, SHA-256
+`a7fb96099cd5793966a4c01dc20a046d67c1858176e48cf3c9d2c6b69563b98c`,
+aporta una comprovació del proveïdor de Boot Services, sense recórrer a
+una especificació externa ni assumir una versió d'EDK2. La taula amb
+signatura `BOOTSERV` a RVA `0x2a578` conté AllocatePool=`0xffd4`
+(+0x40) i FreePool=`0x1048c` (+0x48). La connexió efectiva pressuposa
+que el SystemTable passat a SCM correspon a este Core i no ha sigut alterat.
+
+| Operació | Contracte local verificat | Conseqüència per a SCM |
+| --- | --- | --- |
+| AllocatePool → `0xfeec` | Per al tipus 4 i out-pointer vàlid de SCM, inicialitza `*out=0` a `0xff4c`; error de lock o reserva nul·la retorna EFI error 9. Reserva no nul·la retorna zero. | Productor ordinari de NULL verificat també al Core; no implica que s'haja produït ni que siga induïble. No hi ha estat d'èxit amb `*out=NULL` en esta ruta. |
+| Wrapper SCM `0x6acc` | EFI_ERROR → NULL; èxit no nul → `0x6dd0`, neteja de la mida demanada. | Les taules tenen zero-fill quan l'assignació acaba normalment. La mida és sempre almenys 32 bytes, inclosa configuració zero. |
+| FreePool → `0x100d0` | `CBZ x0` abans de llegir metadades; NULL retorna EFI error 2 (`0x10128/2c`). | **No és un `free(NULL)` d'èxit**. El wrapper SCM `0x6b84` convertiria l'error en ASSERT/espera. Però `0x4cec` evita FreePool si la reserva és nul·la: no és la causa del defecte observat. |
+| ShmBridge +0x10 → `0x2b4c` | NULL o punter sense coincidència: no modifica la llista; coincidència: marca disponible, sense retornar pàgines a Boot Services. El wrapper retorna zero. | És un contracte diferent del FreePool anterior. La recuperació local és reutilització, no necessàriament reducció de pàgines reservades. |
+| Esborrar objecte SCM `0x57fc` | Valida l'índex calculat, no NULL, alineació, marcador ni ocupació. | Amb objecte/base zero i nombre remot positiu, l'índex zero passa. No és un alliberador amb semàntica de NULL segura. |
+
+L'última comprovació de `d450` és posterior als accessos d'objectes i
+`d468+8`; per això el tractament documentat de NULL en FreePool no salva
+la inicialització parcial. Si les escriptures a zero finalitzaren,
+`0x5844/48` també decrementaria `d490`, inicialment zero. Dos esborrats
+portarien el comptador a `2^64-2`. És una conseqüència **condicionada a
+continuar després dels accessos**, no una corrupció observada. Tampoc es
+demostra idempotència: després de FreePool la neteja no posa a zero les
+bases globals. Una segona invocació requeriria estudiar els seus callers;
+no es declara doble alliberament accessible.
+
+### Inventari de propietat en les eixides seleccionades
+
+| Punt de fallada | Estat adquirit | Recuperació local / retorn |
+| --- | --- | --- |
+| Segona reserva ShmBridge nul·la | Primera reserva | Es marca disponible amb +0x10; retorn EFI error 9 si el proveïdor torna normalment. |
+| AllocatePool de taules | Dues reserves ShmBridge, taules inexistents | `0x4b7c` accedix a bases nul·les; no es pot garantir el retorn d'error preparat. |
+| Localització/registre d'objectes posterior | Dues reserves ShmBridge i taules | Es crida `0x4b7c`; els estats parcials i els callbacks continuen sent precondicions per acabar. El retorn normal d'error de `0x4774` no allibera les dues reserves externes. |
+| **CreateEventEx després d'objectes reeixits** | Dues reserves ShmBridge, taules i client creats | `0x384c → 0x3854` retorna l'error sense +0x10 **ni `0x4b7c`**. S'amplia l'omissió local a la reserva de taules d'este camí concret. |
+
+L'última fila és evidència nova: el pool `d450` no forma part de la llista
+de pàgines que recorre el destructor `0x6390`. Amb configuració per defecte
+són 11.296 bytes sol·licitats addicionals sense FreePool local; amb altres
+configuracions, la fórmula anterior. No es quantifica la memòria física
+total ni es dona per provada una fuga acumulativa o l'absència de recuperació
+externa. Les branques que passen per ASSERT no es compten com retorns normals.
+
+### Accés nul: què determina l'entorn
+
+També s'ha revisat de manera acotada **ArmCpuDxe**, SHA-256
+`b8a7217745f23817c167c397b4a439c1e9a1c2c28f8bf7ee84479bf03c83e6b1`.
+`0x4300` prepara vectors, `0x3028` selecciona VBAR segons CurrentEL;
+`0x44b8` delega al handler registrat o a `0x75ec` quan el slot és nul.
+Este gestor per defecte diagnostica i arriba a ASSERT a `0x7c50`, seguit
+de bucle explícit a `0x7c54`. El helper d'espera `0x7254` també posa a
+zero un local i el consulta repetidament. No hi ha ací conversió genèrica
+de l'excepció a EFI error 9 amb retorn a l'inicialitzador.
+
+Açò **no demostra** que l'STR a zero genere excepció ni que use eixe
+handler. Falten: traduccions/atributs de pàgina actius per a VA 0..11,
+nivell d'excepció efectiu, vectors/handlers instal·lats en eixe moment,
+i intervenció eventual de watchdog o depuració. Una pàgina inaccessible
+podria interrompre la inicialització; una pàgina escrivible podria rebre
+els stores. Cap de les dues alternatives es presenta com observació.
+No s'ha revisitat el monitor EL3; són rutines del driver UEFI local.
+
+Reproducció de les noves peces:
+`python3 scripts/extract-selected-uefi.py DxeCore ArmCpuDxe`, seguit de
+l'inspector de bytes. L'extractor usa el manifest existent, valida hash
+del contenidor i de cada PE i no repetix censos GUID. Per a Ghidra:
+importació PE ARM64 i scripts `DumpFunctions.java`/`DumpInstructions.java`
+en `scripts/ghidra/`; conservar les exportacions només en `work/`.

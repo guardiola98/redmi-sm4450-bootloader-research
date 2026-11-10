@@ -1,6 +1,6 @@
 # PROGRESS.md — Investigació del bootloader Redmi 12 5G (SM4450)
 
-**Última actualització:** 2026-11-09  
+**Última actualització:** 2026-11-10
 **Estat:** investigació / anàlisi estàtica, **sense mètode de desbloqueig verificat**  
 **Repositori:** [guardiola98/redmi-sm4450-bootloader-research](https://github.com/guardiola98/redmi-sm4450-bootloader-research)
 
@@ -827,3 +827,27 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   e37b001 (SCM/ShmBridge i neteja parcial); classificació en el commit següent.
   Sense push. Aturada després de les quatre fases acotades, amb preguntes
   concretes per a la represa; no es declaren esgotades totes les fonts locals.
+
+## Auditoria autònoma des d'a566643 — fase 1, contractes SCM
+
+- Punt inicial verificat: `main` net en `a566643`. Abast d'esta sessió:
+  seguretat/robustesa estàtica sobre firmware local, sense dispositiu,
+  execució de firmware, fallades de memòria induïdes ni mecanismes de bypass.
+- DxeCore nou en la revisió funcional: taula Boot Services identifica
+  AllocatePool i FreePool. Per a SCM, el primer retorna error 9/out=NULL
+  en fallades ordinàries; FreePool(NULL) retorna error 2. El wrapper SCM
+  de FreePool faria ASSERT, però la neteja parcial falla abans del seu guard.
+- Precisats zero-fill de taules, diferències amb ShmBridge i absència
+  d'idempotència garantida. Underflow del comptador remot només si els
+  stores nuls finalitzen; no es presenta com execució observada.
+- Nou cas concret de recursos: error CreateEventEx posterior a inicialitzar
+  objectes omet també FreePool de les taules, a més de les dues reserves
+  ShmBridge. No s'afirma acumulació, esgotament ni recuperació global absent.
+- ArmCpuDxe: ruta de diagnòstic per defecte acaba en ASSERT/bucle. Mapatge
+  de VA zero, CurrentEL i handlers efectius no establits; cap crash concret
+  ni canvi de política inferit. No s'ha revisitat el monitor EL3.
+- Extractor dirigit reutilitza metadades i hashes existents, sense cens nou;
+  evidència ampliada en reviewed-pe-evidence.json i informe SCM.
+- Validació d'esta fase: inspector de 8 PE, 5 proves del model SCM i 3
+  d'extracció correctes; `git diff --check` net. Següent: diagnòstic/reentrada
+  TzDxeLA.

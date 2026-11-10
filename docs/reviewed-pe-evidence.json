@@ -1,5 +1,129 @@
 [
   {
+    "name": "DxeCore",
+    "sha256": "a7fb96099cd5793966a4c01dc20a046d67c1858176e48cf3c9d2c6b69563b98c",
+    "ffs": "d6a2cb7f-6a18-4e2f-b43b-9920a733700a",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [],
+    "instructions": [
+      {
+        "rva": "0xff3c",
+        "bytes": "e2 03 00 b4"
+      },
+      {
+        "rva": "0xff4c",
+        "bytes": "7f 02 00 f9"
+      },
+      {
+        "rva": "0xff74",
+        "bytes": "20 02 f8 b7"
+      },
+      {
+        "rva": "0xff98",
+        "bytes": "60 02 00 f9"
+      },
+      {
+        "rva": "0xffac",
+        "bytes": "09 1f 00 91"
+      },
+      {
+        "rva": "0xffb0",
+        "bytes": "1f 01 00 f1"
+      },
+      {
+        "rva": "0xfff8",
+        "bytes": "bd ff ff 97"
+      },
+      {
+        "rva": "0x100d0",
+        "bytes": "c0 02 00 b4"
+      },
+      {
+        "rva": "0x10128",
+        "bytes": "40 00 80 d2"
+      },
+      {
+        "rva": "0x1012c",
+        "bytes": "00 00 f0 f2"
+      },
+      {
+        "rva": "0x104a8",
+        "bytes": "0a ff ff 97"
+      },
+      {
+        "rva": "0x104b0",
+        "bytes": "40 01 f8 b7"
+      }
+    ],
+    "words": [
+      {
+        "rva": "0x2a5b8",
+        "value": "0xffd4"
+      },
+      {
+        "rva": "0x2a5c0",
+        "value": "0x1048c"
+      }
+    ]
+  },
+  {
+    "name": "ArmCpuDxe",
+    "sha256": "b8a7217745f23817c167c397b4a439c1e9a1c2c28f8bf7ee84479bf03c83e6b1",
+    "ffs": "b8d9777e-d72a-451f-9bdb-bafb52a68415",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [],
+    "instructions": [
+      {
+        "rva": "0x3038",
+        "bytes": "41 00 00 b5"
+      },
+      {
+        "rva": "0x3040",
+        "bytes": "00 c0 18 d5"
+      },
+      {
+        "rva": "0x3048",
+        "bytes": "00 c0 1c d5"
+      },
+      {
+        "rva": "0x3050",
+        "bytes": "00 c0 1e d5"
+      },
+      {
+        "rva": "0x44d0",
+        "bytes": "1f 01 02 eb"
+      },
+      {
+        "rva": "0x44f0",
+        "bytes": "60 00 1f d6"
+      },
+      {
+        "rva": "0x4528",
+        "bytes": "31 0c 00 14"
+      },
+      {
+        "rva": "0x7268",
+        "bytes": "ff 07 00 f9"
+      },
+      {
+        "rva": "0x726c",
+        "bytes": "e8 07 40 f9"
+      },
+      {
+        "rva": "0x7270",
+        "bytes": "e8 ff ff b4"
+      },
+      {
+        "rva": "0x7c50",
+        "bytes": "8f ea ff 97"
+      },
+      {
+        "rva": "0x7c54",
+        "bytes": "00 00 00 14"
+      }
+    ]
+  },
+  {
     "name": "MiTokenDxe",
     "sha256": "5960ae5e4b2ae712f8ef1e854cb37e3fcaf0ecb1427aa40eeebd733829be68b9",
     "ffs": "068aae46-bdc6-4073-85d5-31c5eef19a15",
@@ -544,6 +668,30 @@
         "bytes": "1f fd 00 29"
       },
       {
+        "rva": "0x4ce8",
+        "bytes": "00 29 42 f9"
+      },
+      {
+        "rva": "0x4cec",
+        "bytes": "a0 00 00 b4"
+      },
+      {
+        "rva": "0x4cfc",
+        "bytes": "a2 07 00 14"
+      },
+      {
+        "rva": "0x5840",
+        "bytes": "28 49 42 f9"
+      },
+      {
+        "rva": "0x5844",
+        "bytes": "08 05 00 d1"
+      },
+      {
+        "rva": "0x5848",
+        "bytes": "28 49 02 f9"
+      },
+      {
         "rva": "0x6aec",
         "bytes": "00 01 3f d6"
       },
@@ -552,12 +700,32 @@
         "bytes": "c0 00 f8 b7"
       },
       {
+        "rva": "0x6af8",
+        "bytes": "a0 00 00 b4"
+      },
+      {
+        "rva": "0x6b00",
+        "bytes": "b4 00 00 94"
+      },
+      {
         "rva": "0x6b08",
         "bytes": "e0 03 1f aa"
       },
       {
         "rva": "0x6b20",
         "bytes": "eb ff ff 17"
+      },
+      {
+        "rva": "0x6b98",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x6b9c",
+        "bytes": "60 00 f8 b7"
+      },
+      {
+        "rva": "0x6bd4",
+        "bytes": "47 00 00 14"
       },
       {
         "rva": "0x6da0",
