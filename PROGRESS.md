@@ -851,3 +851,23 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Validació d'esta fase: inspector de 8 PE, 5 proves del model SCM i 3
   d'extracció correctes; `git diff --check` net. Següent: diagnòstic/reentrada
   TzDxeLA.
+
+## Auditoria autònoma — fase 2, TzDxeLA
+
+- Fase 1 publicada: `b9aa80f` a origin/main, sense binaris ni dades privades.
+- Reconstruïdes portes de diagnòstic: flags de cache no impedixen repetir
+  la reserva de política; hi ha quatre BL locals al helper de càrrega,
+  però cap freqüència/seqüència real de consumidors provada.
+- Errors de càrrega es reduïxen a ID zero i error EFI 1 en el caller
+  revisat; el diagnòstic no repara l'estat. Branca xifrada té free lògic;
+  política no. Destructor de l'allocator propi omet nodes ocupats.
+- Retenció de política: almenys una pàgina de capacitat per reserva reeixida,
+  possiblement reutilitzada d'un bloc major. No és prova de noves pàgines
+  físiques en cada entrada ni d'una fuga acumulativa observada.
+- Nova inconsistència entre components: cache TzDxeLA de 0x82000 conserva
+  punter/capacitat després de ShmBridge +0x10. Segona entrada compatible
+  no readquirix el node; free repetit duplica comptabilitat i un altre
+  client podria rebre el bloc. Defecte local confirmat; alias/corrupció
+  efectiva i callers repetits continuen condicionals.
+- Quatre proves sintètiques noves passen; models existents SCM i bytes
+  verificats. Següent: origen i sobreescriptures de UEFI Config Lib.
