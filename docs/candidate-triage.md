@@ -1,6 +1,6 @@
 # Classificació i punt de represa — 2026-11-10
 
-Continuació des de `f6672cc`, exclusivament estàtica/offline sobre artefactes
+Continuació vigent des de `a566643`, exclusivament estàtica/offline sobre artefactes
 locals autoritzats. «Confirmat» qualifica el defecte de programació i les
 seues precondicions verificades; **no equival a vulnerabilitat explotable**.
 «En espera» és una decisió de prioritat, no una prova d'inaccessibilitat.
@@ -27,11 +27,20 @@ censos GUID ni proves del monitor per justificar una conclusió nova.
 | Candidat | Fet verificat | Límit / decisió |
 | --- | --- | --- |
 | ScmDxeLA: neteja amb inicialització parcial | AllocatePool EFI_ERROR → NULL sense ASSERT; 0x4774 prepara error 9 però crida 0x4b7c. Amb globals originals zero i nombre remot per defecte, 0x57fc intenta escriure a base nul·la; hi ha lectura posterior de base nul·la+8. | **Defecte confirmat sota error ordinari d'assignació. Prioritat alta dins de la investigació**, sense grau de severitat de seguretat assignat. Activació, mapatge i efecte real desconeguts. |
-| TzDxeLA: búfer de política no recuperat | 0x3454 reserva/neteja 0x4c4, consulta 0x02001401 i no allibera eixa reserva en error ni retorn. Caller directe 0x1e50 i entrada del seu protocol +0x18 identificats. | **Defecte local confirmat; conseqüència acumulativa condicional.** Cal reconstruir freqüència/reentrada i portes de diagnòstic; el seu +0x18 no és el de MiToken. |
-| ScmDxeLA: dues reserves ShmBridge en errors tardans | 0x3744 retorna d'error d'objectes o CreateEventEx sense alliberar les reserves; callback de neteja encara no registrat en eixes vies. Destructor de la imatge tracta una altra llista. | **Omissió local confirmada en retorns normals; impacte condicional.** No assumir que la fallada inicial de taules retorna normalment: té el defecte anterior. No estendre a totes les assignacions. |
+| TzDxeLA: búfer de política no recuperat | 0x3454 reserva/neteja 0x4c4 i omet free en totes les eixides posteriors. Flags de cache no impedixen noves reserves; destructor omet nodes ocupats. | **Defecte local confirmat; acumulació condicional.** Portes de diagnòstic reconstruïdes; falta seqüència real repetida amb assignacions reeixides. El seu +0x18 no és el de MiToken. |
+| ScmDxeLA: recursos en errors tardans | 0x3744 retorna sense recuperar dues reserves ShmBridge; si falla CreateEventEx després d'inicialitzar objectes, també omet el pool de taules (11296 bytes per defecte). Destructor tracta una altra llista. | **Omissió local confirmada; acumulació condicional.** No assumir retorn normal després dels accessos nuls de la fallada inicial de taules. |
+| TzDxeLA/ShmBridge: cache alliberada però vigent | 0x1e74 allibera el node compartit sense invalidar punter/capacitat; 0x1f2c retorna la cache sense readquirir-lo. Free de ShmBridge no comprova busy. | **Inconsistència local confirmada.** Repetició compatible duplica comptabilitat; un client intermedi pot crear àlies. Seqüència real, corrupció i pàgines retornades a UEFI no demostrades. |
+| UEFI Config Lib: temporal indeterminat en error | Getter de 32 bits 0xa701d578 usa el temporal sense inicialitzar encara que falle el getter ampli; pot escriure out-word indeterminat o substituir error original per error 2. | **Defecte confirmat de gestió d'error.** No convertix error en èxit; SCM comprova estat zero i conserva defaults. No prova dada efectiva indeterminada en SCM. |
+| Parser de configuració: frontera de capacitat | 0xa7012af8 rebutja count>capacitat, però accepta igualtat i escriu un descriptor fora dels 16*capacitat bytes declarats. | **Defecte condicional confirmat.** Recurs local té 43 entrades per a capacitat 64: no l'activa. Cap configuració alternativa efectiva ni corrupció física demostrada. |
 
 Detall i bytes: [inicialització SCM](scm-initialization-analysis.md),
-[TzDxeLA](tzdxe-policy-consumer.md), [manifest PE](reviewed-pe-evidence.json).
+[TzDxeLA](tzdxe-policy-consumer.md), [manifest PE](reviewed-pe-evidence.json),
+[procedència de configuració](uefi-configuration-provenance.md).
+DxeCore confirma error ordinari/NULL del pool i error 2 per FreePool(NULL).
+ArmCpuDxe té diagnòstic/espera per defecte, però el mapatge de VA zero,
+CurrentEL i handlers actius no estan establits; no es declara un crash concret.
+La cadena de configuració verificada prediu defaults SCM i SecurityFlag=0xC4
+només sota la taula local intacta; no certifica valors efectius en execució.
 Les conseqüències potencials són interrupció de la inicialització o retenció
 de memòria; no s'ha demostrat cap modificació de política de seguretat,
 autenticació, claus, persistència o estat de bloqueig.
@@ -54,42 +63,38 @@ autenticació, claus, persistència o estat de bloqueig.
 - El rebuig d'una ruta local SCM, inclosa la convenció antiga estudiada,
   no prova indisponibilitat global del servei ni equivalència entre transports.
 
-## Cobertura, proves i aturada
+## Cobertura i proves vigents
 
-Inventari: **110 ocurrències PE + un TE exterior**, ABL separat. 71 DEPEX
-interpretades; TE caracteritzat estructuralment; Ebl/QcomBds, TzDxeLA i
-ShmBridge revisats només en funcions pertinents. No són 110 auditories
-funcionals completes. Manifestos conserven contenidor, FFS, secció, hash
-i mapatge. El loader Ghidra disponible no ha importat directament el TE;
-cap semàntica s'ha atribuït a partir d'eixe intent fallit.
+Inventari: **110 ocurrències PE + un TE exterior**, ABL separat; 71 DEPEX
+interpretades. Revisió funcional dirigida de DxeCore, ArmCpuDxe i la ruta
+de configuració del TE, a més dels components anteriors. No són auditories
+completes dels executables. El TE s'ha importat amb mapatge de seccions
+explícit verificat contra hashes/offsets; l'error històric del loader natiu
+no és una barrera actual per a esta ruta. Vegeu el procediment reproduïble
+en [configuració](uefi-configuration-provenance.md).
 
-No s'ha identificat cap consumidor MiToken +0x18 després d'esta revisió
-acotada. La cerca d'impacte queda en espera per manca de nova evidència,
-no perquè s'hagen resolt totes les crides indirectes. Contracte del productor
-de política, dades efectives de configuració i altres handlers carregables
-continuen oberts. No s'ha fet xarxa ni s'han incorporat fonts públiques noves.
+No s'ha identificat cap nou consumidor MiToken +0x18. La cerca d'impacte
+continua en espera de caller/productor concret. No s'ha repetit el monitor
+EL3, cap cens GUID ni experiments RSA; executar els tests ja existents
+forma part de la regressió. No s'ha consultat xarxa per investigar firmware;
+només s'han publicat commits autoritzats al repositori.
 
-La suite s'executa amb cada `scripts/test-*.py` separat: **54 proves en
-13 scripts**, incloses 13 noves (4 DEPEX, 4 TE, 5 SCM). Els models no
-executen firmware ni fan accessos a les adreces nul·les calculades.
-Hashes/bytes verificats pels inspectors dels components nous; `git diff
---check` net. Les proves de RSA existents són sintètiques i formen part de
-la regressió, sense repetir experiments criptogràfics sobre firmware.
+**64 proves en 15 scripts** passen executant cada `scripts/test-*.py`
+separat. Inclouen 4 models nous TzDxeLA i 6 de configuració. Inspectors
+verifiquen hashes i bytes seleccionats; `git diff --check` net. Els models
+usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 
-S'atura esta iteració després de quatre fases coherents i de conservar el
-punt de represa. No es declara l'auditoria completa ni les fonts esgotades:
-les següents preguntes requerixen una revisió específica nova, no continuar
-descompilant sense criteri de decisió.
+## Punt de continuació i tres prioritats
 
-## Tres prioritats següents
+1. **Callers de la cache TzDxeLA:** seguir la seqüència local de càrregues,
+   inclosa la inicialització, per acotar repetició i alliberaments del mateix
+   node. Separar este defecte de la retenció de política diagnòstica.
+2. **Errors de configuració:** comprovar consumidors ja identificats del
+   getter estret i si validen l'estat abans d'usar out. No fabricar recursos
+   alternatius ni assumir que la frontera 64 s'assolisca en la configuració local.
+3. **Conseqüència SCM pendent d'entorn:** mapatge de VA zero/handlers i
+   recuperació global només si apareix evidència local concreta. MiToken i
+   VerifiedBoot continuen en espera de les precondicions especificades.
 
-1. **SCM, conseqüència del camí d'assignació fallida:** revisar estàticament
-   el mapatge/tractament d'excepcions UEFI i l'entrada d'inicialització per
-   delimitar l'efecte d'accés nul, sense induir esgotament ni executar firmware.
-2. **TzDxeLA, repetibilitat del diagnòstic:** seguir callers de la seua
-   interfície registrada i les portes de 0x3454; decidir si la retenció pot
-   repetir-se sota un contracte normal. Parar si depén d'estat no disponible.
-3. **Configuració i contracte efectius:** seguir `UEFI Config Lib` per
-   determinar origen/sobreescriptures de les dues claus SCM; només reobrir
-   la política MiToken si apareix un caller o productor concret. No repetir
-   la reconstrucció EL3 ni inferir límits a partir d'altres búfers.
+Les quatre fases demanades estan documentades; l'auditoria no es declara
+exhaustiva. La continuació prioritza les noves rutes amb evidència concreta.

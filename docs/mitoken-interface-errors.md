@@ -332,3 +332,11 @@ automàtic després de fallar l'inicialitzador, i publicar el protocol no
 prova disponibilitat de política. El defecte nou de neteja amb globals
 nuls és de ScmDxeLA i no s'ha atribuït a este callback. Criteris de
 reobertura i prioritats en [candidate-triage.md](candidate-triage.md).
+
+## Consolidació des d'a566643
+
+La cache compartida defectuosa de TzDxeLA i el getter estret de configuració
+no aporten un caller de MiToken +0x18 ni un productor admissible del recompte
+de política. Es mantenen les classificacions anteriors: omissió local
+confirmada, impacte/repetició condicionals; rang i bucle condicionals;
+ChipInfo normal resolt. No es traslladen contractes entre assignadors.

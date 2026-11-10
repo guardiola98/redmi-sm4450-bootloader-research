@@ -8,6 +8,11 @@ The current static/offline audit is summarized in [candidate triage](docs/candid
 and [PROGRESS.md](PROGRESS.md), with evidence, coverage limits and next steps.
 This audit phase uses local artifacts and synthetic tests only; it does not use
 the device collection workflow described in the historical baseline below.
+The current evidence covers [SCM cleanup contracts](docs/scm-initialization-analysis.md),
+[TzDxeLA resource ownership](docs/tzdxe-policy-consumer.md) and
+[UEFI configuration provenance](docs/uefi-configuration-provenance.md).
+Confirmed programming defects are distinguished from conditional activation
+and unproven security impact.
 
 ## Goals
 

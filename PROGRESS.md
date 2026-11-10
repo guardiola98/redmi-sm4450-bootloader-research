@@ -895,3 +895,21 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Informe uefi-configuration-provenance.md, inspector amb hashes i 6
   proves noves; més 4 proves TE i 5 SCM afectades correctes. Següent:
   consolidar classificació/cobertura i revisar evidència de les noves rutes.
+
+## Auditoria autònoma — fase 4, consolidació
+
+- Fase 3 publicada: `d1d8d72`. Matriu vigent actualitzada amb contractes
+  DxeCore/ArmCpuDxe, cache TzDxeLA, retenció diagnòstica, procedència de
+  configuració i els dos defectes del getter/parser.
+- MiToken i VerifiedBoot mantenen els límits anteriors; no hi ha nova
+  evidència que active els seus candidats condicionals. No es traslladen
+  garanties de zero-fill ni comportament d'errors entre assignadors.
+- Cobertura/README i informes històrics enllacen les conclusions actuals.
+  TE importat correctament en ConfigTeLayout; ConfigTeAudit/ConfigTe són
+  l'intent anterior fallit i no constituïxen evidència funcional.
+- Regressió completa: **64 proves en 15 scripts**, totes correctes;
+  `git diff --check` net. Només documentació, scripts i metadades
+  seleccionades en Git; cap binari propietari ni dada privada afegida.
+- Següent tasca factible: seguir la seqüència interna de càrregues de
+  TzDxeLA i els callers ja coneguts, motivada pel defecte nou de cache.
+  No repetir censos GUID, EL3 ni models criptogràfics.

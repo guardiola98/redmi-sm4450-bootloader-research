@@ -127,3 +127,22 @@ RAW `uefiplat.cfg` exterior té ara traça de claus pertinents en
 [scm-static-config.json](scm-static-config.json). No és cobertura funcional
 de tots els PE ni certifica els valors de configuració efectius. Vegeu
 [inicialització SCM](scm-initialization-analysis.md).
+
+## Continuació des d'a566643: contractes i configuració
+
+DxeCore i ArmCpuDxe s'han extret amb noms/hash del cens existent per revisar
+AllocatePool/FreePool i la ruta d'excepció per defecte. El TE exterior té
+ara importació estàtica amb seccions/mapatge explícits; revisada només la
+cadena FFS de configuració, parser, biblioteca compartida i getters.
+Açò supera el límit històric del loader, sense auditar tot el TE.
+
+La cadena local prediu defaults SCM i SecurityFlag=0xC4 si es conserva la
+taula; absència de SmcInvokeConfig verificada també sense distingir caixa.
+Ni els recursos locals ni la reconstrucció certifiquen valors efectius.
+S'han separat defectes de neteja SCM/TzDxeLA, propietat de cache compartida,
+temporal indeterminat del getter i frontera del parser; estat vigent en
+[candidate-triage.md](candidate-triage.md).
+
+Regressió: **64 proves en 15 scripts**, totes correctes; 10 noves en esta
+continuació. No s'ha revisitat EL3, repetit escàners GUID ni experiments
+RSA. Cap execució de firmware, dispositiu, payload ni nova font externa.

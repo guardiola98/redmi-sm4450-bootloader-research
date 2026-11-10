@@ -394,3 +394,10 @@ El fals èxit de VerifiedBoot continua condicional i la investigació
 d'impacte queda en espera fins un productor de NULL compatible amb el seu
 contracte. No s'han ampliat els models d'activació ni s'ha inferit cap
 efecte sobre keymaster/RPMB. Estat vigent en [candidate-triage.md](candidate-triage.md).
+
+La revisió dirigida de DxeCore confirma que AllocatePool pot tornar error
+amb out=NULL, però VerifiedBoot continua tenint la seua ruta ASSERT en
+l'assignador de pàgines. Tampoc la comptabilitat errònia de ShmBridge ni
+la retenció diagnòstica TzDxeLA demostren superar eixa barrera. La nova
+evidència no justifica una cadena d'esgotament a fals èxit ni un efecte
+d'autenticació. No s'han repetit els experiments ja resolts.
