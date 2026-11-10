@@ -14,6 +14,12 @@ ni productor UEFI necessari per canviar esta matriu; cap evidència nova
 de desbloqueig. Neteja Android redundant continua com a hipòtesi local,
 no com a double-free efectiu ni equivalència amb ShmBridge.
 
+Continuació des de `3ec36af`: FeatureEnablerDxe és un caller verificat
+de QSEE +0x20, però el wrapper força càrrega de partició per GUID.
+**Corregida** la cadena de fitxers `31dc → 279c → 2414 → 2630`: x2=0
+impedix l'últim salt. Cal seguir la primera interfície Tz `f250` +0x20
+amb argument de fitxer o +0x38; encara sense consumidor exterior.
+
 ## Candidats demanats
 
 | Candidat | Evidència directa / models | Precondicions i incerteses | Classificació i decisió |
@@ -108,8 +114,9 @@ usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 ## Punt de continuació i tres prioritats
 
 1. **Consumidors/notificacions TzDxeLA:** identificar subscriptor de la
-   primera interfície publicada abans de preparar SCM, o caller QSEE+0x20
-   de fitxers, amb TPL/arguments concrets. VerifiedBoot+8 no prova eixes vies.
+   primera interfície publicada abans de preparar SCM, o caller de la
+   primera taula Tz `f250` +0x20 (x2 no nul) / +0x38. QSEE+0x20 i
+   VerifiedBoot+8 són rutes de partició; no proven la via de fitxers.
 2. **Productor SMEM0x192:** delimitar versió/ordre/comptes admissibles
    des d'artefactes locals autoritzats. És la frontera dels defectes RAM
    i de la mescla del mapa MMU; sense evidència efectiva, crash SCM condicional.

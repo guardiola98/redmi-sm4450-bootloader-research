@@ -1113,3 +1113,23 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
   docs/device-qsee-aggregate-2026-11-10.json. La classificació UEFI no canvia.
   Prioritat següent: subscriptor/caller Tz i productor SMEM0x192. Reobrir
   Android QSEE amb caller/retorns o error previ nou, no més còpies del buffer.
+
+## Continuació autònoma — consumidor QSEE i correcció de reachability
+
+- Base `3ec36af`, main net i `git pull --ff-only` sense novetats.
+- FeatureEnablerDxe ja inventariat: referència QSEE6058, caller255c
+  a+0x20 després de dos intents+8 per etiqueta amb retorn no zero.
+  Portes de família116/127/123/130, context i LocateProtocol verificades;
+  no s'ha demostrat activació real de la branca en este telèfon.
+- Correcció important: Tz3228 força x2=0;2438 selecciona partició.
+  La cadena31dc→279c→2414 no arriba a2630 amb eixos arguments.
+  Retirada la seua atribució com a caller de fitxers dels informes vigents.
+- Per a fitxers cal primera taula f250+20 amb x2 no nul o f250+38=27a8.
+  Cap consumidor exterior ni subscriptor f250/TPL verificat. FeatureEnabler
+  usa QSEE, publicat després de preparar SCM; no prova reentrada prematura.
+- Inspector13 PE ampliat amb bytes/taules;18 tests de recursos i9 de fitxers
+  correctes. Quatre tests nous de routing/portes; total conegut118 en18 scripts.
+  `git diff --check` net; només documentació, bytes seleccionats i model simbòlic.
+- ADB inicial de plataforma (captura privada): SoC568, SM4450/parrot,
+  build coincident, green/locked. soc_id no és el ChipFamily UEFI.
+  Seguiment SMEM/diagnòstic de memòria en la fase següent; cap estímul QSEE.

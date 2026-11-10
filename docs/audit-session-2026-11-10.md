@@ -114,9 +114,14 @@ ni serveis d'autenticació. L'única xarxa usada ha sigut Git autoritzat.
 
 ## Punt de represa exacte i tres prioritats
 
+Correcció posterior des de `3ec36af`: QSEE+0x20 força x2=0 i no activa
+fitxers. FeatureEnablerDxe n'és un caller real de partició. Per a fitxers,
+seguir `f250` +0x20 amb x2 no nul o +0x38; detall en el
+[seguiment Tz](tzdxe-policy-consumer.md#consumidor-featureenabler-i-correcció-de-la-ruta-de-fitxers).
+
 1. **Consumidors/notificacions Tz:** partir de la primera taula `f250`
-   publicada a `0x2a28`, SCM global `f428` omplit a `0x2a50`, i QSEE+0x20
-   `0x31dc → 0x279c → 0x2414 → 0x2630`. Buscar caller/subscriptor dins
+   publicada a `0x2a28`, SCM global `f428` omplit a `0x2a50`, i primera
+   taula Tz +0x20=`0x279c` / +0x38=`0x27a8`. Buscar caller/subscriptor dins
    d'artefactes locals ja inventariats; registrar TPL i arguments. No usar
    VerifiedBoot+8 com a prova de la ruta de fitxers. No repetir un cens.
 2. **Productor de RAM SMEM 0x192:** el TE `0xa70230c4` és la frontera

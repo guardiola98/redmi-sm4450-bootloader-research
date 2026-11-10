@@ -144,11 +144,22 @@ esta garantia a caches privades reutilitzades que no tornen a AllocatePool.
 
 ## Accessibilitat i reproducció
 
-`0x2414` usa `0x2630` quan el paràmetre de fitxer no és nul; l'entrada
-QSEE +0x20 (`0x31dc → 0x279c`) aporta eixa forma de crida. La via
-VerifiedBoot +8 ja identificada usa càrrega de partició: **no demostra
-esta ruta de fitxers**. Falta un caller exterior concret de +0x20 i els
-seus arguments. No s'han fabricat fitxers ni repetit escàners de consumers.
+`0x2414` usa `0x2630` quan el paràmetre de fitxer no és nul.
+**Correcció de la continuació des de `3ec36af`: QSEE +0x20 no aporta
+eixa forma de crida.** El wrapper `0x31dc` força `x2=0` a `0x3228`,
+i `0x2414:0x2438` selecciona la partició per GUID. S'ha identificat
+FeatureEnablerDxe `0x255c` com a caller exterior, amb GUID i out-ID vàlids,
+però tampoc activa els defectes del lector. La via VerifiedBoot +8 també
+és de partició. La cadena `31dc → 279c → 2414 → 2630` no és un camí
+factible amb els arguments verificats del wrapper.
+
+Els candidats correctes per seguir fitxers són **la primera interfície
+Tz `f250`**, +0x20=`0x279c` amb tercer argument no nul, i
++0x38=`0x27a8`, que crida `0x2630` directament a `0x27ec`.
+No són els mateixos slots de QSEE `f2d0`; falta consumidor exterior
+verificat d'estes entrades. Vegeu el
+[seguiment de FeatureEnabler](tzdxe-policy-consumer.md#consumidor-featureenabler-i-correcció-de-la-ruta-de-fitxers).
+No s'han fabricat fitxers ni executat les interfícies.
 
 ```sh
 python3 scripts/extract-selected-uefi.py Fat FvSimpleFileSystem

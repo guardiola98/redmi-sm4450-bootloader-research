@@ -164,8 +164,9 @@ No s'ha llegit contingut de FRP, comptes, claus o tokens.
 | Fastboot: `getvar is-userspace`, `getvar unlocked`, `getvar secure`, `getvar current-slot` | Contrast directe dels estats reportats per eixe entorn, sense escriure. Requerix canvi de mode manual i interromp Android; no executat. Capturar només estes respostes, no `getvar all`. |
 | Seguiment estàtic de consumidor/notificació Tz i productor SMEM 0x192 | Més útil per al projecte de bootloader que comptar nous errors QSEE: resol precondicions concretes ja pendents, sense risc al dispositiu. |
 
-**Següent prioritat:** reprendre el subscriptor Tz `f250/f428` o el caller
-QSEE UEFI `+0x20`, i després el productor SMEM `0x192`, segons els punts
+**Següent prioritat (corregida en la continuació des de `3ec36af`):**
+reprendre el subscriptor Tz `f250/f428` o el caller de la primera taula
+Tz `f250` +0x20 amb fitxer / +0x38, i després el productor SMEM `0x192`, segons els punts
 exactes de l'[auditoria](audit-session-2026-11-10.md#punt-de-represa-exacte-i-tres-prioritats).
 La línia Android es reobri amb un caller/retorn verificat, un error previ
 nou o canvi funcional correlacionat; no simplement amb més còpies del

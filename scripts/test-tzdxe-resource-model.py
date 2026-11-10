@@ -71,6 +71,33 @@ def initial_loads(version_status, version, config_status, flags, operation18):
     return loads
 
 
+def feature_load_route(family, locate_status, first_status, second_status):
+    """FeatureEnabler 0x1444/0x2450, non-null context/interface, empty cache.
+
+    Status arguments model returning calls, not induced firmware failures.
+    """
+    if family not in (116, 127, 123, 130) or locate_status:
+        return []
+    calls = ['qsee+8:first-label']
+    if first_status:
+        calls.append('qsee+8:second-label')
+        if second_status:
+            calls.append('qsee+0x20:partition-guid')
+    return calls
+
+
+def tz_load_source(interface, slot, file_argument):
+    """Equal slot numbers in distinct interfaces do not imply equal ABIs."""
+    if (interface, slot) == ('qsee', 0x20):
+        # 0x3228 forces x2=0; incoming x2 is the out-ID, not a file name.
+        file_argument = None
+    elif (interface, slot) == ('first-tz', 0x38):
+        return 'filesystem'  # 0x27ec calls 0x2630 (which validates inputs).
+    elif (interface, slot) != ('first-tz', 0x20):
+        raise ValueError('Outside reviewed entries')
+    return 'filesystem' if file_argument is not None else 'partition-guid'
+
+
 def publication_lifetime(first=0, qsee=0, last=0, enable_qsee=True):
     """Symbolic image/registration ownership, no allocator failure injection.
 
@@ -115,6 +142,26 @@ def notification_observation(old_tpl, notify_tpl, subscriber):
 
 
 class ResourceTests(unittest.TestCase):
+    def test_qsee_guid_wrapper_cannot_select_file_branch(self):
+        for argument in (None, 'symbolic-out-id'):
+            self.assertEqual(tz_load_source('qsee', 0x20, argument), 'partition-guid')
+
+    def test_first_protocol_file_entry_is_a_different_interface(self):
+        self.assertEqual(tz_load_source('first-tz', 0x20, 'symbolic-path'), 'filesystem')
+        self.assertEqual(tz_load_source('first-tz', 0x20, None), 'partition-guid')
+        self.assertEqual(tz_load_source('first-tz', 0x38, 'symbolic-path'), 'filesystem')
+
+    def test_feature_fallback_requires_two_nonzero_named_results(self):
+        self.assertEqual(len(feature_load_route(130, 0, 0, 1)), 1)
+        self.assertEqual(len(feature_load_route(130, 0, 1, 0)), 2)
+        self.assertEqual(feature_load_route(130, 0, 1, 1)[-1], 'qsee+0x20:partition-guid')
+
+    def test_feature_platform_and_locate_gates(self):
+        self.assertEqual(feature_load_route(0, 0, 1, 1), [])
+        self.assertEqual(feature_load_route(130, EFI_ERROR | 14, 1, 1), [])
+        # Android soc_id is not the UEFI ChipFamily enum.
+        self.assertEqual(feature_load_route(568, 0, 1, 1), [])
+
     def test_security_and_encryption_errors_are_distinct_gates(self):
         self.assertEqual(diagnostic_route(0, 1, 0x100, 0, 0), 'security-stop')
         self.assertEqual(diagnostic_route(EFI_ERROR | 7, 1, 0x100, 0, 0), 'policy')

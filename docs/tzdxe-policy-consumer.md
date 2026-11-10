@@ -200,7 +200,7 @@ la cadena intacta de configuració; no és un estat efectiu observat.
 | +8 | `0x2da8` | Inicialització diferida `0x2fb0` si `f55c==0`; lookup d'aplicació; si no hi ha ID, càrrega de partició `0x2058` a `0x2f54`. |
 | +0x10 | `0x3288` | Operació SCM 2 amb ID. No carrega el búfer estudiat. |
 | +0x18 | `0x32d8` | Operació SCM 6. No és +0x18 de la primera taula TzDxeLA ni el callback MiToken. |
-| +0x20 | `0x31dc` | Una altra entrada que crida `0x2fb0` a `0x324c` i després `0x279c → 0x2414`; contrastada en instruccions, encara que l'exportació C no la delimita com a funció. |
+| +0x20 | `0x31dc` | Inicialització `0x2fb0` i `0x279c → 0x2414`, amb `x2=0`: partició per GUID, no fitxer. Correcció verificada en la continuació des de `3ec36af`. |
 
 **Caller exterior concret:** VerifiedBootDxe `0x16c8` localitza exactament
 eixe GUID a `d0f8`. Si `d268==0` i el servei previ +0x48 retorna no zero,
@@ -430,3 +430,75 @@ Tres models de l'ordre de notificació verifiquen estes diferències;
 14 proves en el script de recursos. Referències locals reproduïbles:
 `DumpAddressReferences.java … f428 f108` en Providers/TzDxeLA.pe,
 exportades a `work/tz-publication-reentry-refs.txt` (ignorat).
+
+## Consumidor FeatureEnabler i correcció de la ruta de fitxers
+
+Continuació des de `3ec36af`, 2026-11-10. **Nou consumidor estàtic
+verificat de QSEE +0x20; descartada la seua equivalència amb entrada
+de fitxers.** No és evidència d'execució runtime ni de desbloqueig.
+
+FeatureEnablerDxe, ja present en el manifest i en `work/provider-census`,
+SHA-256 `0c2c011f7954f7bbfa4f736c20eea9457e58e56fc5c46a4e7c894d2b4e0dcdd0`.
+Importat en el projecte existent Providers. La referència fixa `0x6058`
+és el mateix GUID QSEE de Tz `f148`; no s'ha repetit el cens general.
+La cerca dirigida dels tres GUID Tz/QSEE en nou mòduls existents
+(Ebl, QcomBds, EnvDxe, PILDxe, PILProxyDxe, SPSSDxe, FeatureEnablerDxe,
+VerifiedBootDxe i TzDxeLA) només afegix este consumidor QSEE. Este abast
+no exclou callers indirectes ni prova absència global de subscriptors.
+
+### Entrada, arguments i errors
+
+- Entrada `0x1444`: localitza ChipInfo i crida +0x30 (`0x149c`). Només
+  amb estat zero i família en la taula de quatre files de `0x4350`
+  arriba a `0x154c → 0x2450`. Els valors són **116, 127, 123 i 130**;
+  no s'equiparen a `soc_id` Android. Estat/identitat efectiva de família
+  UEFI encara no observats. El context de huit bytes es neteja a `0x14fc`.
+- Amb context vàlid i flag local `6464==0`, `0x2508` fa LocateProtocol;
+  qualsevol estat no zero o punter nul retorna EFI error14.
+- `0x2528` invoca QSEE +8 amb `featenabler_a` i out-ID inicialitzat;
+  si retorna no zero, `0x2544` prova `featenabler`. Només si ambdós
+  retornen no zero arriba al fallback **`0x255c`, QSEE +0x20**.
+- El fallback passa un GUID de partició copiat des de `0x4b68` a pila,
+  i un out-ID de 32 bits no nul. `0x2560` conserva el retorn; zero
+  actualitza ID/flag a `0x2614/0x260c`, no zero es registra i es propaga
+  des del helper. El caller superior registra fallada funcional; no
+  inferir que tot error del helper descarrega el driver.
+- La inicialització diferida Tz usa `f558/f55c`, ja documentats. Si una
+  fallada deixa `f558=1,f55c=0`, una nova crida no força una altra ronda:
+  `0x2fb0` retorna error1. El fallback útil requerix retorn normal dels
+  intents previs i un estat d'inicialització admissible. No hi ha un
+  bucle d'estímul de fallades ni execució d'estes crides en esta sessió.
+
+### Correcció d'arguments, no només de noms
+
+| Interfície i slot | Flux verificat | Efecte |
+| --- | --- | --- |
+| QSEE `f2d0` +0x20 | `31fc` conserva x2 com out-ID; **`3228: mov x2,xzr`**; `322c → 279c`; `27a4 → 2414`; **`2438: cbz x2,2490`** | Selecciona partició per GUID. No arriba a `2450 → 2630`. |
+| Primera Tz `f250` +0x20 | `279c` mou out-ID x3→x4 i posa mode w3=0; conserva x2 | Pot seleccionar fitxer si x2 no nul; falta caller concret. |
+| Primera Tz `f250` +0x38 | `27a8`, arguments adaptats a `27c8/27d4`, crida directa `27ec → 2630` | Entrada de fitxers existent, sense consumidor exterior verificat. |
+
+La cadena de fitxers atribuïda abans a QSEE +0x20 era una inferència
+incorrecta de reachability: es compartix el helper, però el wrapper
+fixa una branca diferent. Els defectes locals del lector continuen
+confirmats; el nou caller **no satisfà la precondició d'entrada**.
+
+### Notificacions i frontera d'inicialització
+
+FeatureEnabler obté **QSEE**, publicat a `0x3370` després de preparar
+SCM. `0x3344/0x3348` rebutja publicació si `f428` és nul; `0x3214/0x3218`
+també guarda SCM en el wrapper +0x20 després de la inicialització.
+Este consumidor no és un subscriptor demostrat de la primera taula
+`f250`, publicada abans de SCM. L'argument `&f250` que `0x2958` passa
+a `0x2d2c` tampoc prova un àlies consumidor: el veneer descarta x0,
+posa x0=x1 i salta a la publicació QSEE `0x3330`.
+
+Per tant, la finestra de reentrada de la primera interfície continua
+condicionada a **subscriptor concret + TPL + callback**. No se li pot
+atribuir l'entrada FeatureEnabler ni traslladar-li guards d'una altra taula.
+
+Evidència reproduïble: inspector existent ampliat a **13 PE**, instruccions
+de caller/wrapper i constants de família en `reviewed-pe-evidence.json`.
+Ghidra: `DumpAddressReferences.java … 6058` sobre FeatureEnablerDxe;
+exports locals `work/feature-qsee-refs.txt`, `work/FeatureEnablerDxe.c/.asm`.
+Quatre proves de rutes/portes afegides al model de recursos (18 totals);
+les nou de fitxers també passen. Cap binari, log cru o dada personal publicats.
