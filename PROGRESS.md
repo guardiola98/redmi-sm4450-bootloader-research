@@ -1043,3 +1043,14 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Huit proves de fitxers correctes i inspector12 PE ampliat; diff check
   net. Total conegut91 en17 scripts. Resta consolidació final de cobertura,
   verificació completa i publicació del punt de represa exacte.
+
+## Restricció de contingut — ompliment del pool DxeCore
+
+- Contracte ShmBridge publicat: `f9ead78`. En seguir el pool del lector,
+  DxeCore0xfb44 aplica ompliment: flag24f71=0x2b, byte24f70=0xAF.
+  Bit0x08 actiu i crida0xfe8c cobreixen el payload de reserva. Referències
+  locals de les constants només de lectura; cap escriptura identificada.
+- La lectura curta continua perdent recompte, però sota estes constants
+  la cua copiada és0xAF; retirada inferència de dades antigues indeterminades.
+  No generalitzar a caches privades reutilitzades. Nou proves de fitxers
+  correctes, inspector12 PE correcte, diff check net. Total92 en17 scripts.

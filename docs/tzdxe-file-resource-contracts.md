@@ -126,11 +126,21 @@ amb fitxer estable, posició inicial zero i mida coherent, s'espera
 lectura completa. Falta canvi de mida, incoherència de proveïdor o altra
 condició admissible entre GetInfo i Read que produïsca eixe resultat.
 
-Si es donara, el consumidor copiaria una cua no escrita pel Read des
-d'un pool sense garantia de zero-fill. La còpia no excedix per això la
-reserva sol·licitada; no és una lectura fora del pool demostrada. Tampoc
-prova divulgació, acceptació d'una imatge incompleta o canvi d'autenticació.
-El model usa només longituds, sense bytes d'imatge ni payload.
+Si es donara, el consumidor copiaria una cua no escrita pel Read.
+**L'ompliment del pool local restringix el seu contingut:** DxeCore
+`0xfb44` crida `0x1378` a `0xfe78`; el flag original `24f71=0x2b`
+té bit0x08 actiu. Per això `0xfe8c → 0x1320 → 0x1d84 → 0x214c`
+ompli tot el payload arredonit de la reserva amb el byte **`24f70=0xaf`**.
+Les referències dirigides de les dues constants són lectures; no hi ha
+sobreescriptura local identificada. Sota estos valors intactes i sense
+altres escriptures, la cua és de0xAF, **no dades antigues indeterminades**.
+Zero-fill absent no significa absència de qualsevol inicialització.
+
+La còpia no excedix per això la reserva sol·licitada; no és una lectura
+fora del pool demostrada. Tampoc prova divulgació, acceptació d'una
+imatge incompleta o canvi d'autenticació. El model usa longituds i un
+valor escalar de patró, sense bytes d'imatge ni payload. No es trasllada
+esta garantia a caches privades reutilitzades que no tornen a AllocatePool.
 
 ## Accessibilitat i reproducció
 
@@ -151,5 +161,5 @@ Ghidra: importacions PE normals als projectes locals ignorats
 exportacions `DumpFunctions.java` i `DumpInstructions.java`. Taules,
 GUIDs a adreces fixes i bytes dels callsites en
 [reviewed-pe-evidence.json](reviewed-pe-evidence.json), ara 12 PE.
-Huit proves simbòliques comparen contractes de recursos, errors i longituds;
+Nou proves simbòliques comparen contractes de recursos, errors i longituds;
 no simulen un dispositiu ni establixen accessibilitat efectiva.

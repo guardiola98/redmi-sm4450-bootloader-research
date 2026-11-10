@@ -35,7 +35,7 @@ censos GUID ni proves del monitor per justificar una conclusió nova.
 | TzDxeLA: notificació abans de preparar SCM | Publica primera taula abans d'emplenar f428; DxeCore pot despatxar NotifySignal durant RestoreTPL, abans del retorn d'InstallMultiple. Slot+0x18 usa f428 sense guard. | **Ordre confirmat; accés nul condicional a reentrada.** Falta subscriptor concret, TPL compatible i crida; no equival a concurrència observada ni crash garantit. |
 | TzDxeLA: recursos de lectura de fitxers | 0x2630 perd temporal pool si la cache retorna NULL; 0x4a00 omet Close arrel i Close fitxer en errors de reserva. Fat crea un handle arrel de 0xb8 per OpenVolume, FV el reutilitza. | **Omissions locals confirmades; activació/retenció depenen de ruta i proveïdor.** Errors ordinaris ShmBridge arriben a ASSERT, no al NULL necessari per perdre el temporal; eixa cadena queda en espera. No hi ha caller exterior de fitxers verificat ni acumulació observada. |
 | TzDxeLA: neteja GetInfo amb NULL | Errors previs a reserva de dades arriben a FreePool(NULL) 0x4bcc; DxeCore error2 activa ASSERT/espera del wrapper Tz. | **Defecte de propagació d'error confirmat.** Falta error efectiu de GetInfo; no generalitzar a Read, on el pool ja és vàlid. |
-| TzDxeLA: longitud de lectura curta ignorada | Retorna FileInfo.FileSize encara que Read actualitze un recompte menor; els proveïdors locals admeten retorn zero curt al final. | **Pèrdua de recompte confirmada; ús de cua indeterminada condicional.** Fitxer estable des de posició zero no aporta activació; cap lectura fora de pool, divulgació o autenticació alterada provades. |
+| TzDxeLA: longitud de lectura curta ignorada | Retorna FileInfo.FileSize encara que Read actualitze un recompte menor; els proveïdors locals admeten retorn zero curt al final. | **Pèrdua de recompte confirmada; còpia de cua condicional.** DxeCore amb constants locals intactes ompli el pool amb0xAF: no es prova herència de dades antigues. Fitxer estable des de posició zero no aporta activació; cap lectura fora de pool, divulgació o autenticació alterada provades. |
 | UEFI Config Lib: temporal indeterminat en error | Getter de 32 bits 0xa701d578 usa el temporal sense inicialitzar encara que falle el getter ampli; pot escriure out-word indeterminat o substituir error original per error 2. | **Defecte confirmat de gestió d'error.** No convertix error en èxit; SCM comprova estat zero i conserva defaults. No prova dada efectiva indeterminada en SCM. TE 0xa7024990 ignora estat, però la seua clau és present i vàlida localment. |
 | Getter de configuració de 64 bits: overflow decimal | Conversor retorna error 3 i UINT64_MAX; wrapper perd l'estat i getter ampli retorna zero amb el valor saturat. | **Pèrdua local d'error confirmada; activació condicional.** Claus seleccionades sense overflow; cap consumidor +0x20 amb eixa entrada identificat. Getter de 32 bits ho rebutja. |
 | Parser de configuració: frontera de capacitat | 0xa7012af8 rebutja count>capacitat, però accepta igualtat i escriu un descriptor fora dels 16*capacitat bytes declarats. | **Defecte condicional confirmat.** Recurs local té 43 entrades per a capacitat 64: no l'activa. Cap configuració alternativa efectiva ni corrupció física demostrada. |
@@ -91,9 +91,9 @@ EL3, cap cens GUID ni experiments RSA; executar els tests ja existents
 forma part de la regressió. No s'ha consultat xarxa per investigar firmware;
 només s'han publicat commits autoritzats al repositori.
 
-**91 proves en 17 scripts**: recompte dels scripts, amb comprovació final
+**92 proves en 17 scripts**: recompte dels scripts, amb comprovació final
 completa registrada en PROGRESS.md. Inclouen 14 models nous TzDxeLA,
-11 de configuració, 4 d'índexs RAM i 8 de recursos de fitxers. Inspectors
+11 de configuració, 4 d'índexs RAM i 9 de recursos de fitxers. Inspectors
 verifiquen hashes i bytes seleccionats; `git diff --check` net. Els models
 usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 

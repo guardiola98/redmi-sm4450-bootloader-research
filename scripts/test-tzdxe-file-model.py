@@ -106,6 +106,13 @@ class FileContracts(unittest.TestCase):
         self.assertEqual(shared_provider_outcome(0x90000), 'returned-nonnull')
         self.assertEqual(shared_provider_outcome(0), 'returned-null')
 
+    def test_local_pool_fill_bounds_the_short_read_tail(self):
+        # Scalar provenance only, no image bytes or memory contents generated.
+        debug_properties, clear_value = 0x2b, 0xaf
+        tail_origin = ('fill', clear_value) if debug_properties & 8 else ('unknown', None)
+        self.assertEqual(tail_origin, ('fill', 0xaf))
+        self.assertNotEqual(tail_origin, ('fill', 0))
+
 
 if __name__ == '__main__':
     unittest.main()
