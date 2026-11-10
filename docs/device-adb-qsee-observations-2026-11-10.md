@@ -2,6 +2,12 @@
 
 > Evidència aportada per l'usuari i **anonimitzada abans de publicar**. No és una prova de vulnerabilitat ni de desbloqueig. No s'inclouen logs complets, identificadors, números de sèrie, digestos, PARTUUID, comptes, noms de xarxa o tokens.
 
+> Seguiment: [validació directa i freqüència](device-qsee-validation-2026-11-10.md).
+> La sessió posterior autoritza explícitament ADB de només lectura; els
+> límits d'autorització al final d'este informe són el context històric.
+> La nova mostra afegix dues entrades de desassignació per cicle i cap
+> activitat nova en les comparacions passives; no aporta prova de desbloqueig.
+
 ## Entorn i estat observat
 
 - Dispositiu: Xiaomi Redmi 12 5G, codename `river`, firmware `OS2.0.218.0.VMWEUXM`.

@@ -17,6 +17,13 @@ The current evidence covers [SCM cleanup contracts](docs/scm-initialization-anal
 Confirmed programming defects are distinguished from conditional activation
 and unproven security impact.
 
+The later [read-only Android/QSEE validation](docs/device-qsee-validation-2026-11-10.md)
+correlates `mtd@1.3` with the observed cleanup messages. Repeated passive
+captures contained the same historical events; no new unlock evidence was
+found. A [passive ADB collector](scripts/collect-qsee-diagnostics.py) and
+[offline analyzer](scripts/analyze-qsee-logcat.py) emit only aggregates.
+Raw logs must remain private, even when restricted to these tags.
+
 ## Goals
 
 - Document device identity, kernel configuration, security patch levels, and boot state using **read-only ADB**.

@@ -6,6 +6,14 @@ seues precondicions verificades; **no equival a vulnerabilitat explotable**.
 «En espera» és una decisió de prioritat, no una prova d'inaccessibilitat.
 Els informes històrics es conserven; esta matriu fixa l'estat vigent.
 
+Contrast posterior [Android/QSEE de només lectura](device-qsee-validation-2026-11-10.md):
+dos cicles retinguts de `mtd@1.3`, cadascun amb desassignació abans i després
+de shutdown, sense fallada prèvia visible en els tags seleccionats. Cap
+registre nou en les comparacions passives. No aporta el caller, allocator
+ni productor UEFI necessari per canviar esta matriu; cap evidència nova
+de desbloqueig. Neteja Android redundant continua com a hipòtesi local,
+no com a double-free efectiu ni equivalència amb ShmBridge.
+
 ## Candidats demanats
 
 | Candidat | Evidència directa / models | Precondicions i incerteses | Classificació i decisió |

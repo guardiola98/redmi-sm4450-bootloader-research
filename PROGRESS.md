@@ -1077,3 +1077,39 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Projectes/callers/exports exactes en l'informe de tancament. ConfigTeLayout
   és el TE vàlid; ConfigTeAudit és l'intent antic incorrecte. Les preguntes
   pendents no justifiquen afirmar impacte runtime o autenticació eludida.
+
+## Contrast ADB autoritzat — origen i freqüència QSEE, 2026-11-10
+
+- `git pull --ff-only`: base actualitzada de `b24a24f` a `1cfd6cd`.
+  Dispositiu USB autoritzat disponible després de superar la restricció
+  del socket ADB del sandbox Debian; cap elevació en Android.
+- `river`, OS2.0.218.0.VMWEUXM, `green/locked/enforcing`, slot `_b`.
+  Init/VINTF identifiquen mtdservice1.3/IMTService; PID/TID correlacionen
+  MTService-TEE i QSEECOMAPI dins de mtd. Executable/biblioteca denegats
+  a shell; sense circumval·lació ni accés a particions.
+- Tres captures main durant207,92s retenen els mateixos30 registres,
+  24 de mtd: dos cicles, dues respostes32, dos errors nuls. Cada cicle té
+  dealloc abans i després de shutdown; retard shutdown→NULL d'1 o3ms.
+  Cap fallada prèvia visible en els tags del cicle. Dos altres E només
+  imprimixen identificadors: contingut privat omés, no comptat com fallada.
+- Zero registres nous entre captures; no taxa sostinguda de dos errors
+  per1,34s. La segona validació real del col·lector, tres captures durant
+  62,735s, també té zero registres nous i estat de bloqueig sense canvis.
+- Prova addicional només lectura: oem_lock consta en dumpsys-l però
+  el seu dump és buit; sys.oem_unlock_allowed=1 no equival a unlocked,
+  get_unlock_ability ni autorització Xiaomi. Cap ordre fastboot o reinici.
+- Neteja Android redundant compatible, sense caller/ownership confirmats.
+  Cap demostració de double-free efectiu, fuga, corrupció, lligam UEFI ni
+  desbloqueig. El contracte públic AOSP de shutdown és context separat,
+  no prova de la implementació instal·lada. No s'usen logs aliens.
+- Analitzador offline i col·lector passiu amb eixida d'agregats per llista
+  permesa. Correlació per PID/TID/app-id intern; solapament amb multiconjunts;
+  cap identificador, timestamp absolut o missatge cru en la sortida.
+- Validació:92 proves anteriors i22 noves correctes,114 en18 scripts.
+  Reanàlisi de les captures amb el parser final conserva els agregats.
+  JSON, enllaços locals, diff check i revisió d'identificadors correctes;
+  captures privades ignorades per Git. Només text documental/codi sintètic.
+- Informe: docs/device-qsee-validation-2026-11-10.md; agregats revisats:
+  docs/device-qsee-aggregate-2026-11-10.json. La classificació UEFI no canvia.
+  Prioritat següent: subscriptor/caller Tz i productor SMEM0x192. Reobrir
+  Android QSEE amb caller/retorns o error previ nou, no més còpies del buffer.
