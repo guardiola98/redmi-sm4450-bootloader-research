@@ -2,12 +2,43 @@
 """Symbolic RAM-table indices only: no SMEM bytes, payload or firmware run.
 
 Evidence: TE 0xa7023300/0xa70234d4, original words recorded by the
-hash-pinned config inspector. The source partition sequence is unknown.
+hash-pinned config inspector. Device data is unknown; the XBL producer is v3.
 """
 import unittest
 
 ENTRY_SIZE = 0x48
 CAPACITY = 32
+
+
+def producer_count(ddr_regions):
+    """0x1485c584/0x1485c894: count-only success path, no descriptors.
+
+    Assumes successful providers and valid size conversions. DDR entries come
+    first; three bounded appends follow. A failed append is not publication.
+    """
+    if ddr_regions < 0:
+        raise ValueError('Nonnegative region count required')
+    count = min(ddr_regions, CAPACITY)
+    for _ in range(3):
+        if count >= CAPACITY:
+            return False, count
+        count += 1
+    return True, count
+
+
+def updated_count(count, operation):
+    """0x1485c938 count invariant for intact tables; no addresses/SMEM bytes."""
+    if not 0 <= count <= CAPACITY:
+        raise ValueError('Outside the identified producer invariant')
+    if count in (0, CAPACITY):
+        return False, count
+    if operation == 'split':
+        return True, count + 1
+    if operation == 'remove':
+        return True, count - 1
+    if operation == 'trim':
+        return True, count
+    raise ValueError('Unknown symbolic operation')
 
 
 def destinations(accepted, version):
@@ -25,6 +56,38 @@ def destinations(accepted, version):
 
 
 class RamIndexTests(unittest.TestCase):
+    def test_producer_allocation_covers_exactly_32_v3_records(self):
+        self.assertEqual(0x18 + 32 * 0x48, 0x918)
+        self.assertEqual(0x18 + 31 * 0x48 + 0x48, 0x918)
+
+    def test_successful_builder_requires_room_for_three_appends(self):
+        for ddr in range(65):
+            success, count = producer_count(ddr)
+            self.assertEqual(success, ddr <= 29)
+            self.assertLessEqual(count, CAPACITY)
+            if success:
+                self.assertEqual(count, ddr + 3)
+
+    def test_identified_v3_path_does_not_have_v1_attribute_mismatch(self):
+        self.assertEqual(destinations([False, True, False, True], 3), [(0, 0), (1, 1)])
+
+    def test_updater_preserves_intact_count_bound(self):
+        for count in range(33):
+            for operation in ('split', 'remove', 'trim'):
+                _, result = updated_count(count, operation)
+                self.assertTrue(0 <= result <= CAPACITY)
+        self.assertEqual(updated_count(31, 'split'), (True, 32))
+        self.assertEqual(updated_count(32, 'split'), (False, 32))
+
+    def test_shift_before_inner_guard_is_bounded_by_outer_count_guard(self):
+        # Insert-shift destination starts at count, permitted only for count<32.
+        for count in range(1, 32):
+            highest_destination = count
+            self.assertLess(highest_destination, CAPACITY)
+        self.assertEqual(updated_count(32, 'trim'), (False, 32))
+        with self.assertRaises(ValueError):
+            updated_count(33, 'split')  # Not claimed safe for corrupted state.
+
     def test_v1_filtering_separates_descriptor_and_attributes(self):
         self.assertEqual(destinations([False, True], 1), [(0, 1)])
         self.assertEqual(destinations([True, False, True], 1), [(0, 0), (1, 2)])

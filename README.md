@@ -14,6 +14,11 @@ The current evidence covers [SCM cleanup contracts](docs/scm-initialization-anal
 [file resource contracts](docs/tzdxe-file-resource-contracts.md),
 [UEFI configuration provenance](docs/uefi-configuration-provenance.md) and
 [RAM descriptor conversion](docs/uefi-ram-table-analysis.md).
+The [identified XBL producer](docs/xbl-ram-producer-analysis.md) emits version 3
+and bounds intact tables to 32 entries; the studied normal path does not
+activate the conditional v1/index or 33rd-entry defects.
+[FeatureEnabler](docs/tzdxe-policy-consumer.md#consumidor-featureenabler-i-correcció-de-la-ruta-de-fitxers)
+is a verified QSEE partition-loading consumer, not evidence of the file route.
 Confirmed programming defects are distinguished from conditional activation
 and unproven security impact.
 

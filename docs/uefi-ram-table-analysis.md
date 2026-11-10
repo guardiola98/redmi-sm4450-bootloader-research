@@ -6,6 +6,12 @@ la procedència del mapa usat per SCM. Hash/mapatge i bytes en
 no adreces observades en execució. No s'ha llegit ni generat SMEM, executat
 firmware o accedit a particions. Els models representen només índexs.
 
+**Actualització de la continuació des de `3ec36af`:** identificat el
+[productor XBL de l'item0x192](xbl-ram-producer-analysis.md). La construcció
+completada genera **versió3**, stride0x48 i <=32 descriptors; l'actualitzador
+estudiat conserva eixa cota des d'un estat intacte. Esta ruta no activa
+els defectes v1/entrada33 descrits ací. La taula runtime continua desconeguda.
+
 ## Entrada i estructura
 
 L'entrada TE crida `0xa70234d4` a `0xa700e7e8`. La rutina neteja dues
@@ -19,7 +25,8 @@ Els descriptors d'entrada versió 1 tenen stride 0x40; l'altra via usa 0x48.
 El filtratge selecciona categoria 0xe i tipus 1 per a RAM normal; tipus
 5..8 de la mateixa categoria van a la taula de precàrrega. Estes condicions
 són del codi local, **no una especificació completa de SMEM**. No es coneixen
-la versió, l'ordre ni el nombre real de descriptors de la plataforma.
+la versió, l'ordre ni el nombre de descriptors observats en execució;
+la construcció estàtica XBL v3 es descriu en l’actualització anterior.
 
 ## Desacord entre índex d'entrada i índex filtrat, versió 1
 
@@ -81,19 +88,22 @@ suficient és la primera escriptura fora de taula anterior al guard.
 
 **Classificació:** defecte local confirmat d'ordre de validació;
 activació amb excés de descriptors condicionada a dades SMEM no observades.
-No s'han provat controls del productor anterior a UEFI. No es presenta
+Els controls del productor s'han delimitat posteriorment en l'informe
+XBL enllaçat: no aporta entrada33 en les vies estudiades. No es presenta
 com un crash inevitable ni com una corrupció física accessible.
 
 ## Proves i punt de continuació
 
-`test-uefi-ram-index-model.py`: quatre tests d'índexs contrasten filtratge,
+`test-uefi-ram-index-model.py`: els quatre tests originals contrasten filtratge,
 via alternativa, frontera 32/33 i desacord entre recompte i índex màxim.
-No creen descriptors binaris ni representen continguts de memòria.
+Cinc tests posteriors afegixen la cota del productor/actualitzador XBL.
+Els nou tests no creen descriptors binaris ni representen continguts de memòria.
 L'inspector de configuració verifica ara **131 instruccions TE** i literals
 d'atributs; la revisió completa del component continua fora de l'abast.
 
-Per a establir activació caldrien metadades autoritzades de versió, nombre,
+Per a establir activació fora del productor identificat caldrien metadades autoritzades de versió, nombre,
 tipus i ordre de descriptors SMEM efectius o un contracte del productor
-anterior. No s'ha demanat una captura del dispositiu: seria fora de les
-restriccions d'esta fase. El mapa nul SCM continua condicionat als límits
+alternatiu. La fase original era offline; en la continuació ADB només
+lectura no s’ha pogut obtindre SMEM ni llegir memory/reg per permisos.
+El mapa nul SCM continua condicionat als límits
 documentats en [inicialització SCM](scm-initialization-analysis.md).

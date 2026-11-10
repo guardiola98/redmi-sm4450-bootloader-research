@@ -1133,3 +1133,37 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - ADB inicial de plataforma (captura privada): SoC568, SM4450/parrot,
   build coincident, green/locked. soc_id no és el ChipFamily UEFI.
   Seguiment SMEM/diagnòstic de memòria en la fase següent; cap estímul QSEE.
+
+## Continuació autònoma — productor XBL de SMEM0x192
+
+- Fase Tz publicada: `a0f2df0`. Productor RAM trobat en el tercer ELF
+  consecutiu de xbl_s.melf local, hash verificat. Reutilitzat Providers;
+  cap reconstrucció FV ni cens global repetits. Extractor existent ampliat
+  amb selecció explícita XBL; CLI real executada correctament.
+- `1481bf6c → 1485c584`, fase boot_update_ram_partition_table. Interfície
+  0x52+8 governa entrada; taula/getter/global/inicialitzador identificats.
+  Selectorzero depén de consulta0x51 i bits MMIO; cap lectura MMIO al telèfon.
+- Reserva SMEM0x192 de0x918: header0x18, stride0x48,32 descriptors.
+  Constructor completat escriu versió3 i signatures esperades pel TE.
+  DDR en ordre de getter, després tres appends; cadascun comprova capacitat
+  abans dels stores. Construcció reeixida requerix <=29 entrades DDR.
+- Actualitzador1485c938 retalla/elimina/dividix exclusions; amb count
+  intacte0..32 el guard exterior conserva límit32. El guard interior tardà
+  no prova desbordament sota eixa precondició. Altres aritmètics no auditats.
+- Hipòtesis RAM restringides: esta cadena ordinària no activa v1 ni entrada33
+  del TE. Defectes locals del consumidor conservats, activació per altres
+  writers/estat corrupte no provada. Mapa nul/impacte SCM continuen condicionals.
+- ADB real: soc_id568/familySnapdragon, SM4450/parrot i build coincident,
+  green/locked. Nodes memory i driver qcom-smem presents; lectura dels cells
+  i memory/reg denegada. exec-out retorna estat host0 amb text d’error:
+  descartat com a dades. Debugfs smem/qcom_smem no disponibles. Cap bypass,
+  reinici, fastboot, escriptura o nova captura repetitiva QSEE.
+- Inspector nou:3 ELF,72 instruccions seleccionades i literals. Cinc tests
+  nous de layout ELF i cinc de comptes RAM. Regressió completa **128 proves
+  en19 scripts**, totes correctes; inspector13 PE correcte; diff check net.
+- Informe/evidència: docs/xbl-ram-producer-analysis.md i JSON associat.
+  Originals ADB exclusivament en work/platform-diagnostics-2026-11-10/,
+  ignorat i privat. Revisió de publicació limitada a text/codi/metadades.
+- Cap evidència nova de desbloqueig. Següent treball útil: caller/subscriptor
+  f250/TPL concret, DDR/exclusions efectives o un consumidor de configuració
+  ampli encara no revisat. No repetir QSEE Android sense esdeveniment nou.

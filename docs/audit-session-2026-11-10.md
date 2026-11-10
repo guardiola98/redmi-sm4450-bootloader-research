@@ -142,3 +142,39 @@ Exports/refs rellevants: `work/ConfigTeLayout.c/.asm`,
 `work/tz-publication-reentry-refs.txt`, `work/te-image-unload-refs.txt`,
 `work/dxecore-pool-fill-refs.txt`, `work/Fat.c/.asm` i
 `work/FvSimpleFileSystem.c/.asm`. Tot això queda fora de Git.
+
+## Actualització posterior a3ec36af — XBL/SMEM i diagnòstic autoritzat
+
+Este apartat actualitza el punt de represa històric anterior. La fase Tz
+`a0f2df0` ja està publicada: FeatureEnabler és caller QSEE verificat,
+però QSEE+0x20 força x2=0 i no arriba al lector de fitxers2630.
+
+La segona fase identifica **1485c584** en el component AArch64 del MELF
+XBL, amb caller1481bf6c i etiqueta boot_update_ram_partition_table.
+[Informe complet i reproducció](xbl-ram-producer-analysis.md): productor
+v3, header0x18, stride0x48, reserva0x918 i límit32 comprovat abans dels
+stores. Tres appends després de DDR impliquen <=29 DDR en camí completat.
+El postprocessador1485c938 manté la cota des d’un recompte intacte.
+Els candidats TE v1/entrada33 no s’activen per esta cadena normal;
+no s’ha demostrat absència de tots els altres writers ni taula runtime.
+
+El selector0x52 té definició estàtica a148c38b8→148c7be0; getter+8
+copia148c7bd0. Inicialitzador consulta0x51 i un registre MMIO. Despatx
+real de fases, continguts DDR/exclusions i valors runtime continuen oberts.
+No es proposa llegir memòria física del telèfon per resoldre-ho.
+
+ADB executat realment en esta continuació: propietats específiques de
+plataforma/build/bootstate, soc_id/family; existència de nodes memory,
+driver qcom-smem i dos paths debugfs. Lectures device-tree denegades:
+cap dada SMEM obtinguda i cap circumval·lació de permisos. Originals en
+work/ privat i ignorat; només resultats no personals en l’informe.
+No s’han repetit captures QSEE, ni usat fastboot o provocat reinicis.
+
+Validació completa: **128 tests en19 scripts** correctes. Inspector XBL
+verifica3 components i72 instruccions; inspector PE13 correcte. CLI
+extractora XBL contrastada amb el paquet local i hash fixat. JSON vàlid,
+canvis revisats per dades sensibles i `git diff --check` net.
+Prioritats vigents: f250/subscriptor/TPL, fonts DDR/exclusions i consumidor
+Config+0x20. Els projectes existents es mantenen; nou ELF en Providers,
+exports xbl-ram-helpers.c, xbl-mode-interface-refs.txt i XblAarch64.asm
+només en work/. No hi ha nova evidència d’elusió d’autorització ni desbloqueig.

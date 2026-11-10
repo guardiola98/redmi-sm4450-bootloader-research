@@ -1,7 +1,7 @@
 # Classificació i punt de represa — 2026-11-10
 
-Continuació vigent des de `a566643`, exclusivament estàtica/offline sobre artefactes
-locals autoritzats. «Confirmat» qualifica el defecte de programació i les
+Continuació vigent des de `3ec36af`: anàlisi estàtica d’artefactes locals
+autoritzats i diagnòstic Android de només lectura. «Confirmat» qualifica el defecte de programació i les
 seues precondicions verificades; **no equival a vulnerabilitat explotable**.
 «En espera» és una decisió de prioritat, no una prova d'inaccessibilitat.
 Els informes històrics es conserven; esta matriu fixa l'estat vigent.
@@ -53,14 +53,15 @@ censos GUID ni proves del monitor per justificar una conclusió nova.
 | UEFI Config Lib: temporal indeterminat en error | Getter de 32 bits 0xa701d578 usa el temporal sense inicialitzar encara que falle el getter ampli; pot escriure out-word indeterminat o substituir error original per error 2. | **Defecte confirmat de gestió d'error.** No convertix error en èxit; SCM comprova estat zero i conserva defaults. No prova dada efectiva indeterminada en SCM. TE 0xa7024990 ignora estat, però la seua clau és present i vàlida localment. |
 | Getter de configuració de 64 bits: overflow decimal | Conversor retorna error 3 i UINT64_MAX; wrapper perd l'estat i getter ampli retorna zero amb el valor saturat. | **Pèrdua local d'error confirmada; activació condicional.** Claus seleccionades sense overflow; cap consumidor +0x20 amb eixa entrada identificat. Getter de 32 bits ho rebutja. |
 | Parser de configuració: frontera de capacitat | 0xa7012af8 rebutja count>capacitat, però accepta igualtat i escriu un descriptor fora dels 16*capacitat bytes declarats. | **Defecte condicional confirmat.** Recurs local té 43 entrades per a capacitat 64: no l'activa. Cap configuració alternativa efectiva ni corrupció física demostrada. |
-| Conversor RAM UEFI v1: atributs amb índex incorrecte | Atributs usen índex d'origen; base/mida usen recompte filtrat. Entrades prèvies descartades separen els camps. | **Defecte local confirmat; activació condicional.** Versió/ordre SMEM desconeguts. La via alternativa usa índex coherent. |
-| Conversors RAM UEFI: guard de capacitat tardà | Primera còpia de l'entrada 33 es fa a base+0x900 abans del salt a ASSERT, en les dues taules i vies. | **Defecte local confirmat; activació condicional.** Recompte SMEM efectiu i controls del productor no establits; no inferir retorn normal ni corrupció física accessible. |
+| Conversor RAM UEFI v1: atributs amb índex incorrecte | Atributs usen índex d'origen; base/mida usen recompte filtrat. Entrades prèvies descartades separen els camps. | **Defecte local confirmat; activació condicional.** Productor XBL identificat genera v3; no activa este defecte. Versió/ordre runtime encara no observats. La via alternativa usa índex coherent. |
+| Conversors RAM UEFI: guard de capacitat tardà | Primera còpia de l'entrada 33 es fa a base+0x900 abans del salt a ASSERT, en les dues taules i vies. | **Defecte local confirmat; activació condicional.** Constructor XBL i actualitzador estudiats mantenen <=32 des d’estat intacte; esta cadena ordinària no activa entrada33. Recompte runtime i altres writers no establits. |
 
 Detall i bytes: [inicialització SCM](scm-initialization-analysis.md),
 [TzDxeLA](tzdxe-policy-consumer.md), [manifest PE](reviewed-pe-evidence.json),
 [recursos de fitxers Tz](tzdxe-file-resource-contracts.md),
 [procedència de configuració](uefi-configuration-provenance.md),
-[conversió de RAM](uefi-ram-table-analysis.md).
+[conversió de RAM](uefi-ram-table-analysis.md),
+[productor XBL](xbl-ram-producer-analysis.md).
 DxeCore confirma error ordinari/NULL del pool i error 2 per FreePool(NULL).
 ArmCpuDxe té diagnòstic/espera per defecte, però el mapatge de VA zero,
 CurrentEL i handlers actius no estan establits; no es declara un crash concret.
@@ -105,9 +106,9 @@ EL3, cap cens GUID ni experiments RSA; executar els tests ja existents
 forma part de la regressió. No s'ha consultat xarxa per investigar firmware;
 només s'han publicat commits autoritzats al repositori.
 
-**92 proves en 17 scripts**, totes correctes en la regressió final
-registrada en PROGRESS.md. Inclouen 14 models nous TzDxeLA,
-11 de configuració, 4 d'índexs RAM i 9 de recursos de fitxers. Inspectors
+**128 proves en 19 scripts**, totes correctes en la regressió final
+registrada en PROGRESS.md. Inclouen 18 models TzDxeLA, 11 de configuració,
+9 d’índexs/comptes RAM, 9 de fitxers, 22 d’anàlisi QSEE i 5 de metadades XBL. Inspectors
 verifiquen hashes i bytes seleccionats; `git diff --check` net. Els models
 usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
 
@@ -117,9 +118,9 @@ usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
    primera interfície publicada abans de preparar SCM, o caller de la
    primera taula Tz `f250` +0x20 (x2 no nul) / +0x38. QSEE+0x20 i
    VerifiedBoot+8 són rutes de partició; no proven la via de fitxers.
-2. **Productor SMEM0x192:** delimitar versió/ordre/comptes admissibles
-   des d'artefactes locals autoritzats. És la frontera dels defectes RAM
-   i de la mescla del mapa MMU; sense evidència efectiva, crash SCM condicional.
+2. **Productor SMEM0x192:** v3/stride0x48 i límit32 ja delimitats en XBL.
+   Si es reprén, seguir getter DDR/exclusions i despatx de fases, no repetir
+   el constructor. Sense dades efectives, el mapa zero/crash SCM és condicional.
 3. **Configuració:** continuar amb consumidor real de biblioteca+0x20
    o escriptura posterior a la taula compartida. No repetir els 25 callsites
    revisats, defaults resolts, monitor EL3, censos GUID o models RSA.
