@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Pinned XBL RAM producer evidence; ELF metadata and selected original bytes.
 
+Includes selected ChipInfo family provenance to constrain a QSEE consumer.
 Reuses the authorized local image. No SMEM construction, device commands,
 firmware execution, GUID census or arbitrary firmware downloads.
 """
@@ -112,11 +113,46 @@ def inspect(data):
     _, raw = read_va(data, arm, 0x148b02a5, 32)
     if raw.split(b'\0')[0] != b'boot_update_ram_partition_table':
         raise ValueError('Stage label mismatch')
+    chip_sites = [0x14825384,0x14825388,0x14825a3c,0x14825a48,
+                  0x14825a64,0x14825a68,0x14825aec,0x14825af4,0x14825af8,
+                  0x14832220,0x1483222c,0x148322b4,0x148322c0,
+                  0x148322d0,0x148322dc,0x148322e4,0x148322f4,
+                  0x14832314,0x14832318,0x14832330,0x14832334,
+                  0x1483237c,0x14832380,0x148323c4,0x148acd18,
+                  0x148acd28,0x148aceb8,0x148acec4]
+    chip_instructions = []
+    for address in chip_sites:
+        offset, raw = read_va(data, arm, address, 4)
+        chip_instructions.append(dict(va=hex(address), source_offset=hex(offset), bytes=raw.hex(' ')))
+    _, raw = read_va(data, arm, 0x148c70d8, 32)
+    chip_table, chip_count, family_table, family_count = struct.unpack('<QQQQ', raw)
+    if (chip_table,chip_count,family_table,family_count) != (0x148b3180,20,0x148b3360,8):
+        raise ValueError('Unexpected ChipInfo table dimensions')
+    families = []
+    for i in range(family_count):
+        address = family_table+i*16
+        _, raw = read_va(data, arm, address, 16)
+        major, minor, family, fallback_id = struct.unpack('<IIII', raw)
+        families.append(dict(va=hex(address), major=major, minor=minor,
+                             family=family, fallback_soc_id=fallback_id))
+    _, raw = read_va(data, arm, 0x148b32b8, 24)
+    name, soc_id, raw_part, modem, padding = struct.unpack('<QIIII', raw)
+    _, name_bytes = read_va(data, arm, name, 32)
+    if soc_id != 568 or name_bytes.split(b'\0')[0] != b'SM_CLARENCE':
+        raise ValueError('Unexpected selected ChipInfo row')
+    chip_words = []
+    for address in (0x148bbbf8,0x148bbc08,0x148bbc80):
+        offset, raw = read_va(data, arm, address, 8)
+        chip_words.append(dict(va=hex(address), value=hex(int.from_bytes(raw, 'little'))))
+    chip_evidence = dict(instructions=chip_instructions, family_rows=families, selected_words=chip_words,
+                        selected_chip=dict(va='0x148b32b8', soc_id=soc_id, raw_part=raw_part,
+                                           name='SM_CLARENCE'),
+                        note='Family uses hardware family fields; raw-part ID lookup does not alone prove family')
     report = dict(source_sha256=SOURCE_SHA, components=layouts,
                   address_kind='Preferred ELF VA, not observed runtime addresses',
                   stage_name='boot_update_ram_partition_table',
-                  instructions=instructions, selected_words=words,
-                  scope='Identified producer and one updater; no complete XBL audit or runtime SMEM capture')
+                  instructions=instructions, selected_words=words, chip_family=chip_evidence,
+                  scope='Identified RAM producer/updater and selected ChipInfo provenance; no complete XBL audit or runtime SMEM capture')
     return report, data[arm['offset']:arm['offset']+arm['size']]
 
 
@@ -135,7 +171,7 @@ def main():
         if not output.exists():
             output.write_bytes(arm)
     Path('docs/xbl-ram-producer-evidence.json').write_text(json.dumps(report, indent=2)+'\n')
-    print('Verified 3 consecutive ELF components and',len(report['instructions']),'producer/updater instruction sites')
+    print('Verified 3 consecutive ELF components and',len(report['instructions']),'producer/updater instruction sites and',len(report['chip_family']['instructions']),'ChipInfo sites')
 
 
 if __name__ == '__main__':

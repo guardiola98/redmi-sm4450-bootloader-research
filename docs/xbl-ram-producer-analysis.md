@@ -35,7 +35,8 @@ en rodata. No són adreces observades en el mòbil.
 
 L'[inspector](../scripts/inspect-xbl-ram-producer.py) i el
 [manifest d'evidència](xbl-ram-producer-evidence.json) fixen 72 instruccions,
-els literals i l'entrada de la taula de fases. No s'ha repetit el cens
+els literals i l'entrada de la taula de fases. L’ampliació posterior inclou
+28 instruccions ChipInfo i metadades de família, documentades separadament. No s'ha repetit el cens
 de GUID, descompilació del monitor EL3 ni anàlisi RSA.
 
 ## Entrada efectiva en el codi i portes encara condicionals
@@ -160,6 +161,10 @@ OS2.0.218.0.VMWEUXM, verified boot green i flash locked1.
 `/sys/devices/soc0/soc_id` retorna **568**, `family` retorna `Snapdragon`.
 Estos camps no són serials; tampoc són l'enumeració ChipFamily UEFI
 que restringix FeatureEnabler. No s'inferix que eixe caller estiga activat.
+
+Una consulta posterior del camp específic `chip_family` sí retorna141,
+exclosa per FeatureEnabler: [cadena i límits](featureenabler-chip-family.md).
+La diferència entre soc_id i família es manté; no es deduïx141 només de568.
 
 Pregunta2: Android exposa descriptors o només nodes del mapa final?
 `ls -d` troba `/proc/device-tree/memory` i el seu àlies sysfs, però

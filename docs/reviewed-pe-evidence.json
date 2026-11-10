@@ -430,6 +430,99 @@
     ]
   },
   {
+    "name": "ChipInfo",
+    "sha256": "5ac6376fb8066e5fe106a4bb70c303abe34e9f7de19fb6527ef638b09ea1c3dd",
+    "ffs": "10e193df-9966-44e7-b17c-59dd831e20fc",
+    "outer": "9e21fd93-9c72-4c15-8c4b-e77f1db2d792",
+    "guids": [
+      {
+        "rva": "0xa068",
+        "bytes": "69 04 76 b0 0c 97 7a 48 a4 b5 28 db 7b 45 ce f1",
+        "guid": "b0760469-970c-487a-a4b5-28db7b45cef1"
+      }
+    ],
+    "instructions": [
+      {
+        "rva": "0x1640",
+        "bytes": "00 65 41 f9"
+      },
+      {
+        "rva": "0x1644",
+        "bytes": "c0 00 00 b4"
+      },
+      {
+        "rva": "0x164c",
+        "bytes": "08 39 40 f9"
+      },
+      {
+        "rva": "0x1650",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "rva": "0x1658",
+        "bytes": "f3 03 93 9a"
+      },
+      {
+        "rva": "0x33f4",
+        "bytes": "81 07 00 94"
+      },
+      {
+        "rva": "0x33fc",
+        "bytes": "e0 03 1f 2a"
+      },
+      {
+        "rva": "0x3400",
+        "bytes": "68 02 00 b9"
+      },
+      {
+        "rva": "0x5200",
+        "bytes": "00 15 40 b9"
+      },
+      {
+        "rva": "0x5368",
+        "bytes": "49 00 00 94"
+      },
+      {
+        "rva": "0x536c",
+        "bytes": "20 07 00 b4"
+      },
+      {
+        "rva": "0x53a4",
+        "bytes": "09 6c 40 b9"
+      },
+      {
+        "rva": "0x53b8",
+        "bytes": "c9 16 00 b9"
+      },
+      {
+        "rva": "0x5498",
+        "bytes": "20 11 80 52"
+      },
+      {
+        "rva": "0x54a0",
+        "bytes": "1c 01 00 94"
+      },
+      {
+        "rva": "0x54ac",
+        "bytes": "1f 01 00 71"
+      },
+      {
+        "rva": "0x54b4",
+        "bytes": "e0 03 80 9a"
+      }
+    ],
+    "words": [
+      {
+        "rva": "0xa110",
+        "value": "0x162c"
+      },
+      {
+        "rva": "0x7de8",
+        "value": "0x33e4"
+      }
+    ]
+  },
+  {
     "name": "VerifiedBootDxe",
     "sha256": "cb1f1861c84d2aecc6f01ffcd84ea39dff406106053ed389acdd7b045da47fc6",
     "ffs": "a25f5839-4d55-428f-8f0b-5ce1d565f53e",

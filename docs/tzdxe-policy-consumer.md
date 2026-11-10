@@ -453,6 +453,10 @@ no exclou callers indirectes ni prova absència global de subscriptors.
   arriba a `0x154c → 0x2450`. Els valors són **116, 127, 123 i 130**;
   no s'equiparen a `soc_id` Android. Estat/identitat efectiva de família
   UEFI encara no observats. El context de huit bytes es neteja a `0x14fc`.
+  **Actualització posterior:** Android exposa chip_family141; la cadena
+  ChipInfo local llig SMEM0x89+0x6c.141 queda fora de la porta. Vegeu
+  [contrast de família](featureenabler-chip-family.md): caller estàtic
+  existent, activació en este telèfon sense suport actual.
 - Amb context vàlid i flag local `6464==0`, `0x2508` fa LocateProtocol;
   qualsevol estat no zero o punter nul retorna EFI error14.
 - `0x2528` invoca QSEE +8 amb `featenabler_a` i out-ID inicialitzat;

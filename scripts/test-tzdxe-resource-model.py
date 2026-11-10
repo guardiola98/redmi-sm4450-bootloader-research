@@ -162,6 +162,14 @@ class ResourceTests(unittest.TestCase):
         # Android soc_id is not the UEFI ChipFamily enum.
         self.assertEqual(feature_load_route(568, 0, 1, 1), [])
 
+    def test_observed_chip_family_does_not_enter_feature_qsee_route(self):
+        # Observed Android chip_family=0x8d, distinct from soc_id=568.
+        for first in (0, 1):
+            for second in (0, 1):
+                self.assertEqual(feature_load_route(141, 0, first, second), [])
+        for family in (116, 127, 123, 130):
+            self.assertTrue(feature_load_route(family, 0, 1, 1))
+
     def test_security_and_encryption_errors_are_distinct_gates(self):
         self.assertEqual(diagnostic_route(0, 1, 0x100, 0, 0), 'security-stop')
         self.assertEqual(diagnostic_route(EFI_ERROR | 7, 1, 0x100, 0, 0), 'policy')

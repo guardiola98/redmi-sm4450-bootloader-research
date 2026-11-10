@@ -1167,3 +1167,27 @@ branches de 0x1e84, després taula VerifiedBoot i persistència.
 - Cap evidència nova de desbloqueig. Següent treball útil: caller/subscriptor
   f250/TPL concret, DDR/exclusions efectives o un consumidor de configuració
   ampli encara no revisat. No repetir QSEE Android sense esdeveniment nou.
+
+## Contrast final — ChipFamily observat i porta FeatureEnabler
+
+- Fase productor XBL publicada: `0439f35`. Nova pregunta concreta:
+  la família que governa FeatureEnabler es pot contrastar en Android?
+- Cadena local resolta: ChipInfo+30→162c→DAL+70→33e4→51f8→a41c;
+  inicialitzador copia SMEM0x89+6c. XBL productor del camp també identificat,
+  amb taula de8 famílies i fila (11,16,141,568) compatible amb SM_CLARENCE.
+- soc_id568 per si sol no demostra família141: inicialitzador usa cerques
+  distintes per família i part-id. No s’han llegit MMIO ni fusibles al mòbil.
+- ADB només lectura de /sys/devices/soc0/chip_family retorna0x8d=141.
+  Una consulta; interpretació hexadecimal corregida offline sense repetir-la.
+  Original privat ignorat. No és el family=Snapdragon genèric ni un serial.
+- 141 no està entre116/127/123/130: si ChipInfo UEFI veu el mateix camp
+  intacte, no entra a la branca QSEE FeatureEnabler. No es declara traça
+  UEFI real; driver vendor Android i imatges arrancades no atestats.
+- Informe: docs/featureenabler-chip-family.md. Inspector14 PE; XBL afig28
+  llocs ChipInfo als72 RAM/mode.19 tests Tz i5 layout correctes; total129
+  en19 scripts (regressió completa128 prèvia més el cas nou). Diff check net.
+- No hi ha evidència nova de desbloqueig. Esta dada restringix activació,
+  no justifica fastboot. Continuar amb caller/subscriptor f250 real, fonts
+  DDR/exclusions o consumidor Config+20. QSEE Android continua sense
+  pregunta nova per a repetir captures. Contrast web primari intentat
+  sense contingut accessible; cap conclusió depén d’una font no verificada.

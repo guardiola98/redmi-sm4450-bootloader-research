@@ -178,3 +178,19 @@ Prioritats vigents: f250/subscriptor/TPL, fonts DDR/exclusions i consumidor
 Config+0x20. Els projectes existents es mantenen; nou ELF en Providers,
 exports xbl-ram-helpers.c, xbl-mode-interface-refs.txt i XblAarch64.asm
 només en work/. No hi ha nova evidència d’elusió d’autorització ni desbloqueig.
+
+## Contrast final del consumidor — camp ChipFamily
+
+Productor RAM publicat a `0439f35`. [Informe addicional](featureenabler-chip-family.md):
+ChipInfo UEFI obté família deSMEM0x89+6c; productor XBL i taules locals
+seguits fins a la fila141/568. soc_id i família es calculen separadament.
+ADB real del camp específic chip_family retorna0x8d=141, fora de les
+quatre famílies acceptades per FeatureEnabler. És compatible amb exclusió
+d’este caller en el telèfon; no és una observació directa d’UEFI.
+Cap fastboot, reinici, estímul QSEE ni lectura de memòria física.
+
+Inspectors14 PE i72+28 llocs XBL correctes. Test nou amb família141,
+19 tests de recursos i5 de layout correctes;129 en19 scripts acumulats.
+Captura privada ignorada; només valor numèric no personal en informes.
+El contrast web de fonts primàries no ha retornat contingut accessible;
+les conclusions es basen exclusivament en bytes locals i consulta ADB.

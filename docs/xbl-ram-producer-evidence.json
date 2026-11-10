@@ -722,5 +722,228 @@
       "value": "0x14857928"
     }
   ],
-  "scope": "Identified producer and one updater; no complete XBL audit or runtime SMEM capture"
+  "chip_family": {
+    "instructions": [
+      {
+        "va": "0x14825384",
+        "source_offset": "0x58318",
+        "bytes": "08 01 14 91"
+      },
+      {
+        "va": "0x14825388",
+        "source_offset": "0x5831c",
+        "bytes": "00 15 40 b9"
+      },
+      {
+        "va": "0x14825a3c",
+        "source_offset": "0x589d0",
+        "bytes": "20 11 80 52"
+      },
+      {
+        "va": "0x14825a48",
+        "source_offset": "0x589dc",
+        "bytes": "6b 99 00 94"
+      },
+      {
+        "va": "0x14825a64",
+        "source_offset": "0x589f8",
+        "bytes": "08 02 80 52"
+      },
+      {
+        "va": "0x14825a68",
+        "source_offset": "0x589fc",
+        "bytes": "88 02 00 b9"
+      },
+      {
+        "va": "0x14825aec",
+        "source_offset": "0x58a80",
+        "bytes": "81 b2 01 91"
+      },
+      {
+        "va": "0x14825af4",
+        "source_offset": "0x58a88",
+        "bytes": "08 39 40 f9"
+      },
+      {
+        "va": "0x14825af8",
+        "source_offset": "0x58a8c",
+        "bytes": "00 01 3f d6"
+      },
+      {
+        "va": "0x14832220",
+        "source_offset": "0x651b4",
+        "bytes": "0c 08 40 f9"
+      },
+      {
+        "va": "0x1483222c",
+        "source_offset": "0x651c0",
+        "bytes": "0b 18 40 b9"
+      },
+      {
+        "va": "0x148322b4",
+        "source_offset": "0x65248",
+        "bytes": "6d 1a 00 b9"
+      },
+      {
+        "va": "0x148322c0",
+        "source_offset": "0x65254",
+        "bytes": "7f 16 00 b9"
+      },
+      {
+        "va": "0x148322d0",
+        "source_offset": "0x65264",
+        "bytes": "90 81 5f b8"
+      },
+      {
+        "va": "0x148322dc",
+        "source_offset": "0x65270",
+        "bytes": "90 c1 5f b8"
+      },
+      {
+        "va": "0x148322e4",
+        "source_offset": "0x65278",
+        "bytes": "80 01 00 54"
+      },
+      {
+        "va": "0x148322f4",
+        "source_offset": "0x65288",
+        "bytes": "e1 fe ff 54"
+      },
+      {
+        "va": "0x14832314",
+        "source_offset": "0x652a8",
+        "bytes": "8c 2d 40 29"
+      },
+      {
+        "va": "0x14832318",
+        "source_offset": "0x652ac",
+        "bytes": "6c 16 00 b9"
+      },
+      {
+        "va": "0x14832330",
+        "source_offset": "0x652c4",
+        "bytes": "ff 01 0a 6b"
+      },
+      {
+        "va": "0x14832334",
+        "source_offset": "0x652c8",
+        "bytes": "80 01 00 54"
+      },
+      {
+        "va": "0x1483237c",
+        "source_offset": "0x65310",
+        "bytes": "88 0a 40 b9"
+      },
+      {
+        "va": "0x14832380",
+        "source_offset": "0x65314",
+        "bytes": "68 0a 00 b9"
+      },
+      {
+        "va": "0x148323c4",
+        "source_offset": "0x65358",
+        "bytes": "00 60 03 91"
+      },
+      {
+        "va": "0x148acd18",
+        "source_offset": "0xdfcac",
+        "bytes": "29 41 30 91"
+      },
+      {
+        "va": "0x148acd28",
+        "source_offset": "0xdfcbc",
+        "bytes": "89 52 02 a9"
+      },
+      {
+        "va": "0x148aceb8",
+        "source_offset": "0xdfe4c",
+        "bytes": "32 e1 fd 97"
+      },
+      {
+        "va": "0x148acec4",
+        "source_offset": "0xdfe58",
+        "bytes": "68 02 00 b9"
+      }
+    ],
+    "family_rows": [
+      {
+        "va": "0x148b3360",
+        "major": 0,
+        "minor": 0,
+        "family": 0,
+        "fallback_soc_id": 0
+      },
+      {
+        "va": "0x148b3370",
+        "major": 11,
+        "minor": 1,
+        "family": 116,
+        "fallback_soc_id": 457
+      },
+      {
+        "va": "0x148b3380",
+        "major": 11,
+        "minor": 4,
+        "family": 123,
+        "fallback_soc_id": 506
+      },
+      {
+        "va": "0x148b3390",
+        "major": 11,
+        "minor": 3,
+        "family": 127,
+        "fallback_soc_id": 519
+      },
+      {
+        "va": "0x148b33a0",
+        "major": 11,
+        "minor": 6,
+        "family": 128,
+        "fallback_soc_id": 525
+      },
+      {
+        "va": "0x148b33b0",
+        "major": 11,
+        "minor": 8,
+        "family": 130,
+        "fallback_soc_id": 530
+      },
+      {
+        "va": "0x148b33c0",
+        "major": 11,
+        "minor": 5,
+        "family": 132,
+        "fallback_soc_id": 537
+      },
+      {
+        "va": "0x148b33d0",
+        "major": 11,
+        "minor": 16,
+        "family": 141,
+        "fallback_soc_id": 568
+      }
+    ],
+    "selected_words": [
+      {
+        "va": "0x148bbbf8",
+        "value": "0x148acccc"
+      },
+      {
+        "va": "0x148bbc08",
+        "value": "0x148e87d0"
+      },
+      {
+        "va": "0x148bbc80",
+        "value": "0x148acea8"
+      }
+    ],
+    "selected_chip": {
+      "va": "0x148b32b8",
+      "soc_id": 568,
+      "raw_part": 538,
+      "name": "SM_CLARENCE"
+    },
+    "note": "Family uses hardware family fields; raw-part ID lookup does not alone prove family"
+  },
+  "scope": "Identified RAM producer/updater and selected ChipInfo provenance; no complete XBL audit or runtime SMEM capture"
 }

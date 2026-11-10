@@ -19,6 +19,9 @@ de QSEE +0x20, però el wrapper força càrrega de partició per GUID.
 **Corregida** la cadena de fitxers `31dc → 279c → 2414 → 2630`: x2=0
 impedix l'últim salt. Cal seguir la primera interfície Tz `f250` +0x20
 amb argument de fitxer o +0x38; encara sense consumidor exterior.
+[Contrast de família posterior](featureenabler-chip-family.md): Android
+exposa chip_family141, exclosa per FeatureEnabler. El caller estàtic no
+prova activació al dispositiu; soc_id568 és un camp diferent.
 
 ## Candidats demanats
 
@@ -103,11 +106,12 @@ en [configuració](uefi-configuration-provenance.md).
 No s'ha identificat cap nou consumidor MiToken +0x18. La cerca d'impacte
 continua en espera de caller/productor concret. No s'ha repetit el monitor
 EL3, cap cens GUID ni experiments RSA; executar els tests ja existents
-forma part de la regressió. No s'ha consultat xarxa per investigar firmware;
-només s'han publicat commits autoritzats al repositori.
+forma part de la regressió. El contrast web primari de ChipInfo no ha
+retornat contingut accessible; no sustenta cap conclusió. Publicació Git
+autoritzada, sense firmware ni captures privades.
 
-**128 proves en 19 scripts**, totes correctes en la regressió final
-registrada en PROGRESS.md. Inclouen 18 models TzDxeLA, 11 de configuració,
+**129 proves en 19 scripts** validades: regressió completa de128 i el
+cas nou de família dins dels19 tests Tz, segons PROGRESS.md. Inclouen 19 models TzDxeLA, 11 de configuració,
 9 d’índexs/comptes RAM, 9 de fitxers, 22 d’anàlisi QSEE i 5 de metadades XBL. Inspectors
 verifiquen hashes i bytes seleccionats; `git diff --check` net. Els models
 usen estats/índexs simbòlics, sense executar firmware ni provocar fallades.
